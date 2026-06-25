@@ -1,0 +1,2472 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitoring Dashboard Return</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* DESIGN SYSTEM & VISUAL STYLE variables */
+    :root {
+      --sidebar-bg: #0D1B2A;
+      --sidebar-hover: #1B263B;
+      --sidebar-active: #1565C0;
+      --sidebar-accent: #64B5F6;
+      --main-bg: #F0F4F8;
+      --card-bg: #FFFFFF;
+      --primary-accent: #1565C0;
+      --success: #2E7D32;
+      --warning: #F57C00;
+      --danger: #C62828;
+      --info: #0277BD;
+      --purple: #6A1B9A;
+      --text-primary: #1A237E;
+      --text-secondary: #546E7A;
+      --border-color: #E3E8EF;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    /* Core Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--main-bg);
+      color: var(--text-primary);
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    /* Layout Structure */
+    .sidebar {
+      background-color: var(--sidebar-bg);
+      color: #FFFFFF;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+      z-index: 100;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .main-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    /* Sidebar Content */
+    .sidebar-top {
+      padding: 24px 16px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .logo-icon {
+      background-color: var(--primary-accent);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 4px 8px rgba(21, 101, 192, 0.3);
+    }
+
+    .logo-text-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-title {
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      color: #FFFFFF;
+    }
+
+    .logo-subtitle {
+      font-size: 10px;
+      color: #90CAF9;
+      font-weight: 500;
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      color: #E3E8EF;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-item a:hover {
+      background-color: var(--sidebar-hover);
+      color: #FFFFFF;
+    }
+
+    .nav-item.active a {
+      background-color: var(--sidebar-active);
+      color: #FFFFFF;
+      border-left: 3px solid var(--sidebar-accent);
+      font-weight: 600;
+    }
+
+    /* System Info Card (Bottom of Sidebar) */
+    .sidebar-bottom {
+      padding: 16px;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .sys-info-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sys-info-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #A5D6A7;
+    }
+
+    .sys-info-label {
+      color: #90A4AE;
+    }
+
+    .sys-info-val {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.green {
+      background-color: #4CAF50;
+      box-shadow: 0 0 8px #4CAF50;
+    }
+
+    /* Top Header Bar */
+    .header-bar {
+      background-color: #FFFFFF;
+      height: 64px;
+      min-height: 64px;
+      border-bottom: 1px solid var(--border-color);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 24px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    .header-title-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .header-subtitle {
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .header-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .live-clock-container {
+      background: #F0F4F8;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-primary);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+    }
+
+    .last-update-tag {
+      font-size: 11px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-refresh {
+      background-color: var(--primary-accent);
+      color: #FFFFFF;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(21, 101, 192, 0.2);
+    }
+
+    .btn-refresh:hover {
+      background-color: #0D47A1;
+      transform: translateY(-1px);
+    }
+
+    .link-reset-filter {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .link-reset-filter:hover {
+      color: var(--primary-accent);
+      text-decoration: underline;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      background-color: #FFFFFF;
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 16px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .filter-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .filter-select, .filter-input {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-primary);
+      padding: 6px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      outline: none;
+      background-color: #F8FAFC;
+      transition: border-color 0.2s ease;
+      min-width: 140px;
+    }
+
+    .filter-select:focus, .filter-input:focus {
+      border-color: var(--primary-accent);
+    }
+
+    .filter-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-apply {
+      background-color: var(--primary-accent);
+      color: #FFFFFF;
+      border: none;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-apply:hover {
+      background-color: #0D47A1;
+    }
+
+    .btn-reset-outline {
+      background: none;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-reset-outline:hover {
+      background-color: #F1F5F9;
+      color: var(--text-primary);
+    }
+
+    /* Main Content */
+    .content-container {
+      flex: 1;
+      padding: 20px 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Section Labels */
+    .section-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: var(--border-color);
+    }
+
+    /* Cards Styles */
+    .dashboard-card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    /* Section 1 - KPI Cards Grid */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .kpi-card {
+      height: 130px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      border-left: 5px solid transparent;
+    }
+
+    .kpi-card-1 { border-left-color: #1565C0; }
+    .kpi-card-2 { border-left-color: #2E7D32; }
+    .kpi-card-3 { border-left-color: #F57C00; }
+    .kpi-card-4 { border-left-color: #6A1B9A; }
+    .kpi-card-5 { border-left-color: #0277BD; }
+
+    .kpi-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .kpi-val {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+      letter-spacing: -0.5px;
+    }
+
+    .kpi-circle-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .kpi-card-1 .kpi-circle-icon { background-color: rgba(21, 101, 192, 0.1); }
+    .kpi-card-2 .kpi-circle-icon { background-color: rgba(46, 125, 50, 0.1); }
+    .kpi-card-3 .kpi-circle-icon { background-color: rgba(245, 124, 0, 0.1); }
+    .kpi-card-4 .kpi-circle-icon { background-color: rgba(106, 27, 154, 0.1); }
+    .kpi-card-5 .kpi-circle-icon { background-color: rgba(2, 119, 189, 0.1); }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    .kpi-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: auto;
+    }
+
+    .kpi-subtext {
+      font-size: 10px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .kpi-trend {
+      font-size: 10px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .trend-up { color: var(--success); }
+    .trend-down { color: var(--danger); }
+    .trend-neutral { color: var(--text-secondary); }
+
+    /* Card 4 - Mini progress bars styling */
+    .top-3pl-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 100%;
+      margin-top: 6px;
+    }
+
+    .bar-item-3pl {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .bar-info-3pl {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .progress-track-3pl {
+      height: 4px;
+      background-color: #E2E8F0;
+      border-radius: 2px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .progress-fill-3pl {
+      height: 100%;
+      background-color: var(--purple);
+      border-radius: 2px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Section 2 - Charts Row Layout */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 55% 45%;
+      gap: 16px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .card-header-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-header-badge {
+      background-color: #F0F4F8;
+      border: 1px solid var(--border-color);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .chart-container-280 {
+      height: 280px;
+      position: relative;
+    }
+
+    /* Section 3 - SKU Bar Chart with tabs */
+    .tab-group {
+      display: flex;
+      background-color: #F1F5F9;
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 4px 12px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background-color: #FFFFFF;
+      color: var(--text-primary);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .chart-container-380 {
+      height: 380px;
+      position: relative;
+    }
+
+    /* Section 4 - Trend Harian Layout */
+    .chart-container-260 {
+      height: 260px;
+      position: relative;
+    }
+
+    .btn-export-outline {
+      background: none;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-export-outline:hover {
+      background-color: #F8FAFC;
+      color: var(--text-primary);
+    }
+
+    /* Section 5 - Summary Report */
+    .summary-filter-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .pill-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .pill-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      padding: 4px 14px;
+      border-radius: 16px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pill-btn:hover {
+      background-color: #F8FAFC;
+    }
+
+    .pill-btn.active {
+      background-color: var(--primary-accent);
+      color: #FFFFFF;
+      border-color: var(--primary-accent);
+      box-shadow: 0 2px 4px rgba(21, 101, 192, 0.2);
+    }
+
+    .export-actions-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-export-accent {
+      background-color: #FFFFFF;
+      color: var(--primary-accent);
+      border: 1px solid var(--primary-accent);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-export-accent:hover {
+      background-color: rgba(21, 101, 192, 0.05);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .summary-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-right: 1px solid var(--border-color);
+      padding: 0 12px;
+    }
+
+    .summary-col:last-child {
+      border-right: none;
+    }
+
+    .summary-col-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .chart-container-240 {
+      height: 240px;
+      width: 100%;
+      position: relative;
+    }
+
+    /* Donut Center text container */
+    .donut-center-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .donut-center-num {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+
+    .donut-center-label {
+      font-size: 8px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Gauge / SLA Center elements */
+    .gauge-center-container {
+      position: absolute;
+      bottom: 25%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      text-align: center;
+    }
+
+    .gauge-center-num {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary-accent);
+      line-height: 1;
+    }
+
+    .gauge-center-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .gauge-metrics {
+      width: 100%;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 0 10px;
+    }
+
+    .gauge-metric-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .gauge-metric-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .gauge-metric-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+    }
+
+    .gauge-metric-dot.green { background-color: var(--success); }
+    .gauge-metric-dot.red { background-color: var(--danger); }
+    .gauge-metric-dot.orange { background-color: var(--warning); }
+
+    .gauge-metric-val {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    .status-badge.orange {
+      background-color: rgba(245, 124, 0, 0.1);
+      color: var(--warning);
+      border: 1px solid rgba(245, 124, 0, 0.2);
+    }
+
+    /* Custom Toast Notification styling */
+    #toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .toast {
+      background-color: var(--sidebar-bg);
+      color: #FFFFFF;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 500;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 250px;
+      border-left: 4px solid var(--primary-accent);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success { border-left-color: var(--success); }
+    .toast.warning { border-left-color: var(--warning); }
+    .toast.danger { border-left-color: var(--danger); }
+
+    .toast i {
+      font-size: 16px;
+    }
+    .toast.success i { color: #81C784; }
+    .toast.warning i { color: #FFB74D; }
+    .toast.danger i { color: #E57373; }
+
+    /* Responsive adjustments */
+    @media (max-width: 1200px) {
+      .kpi-row {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .charts-row {
+        grid-template-columns: 1fr;
+      }
+      .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .summary-col {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 20px;
+      }
+      .summary-col:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        width: 220px;
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .header-bar {
+        grid-template-columns: auto 1fr;
+        padding: 0 16px;
+      }
+
+      .header-center {
+        display: none;
+      }
+
+      .kpi-row {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-group {
+        width: 100%;
+      }
+
+      .filter-select, .filter-input {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="logo-area">
+        <div class="logo-icon">
+          <i class="fa-solid fa-truck-ramp-box"></i>
+        </div>
+        <div class="logo-text-container">
+          <span class="logo-title">MONITORING RETURN</span>
+          <span class="logo-subtitle">Dashboard Operasional</span>
+        </div>
+      </div>
+      
+      <ul class="nav-menu">
+        <li class="nav-item active">
+          <a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="showFeatureAlert('Data Order')"><i class="fa-solid fa-box"></i> Data Order</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="showFeatureAlert('Return Management')"><i class="fa-solid fa-rotate-left"></i> Return Management</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="showFeatureAlert('3PL Partner')"><i class="fa-solid fa-truck"></i> 3PL Partner</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="showFeatureAlert('Laporan SLA')"><i class="fa-solid fa-file-invoice"></i> Laporan SLA</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="showFeatureAlert('Master Data')"><i class="fa-solid fa-database"></i> Master Data</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="showFeatureAlert('Pengaturan')"><i class="fa-solid fa-gears"></i> Pengaturan</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Sidebar Bottom Info -->
+    <div class="sidebar-bottom">
+      <div class="sys-info-card">
+        <div class="sys-info-item">
+          <span class="sys-info-label">Database</span>
+          <span class="sys-info-val"><span class="dot green"></span> Connected</span>
+        </div>
+        <div class="sys-info-item">
+          <span class="sys-info-label">Auto Refresh</span>
+          <span class="sys-info-val"><span class="dot green"></span> Aktif</span>
+        </div>
+        <div class="sys-info-item">
+          <span class="sys-info-label">User</span>
+          <span class="sys-info-val" style="color: #FFFFFF;">admin</span>
+        </div>
+        <div class="sys-info-item">
+          <span class="sys-info-label">Last Sync</span>
+          <span class="sys-info-val" id="last-sync-time" style="color: #90A4AE;">21:36:27</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    
+    <!-- TOP HEADER BAR -->
+    <header class="header-bar">
+      <div class="header-left">
+        <button class="hamburger" id="hamburger-btn">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="header-title-container">
+          <h1 class="header-title">MONITORING DASHBOARD RETURN</h1>
+          <p class="header-subtitle">Dashboard Monitoring Operasional Return & SLA</p>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <div class="live-clock-container">
+          <i class="fa-regular fa-clock" style="color: var(--primary-accent);"></i>
+          <span id="live-clock">21:36:27 / Kamis, 25 Jun 2026</span>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="last-update-tag">
+          <span class="dot green"></span> Last Update: <strong id="header-update-time">21:36:27</strong>
+        </div>
+        <button class="btn-refresh" id="btn-refresh-data">
+          <i class="fa-solid fa-arrows-rotate"></i> Refresh Data
+        </button>
+        <a class="link-reset-filter" id="link-reset-top">Reset Filter</a>
+      </div>
+    </header>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label class="filter-label">Tanggal</label>
+        <input type="date" class="filter-input" id="filter-date">
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Periode</label>
+        <select class="filter-select" id="filter-periode">
+          <option value="bulanan" selected>Bulanan</option>
+          <option value="mingguan">Mingguan</option>
+          <option value="harian">Harian</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Status</label>
+        <select class="filter-select" id="filter-status">
+          <option value="all" selected>Semua Status</option>
+          <option value="open">Open</option>
+          <option value="closed">Closed</option>
+          <option value="in_process">In Process</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">3PL Partner</label>
+        <select class="filter-select" id="filter-3pl">
+          <option value="all" selected>Semua 3PL</option>
+          <option value="jne">JNE</option>
+          <option value="tiki">TIKI</option>
+          <option value="sicepat">SiCepat</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Area</label>
+        <select class="filter-select" id="filter-area">
+          <option value="all" selected>Semua Area</option>
+          <option value="jabodetabek">Jabodetabek</option>
+          <option value="jawa_barat">Jawa Barat</option>
+          <option value="jawa_tengah">Jawa Tengah</option>
+          <option value="jawa_timur">Jawa Timur</option>
+          <option value="luar_jawa">Luar Jawa</option>
+        </select>
+      </div>
+      <div class="filter-actions">
+        <button class="btn-apply" id="btn-apply-filters">
+          <i class="fa-solid fa-magnifying-glass"></i> Apply Filter
+        </button>
+        <button class="btn-reset-outline" id="btn-reset-filters">Reset</button>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="content-container">
+      
+      <!-- SECTION 1 — KPI CARDS ROW -->
+      <section class="kpi-row">
+        
+        <!-- CARD 1: TOTAL ORDER -->
+        <div class="dashboard-card kpi-card kpi-card-1" id="kpi-card-total-order">
+          <div class="kpi-top-row">
+            <div>
+              <span class="kpi-val" id="kpi-orders">1,284</span>
+              <div class="kpi-label">TOTAL ORDER</div>
+            </div>
+            <div class="kpi-circle-icon">
+              📋
+            </div>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-subtext">100% dari total order</span>
+            <span class="kpi-trend trend-up" id="kpi-orders-trend">
+              <i class="fa-solid fa-caret-up"></i> ▲ 12% dari bulan lalu
+            </span>
+          </div>
+        </div>
+
+        <!-- CARD 2: TOTAL CASE ID -->
+        <div class="dashboard-card kpi-card kpi-card-2" id="kpi-card-total-case">
+          <div class="kpi-top-row">
+            <div>
+              <span class="kpi-val" id="kpi-cases">987</span>
+              <div class="kpi-label">TOTAL CASE ID</div>
+            </div>
+            <div class="kpi-circle-icon">
+              🔑
+            </div>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-subtext" id="kpi-cases-subtext">76,87% dari total order</span>
+            <span class="kpi-trend trend-up" id="kpi-cases-trend">
+              <i class="fa-solid fa-caret-up"></i> ▲ 8% dari bulan lalu
+            </span>
+          </div>
+        </div>
+
+        <!-- CARD 3: TOTAL QTY -->
+        <div class="dashboard-card kpi-card kpi-card-3" id="kpi-card-total-qty">
+          <div class="kpi-top-row">
+            <div>
+              <span class="kpi-val" id="kpi-qty">14,320</span>
+              <div class="kpi-label">TOTAL QTY RETURN</div>
+            </div>
+            <div class="kpi-circle-icon">
+              📦
+            </div>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-subtext">rata-rata 11,15 qty/order</span>
+            <span class="kpi-trend trend-down" id="kpi-qty-trend">
+              <i class="fa-solid fa-caret-down"></i> ▼ 3% dari bulan lalu
+            </span>
+          </div>
+        </div>
+
+        <!-- CARD 4: TOP 3PL -->
+        <div class="dashboard-card kpi-card kpi-card-4" id="kpi-card-top-3pl">
+          <div class="kpi-top-row" style="margin-bottom: 0px;">
+            <div>
+              <span class="kpi-val" style="font-size: 26px;">JNE</span>
+              <div class="kpi-label">TOP 3PL PARTNER</div>
+            </div>
+            <div class="kpi-circle-icon">
+              🚚
+            </div>
+          </div>
+          <div class="top-3pl-bars">
+            <div class="bar-item-3pl">
+              <div class="bar-info-3pl"><span>JNE</span><span id="bar-val-jne">42%</span></div>
+              <div class="progress-track-3pl"><div class="progress-fill-3pl" id="bar-fill-jne" style="width: 42%;"></div></div>
+            </div>
+            <div class="bar-item-3pl">
+              <div class="bar-info-3pl"><span>TIKI</span><span id="bar-val-tiki">31%</span></div>
+              <div class="progress-track-3pl"><div class="progress-fill-3pl" id="bar-fill-tiki" style="width: 31%; background-color: #8E24AA;"></div></div>
+            </div>
+            <div class="bar-item-3pl">
+              <div class="bar-info-3pl"><span>SiCepat</span><span id="bar-val-sicepat">27%</span></div>
+              <div class="progress-track-3pl"><div class="progress-fill-3pl" id="bar-fill-sicepat" style="width: 27%; background-color: #BA68C8;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5: AVERAGE PER DAY -->
+        <div class="dashboard-card kpi-card kpi-card-5" id="kpi-card-avg-day">
+          <div class="kpi-top-row">
+            <div>
+              <span class="kpi-val" id="kpi-avg">42.8</span>
+              <div class="kpi-label">AVG ORDER / HARI</div>
+            </div>
+            <div class="kpi-circle-icon">
+              📅
+            </div>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-subtext">Rata-rata case: 32,9/hari</span>
+            <span class="kpi-trend trend-up" id="kpi-avg-trend">
+              <i class="fa-solid fa-caret-up"></i> ▲ 5% dari minggu lalu
+            </span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- SECTION 2 — CHARTS ROW -->
+      <section class="charts-row">
+        
+        <!-- LEFT CHART — SLA PER BULAN -->
+        <div class="dashboard-card">
+          <div class="card-header">
+            <h3 class="card-header-title">
+              <i class="fa-solid fa-chart-column" style="color: var(--success);"></i>
+              SLA PER BULAN
+            </h3>
+            <span class="card-header-badge">Jan–Jun 2025</span>
+          </div>
+          <div class="chart-container-280">
+            <canvas id="chart-sla-bulan"></canvas>
+          </div>
+        </div>
+
+        <!-- RIGHT CHART — TOTAL PENJUALAN PER BULAN -->
+        <div class="dashboard-card">
+          <div class="card-header">
+            <h3 class="card-header-title">
+              <i class="fa-solid fa-chart-line" style="color: var(--primary-accent);"></i>
+              TOTAL ORDER RETURN PER BULAN
+            </h3>
+            <span class="card-header-badge">2025</span>
+          </div>
+          <div class="chart-container-280">
+            <canvas id="chart-order-bulan"></canvas>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- SECTION 3 — BAR CHART (Full Width) -->
+      <section class="dashboard-card">
+        <div class="card-header">
+          <h3 class="card-header-title">
+            <i class="fa-solid fa-cubes" style="color: var(--purple);"></i>
+            TOP 10 SKU BY QTY — WEEKLY VIEW (MEI 2025)
+          </h3>
+          <div class="tab-group" id="sku-week-tabs">
+            <button class="tab-btn active" data-week="1">Week 1</button>
+            <button class="tab-btn" data-week="2">Week 2</button>
+            <button class="tab-btn" data-week="3">Week 3</button>
+            <button class="tab-btn" data-week="4">Week 4</button>
+          </div>
+        </div>
+        <div class="chart-container-380">
+          <canvas id="chart-top-sku"></canvas>
+        </div>
+      </section>
+
+      <!-- SECTION 4 — TREND HARIAN (Full Width) -->
+      <section class="dashboard-card">
+        <div class="card-header">
+          <h3 class="card-header-title">
+            <i class="fa-solid fa-business-time" style="color: var(--info);"></i>
+            TREND HARIAN — CASE ID & ORDER (30 HARI TERAKHIR)
+          </h3>
+          <button class="btn-export-outline" id="btn-export-csv-trend">
+            <i class="fa-solid fa-file-csv"></i> Export CSV
+          </button>
+        </div>
+        <div class="chart-container-260">
+          <canvas id="chart-trend-harian"></canvas>
+        </div>
+      </section>
+
+      <!-- SECTION 5 — SUMMARY REPORT RETURN (Full Width) -->
+      <section class="dashboard-card">
+        <div class="summary-filter-row">
+          <h3 class="card-header-title" style="font-size: 14px; text-transform: uppercase;">
+            <i class="fa-solid fa-paste" style="color: var(--primary-accent);"></i>
+            SUMMARY REPORT RETURN — SLA, QTY & STATUS
+          </h3>
+          
+          <div class="pill-group" id="summary-status-pills">
+            <button class="pill-btn active" data-status="all">Semua</button>
+            <button class="pill-btn" data-status="open">Open</button>
+            <button class="pill-btn" data-status="closed">Closed</button>
+            <button class="pill-btn" data-status="in_process">In Process</button>
+          </div>
+
+          <div class="export-actions-row">
+            <button class="btn-export-accent" onclick="triggerDownload('Excel')">
+              <i class="fa-solid fa-file-excel"></i> Export Excel
+            </button>
+            <button class="btn-export-accent" onclick="triggerDownload('PDF')">
+              <i class="fa-solid fa-file-pdf"></i> Export PDF
+            </button>
+          </div>
+        </div>
+
+        <div class="summary-grid">
+          
+          <!-- LEFT — Donut Chart: Status Distribution -->
+          <div class="summary-col">
+            <div class="chart-container-240">
+              <canvas id="chart-status-donut"></canvas>
+              <!-- Center text inside donut -->
+              <div class="donut-center-container">
+                <span class="donut-center-num" id="donut-center-total">1,284</span>
+                <span class="donut-center-label">ORDER</span>
+              </div>
+            </div>
+            <h4 class="summary-col-title">DISTRIBUSI STATUS ORDER</h4>
+          </div>
+
+          <!-- MIDDLE — Bar Chart: QTY per Status per Bulan -->
+          <div class="summary-col">
+            <div class="chart-container-240">
+              <canvas id="chart-qty-status-stacked"></canvas>
+            </div>
+            <h4 class="summary-col-title">QTY RETURN PER STATUS/BULAN</h4>
+          </div>
+
+          <!-- RIGHT — Gauge/Progress: SLA Achievement -->
+          <div class="summary-col">
+            <div class="chart-container-240" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <div style="height: 120px; width: 100%; position: relative;">
+                <canvas id="chart-sla-gauge"></canvas>
+                <div class="gauge-center-container">
+                  <span class="gauge-center-num" id="gauge-percent">87,5%</span>
+                  <span class="gauge-center-label">ACHIEVEMENT</span>
+                </div>
+              </div>
+              
+              <div class="gauge-metrics">
+                <div class="gauge-metric-row">
+                  <span class="gauge-metric-label">
+                    <span class="gauge-metric-dot green"></span> On Time
+                  </span>
+                  <span class="gauge-metric-val" id="gauge-val-ontime">1,124 order (87.5%)</span>
+                </div>
+                <div class="gauge-metric-row">
+                  <span class="gauge-metric-label">
+                    <span class="gauge-metric-dot red"></span> Over SLA
+                  </span>
+                  <span class="gauge-metric-val" id="gauge-val-oversla">160 order (12.5%)</span>
+                </div>
+                <div class="gauge-metric-row">
+                  <span class="gauge-metric-label">
+                    <span class="gauge-metric-dot orange"></span> Target SLA
+                  </span>
+                  <span class="gauge-metric-val">95,0%</span>
+                </div>
+              </div>
+
+              <div>
+                <span class="status-badge orange" id="sla-badge">
+                  <i class="fa-solid fa-triangle-exclamation"></i> BELOW TARGET
+                </span>
+              </div>
+            </div>
+            <h4 class="summary-col-title" style="margin-top: 12px;">SLA ACHIEVEMENT</h4>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // System Config & Global States
+    const baselineKPIs = {
+      orders: 1284,
+      cases: 987,
+      qty: 14320,
+      avg: 42.8
+    };
+
+    let activeKPIs = { ...baselineKPIs };
+    let currentWeekSku = "1";
+    let currentSummaryFilter = "all";
+
+    // Chart Global References
+    let chartSlaBulan = null;
+    let chartOrderBulan = null;
+    let chartTopSku = null;
+    let chartTrendHarian = null;
+    let chartStatusDonut = null;
+    let chartQtyStatusStacked = null;
+    let chartSlaGauge = null;
+
+    // Helper functions for localized date & time
+    function getIndonesianDayName(dayIndex) {
+      const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+      return days[dayIndex];
+    }
+
+    function getIndonesianMonthName(monthIndex) {
+      const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+      return months[monthIndex];
+    }
+
+    function formatTimeComponent(num) {
+      return num < 10 ? '0' + num : num;
+    }
+
+    function updateLiveClock() {
+      const now = new Date();
+      const hours = formatTimeComponent(now.getHours());
+      const minutes = formatTimeComponent(now.getMinutes());
+      const seconds = formatTimeComponent(now.getSeconds());
+      
+      const dayName = getIndonesianDayName(now.getDay());
+      const day = formatTimeComponent(now.getDate());
+      const monthName = getIndonesianMonthName(now.getMonth());
+      const year = now.getFullYear();
+
+      const clockStr = `${hours}:${minutes}:${seconds} / ${dayName}, ${day} ${monthName} ${year}`;
+      const clockElem = document.getElementById('live-clock');
+      if (clockElem) {
+        clockElem.textContent = clockStr;
+      }
+    }
+
+    // Set Default Filter Date to Today
+    function setDefaultFilterDate() {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = formatTimeComponent(now.getMonth() + 1);
+      const dd = formatTimeComponent(now.getDate());
+      const filterDateInput = document.getElementById('filter-date');
+      if (filterDateInput) {
+        filterDateInput.value = `${yyyy}-${mm}-${dd}`;
+      }
+    }
+
+    // Custom Toast Notifications
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      
+      let icon = 'fa-circle-info';
+      if (type === 'success') icon = 'fa-circle-check';
+      else if (type === 'warning') icon = 'fa-triangle-exclamation';
+      else if (type === 'danger') icon = 'fa-circle-xmark';
+
+      toast.innerHTML = `
+        <i class="fa-solid ${icon}"></i>
+        <span>${message}</span>
+      `;
+      
+      container.appendChild(toast);
+      
+      // Force reflow and animate
+      setTimeout(() => toast.classList.add('show'), 10);
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Feature Alerts
+    function showFeatureAlert(featureName) {
+      showToast(`Membuka halaman ${featureName}...`, 'info');
+    }
+
+    // Export Excel / PDF Simulations
+    function triggerDownload(type) {
+      showToast(`Menyiapkan data untuk download ${type}...`, 'info');
+      setTimeout(() => {
+        showToast(`File SUMMARY_REPORT_RETURN_${new Date().getFullYear()}.${type === 'Excel' ? 'xlsx' : 'pdf'} berhasil diunduh!`, 'success');
+      }, 1500);
+    }
+
+    // Animated Value Counters
+    function animateValue(id, start, end, duration, decimal = false) {
+      const obj = document.getElementById(id);
+      if (!obj) return;
+      
+      const range = end - start;
+      let current = start;
+      const stepTime = 16; // approx 60fps
+      const steps = duration / stepTime;
+      const increment = range / steps;
+      let stepCount = 0;
+
+      const timer = setInterval(() => {
+        current += increment;
+        stepCount++;
+        
+        if (stepCount >= steps) {
+          current = end;
+          clearInterval(timer);
+        }
+
+        if (decimal) {
+          obj.textContent = current.toFixed(1).replace('.', ',');
+        } else {
+          obj.textContent = Math.floor(current).toLocaleString('id-ID');
+        }
+      }, stepTime);
+    }
+
+    // Animate KPI Elements
+    function runKPIAnimations(orders, cases, qty, avg, duration = 1000) {
+      animateValue('kpi-orders', 0, orders, duration);
+      animateValue('kpi-cases', 0, cases, duration);
+      animateValue('kpi-qty', 0, qty, duration);
+      animateValue('kpi-avg', 0, avg, duration, true);
+      
+      // Update cases subtext percent
+      const casesPct = ((cases / orders) * 100).toFixed(2).replace('.', ',');
+      const subtextElem = document.getElementById('kpi-cases-subtext');
+      if (subtextElem) {
+        subtextElem.textContent = `${casesPct}% dari total order`;
+      }
+
+      // Animate top 3PL mini progress bars
+      const jneFill = document.getElementById('bar-fill-jne');
+      const tikiFill = document.getElementById('bar-fill-tiki');
+      const sicepatFill = document.getElementById('bar-fill-sicepat');
+
+      if (jneFill) jneFill.style.width = '0%';
+      if (tikiFill) tikiFill.style.width = '0%';
+      if (sicepatFill) sicepatFill.style.width = '0%';
+
+      setTimeout(() => {
+        if (jneFill) jneFill.style.width = '42%';
+        if (tikiFill) tikiFill.style.width = '31%';
+        if (sicepatFill) sicepatFill.style.width = '27%';
+      }, 100);
+    }
+
+    // DUMMY DATA FOR CHARTS & SYSTEMS
+    const rawSlaBulanData = {
+      onTime: [88, 91, 85, 93, 89, 94],
+      overSla: [12, 9, 15, 7, 11, 6]
+    };
+
+    const rawOrderBulanData = {
+      order: [180, 210, 195, 240, 220, 260],
+      case: [140, 168, 152, 187, 174, 198]
+    };
+
+    const skuWeeklyData = {
+      "1": [450, 380, 320, 290, 265, 240, 210, 195, 180, 160],
+      "2": [490, 410, 355, 310, 280, 255, 225, 205, 185, 170],
+      "3": [420, 360, 300, 275, 250, 230, 200, 185, 170, 150],
+      "4": [510, 430, 370, 330, 295, 270, 235, 215, 190, 175]
+    };
+    const skuLabels = ['SKU-A001','SKU-B234','SKU-C089','SKU-D445','SKU-E312','SKU-F678','SKU-G901','SKU-H123','SKU-I456','SKU-J789'];
+
+    // Generate 30 days dummy trend data
+    function generateTrend30Days() {
+      const dates = [];
+      const orders = [];
+      const cases = [];
+      
+      const now = new Date();
+      for (let i = 29; i >= 0; i--) {
+        const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+        const dayStr = formatTimeComponent(d.getDate()) + "/" + formatTimeComponent(d.getMonth() + 1);
+        dates.push(dayStr);
+        
+        // Simulating realistic business pattern (high on Mon-Fri, dip on Sat-Sun)
+        const dayOfWeek = d.getDay(); // 0 is Sunday, 6 is Saturday
+        let baseOrder = 45;
+        let baseCase = 32;
+        
+        if (dayOfWeek === 0) { // Sunday dip
+          baseOrder = 22 + Math.floor(Math.random() * 8);
+          baseCase = 14 + Math.floor(Math.random() * 6);
+        } else if (dayOfWeek === 6) { // Saturday dip
+          baseOrder = 30 + Math.floor(Math.random() * 10);
+          baseCase = 20 + Math.floor(Math.random() * 8);
+        } else { // Weekdays peak
+          baseOrder = 48 + Math.floor(Math.random() * 18);
+          baseCase = 34 + Math.floor(Math.random() * 14);
+        }
+        
+        orders.push(baseOrder);
+        cases.push(baseCase);
+      }
+      return { dates, orders, cases };
+    }
+    const trendHarianData = generateTrend30Days();
+
+    // Summary Section data by status filter
+    const summaryDataByStatus = {
+      all: {
+        donut: [62.8, 16.0, 11.5, 9.7], // Selesai, In Process, Antri, Belum Datang
+        donutLabels: ['Selesai/Closed', 'In Process', 'Antri/Open', 'Belum Datang'],
+        ordersCount: 1284,
+        stacked: {
+          selesai: [110, 130, 120, 155, 140, 168],
+          inProcess: [30, 35, 32, 40, 36, 42],
+          antri: [25, 28, 26, 28, 25, 30],
+          belumDatang: [15, 17, 17, 17, 19, 20]
+        },
+        sla: {
+          achievement: 87.5,
+          onTime: 1124,
+          overSla: 160
+        }
+      },
+      open: {
+        donut: [0, 0, 100, 0],
+        donutLabels: ['Selesai/Closed', 'In Process', 'Antri/Open', 'Belum Datang'],
+        ordersCount: 148,
+        stacked: {
+          selesai: [0, 0, 0, 0, 0, 0],
+          inProcess: [0, 0, 0, 0, 0, 0],
+          antri: [25, 28, 26, 28, 25, 30],
+          belumDatang: [0, 0, 0, 0, 0, 0]
+        },
+        sla: {
+          achievement: 0.0,
+          onTime: 0,
+          overSla: 148
+        }
+      },
+      closed: {
+        donut: [100, 0, 0, 0],
+        donutLabels: ['Selesai/Closed', 'In Process', 'Antri/Open', 'Belum Datang'],
+        ordersCount: 823,
+        stacked: {
+          selesai: [110, 130, 120, 155, 140, 168],
+          inProcess: [0, 0, 0, 0, 0, 0],
+          antri: [0, 0, 0, 0, 0, 0],
+          belumDatang: [0, 0, 0, 0, 0, 0]
+        },
+        sla: {
+          achievement: 100.0,
+          onTime: 823,
+          overSla: 0
+        }
+      },
+      in_process: {
+        donut: [0, 100, 0, 0],
+        donutLabels: ['Selesai/Closed', 'In Process', 'Antri/Open', 'Belum Datang'],
+        ordersCount: 205,
+        stacked: {
+          selesai: [0, 0, 0, 0, 0, 0],
+          inProcess: [30, 35, 32, 40, 36, 42],
+          antri: [0, 0, 0, 0, 0, 0],
+          belumDatang: [0, 0, 0, 0, 0, 0]
+        },
+        sla: {
+          achievement: 72.4,
+          onTime: 148,
+          overSla: 57
+        }
+      }
+    };
+
+    // CHART INITIALIZATIONS
+    function initCharts() {
+      
+      // 1. SLA PER BULAN CHART (Grouped Bar + Line Target SLA)
+      const ctxSla = document.getElementById('chart-sla-bulan').getContext('2d');
+      chartSlaBulan = new Chart(ctxSla, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+          datasets: [
+            {
+              label: 'On Time',
+              data: [...rawSlaBulanData.onTime],
+              backgroundColor: '#2E7D32',
+              borderRadius: 4,
+              barPercentage: 0.6,
+              categoryPercentage: 0.8
+            },
+            {
+              label: 'Over SLA',
+              data: [...rawSlaBulanData.overSla],
+              backgroundColor: '#C62828',
+              borderRadius: 4,
+              barPercentage: 0.6,
+              categoryPercentage: 0.8
+            },
+            {
+              label: 'Target SLA (95%)',
+              data: [95, 95, 95, 95, 95, 95],
+              type: 'line',
+              borderColor: '#F57C00',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              fill: false,
+              pointStyle: 'none',
+              pointRadius: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                boxWidth: 12,
+                font: { family: 'Inter', size: 11, weight: '500' },
+                color: '#546E7A'
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return ` ${context.dataset.label}: ${context.raw}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { font: { family: 'Inter', size: 11 }, color: '#546E7A' }
+            },
+            y: {
+              min: 0,
+              max: 100,
+              ticks: {
+                callback: value => value + '%',
+                font: { family: 'Inter', size: 11 },
+                color: '#546E7A'
+              },
+              grid: { color: '#E3E8EF' }
+            }
+          }
+        }
+      });
+
+      // 2. TOTAL PENJUALAN PER BULAN (Line Chart + Area Fill)
+      const ctxOrder = document.getElementById('chart-order-bulan').getContext('2d');
+      chartOrderBulan = new Chart(ctxOrder, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+          datasets: [
+            {
+              label: 'Jumlah Order',
+              data: [...rawOrderBulanData.order],
+              borderColor: '#1565C0',
+              backgroundColor: 'rgba(21, 101, 192, 0.1)',
+              fill: true,
+              tension: 0.4,
+              pointBackgroundColor: '#1565C0',
+              pointRadius: 4,
+              pointHoverRadius: 6
+            },
+            {
+              label: 'Jumlah Case ID',
+              data: [...rawOrderBulanData.case],
+              borderColor: '#2E7D32',
+              backgroundColor: 'transparent',
+              borderDash: [4, 4],
+              tension: 0.4,
+              pointBackgroundColor: '#2E7D32',
+              pointRadius: 4,
+              pointHoverRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                boxWidth: 12,
+                font: { family: 'Inter', size: 11, weight: '500' },
+                color: '#546E7A'
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { font: { family: 'Inter', size: 11 }, color: '#546E7A' }
+            },
+            y: {
+              ticks: { font: { family: 'Inter', size: 11 }, color: '#546E7A' },
+              grid: { color: '#E3E8EF' }
+            }
+          }
+        }
+      });
+
+      // 3. TOP 10 SKU BY QTY — HORIZONTAL BAR CHART (Weekly Views)
+      const ctxSku = document.getElementById('chart-top-sku').getContext('2d');
+      
+      // Build dynamic colors: top index is Gold, rest are gradients
+      const generateSkuColors = (count) => {
+        const colors = ['#FFD700']; // Top SKU is Gold
+        for (let i = 1; i < count; i++) {
+          // Purple to Blue gradient-like colors
+          const ratio = i / (count - 1);
+          const r = Math.floor(21 + (106 - 21) * ratio);
+          const g = Math.floor(101 + (27 - 101) * ratio);
+          const b = Math.floor(192 + (154 - 192) * ratio);
+          colors.push(`rgb(${r}, ${g}, ${b})`);
+        }
+        return colors;
+      };
+      
+      chartTopSku = new Chart(ctxSku, {
+        type: 'bar',
+        data: {
+          labels: [...skuLabels],
+          datasets: [{
+            label: 'Quantity Return',
+            data: [...skuWeeklyData["1"]],
+            backgroundColor: generateSkuColors(10),
+            borderRadius: { topRight: 6, bottomRight: 6 },
+            borderSkipped: 'start',
+            barThickness: 18
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return ` Qty: ${context.raw} pcs`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: '#E3E8EF' },
+              ticks: { font: { family: 'Inter', size: 11 }, color: '#546E7A' }
+            },
+            y: {
+              grid: { display: false },
+              ticks: { font: { family: 'Inter', size: 11, weight: '600' }, color: '#1A237E' }
+            }
+          }
+        }
+      });
+
+      // 4. TREND HARIAN — CASE ID & ORDER (Dual-axis Line)
+      const ctxTrend = document.getElementById('chart-trend-harian').getContext('2d');
+      chartTrendHarian = new Chart(ctxTrend, {
+        type: 'line',
+        data: {
+          labels: [...trendHarianData.dates],
+          datasets: [
+            {
+              label: 'Jumlah Order',
+              data: [...trendHarianData.orders],
+              borderColor: '#1565C0',
+              backgroundColor: '#1565C0',
+              yAxisID: 'yLeft',
+              borderWidth: 2,
+              pointRadius: 2.5,
+              pointHoverRadius: 5,
+              tension: 0.1
+            },
+            {
+              label: 'Case ID Baru',
+              data: [...trendHarianData.cases],
+              borderColor: '#2E7D32',
+              backgroundColor: '#2E7D32',
+              borderDash: [5, 5],
+              yAxisID: 'yRight',
+              borderWidth: 2,
+              pointRadius: 2.5,
+              pointHoverRadius: 5,
+              tension: 0.1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              align: 'end',
+              labels: {
+                boxWidth: 12,
+                font: { family: 'Inter', size: 11, weight: '500' },
+                color: '#546E7A'
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: {
+                font: { family: 'Inter', size: 10 },
+                color: '#546E7A',
+                callback: function(val, index) {
+                  // Show every 3rd label to avoid cluttering
+                  return index % 3 === 0 ? this.getLabelForValue(val) : '';
+                }
+              }
+            },
+            yLeft: {
+              type: 'linear',
+              position: 'left',
+              min: 0,
+              max: 80,
+              ticks: { font: { family: 'Inter', size: 11 }, color: '#1565C0' },
+              grid: { color: '#E3E8EF' },
+              title: { display: true, text: 'Jumlah Order', font: { size: 11, weight: '600' }, color: '#1565C0' }
+            },
+            yRight: {
+              type: 'linear',
+              position: 'right',
+              min: 0,
+              max: 60,
+              ticks: { font: { family: 'Inter', size: 11 }, color: '#2E7D32' },
+              grid: { drawOnChartArea: false }, // avoid overlapping grids
+              title: { display: true, text: 'Jumlah Case ID', font: { size: 11, weight: '600' }, color: '#2E7D32' }
+            }
+          }
+        }
+      });
+
+      // 5. SUMMARY DONUT — Status Distribution
+      const ctxDonut = document.getElementById('chart-status-donut').getContext('2d');
+      chartStatusDonut = new Chart(ctxDonut, {
+        type: 'doughnut',
+        data: {
+          labels: [...summaryDataByStatus.all.donutLabels],
+          datasets: [{
+            data: [...summaryDataByStatus.all.donut],
+            backgroundColor: ['#2E7D32', '#1565C0', '#F57C00', '#C62828'],
+            borderWidth: 2,
+            borderColor: '#FFFFFF',
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '75%',
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: {
+                boxWidth: 12,
+                font: { family: 'Inter', size: 11, weight: '500' },
+                color: '#546E7A',
+                generateLabels: function(chart) {
+                  const data = chart.data;
+                  if (data.labels.length && data.datasets.length) {
+                    return data.labels.map(function(label, i) {
+                      const meta = chart.getDatasetMeta(0);
+                      const style = meta.controller.getStyle(i);
+                      const val = data.datasets[0].data[i];
+                      
+                      // Calculate order number based on active filter
+                      let absoluteVal = 0;
+                      const activeFilter = currentSummaryFilter;
+                      if (activeFilter === 'all') {
+                        if (i === 0) absoluteVal = 806;
+                        if (i === 1) absoluteVal = 205;
+                        if (i === 2) absoluteVal = 148;
+                        if (i === 3) absoluteVal = 125;
+                      } else {
+                        // For solo filters, the focused segment gets total count, others 0
+                        absoluteVal = val > 0 ? summaryDataByStatus[activeFilter].ordersCount : 0;
+                      }
+
+                      return {
+                        text: `${label} — ${val.toFixed(1).replace('.', ',')}% (${absoluteVal} ord)`,
+                        fillStyle: style.backgroundColor,
+                        strokeStyle: style.borderColor,
+                        lineWidth: style.borderWidth,
+                        hidden: isNaN(data.datasets[0].data[i]) || meta.data[i].hidden,
+                        index: i
+                      };
+                    });
+                  }
+                  return [];
+                }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return ` ${context.label}: ${context.raw.toFixed(1).replace('.', ',')}%`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // 6. SUMMARY STACKED BAR — QTY per Status per Bulan
+      const ctxStacked = document.getElementById('chart-qty-status-stacked').getContext('2d');
+      chartQtyStatusStacked = new Chart(ctxStacked, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+          datasets: [
+            {
+              label: 'Selesai/Closed',
+              data: [...summaryDataByStatus.all.stacked.selesai],
+              backgroundColor: '#2E7D32',
+              barPercentage: 0.6
+            },
+            {
+              label: 'In Process',
+              data: [...summaryDataByStatus.all.stacked.inProcess],
+              backgroundColor: '#1565C0',
+              barPercentage: 0.6
+            },
+            {
+              label: 'Antri/Open',
+              data: [...summaryDataByStatus.all.stacked.antri],
+              backgroundColor: '#F57C00',
+              barPercentage: 0.6
+            },
+            {
+              label: 'Belum Datang',
+              data: [...summaryDataByStatus.all.stacked.belumDatang],
+              backgroundColor: '#C62828',
+              barPercentage: 0.6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              stacked: true,
+              grid: { display: false },
+              ticks: { font: { family: 'Inter', size: 10 }, color: '#546E7A' }
+            },
+            y: {
+              stacked: true,
+              min: 0,
+              max: 3000,
+              ticks: { font: { family: 'Inter', size: 10 }, color: '#546E7A' },
+              grid: { color: '#E3E8EF' }
+            }
+          },
+          plugins: {
+            legend: { display: false } // Hidden to prevent duplicated legends
+          }
+        }
+      });
+
+      // 7. SEMI-CIRCULAR GAUGE — SLA Achievement
+      const ctxGauge = document.getElementById('chart-sla-gauge').getContext('2d');
+      chartSlaGauge = new Chart(ctxGauge, {
+        type: 'doughnut',
+        data: {
+          labels: ['Achieved', 'Remaining'],
+          datasets: [{
+            data: [87.5, 12.5],
+            backgroundColor: ['#1565C0', '#E2E8F0'],
+            borderWidth: 0,
+            hoverOffset: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          circumference: 180,
+          rotation: -90,
+          cutout: '80%',
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: false }
+          }
+        }
+      });
+    }
+
+    // FUNCTION TO SWAP SUMMARY VIEWS (Pills filter)
+    function applySummaryPillFilter(statusKey) {
+      currentSummaryFilter = statusKey;
+      const data = summaryDataByStatus[statusKey];
+      if (!data) return;
+
+      // Update active state in UI
+      const pills = document.querySelectorAll('#summary-status-pills .pill-btn');
+      pills.forEach(p => {
+        if (p.getAttribute('data-status') === statusKey) {
+          p.classList.add('active');
+        } else {
+          p.classList.remove('active');
+        }
+      });
+
+      // Update Center Donut Total
+      const totalLabel = document.getElementById('donut-center-total');
+      if (totalLabel) {
+        animateValue('donut-center-total', parseInt(totalLabel.textContent.replace(/\./g, '')) || 0, data.ordersCount, 500);
+      }
+
+      // Update Donut Chart
+      chartStatusDonut.data.datasets[0].data = [...data.donut];
+      chartStatusDonut.update('active');
+
+      // Update Stacked Bar
+      chartQtyStatusStacked.data.datasets[0].data = [...data.stacked.selesai];
+      chartQtyStatusStacked.data.datasets[1].data = [...data.stacked.inProcess];
+      chartQtyStatusStacked.data.datasets[2].data = [...data.stacked.antri];
+      chartQtyStatusStacked.data.datasets[3].data = [...data.stacked.belumDatang];
+      
+      // Dynamic Y-axis adjustments for single stacked views to look proportional
+      if (statusKey === 'all') {
+        chartQtyStatusStacked.options.scales.y.max = 3000;
+      } else if (statusKey === 'closed') {
+        chartQtyStatusStacked.options.scales.y.max = 2000;
+      } else if (statusKey === 'in_process' || statusKey === 'open') {
+        chartQtyStatusStacked.options.scales.y.max = 400;
+      }
+      chartQtyStatusStacked.update('active');
+
+      // Update Gauge SLA Achievement
+      const percentLabel = document.getElementById('gauge-percent');
+      if (percentLabel) {
+        const startVal = parseFloat(percentLabel.textContent.replace(',', '.')) || 0;
+        animateValue('gauge-percent', startVal, data.sla.achievement, 500, true);
+        // append '%' mark in the animation callback or directly afterward in UI
+        setTimeout(() => {
+          percentLabel.textContent = data.sla.achievement.toFixed(1).replace('.', ',') + '%';
+        }, 510);
+      }
+
+      chartSlaGauge.data.datasets[0].data = [data.sla.achievement, 100 - data.sla.achievement];
+      
+      // Update Gauge colors based on achievement level
+      if (data.sla.achievement >= 95) {
+        chartSlaGauge.data.datasets[0].backgroundColor = ['#2E7D32', '#E2E8F0'];
+        const badge = document.getElementById('sla-badge');
+        if (badge) {
+          badge.className = "status-badge";
+          badge.style.backgroundColor = "rgba(46, 125, 50, 0.1)";
+          badge.style.color = "var(--success)";
+          badge.style.border = "1px solid rgba(46, 125, 50, 0.2)";
+          badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> TARGET ACHIEVED`;
+        }
+      } else {
+        chartSlaGauge.data.datasets[0].backgroundColor = ['#1565C0', '#E2E8F0'];
+        const badge = document.getElementById('sla-badge');
+        if (badge) {
+          badge.className = "status-badge orange";
+          badge.style.backgroundColor = "";
+          badge.style.color = "";
+          badge.style.border = "";
+          badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> BELOW TARGET`;
+        }
+      }
+      chartSlaGauge.update('active');
+
+      // Update metrics below gauge
+      const ontimeText = document.getElementById('gauge-val-ontime');
+      const overslaText = document.getElementById('gauge-val-oversla');
+      
+      if (ontimeText) {
+        ontimeText.textContent = `${data.sla.onTime.toLocaleString('id-ID')} order (${data.sla.onTime === 0 ? '0' : data.sla.achievement.toFixed(1).replace('.', ',')}%)`;
+      }
+      if (overslaText) {
+        const overslaPct = data.ordersCount === 0 ? 0 : (100 - data.sla.achievement).toFixed(1).replace('.', ',');
+        overslaText.textContent = `${data.sla.overSla.toLocaleString('id-ID')} order (${overslaPct}%)`;
+      }
+
+      showToast(`Filter Summary: Status ${statusKey.toUpperCase()} diterapkan`, 'success');
+    }
+
+    // SIMULATED FRESH LIVE REFRESH DATA (With dynamic animations)
+    function simulateLiveRefresh() {
+      const timestamp = new Date();
+      const h = formatTimeComponent(timestamp.getHours());
+      const m = formatTimeComponent(timestamp.getMinutes());
+      const s = formatTimeComponent(timestamp.getSeconds());
+      const timeStr = `${h}:${m}:${s}`;
+      
+      // Update UI last sync timestamp
+      const lastSync = document.getElementById('last-sync-time');
+      const lastHeader = document.getElementById('header-update-time');
+      if (lastSync) lastSync.textContent = timeStr;
+      if (lastHeader) lastHeader.textContent = timeStr;
+
+      // Introduce slight dynamic variation (+/- 2-4%)
+      const varFactor = () => 1 + (Math.random() * 0.08 - 0.04);
+      
+      activeKPIs.orders = Math.floor(baselineKPIs.orders * varFactor());
+      activeKPIs.cases = Math.floor(baselineKPIs.cases * varFactor());
+      activeKPIs.qty = Math.floor(baselineKPIs.qty * varFactor());
+      activeKPIs.avg = parseFloat((baselineKPIs.avg * varFactor()).toFixed(1));
+
+      // Run KPI counter animations
+      runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, 1000);
+
+      // Vary SLA bar data
+      const variedSlaOnTime = rawSlaBulanData.onTime.map(v => Math.min(100, Math.floor(v * varFactor())));
+      const variedSlaOver = variedSlaOnTime.map(v => 100 - v);
+      chartSlaBulan.data.datasets[0].data = variedSlaOnTime;
+      chartSlaBulan.data.datasets[1].data = variedSlaOver;
+      chartSlaBulan.update();
+
+      // Vary Order volumes
+      const variedOrders = rawOrderBulanData.order.map(v => Math.floor(v * varFactor()));
+      const variedCases = rawOrderBulanData.case.map(v => Math.floor(v * varFactor()));
+      chartOrderBulan.data.datasets[0].data = variedOrders;
+      chartOrderBulan.data.datasets[1].data = variedCases;
+      chartOrderBulan.update();
+
+      // Refresh currently selected weekly SKU view with variation
+      const weekData = skuWeeklyData[currentWeekSku].map(v => Math.floor(v * varFactor()));
+      chartTopSku.data.datasets[0].data = weekData;
+      chartTopSku.update();
+
+      // Vary trend harian harian
+      const variedTrendOrders = trendHarianData.orders.map(v => Math.floor(v * varFactor()));
+      const variedTrendCases = trendHarianData.cases.map(v => Math.floor(v * varFactor()));
+      chartTrendHarian.data.datasets[0].data = variedTrendOrders;
+      chartTrendHarian.data.datasets[1].data = variedTrendCases;
+      chartTrendHarian.update();
+
+      // Sync summary report dataset based on selected pill
+      applySummaryPillFilter(currentSummaryFilter);
+
+      showToast("Sinkronisasi real-time berhasil! Data diperbarui.", "success");
+    }
+
+    // APPLY MAIN FILTER ROW
+    function applyMainFilters() {
+      const selectedPeriode = document.getElementById('filter-periode').value;
+      const selectedStatus = document.getElementById('filter-status').value;
+      const selected3PL = document.getElementById('filter-3pl').value;
+      const selectedArea = document.getElementById('filter-area').value;
+      const selectedDate = document.getElementById('filter-date').value;
+
+      showToast("Menerapkan kriteria pencarian...", "info");
+
+      setTimeout(() => {
+        // Adjust KPI base values based on filters to simulate realistic subset
+        let multiplier = 1.0;
+        if (selectedPeriode === 'mingguan') multiplier = 0.25;
+        if (selectedPeriode === 'harian') multiplier = 0.035;
+
+        if (selectedStatus === 'open') multiplier *= 0.15;
+        if (selectedStatus === 'closed') multiplier *= 0.65;
+        if (selectedStatus === 'in_process') multiplier *= 0.20;
+
+        if (selected3PL === 'jne') multiplier *= 0.42;
+        if (selected3PL === 'tiki') multiplier *= 0.31;
+        if (selected3PL === 'sicepat') multiplier *= 0.27;
+
+        if (selectedArea === 'jabodetabek') multiplier *= 0.45;
+        else if (selectedArea !== 'all') multiplier *= 0.13; // Luar area
+
+        const filteredOrders = Math.max(12, Math.floor(baselineKPIs.orders * multiplier));
+        const filteredCases = Math.max(8, Math.floor(baselineKPIs.cases * multiplier * 0.8));
+        const filteredQty = Math.max(140, Math.floor(baselineKPIs.qty * multiplier));
+        const filteredAvg = parseFloat(Math.max(1.5, baselineKPIs.avg * (selectedPeriode === 'bulanan' ? 1 : 0.4)).toFixed(1));
+
+        // Re-animate KPIs
+        runKPIAnimations(filteredOrders, filteredCases, filteredQty, filteredAvg, 800);
+
+        // Apply filters to charts by scaling or slightly modifying datasets
+        chartSlaBulan.data.datasets[0].data = rawSlaBulanData.onTime.map(v => Math.min(100, Math.max(40, Math.floor(v * (0.9 + Math.random() * 0.15)))));
+        chartSlaBulan.data.datasets[1].data = chartSlaBulan.data.datasets[0].data.map(v => 100 - v);
+        chartSlaBulan.update();
+
+        chartOrderBulan.data.datasets[0].data = rawOrderBulanData.order.map(v => Math.max(5, Math.floor(v * multiplier * 1.1)));
+        chartOrderBulan.data.datasets[1].data = rawOrderBulanData.case.map(v => Math.max(3, Math.floor(v * multiplier * 0.9)));
+        chartOrderBulan.update();
+
+        // If specific status was filtered in main filters, also auto-update Section 5 Summary Pill
+        if (selectedStatus !== 'all') {
+          const pillMap = { 'open': 'open', 'closed': 'closed', 'in_process': 'in_process' };
+          applySummaryPillFilter(pillMap[selectedStatus] || 'all');
+        } else {
+          applySummaryPillFilter('all');
+        }
+
+        showToast("Filter berhasil diterapkan ke seluruh panel!", "success");
+      }, 500);
+    }
+
+    // RESET ALL FILTERS
+    function resetAllFilters() {
+      setDefaultFilterDate();
+      document.getElementById('filter-periode').value = 'bulanan';
+      document.getElementById('filter-status').value = 'all';
+      document.getElementById('filter-3pl').value = 'all';
+      document.getElementById('filter-area').value = 'all';
+
+      activeKPIs = { ...baselineKPIs };
+      runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, 1000);
+
+      // Revert SLA bulan chart
+      chartSlaBulan.data.datasets[0].data = [...rawSlaBulanData.onTime];
+      chartSlaBulan.data.datasets[1].data = [...rawSlaBulanData.overSla];
+      chartSlaBulan.update();
+
+      // Revert Order chart
+      chartOrderBulan.data.datasets[0].data = [...rawOrderBulanData.order];
+      chartOrderBulan.data.datasets[1].data = [...rawOrderBulanData.case];
+      chartOrderBulan.update();
+
+      // Revert SKU weekly chart
+      chartTopSku.data.datasets[0].data = [...skuWeeklyData[currentWeekSku]];
+      chartTopSku.update();
+
+      // Revert Trend Chart
+      chartTrendHarian.data.datasets[0].data = [...trendHarianData.orders];
+      chartTrendHarian.data.datasets[1].data = [...trendHarianData.cases];
+      chartTrendHarian.update();
+
+      // Revert Summary
+      applySummaryPillFilter('all');
+
+      showToast("Kriteria filter telah di-reset ke default", "success");
+    }
+
+    // ON DOM CONTENT LOADED INITIALIZATIONS
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // Live Clock Start
+      setInterval(updateLiveClock, 1000);
+      updateLiveClock();
+
+      // Set Default Date Input
+      setDefaultFilterDate();
+
+      // Initialize all Chart.js instances
+      initCharts();
+
+      // Run Counters Animations
+      runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, 1200);
+
+      // EVENT LISTENERS
+      
+      // Refresh Data button
+      document.getElementById('btn-refresh-data').addEventListener('click', () => {
+        const btn = document.getElementById('btn-refresh-data');
+        btn.querySelector('i').classList.add('fa-spin');
+        showToast("Menghubungkan ke database operasional...", "info");
+        
+        setTimeout(() => {
+          simulateLiveRefresh();
+          btn.querySelector('i').classList.remove('fa-spin');
+        }, 1200);
+      });
+
+      // Apply filter button
+      document.getElementById('btn-apply-filters').addEventListener('click', applyMainFilters);
+
+      // Reset filter buttons
+      document.getElementById('btn-reset-filters').addEventListener('click', resetAllFilters);
+      document.getElementById('link-reset-top').addEventListener('click', resetAllFilters);
+
+      // SKU Weekly Tabs change event
+      const weekTabs = document.querySelectorAll('#sku-week-tabs .tab-btn');
+      weekTabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          weekTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          
+          currentWeekSku = tab.getAttribute('data-week');
+          const newData = skuWeeklyData[currentWeekSku];
+          
+          if (newData && chartTopSku) {
+            chartTopSku.data.datasets[0].data = [...newData];
+            chartTopSku.update('active');
+            showToast(`Menampilkan SKU Return: Week ${currentWeekSku}`, "success");
+          }
+        });
+      });
+
+      // Summary Report Status Pills change event
+      const summaryPills = document.querySelectorAll('#summary-status-pills .pill-btn');
+      summaryPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          const statusKey = pill.getAttribute('data-status');
+          applySummaryPillFilter(statusKey);
+        });
+      });
+
+      // Export CSV Trend button
+      document.getElementById('btn-export-csv-trend').addEventListener('click', () => {
+        showToast("Mengekspor data trend harian ke format CSV...", "info");
+        setTimeout(() => {
+          showToast("File DAILY_TREND_RETURN_30DAYS.csv berhasil diunduh!", "success");
+        }, 1000);
+      });
+
+      // Mobile Hamburger Toggle
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const sidebar = document.getElementById('sidebar');
+      if (hamburgerBtn && sidebar) {
+        hamburgerBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          sidebar.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+          if (sidebar.classList.contains('active') && !sidebar.contains(e.target) && e.target !== hamburgerBtn) {
+            sidebar.classList.remove('active');
+          }
+        });
+      }
+
+    });
+  </script>
+
+</body>
+</html>
