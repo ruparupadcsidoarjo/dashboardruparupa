@@ -605,7 +605,7 @@
     /* Section 2 - Charts Row Layout */
     .charts-row {
       display: grid;
-      grid-template-columns: 55% 45%;
+      grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
 
@@ -1249,28 +1249,28 @@
       <!-- SECTION 2 — CHARTS ROW -->
       <section class="charts-row">
         
-        <!-- LEFT CHART — SLA PER BULAN -->
+        <!-- LEFT CHART — TOTAL ORDER HARIAN -->
         <div class="dashboard-card">
           <div class="card-header">
             <h3 class="card-header-title">
-              <i class="fa-solid fa-chart-column" style="color: var(--success);"></i>
-              SLA PER BULAN
+              <i class="fa-solid fa-chart-bar" style="color: var(--primary-accent);"></i>
+              TOTAL ORDER HARIAN (DAILY 2026)
             </h3>
-            <span class="card-header-badge">Jan–Jun 2025</span>
+            <span class="card-header-badge" id="sla-chart-badge">30 Hari Terakhir</span>
           </div>
           <div class="chart-container-280">
             <canvas id="chart-sla-bulan"></canvas>
           </div>
         </div>
 
-        <!-- RIGHT CHART — TOTAL PENJUALAN PER BULAN -->
+        <!-- RIGHT CHART — TOTAL QTY HARIAN -->
         <div class="dashboard-card">
           <div class="card-header">
             <h3 class="card-header-title">
-              <i class="fa-solid fa-chart-line" style="color: var(--primary-accent);"></i>
-              TOTAL ORDER RETURN PER BULAN
+              <i class="fa-solid fa-chart-line" style="color: var(--warning);"></i>
+              TOTAL QTY HARIAN (DAILY 2026)
             </h3>
-            <span class="card-header-badge">2025</span>
+            <span class="card-header-badge" id="order-chart-badge">30 Hari Terakhir</span>
           </div>
           <div class="chart-container-280">
             <canvas id="chart-order-bulan"></canvas>
@@ -1302,8 +1302,8 @@
       <section class="dashboard-card">
         <div class="card-header">
           <h3 class="card-header-title">
-            <i class="fa-solid fa-business-time" style="color: var(--info);"></i>
-            TREND HARIAN — CASE ID & ORDER (30 HARI TERAKHIR)
+            <i class="fa-solid fa-chart-area" style="color: var(--info);"></i>
+            TREND HARIAN — TOTAL ORDER &amp; TOTAL QTY (DAILY 2026)
           </h3>
           <button class="btn-export-outline" id="btn-export-csv-trend">
             <i class="fa-solid fa-file-csv"></i> Export CSV
@@ -1918,7 +1918,7 @@
     function generateTrend30Days() {
       const dates = [];
       const orders = [];
-      const cases = [];
+      const qty = [];
       
       const now = new Date();
       for (let i = 29; i >= 0; i--) {
@@ -1929,23 +1929,20 @@
         // Simulating realistic business pattern (high on Mon-Fri, dip on Sat-Sun)
         const dayOfWeek = d.getDay(); // 0 is Sunday, 6 is Saturday
         let baseOrder = 45;
-        let baseCase = 32;
         
         if (dayOfWeek === 0) { // Sunday dip
           baseOrder = 22 + Math.floor(Math.random() * 8);
-          baseCase = 14 + Math.floor(Math.random() * 6);
         } else if (dayOfWeek === 6) { // Saturday dip
           baseOrder = 30 + Math.floor(Math.random() * 10);
-          baseCase = 20 + Math.floor(Math.random() * 8);
         } else { // Weekdays peak
           baseOrder = 48 + Math.floor(Math.random() * 18);
-          baseCase = 34 + Math.floor(Math.random() * 14);
         }
         
+        const baseQty = baseOrder * (10 + Math.floor(Math.random() * 4));
         orders.push(baseOrder);
-        cases.push(baseCase);
+        qty.push(baseQty);
       }
-      return { dates, orders, cases };
+      return { dates, orders, qty };
     }
     const trendHarianData = generateTrend30Days();
 
@@ -2017,140 +2014,219 @@
       }
     };
 
-    // CHART INITIALIZATIONS
-    function initCharts() {
-      
-      // 1. SLA PER BULAN CHART (Grouped Bar + Line Target SLA)
-      const ctxSla = document.getElementById('chart-sla-bulan').getContext('2d');
-      chartSlaBulan = new Chart(ctxSla, {
-        type: 'bar',
-        data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
-          datasets: [
-            {
-              label: 'On Time',
-              data: [...rawSlaBulanData.onTime],
-              backgroundColor: '#2E7D32',
-              borderRadius: 4,
-              barPercentage: 0.6,
-              categoryPercentage: 0.8
-            },
-            {
-              label: 'Over SLA',
-              data: [...rawSlaBulanData.overSla],
-              backgroundColor: '#C62828',
-              borderRadius: 4,
-              barPercentage: 0.6,
-              categoryPercentage: 0.8
-            },
-            {
-              label: 'Target SLA (95%)',
-              data: [95, 95, 95, 95, 95, 95],
-              type: 'line',
-              borderColor: '#F57C00',
-              borderWidth: 2,
-              borderDash: [5, 5],
-              fill: false,
-              pointStyle: 'none',
-              pointRadius: 0
+    // Custom inline plugin for displaying data labels on Chart.js
+    const datalabelsPlugin = {
+      id: 'datalabelsCustom',
+      afterDatasetsDraw(chart) {
+        const { ctx } = chart;
+        ctx.save();
+        
+        chart.data.datasets.forEach((dataset, datasetIndex) => {
+          // Only render text labels on the Line representation (datasetIndex === 1)
+          // to prevent overlapping numbers between the Bar and the Line.
+          if (datasetIndex !== 1) return;
+          
+          const meta = chart.getDatasetMeta(datasetIndex);
+          if (meta.hidden) return;
+          
+          meta.data.forEach((element, index) => {
+            const val = dataset.data[index];
+            if (val === undefined || val === null) return;
+            
+            const totalPoints = chart.data.labels.length;
+            // Skip alternate labels only if we have a very large number of points (e.g. > 30) to avoid crowding
+            if (totalPoints > 31 && index % 2 !== 0) return;
+            
+            const text = typeof val === 'number' ? val.toLocaleString('id-ID') : val;
+            
+            ctx.font = 'bold 8px "Inter", sans-serif';
+            ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
+            ctx.shadowBlur = 4;
+            
+            if (chart.canvas.id === 'chart-sla-bulan') {
+              ctx.fillStyle = '#0D47A1'; // Deep Blue for Order
+            } else {
+              ctx.fillStyle = '#E65100'; // Deep Orange for Qty
             }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                boxWidth: 12,
-                font: { family: 'Inter', size: 11, weight: '500' },
-                color: '#546E7A'
-              }
-            },
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  return ` ${context.dataset.label}: ${context.raw}%`;
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              grid: { display: false },
-              ticks: { font: { family: 'Inter', size: 11 }, color: '#546E7A' }
-            },
-            y: {
-              min: 0,
-              max: 100,
-              ticks: {
-                callback: value => value + '%',
-                font: { family: 'Inter', size: 11 },
-                color: '#546E7A'
-              },
-              grid: { color: '#E3E8EF' }
-            }
-          }
-        }
-      });
+            
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            
+            const pos = element.tooltipPosition ? element.tooltipPosition() : { x: element.x, y: element.y };
+            ctx.fillText(text, pos.x, pos.y - 6);
+          });
+        });
+        ctx.restore();
+      }
+    };
 
-      // 2. TOTAL PENJUALAN PER BULAN (Line Chart + Area Fill)
-      const ctxOrder = document.getElementById('chart-order-bulan').getContext('2d');
-      chartOrderBulan = new Chart(ctxOrder, {
-        type: 'line',
-        data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
-          datasets: [
-            {
-              label: 'Jumlah Order',
-              data: [...rawOrderBulanData.order],
-              borderColor: '#1565C0',
-              backgroundColor: 'rgba(21, 101, 192, 0.1)',
-              fill: true,
-              tension: 0.4,
-              pointBackgroundColor: '#1565C0',
-              pointRadius: 4,
-              pointHoverRadius: 6
-            },
-            {
-              label: 'Jumlah Case ID',
-              data: [...rawOrderBulanData.case],
-              borderColor: '#2E7D32',
-              backgroundColor: 'transparent',
-              borderDash: [4, 4],
-              tension: 0.4,
-              pointBackgroundColor: '#2E7D32',
-              pointRadius: 4,
-              pointHoverRadius: 6
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                boxWidth: 12,
-                font: { family: 'Inter', size: 11, weight: '500' },
-                color: '#546E7A'
-              }
-            }
-          },
-          scales: {
-            x: {
-              grid: { display: false },
-              ticks: { font: { family: 'Inter', size: 11 }, color: '#546E7A' }
-            },
-            y: {
-              ticks: { font: { family: 'Inter', size: 11 }, color: '#546E7A' },
-              grid: { color: '#E3E8EF' }
-            }
-          }
-        }
-      });
+     // CHART INITIALIZATIONS
+     function initCharts() {
+       
+       // 1. DAILY TOTAL ORDERS CHART (Bar + Line)
+       const ctxSla = document.getElementById('chart-sla-bulan').getContext('2d');
+       chartSlaBulan = new Chart(ctxSla, {
+         type: 'bar',
+         data: {
+           labels: [...trendHarianData.dates],
+           datasets: [
+             {
+               type: 'bar',
+               label: 'Total Order',
+               data: [...trendHarianData.orders],
+               backgroundColor: 'rgba(21, 101, 192, 0.25)',
+               borderColor: 'rgba(21, 101, 192, 0.8)',
+               borderWidth: 1.5,
+               borderRadius: 4,
+               barPercentage: 0.6,
+               categoryPercentage: 0.7
+             },
+             {
+               type: 'line',
+               label: 'Tren Naik Turun (Line)',
+               data: [...trendHarianData.orders],
+               borderColor: '#0D47A1',
+               backgroundColor: 'transparent',
+               borderWidth: 2.5,
+               pointBackgroundColor: '#0D47A1',
+               pointBorderColor: '#FFFFFF',
+               pointBorderWidth: 1.5,
+               pointRadius: 4,
+               pointHoverRadius: 6,
+               tension: 0.3,
+               fill: false
+             }
+           ]
+         },
+         plugins: [datalabelsPlugin],
+         options: {
+           responsive: true,
+           maintainAspectRatio: false,
+           interaction: {
+             mode: 'index',
+             intersect: false
+           },
+           plugins: {
+             legend: {
+               position: 'bottom',
+               labels: {
+                 boxWidth: 12,
+                 font: { family: 'Inter', size: 11, weight: '600' },
+                 color: '#546E7A'
+               }
+             },
+             tooltip: {
+               callbacks: {
+                 label: function(context) {
+                   const value = context.raw || 0;
+                   return ` ${context.dataset.label}: ${value.toLocaleString('id-ID')} order`;
+                 }
+               }
+             }
+           },
+           scales: {
+             x: {
+               grid: { display: false },
+               ticks: { font: { family: 'Inter', size: 10 }, color: '#546E7A' }
+             },
+             y: {
+               min: 0,
+               ticks: {
+                 font: { family: 'Inter', size: 10 },
+                 color: '#1565C0'
+               },
+               grid: { color: '#E3E8EF' },
+               title: {
+                 display: true,
+                 text: 'Total Order',
+                 font: { family: 'Inter', size: 11, weight: '600' },
+                 color: '#1565C0'
+               }
+             }
+           }
+         }
+       });
+ 
+       // 2. DAILY TOTAL QTY CHART (Bar + Line)
+       const ctxOrder = document.getElementById('chart-order-bulan').getContext('2d');
+       chartOrderBulan = new Chart(ctxOrder, {
+         type: 'bar',
+         data: {
+           labels: [...trendHarianData.dates],
+           datasets: [
+             {
+               type: 'bar',
+               label: 'Total Qty',
+               data: [...trendHarianData.qty],
+               backgroundColor: 'rgba(245, 124, 0, 0.25)',
+               borderColor: 'rgba(245, 124, 0, 0.8)',
+               borderWidth: 1.5,
+               borderRadius: 4,
+               barPercentage: 0.6,
+               categoryPercentage: 0.7
+             },
+             {
+               type: 'line',
+               label: 'Tren Naik Turun (Line)',
+               data: [...trendHarianData.qty],
+               borderColor: '#E65100',
+               backgroundColor: 'transparent',
+               borderWidth: 2.5,
+               pointBackgroundColor: '#E65100',
+               pointBorderColor: '#FFFFFF',
+               pointBorderWidth: 1.5,
+               pointRadius: 4,
+               pointHoverRadius: 6,
+               tension: 0.3,
+               fill: false
+             }
+           ]
+         },
+         plugins: [datalabelsPlugin],
+         options: {
+           responsive: true,
+           maintainAspectRatio: false,
+           interaction: {
+             mode: 'index',
+             intersect: false
+           },
+           plugins: {
+             legend: {
+               position: 'bottom',
+               labels: {
+                 boxWidth: 12,
+                 font: { family: 'Inter', size: 11, weight: '600' },
+                 color: '#546E7A'
+               }
+             },
+             tooltip: {
+               callbacks: {
+                 label: function(context) {
+                   const value = context.raw || 0;
+                   return ` ${context.dataset.label}: ${value.toLocaleString('id-ID')} pcs`;
+                 }
+               }
+             }
+           },
+           scales: {
+             x: {
+               grid: { display: false },
+               ticks: { font: { family: 'Inter', size: 10 }, color: '#546E7A' }
+             },
+             y: {
+               min: 0,
+               ticks: { font: { family: 'Inter', size: 10 }, color: '#546E7A' },
+               grid: { color: '#E3E8EF' },
+               title: {
+                 display: true,
+                 text: 'Total Qty (Pcs)',
+                 font: { family: 'Inter', size: 11, weight: '600' },
+                 color: '#F57C00'
+               }
+             }
+           }
+         }
+       });
 
       // 3. TOP 10 SKU BY QTY — HORIZONTAL BAR CHART (Weekly Views)
       const ctxSku = document.getElementById('chart-top-sku').getContext('2d');
@@ -2212,32 +2288,31 @@
       // 4. TREND HARIAN — CASE ID & ORDER (Dual-axis Line)
       const ctxTrend = document.getElementById('chart-trend-harian').getContext('2d');
       chartTrendHarian = new Chart(ctxTrend, {
-        type: 'line',
+        type: 'bar',
         data: {
           labels: [...trendHarianData.dates],
           datasets: [
             {
-              label: 'Jumlah Order',
+              type: 'bar',
+              label: 'Total Order (Batang)',
               data: [...trendHarianData.orders],
+              backgroundColor: 'rgba(21, 101, 192, 0.75)',
               borderColor: '#1565C0',
-              backgroundColor: '#1565C0',
-              yAxisID: 'yLeft',
-              borderWidth: 2,
-              pointRadius: 2.5,
-              pointHoverRadius: 5,
-              tension: 0.1
+              borderWidth: 1.5,
+              borderRadius: 4,
+              yAxisID: 'yLeft'
             },
             {
-              label: 'Case ID Baru',
-              data: [...trendHarianData.cases],
-              borderColor: '#2E7D32',
-              backgroundColor: '#2E7D32',
-              borderDash: [5, 5],
+              type: 'line',
+              label: 'Total Qty (Grafik)',
+              data: [...trendHarianData.qty],
+              borderColor: '#F57C00',
+              backgroundColor: '#F57C00',
               yAxisID: 'yRight',
-              borderWidth: 2,
-              pointRadius: 2.5,
-              pointHoverRadius: 5,
-              tension: 0.1
+              borderWidth: 3,
+              pointRadius: 3,
+              pointHoverRadius: 6,
+              tension: 0.2
             }
           ]
         },
@@ -2271,19 +2346,17 @@
               type: 'linear',
               position: 'left',
               min: 0,
-              max: 80,
               ticks: { font: { family: 'Inter', size: 11 }, color: '#1565C0' },
               grid: { color: '#E3E8EF' },
-              title: { display: true, text: 'Jumlah Order', font: { size: 11, weight: '600' }, color: '#1565C0' }
+              title: { display: true, text: 'Total Order (Pcs)', font: { size: 11, weight: '600' }, color: '#1565C0' }
             },
             yRight: {
               type: 'linear',
               position: 'right',
               min: 0,
-              max: 60,
-              ticks: { font: { family: 'Inter', size: 11 }, color: '#2E7D32' },
+              ticks: { font: { family: 'Inter', size: 11 }, color: '#F57C00' },
               grid: { drawOnChartArea: false }, // avoid overlapping grids
-              title: { display: true, text: 'Jumlah Case ID', font: { size: 11, weight: '600' }, color: '#2E7D32' }
+              title: { display: true, text: 'Total Qty (Pcs)', font: { size: 11, weight: '600' }, color: '#F57C00' }
             }
           }
         }
@@ -2719,25 +2792,6 @@
       let total3PLSum = sortedPartners.reduce((acc, curr) => acc + curr.sum, 0);
       update3PLPartnerPie(sortedPartners, total3PLSum);
 
-      // Update Order & Case monthly line chart with actual monthly sums
-      if (chartOrderBulan) {
-        chartOrderBulan.data.datasets[0].data = monthlyOrders;
-        chartOrderBulan.data.datasets[1].data = monthlyCases;
-        chartOrderBulan.update();
-      }
-
-      // Update SLA monthly chart
-      if (chartSlaBulan) {
-        const calculatedSla = monthlyOrders.map((v, idx) => {
-          if (v === 0) return 0;
-          return Math.min(100, Math.max(75, 87 + (idx * 2) % 11));
-        });
-        const calculatedOver = calculatedSla.map(v => v === 0 ? 0 : 100 - v);
-        chartSlaBulan.data.datasets[0].data = calculatedSla;
-        chartSlaBulan.data.datasets[1].data = calculatedOver;
-        chartSlaBulan.update();
-      }
-
       // Update SKU horizontal bar chart with scaled quantities
       if (chartTopSku) {
         let qtyScale = totalQty / baselineKPIs.qty;
@@ -2782,7 +2836,7 @@
         validRows.push({
           date: rowDate,
           orders: safeParseFloat(row[5]),
-          cases: safeParseFloat(row[6])
+          qty: safeParseFloat(row[7])
         });
       }
 
@@ -2792,20 +2846,43 @@
       if (trendRows.length > 0) {
         let trendDates = [];
         let trendOrders = [];
-        let trendCases = [];
+        let trendQty = [];
 
         trendRows.forEach(item => {
           let day = formatTimeComponent(item.date.getDate());
           let month = formatTimeComponent(item.date.getMonth() + 1);
           trendDates.push(`${day}/${month}`);
           trendOrders.push(item.orders);
-          trendCases.push(item.cases);
+          trendQty.push(item.qty);
         });
 
         chartTrendHarian.data.labels = trendDates;
         chartTrendHarian.data.datasets[0].data = trendOrders;
-        chartTrendHarian.data.datasets[1].data = trendCases;
+        chartTrendHarian.data.datasets[1].data = trendQty;
         chartTrendHarian.update();
+
+        // Update Section 2 Total Order Chart (Bar + Line)
+        if (chartSlaBulan) {
+          chartSlaBulan.data.labels = trendDates;
+          chartSlaBulan.data.datasets[0].data = trendOrders;
+          chartSlaBulan.data.datasets[1].data = trendOrders;
+          chartSlaBulan.update();
+        }
+
+        // Update Section 2 Total Qty Chart (Bar + Line)
+        if (chartOrderBulan) {
+          chartOrderBulan.data.labels = trendDates;
+          chartOrderBulan.data.datasets[0].data = trendQty;
+          chartOrderBulan.data.datasets[1].data = trendQty;
+          chartOrderBulan.update();
+        }
+
+        // Update badges to match the number of active days
+        const badgeLabel = `${trendRows.length} Hari Terakhir`;
+        const slaChartBadge = document.getElementById('sla-chart-badge');
+        if (slaChartBadge) slaChartBadge.textContent = badgeLabel;
+        const orderChartBadge = document.getElementById('order-chart-badge');
+        if (orderChartBadge) orderChartBadge.textContent = badgeLabel;
       }
     }
 
@@ -2961,31 +3038,32 @@
       let totalSimSum = simulatedPartners.reduce((acc, curr) => acc + curr.sum, 0);
       update3PLPartnerPie(simulatedPartners.sort((a,b) => b.sum - a.sum), totalSimSum);
 
-      // Vary SLA bar data
-      const variedSlaOnTime = rawSlaBulanData.onTime.map(v => Math.min(100, Math.floor(v * varFactor())));
-      const variedSlaOver = variedSlaOnTime.map(v => 100 - v);
-      chartSlaBulan.data.datasets[0].data = variedSlaOnTime;
-      chartSlaBulan.data.datasets[1].data = variedSlaOver;
-      chartSlaBulan.update();
+      // Vary trend harian harian
+      const variedTrendOrders = trendHarianData.orders.map(v => Math.floor(v * varFactor()));
+      const variedTrendQty = trendHarianData.qty.map(v => Math.floor(v * varFactor()));
 
-      // Vary Order volumes
-      const variedOrders = rawOrderBulanData.order.map(v => Math.floor(v * varFactor()));
-      const variedCases = rawOrderBulanData.case.map(v => Math.floor(v * varFactor()));
-      chartOrderBulan.data.datasets[0].data = variedOrders;
-      chartOrderBulan.data.datasets[1].data = variedCases;
-      chartOrderBulan.update();
+      chartTrendHarian.data.datasets[0].data = variedTrendOrders;
+      chartTrendHarian.data.datasets[1].data = variedTrendQty;
+      chartTrendHarian.update();
+
+      // Update Section 2 Total Order Chart (Bar + Line)
+      if (chartSlaBulan) {
+        chartSlaBulan.data.datasets[0].data = variedTrendOrders;
+        chartSlaBulan.data.datasets[1].data = variedTrendOrders;
+        chartSlaBulan.update();
+      }
+
+      // Update Section 2 Total Qty Chart (Bar + Line)
+      if (chartOrderBulan) {
+        chartOrderBulan.data.datasets[0].data = variedTrendQty;
+        chartOrderBulan.data.datasets[1].data = variedTrendQty;
+        chartOrderBulan.update();
+      }
 
       // Refresh currently selected weekly SKU view with variation
       const weekData = skuWeeklyData[currentWeekSku].map(v => Math.floor(v * varFactor()));
       chartTopSku.data.datasets[0].data = weekData;
       chartTopSku.update();
-
-      // Vary trend harian harian
-      const variedTrendOrders = trendHarianData.orders.map(v => Math.floor(v * varFactor()));
-      const variedTrendCases = trendHarianData.cases.map(v => Math.floor(v * varFactor()));
-      chartTrendHarian.data.datasets[0].data = variedTrendOrders;
-      chartTrendHarian.data.datasets[1].data = variedTrendCases;
-      chartTrendHarian.update();
 
       // Sync summary report dataset based on selected pill
       applySummaryPillFilter(currentSummaryFilter);
@@ -3053,34 +3131,51 @@
         let totalSimSum = simulatedPartners.reduce((acc, curr) => acc + curr.sum, 0);
         update3PLPartnerPie(simulatedPartners, totalSimSum);
 
-        // Apply filters to charts by scaling or slightly modifying datasets
-        chartSlaBulan.data.datasets[0].data = rawSlaBulanData.onTime.map(v => Math.min(100, Math.max(40, Math.floor(v * (0.9 + Math.random() * 0.15)))));
-        chartSlaBulan.data.datasets[1].data = chartSlaBulan.data.datasets[0].data.map(v => 100 - v);
-        chartSlaBulan.update();
+        // Generate Daily Trend data arrays first so they can be referenced cleanly!
+        let pointsCount = Math.min(30, selectedDays);
+        let dailyOrders = [];
+        let dailyQty = [];
+        let dailyDates = [];
+        for (let i = 0; i < pointsCount; i++) {
+          let ord = Math.round(filteredAvg * (0.8 + Math.random() * 0.4));
+          dailyOrders.push(ord);
+          dailyQty.push(Math.round(filteredAvgQty * (0.8 + Math.random() * 0.4)));
+          let d = new Date();
+          d.setDate(d.getDate() - (pointsCount - i));
+          dailyDates.push(`${formatTimeComponent(d.getDate())}/${formatTimeComponent(d.getMonth()+1)}`);
+        }
 
-        chartOrderBulan.data.datasets[0].data = rawOrderBulanData.order.map(v => Math.floor(v * scaleFactor));
-        chartOrderBulan.data.datasets[1].data = rawOrderBulanData.case.map(v => Math.floor(v * scaleFactor));
-        chartOrderBulan.update();
+        // Update Section 2 Total Order Chart (Bar + Line)
+        if (chartSlaBulan) {
+          chartSlaBulan.data.labels = dailyDates;
+          chartSlaBulan.data.datasets[0].data = dailyOrders;
+          chartSlaBulan.data.datasets[1].data = dailyOrders;
+          chartSlaBulan.update();
+        }
+
+        // Update Section 2 Total Qty Chart (Bar + Line)
+        if (chartOrderBulan) {
+          chartOrderBulan.data.labels = dailyDates;
+          chartOrderBulan.data.datasets[0].data = dailyQty;
+          chartOrderBulan.data.datasets[1].data = dailyQty;
+          chartOrderBulan.update();
+        }
+
+        // Update badges to match the number of active days
+        const badgeLabel = `${pointsCount} Hari Terakhir`;
+        const slaChartBadge = document.getElementById('sla-chart-badge');
+        if (slaChartBadge) slaChartBadge.textContent = badgeLabel;
+        const orderChartBadge = document.getElementById('order-chart-badge');
+        if (orderChartBadge) orderChartBadge.textContent = badgeLabel;
 
         // Update horizontal SKU bars
         chartTopSku.data.datasets[0].data = skuWeeklyData[currentWeekSku].map(v => Math.round(v * scaleFactor));
         chartTopSku.update();
 
-        // Update Daily Trend
-        let pointsCount = Math.min(30, selectedDays);
-        let dailyOrders = [];
-        let dailyCases = [];
-        let dailyDates = [];
-        for (let i = 0; i < pointsCount; i++) {
-          dailyOrders.push(Math.round(filteredAvg * (0.8 + Math.random() * 0.4)));
-          dailyCases.push(Math.round(filteredAvgCase * (0.8 + Math.random() * 0.4)));
-          let d = new Date();
-          d.setDate(d.getDate() - (pointsCount - i));
-          dailyDates.push(`${formatTimeComponent(d.getDate())}/${formatTimeComponent(d.getMonth()+1)}`);
-        }
+        // Update Daily Trend Chart
         chartTrendHarian.data.labels = dailyDates;
         chartTrendHarian.data.datasets[0].data = dailyOrders;
-        chartTrendHarian.data.datasets[1].data = dailyCases;
+        chartTrendHarian.data.datasets[1].data = dailyQty;
         chartTrendHarian.update();
 
         // Update Section 5 Summary Panels
@@ -3115,16 +3210,27 @@
         ];
         update3PLPartnerPie(defaultSimPartners, 100);
 
-        // Revert SLA bulan chart
-        chartSlaBulan.data.datasets[0].data = [...rawSlaBulanData.onTime];
-        chartSlaBulan.data.datasets[1].data = [...rawSlaBulanData.overSla];
-        chartSlaBulan.update();
+        // Revert Section 2 Total Order Chart (Bar + Line)
+        if (chartSlaBulan) {
+          chartSlaBulan.data.labels = [...trendHarianData.dates];
+          chartSlaBulan.data.datasets[0].data = [...trendHarianData.orders];
+          chartSlaBulan.data.datasets[1].data = [...trendHarianData.orders];
+          chartSlaBulan.update();
+        }
 
-        // Revert Order chart
-        chartOrderBulan.data.datasets[0].data = [...rawOrderBulanData.order];
-        chartOrderBulan.data.datasets[1].data = [...rawOrderBulanData.case];
-        chartOrderBulan.update();
-        chartOrderBulan.update();
+        // Revert Section 2 Total Qty Chart (Bar + Line)
+        if (chartOrderBulan) {
+          chartOrderBulan.data.labels = [...trendHarianData.dates];
+          chartOrderBulan.data.datasets[0].data = [...trendHarianData.qty];
+          chartOrderBulan.data.datasets[1].data = [...trendHarianData.qty];
+          chartOrderBulan.update();
+        }
+
+        // Reset badges
+        const slaChartBadge = document.getElementById('sla-chart-badge');
+        if (slaChartBadge) slaChartBadge.textContent = "30 Hari Terakhir";
+        const orderChartBadge = document.getElementById('order-chart-badge');
+        if (orderChartBadge) orderChartBadge.textContent = "30 Hari Terakhir";
 
         // Revert SKU weekly chart
         chartTopSku.data.datasets[0].data = [...skuWeeklyData[currentWeekSku]];
@@ -3132,7 +3238,7 @@
 
         // Revert Trend Chart
         chartTrendHarian.data.datasets[0].data = [...trendHarianData.orders];
-        chartTrendHarian.data.datasets[1].data = [...trendHarianData.cases];
+        chartTrendHarian.data.datasets[1].data = [...trendHarianData.qty];
         chartTrendHarian.update();
 
         // Revert Summary
