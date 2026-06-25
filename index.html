@@ -361,6 +361,54 @@
       gap: 8px;
     }
 
+    .filter-sla-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #F8FAFC;
+      border: 1px solid var(--border-color);
+      padding: 8px 18px;
+      border-radius: 8px;
+      margin-left: auto;
+      min-height: 52px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .filter-sla-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    .filter-sla-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+      line-height: 1;
+    }
+
+    .filter-sla-value-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      line-height: 1;
+    }
+
+    .filter-sla-value {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .filter-sla-emoji {
+      font-size: 26px;
+      line-height: 1;
+    }
+
     .btn-apply {
       background-color: var(--primary-accent);
       color: #FFFFFF;
@@ -976,6 +1024,17 @@
       .filter-select, .filter-input {
         width: 100%;
       }
+
+      .filter-sla-info {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .filter-sla-inner {
+        align-items: center;
+      }
     }
   </style>
 </head>
@@ -1089,6 +1148,17 @@
           <i class="fa-solid fa-magnifying-glass"></i> Apply Filter
         </button>
         <button class="btn-reset-outline" id="btn-reset-filters">Reset</button>
+      </div>
+      
+      <!-- SLA Info Box -->
+      <div class="filter-sla-info" id="filter-sla-info-box" style="display: none;">
+        <div class="filter-sla-inner">
+          <div class="filter-sla-label">PENCAPAIAN SLA</div>
+          <div class="filter-sla-value-container">
+            <span class="filter-sla-value" id="filter-sla-text">-</span>
+            <span class="filter-sla-emoji" id="filter-sla-emoji">-</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1361,10 +1431,10 @@
     let currentSummaryFilter = "all";
 
     // Google Sheets URLs (fetched directly from client-side via Google's CORS-enabled gviz/tq API)
-    const SHEET_A_URL = "https://docs.google.com/spreadsheets/d/1T9uV6PyiKflDaruPYbMid5WOooPlHWZP5nbxpodRGsA/gviz/tq?tqx=out:csv&gid=0";
+    const SHEET_SLA_URL = "https://docs.google.com/spreadsheets/d/1AXqJ7plwv7p3KVD8VQ7d_EY-EX87RPJGlIDGxam_6Fo/gviz/tq?tqx=out:csv&gid=1894847581";
     const SHEET_B_URL = "https://docs.google.com/spreadsheets/d/1AXqJ7plwv7p3KVD8VQ7d_EY-EX87RPJGlIDGxam_6Fo/gviz/tq?tqx=out:csv&gid=263708152";
 
-    let parsedSheetA = null;
+    let parsedSheetSLA = null;
     let parsedSheetB = null;
 
     // Simulated Monthly Data for dynamic trends comparison when offline/simulated
@@ -1492,13 +1562,110 @@
       return null;
     }
 
+    function parseSlaMonth(monthStr) {
+      if (!monthStr) return null;
+      const parts = monthStr.trim().split('-');
+      if (parts.length !== 2) return null;
+      const monthName = parts[0].toLowerCase();
+      const year = parseInt(parts[1], 10);
+      
+      const monthsMap = {
+        'jan': 0, 'feb': 1, 'mar': 2, 'apr': 3, 'may': 4, 'jun': 5,
+        'jul': 6, 'aug': 7, 'sep': 8, 'oct': 9, 'nov': 10, 'dec': 11,
+        'mei': 4, 'agu': 7, 'okt': 9, 'des': 11
+      };
+      const month = monthsMap[monthName];
+      if (month === undefined || isNaN(year)) return null;
+      return { month, year };
+    }
+
+    function calculateSlaForRange(dateStart, dateEnd) {
+      if (!parsedSheetSLA || parsedSheetSLA.length <= 1) {
+        return null;
+      }
+      
+      let totalSlaSum = 0;
+      let totalWeight = 0;
+      let overlappingRowsCount = 0;
+      
+      for (let i = 1; i < parsedSheetSLA.length; i++) {
+        const row = parsedSheetSLA[i];
+        if (!row || !row[0]) continue;
+        
+        const parsed = parseSlaMonth(row[0]);
+        if (!parsed) continue;
+        
+        const monthStart = new Date(parsed.year, parsed.month, 1, 0, 0, 0, 0);
+        const monthEnd = new Date(parsed.year, parsed.month + 1, 0, 23, 59, 59, 999);
+        
+        const filterStart = dateStart ? new Date(dateStart) : new Date(2000, 0, 1);
+        const filterEnd = dateEnd ? new Date(dateEnd) : new Date(2100, 11, 31);
+        
+        if (monthStart <= filterEnd && monthEnd >= filterStart) {
+          const slaStr = row[3];
+          if (slaStr) {
+            const slaVal = parseFloat(slaStr.replace('%', '').trim());
+            if (!isNaN(slaVal)) {
+              const txStr = row[1];
+              const txVal = safeParseFloat(txStr);
+              const weight = txVal > 0 ? txVal : 1;
+              
+              totalSlaSum += slaVal * weight;
+              totalWeight += weight;
+              overlappingRowsCount++;
+            }
+          }
+        }
+      }
+      
+      if (overlappingRowsCount === 0) {
+        return null;
+      }
+      
+      return totalWeight > 0 ? (totalSlaSum / totalWeight) : (totalSlaSum / overlappingRowsCount);
+    }
+
+    function updateSlaInfoBox(slaValue) {
+      const infoBox = document.getElementById('filter-sla-info-box');
+      const textElem = document.getElementById('filter-sla-text');
+      const emojiElem = document.getElementById('filter-sla-emoji');
+      
+      if (!infoBox) return;
+      
+      if (slaValue === null || slaValue === undefined) {
+        infoBox.style.display = 'none';
+        return;
+      }
+      
+      infoBox.style.display = 'flex';
+      const formattedVal = slaValue.toFixed(2).replace('.', ',') + '%';
+      textElem.textContent = formattedVal;
+      
+      let emoji = '😊';
+      let emojiColor = '#4CAF50';
+      
+      if (slaValue >= 100) {
+        emoji = '👍';
+        emojiColor = '#2E7D32';
+      } else if (slaValue >= 98) {
+        emoji = '😊';
+        emojiColor = '#4CAF50';
+      } else {
+        emoji = '😞';
+        emojiColor = '#C62828';
+      }
+      
+      emojiElem.textContent = emoji;
+      emojiElem.style.color = emojiColor;
+    }
+
     // Async function to fetch and parse Google Sheets data
     async function fetchAndParseAllData() {
       showToast("Menghubungkan ke Google Sheets...", "info");
       try {
-        const [resA, resB] = await Promise.all([
-          fetch(SHEET_A_URL).then(r => {
-            if (!r.ok) throw new Error("A: " + r.status);
+        const [resSLA, resB] = await Promise.all([
+          fetch(SHEET_SLA_URL).then(r => {
+            if (!r.ok) throw new Error("SLA: " + r.status);
             return r.text();
           }),
           fetch(SHEET_B_URL).then(r => {
@@ -1507,7 +1674,7 @@
           })
         ]);
 
-        parsedSheetA = parseCSV(resA);
+        parsedSheetSLA = parseCSV(resSLA);
         parsedSheetB = parseCSV(resB);
 
         showToast("Berhasil sinkronisasi dengan Google Sheets!", "success");
@@ -2406,7 +2573,7 @@
     }
 
     function updateDashboardWithRealData() {
-      if (!parsedSheetA || !parsedSheetB) return;
+      if (!parsedSheetSLA || !parsedSheetB) return;
 
       const dateStartVal = document.getElementById('filter-date-start').value;
       const dateEndVal = document.getElementById('filter-date-end').value;
@@ -2415,6 +2582,10 @@
       if (dateStart) dateStart.setHours(0,0,0,0);
       const dateEnd = dateEndVal ? parseInputDate(dateEndVal) : null;
       if (dateEnd) dateEnd.setHours(23,59,59,999);
+
+      // Calculate and update SLA in the filter bar
+      const calculatedSla = calculateSlaForRange(dateStart, dateEnd);
+      updateSlaInfoBox(calculatedSla);
 
       showToast("Mengkalkulasi data dari Google Sheets...", "info");
 
@@ -2824,7 +2995,7 @@
 
     // APPLY MAIN FILTER ROW
     function applyMainFilters() {
-      if (parsedSheetA && parsedSheetB) {
+      if (parsedSheetSLA && parsedSheetB) {
         updateDashboardWithRealData();
       } else {
         applyMainFiltersSimulated();
@@ -2851,6 +3022,14 @@
             selectedDays = calced;
           }
         }
+
+        // Update SLA Info Box for simulated mode
+        let simulatedSlaVal = 99.5;
+        if (dateStart && dateEnd) {
+          const seed = dateStart.getDate() + dateEnd.getDate();
+          simulatedSlaVal = parseFloat((98.0 + (seed % 20) / 10).toFixed(2));
+        }
+        updateSlaInfoBox(simulatedSlaVal);
 
         let scaleFactor = selectedDays / 30;
 
@@ -2921,9 +3100,10 @@
     function resetAllFilters() {
       setDefaultFilterDate();
 
-      if (parsedSheetA && parsedSheetB) {
+      if (parsedSheetSLA && parsedSheetB) {
         updateDashboardWithRealData();
       } else {
+        updateSlaInfoBox(99.80);
         activeKPIs = { ...baselineKPIs };
         runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, activeKPIs.avgCase, activeKPIs.avgQty, 1000);
 
