@@ -1440,9 +1440,9 @@
     let currentWeekSku = "1";
     let currentSummaryFilter = "all";
 
-    // Google Sheets URLs (fetched via local Express server proxy to bypass CORS)
-    const SHEET_A_URL = "/api/sheet-a";
-    const SHEET_B_URL = "/api/sheet-b";
+    // Google Sheets URLs (fetched directly from client-side via Google's CORS-enabled gviz/tq API)
+    const SHEET_A_URL = "https://docs.google.com/spreadsheets/d/1T9uV6PyiKflDaruPYbMid5WOooPlHWZP5nbxpodRGsA/gviz/tq?tqx=out:csv&gid=0";
+    const SHEET_B_URL = "https://docs.google.com/spreadsheets/d/1AXqJ7plwv7p3KVD8VQ7d_EY-EX87RPJGlIDGxam_6Fo/gviz/tq?tqx=out:csv&gid=263708152";
 
     let parsedSheetA = null;
     let parsedSheetB = null;
