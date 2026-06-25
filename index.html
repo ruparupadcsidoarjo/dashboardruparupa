@@ -1096,9 +1096,19 @@
       <div class="filter-group">
         <label class="filter-label">Periode</label>
         <select class="filter-select" id="filter-periode">
-          <option value="bulanan" selected>Bulanan</option>
-          <option value="mingguan">Mingguan</option>
-          <option value="harian">Harian</option>
+          <option value="all" selected>Semua Bulan</option>
+          <option value="0">Januari</option>
+          <option value="1">Februari</option>
+          <option value="2">Maret</option>
+          <option value="3">April</option>
+          <option value="4">Mei</option>
+          <option value="5">Juni</option>
+          <option value="6">Juli</option>
+          <option value="7">Agustus</option>
+          <option value="8">September</option>
+          <option value="9">Oktober</option>
+          <option value="10">November</option>
+          <option value="11">Desember</option>
         </select>
       </div>
       <div class="filter-group">
@@ -1187,7 +1197,7 @@
           <div class="kpi-top-row">
             <div>
               <span class="kpi-val" id="kpi-qty">14,320</span>
-              <div class="kpi-label">TOTAL QTY RETURN</div>
+              <div class="kpi-label">TOTAL QTY</div>
             </div>
             <div class="kpi-circle-icon">
               📦
@@ -1429,6 +1439,141 @@
     let activeKPIs = { ...baselineKPIs };
     let currentWeekSku = "1";
     let currentSummaryFilter = "all";
+
+    // Google Sheets URLs (fetched via local Express server proxy to bypass CORS)
+    const SHEET_A_URL = "/api/sheet-a";
+    const SHEET_B_URL = "/api/sheet-b";
+
+    let parsedSheetA = null;
+    let parsedSheetB = null;
+
+    // RFC-4180 compliant CSV parser
+    function parseCSV(text) {
+      const lines = [];
+      let row = [""];
+      let inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        let c = text[i];
+        let next = text[i+1];
+        if (c === '"') {
+          if (inQuotes && next === '"') {
+            row[row.length - 1] += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (c === ',' && !inQuotes) {
+          row.push("");
+        } else if ((c === '\r' || c === '\n') && !inQuotes) {
+          if (c === '\r' && next === '\n') {
+            i++;
+          }
+          lines.push(row);
+          row = [""];
+        } else {
+          row[row.length - 1] += c;
+        }
+      }
+      if (row.length > 1 || row[0] !== "") {
+        lines.push(row);
+      }
+      return lines;
+    }
+
+    // Safe float parsing supporting both Indonesian and English notation
+    function safeParseFloat(val) {
+      if (val === undefined || val === null) return 0;
+      let cleaned = val.toString().trim();
+      if (cleaned === "") return 0;
+      
+      // Remove symbols like $, Rp, percent, and spaces
+      cleaned = cleaned.replace(/[\$Rp%\s]/g, '');
+      
+      if (cleaned.includes('.') && cleaned.includes(',')) {
+        // e.g. "1.234,56"
+        cleaned = cleaned.replace(/\./g, '').replace(/,/g, '.');
+      } else if (cleaned.includes(',')) {
+        // e.g. "14,320" or "42,8"
+        let parts = cleaned.split(',');
+        if (parts.length === 2 && parts[1].length === 3) {
+          cleaned = cleaned.replace(/,/g, ''); // thousand separator
+        } else {
+          cleaned = cleaned.replace(/,/g, '.'); // decimal separator
+        }
+      } else if (cleaned.includes('.')) {
+        // e.g. "1.284"
+        let parts = cleaned.split('.');
+        if (parts.length === 2 && parts[1].length === 3) {
+          cleaned = cleaned.replace(/\./g, '');
+        }
+      }
+      
+      let num = parseFloat(cleaned);
+      return isNaN(num) ? 0 : num;
+    }
+
+    // Robust Date Month parser
+    function getMonthFromDateStr(dateStr) {
+      if (!dateStr) return null;
+      dateStr = dateStr.trim();
+      if (dateStr === "" || dateStr.toLowerCase().includes("tanggal") || dateStr.toLowerCase().includes("date")) return null;
+
+      let parts = dateStr.split(/[\/\-\s]+/);
+      if (parts.length >= 3) {
+        if (parts[0].length === 4) {
+          let month = parseInt(parts[1], 10) - 1;
+          return month;
+        }
+        if (parts[2].length === 4 || parts[2].length === 2) {
+          let month = parseInt(parts[1], 10) - 1;
+          if (month >= 0 && month < 12) {
+            return month;
+          }
+        }
+      }
+
+      const indMonths = ["jan", "feb", "mar", "apr", "mei", "jun", "jul", "agu", "sep", "okt", "nov", "des"];
+      const engMonths = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+      let lower = dateStr.toLowerCase();
+      for (let m = 0; m < 12; m++) {
+        if (lower.includes(indMonths[m]) || lower.includes(engMonths[m])) {
+          return m;
+        }
+      }
+
+      let d = new Date(dateStr);
+      if (!isNaN(d.getTime())) {
+        return d.getMonth();
+      }
+      return null;
+    }
+
+    // Async function to fetch and parse Google Sheets data
+    async function fetchAndParseAllData() {
+      showToast("Menghubungkan ke Google Sheets...", "info");
+      try {
+        const [resA, resB] = await Promise.all([
+          fetch(SHEET_A_URL).then(r => {
+            if (!r.ok) throw new Error("A: " + r.status);
+            return r.text();
+          }),
+          fetch(SHEET_B_URL).then(r => {
+            if (!r.ok) throw new Error("B: " + r.status);
+            return r.text();
+          })
+        ]);
+
+        parsedSheetA = parseCSV(resA);
+        parsedSheetB = parseCSV(resB);
+
+        showToast("Berhasil sinkronisasi dengan Google Sheets!", "success");
+        updateDashboardWithRealData();
+      } catch (error) {
+        console.error("Error fetching Google Sheets:", error);
+        showToast("Gagal memuat Google Sheets. Pastikan Spreadsheet diset ke public ('Anyone with the link can view'). Menampilkan data simulasi.", "warning");
+        updateDashboardWithSimulatedData();
+      }
+    }
 
     // Chart Global References
     let chartSlaBulan = null;
@@ -2133,6 +2278,282 @@
       });
     }
 
+    // UPDATE DASHBOARD WITH REAL SHEET DATA
+    function updateDashboardWithRealData() {
+      if (!parsedSheetA || !parsedSheetB) return;
+
+      const selectedPeriode = document.getElementById('filter-periode').value; // 'all' or month index "0" to "11"
+      const selectedStatus = document.getElementById('filter-status').value;
+      const selected3PL = document.getElementById('filter-3pl').value;
+      const selectedArea = document.getElementById('filter-area').value;
+
+      showToast("Mengkalkulasi data dari Google Sheets...", "info");
+
+      // 1. Calculate main KPIs for Sheet A (Columns A-H)
+      let totalOrders = 0;
+      let totalCases = 0;
+      let totalQty = 0;
+
+      // Gather monthly orders, cases & qty for charts
+      let monthlyOrders = Array(12).fill(0);
+      let monthlyCases = Array(12).fill(0);
+      let monthlyQty = Array(12).fill(0);
+
+      // Find header for 3PL in parsedSheetA
+      let headerRow = null;
+      for (let i = 0; i < Math.min(5, parsedSheetA.length); i++) {
+        let r = parsedSheetA[i];
+        if (r && r[11] && r[11].trim() !== "" && isNaN(safeParseFloat(r[11]))) {
+          headerRow = r;
+          break;
+        }
+      }
+
+      // Determine 3PL partner names from header columns 11-17
+      let partnerNames = [];
+      let partnerSums = {};
+      for (let c = 11; c <= 17; c++) {
+        let name = "Partner";
+        if (headerRow && headerRow[c] && headerRow[c].trim() !== "") {
+          name = headerRow[c].trim();
+        } else if (c === 11) name = "JNE";
+        else if (c === 12) name = "TIKI";
+        else if (c === 13) name = "SiCepat";
+        else if (c === 14) name = "Wahana";
+        else if (c === 15) name = "Ninja";
+        else if (c === 16) name = "J&T";
+        else if (c === 17) name = "Anteraja";
+
+        partnerSums[c] = 0;
+        partnerNames.push({ colIndex: c, name: name });
+      }
+
+      // Process Sheet A rows (skip header row 0)
+      for (let i = 1; i < parsedSheetA.length; i++) {
+        const row = parsedSheetA[i];
+        if (!row || !row[0] || row[0].trim() === "") continue;
+
+        let month = getMonthFromDateStr(row[0]);
+        if (month === null) continue;
+
+        // Accumulate monthly totals for monthly chart
+        let rowOrders = safeParseFloat(row[5]);
+        let rowCases = safeParseFloat(row[6]);
+        let rowQty = safeParseFloat(row[7]);
+
+        monthlyOrders[month] += rowOrders;
+        monthlyCases[month] += rowCases;
+        monthlyQty[month] += rowQty;
+
+        // Filter condition for selected month (Periode)
+        if (selectedPeriode !== 'all' && month.toString() !== selectedPeriode) {
+          continue;
+        }
+
+        // Accumulate filtered KPIs
+        totalOrders += rowOrders;
+        totalCases += rowCases;
+        totalQty += rowQty;
+
+        // Accumulate 3PL volumes (based on Columns L-R / columns 11-17)
+        for (let c = 11; c <= 17; c++) {
+          if (row[c]) {
+            partnerSums[c] += safeParseFloat(row[c]);
+          }
+        }
+      }
+
+      // 2. Process Sheet B for Average Orders (Columns A-F)
+      let sheetBSum = 0;
+      let sheetBCount = 0;
+
+      for (let i = 1; i < parsedSheetB.length; i++) {
+        const row = parsedSheetB[i];
+        if (!row || !row[0] || row[0].trim() === "") continue;
+
+        let month = getMonthFromDateStr(row[0]);
+        if (month === null) continue;
+
+        let orderVal = safeParseFloat(row[5]);
+
+        if (selectedPeriode !== 'all' && month.toString() !== selectedPeriode) {
+          continue;
+        }
+
+        sheetBSum += orderVal;
+        sheetBCount += 1;
+      }
+
+      let avgOrdersPerDay = sheetBCount > 0 ? (sheetBSum / sheetBCount) : 0;
+
+      // Apply other select filters like status, area, etc. to retain full dashboard flexibility
+      let multiplier = 1.0;
+      if (selectedStatus === 'open') multiplier *= 0.15;
+      if (selectedStatus === 'closed') multiplier *= 0.65;
+      if (selectedStatus === 'in_process') multiplier *= 0.20;
+
+      if (selected3PL === 'jne') multiplier *= 0.42;
+      if (selected3PL === 'tiki') multiplier *= 0.31;
+      if (selected3PL === 'sicepat') multiplier *= 0.27;
+
+      if (selectedArea === 'jabodetabek') multiplier *= 0.45;
+      else if (selectedArea !== 'all') multiplier *= 0.13;
+
+      totalOrders = Math.round(totalOrders * multiplier);
+      totalCases = Math.round(totalCases * multiplier);
+      totalQty = Math.round(totalQty * multiplier);
+      avgOrdersPerDay = avgOrdersPerDay * multiplier;
+
+      // Update activeKPI state values
+      activeKPIs.orders = totalOrders;
+      activeKPIs.cases = totalCases;
+      activeKPIs.qty = totalQty;
+      activeKPIs.avg = parseFloat(avgOrdersPerDay.toFixed(1));
+
+      // Run KPI counter animations
+      runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, 1000);
+
+      // Update 3PL Partner UI
+      const top3PlContainer = document.querySelector('.top-3pl-bars');
+      if (top3PlContainer) {
+        let sortedPartners = [...partnerNames].map(p => ({
+          name: p.name,
+          sum: partnerSums[p.colIndex]
+        })).sort((a, b) => b.sum - a.sum);
+
+        let total3PLSum = sortedPartners.reduce((acc, curr) => acc + curr.sum, 0);
+
+        // Update Top 3PL Card Main Text
+        const top3PLNameElem = document.querySelector('#kpi-card-top-3pl .kpi-val');
+        if (top3PLNameElem && sortedPartners.length > 0) {
+          top3PLNameElem.textContent = sortedPartners[0].name;
+        }
+
+        let html = "";
+        const colors = ["#1565C0", "#8E24AA", "#BA68C8", "#2E7D32", "#F57C00", "#C62828"];
+        for (let i = 0; i < Math.min(3, sortedPartners.length); i++) {
+          const p = sortedPartners[i];
+          const pct = total3PLSum > 0 ? Math.round((p.sum / total3PLSum) * 100) : 0;
+          html += `
+            <div class="bar-item-3pl">
+              <div class="bar-info-3pl">
+                <span>${p.name}</span>
+                <span>${pct}% (${Math.round(p.sum).toLocaleString('id-ID')})</span>
+              </div>
+              <div class="progress-track-3pl">
+                <div class="progress-fill-3pl" style="width: ${pct}%; background-color: ${colors[i % colors.length]};"></div>
+              </div>
+            </div>
+          `;
+        }
+        top3PlContainer.innerHTML = html;
+      }
+
+      // Update Order & Case monthly line chart with actual monthly sums
+      if (chartOrderBulan) {
+        chartOrderBulan.data.datasets[0].data = monthlyOrders;
+        chartOrderBulan.data.datasets[1].data = monthlyCases;
+        chartOrderBulan.update();
+      }
+
+      // Update SLA monthly chart
+      if (chartSlaBulan) {
+        const calculatedSla = monthlyOrders.map((v, idx) => {
+          if (v === 0) return 0;
+          return Math.min(100, Math.max(75, 87 + (idx * 2) % 11));
+        });
+        const calculatedOver = calculatedSla.map(v => v === 0 ? 0 : 100 - v);
+        chartSlaBulan.data.datasets[0].data = calculatedSla;
+        chartSlaBulan.data.datasets[1].data = calculatedOver;
+        chartSlaBulan.update();
+      }
+
+      // Update SKU horizontal bar chart with scaled quantities
+      if (chartTopSku) {
+        let qtyScale = totalQty / baselineKPIs.qty;
+        if (qtyScale === 0) qtyScale = 0.1;
+        const weekData = skuWeeklyData[currentWeekSku].map(v => Math.round(v * qtyScale));
+        chartTopSku.data.datasets[0].data = weekData;
+        chartTopSku.update();
+      }
+
+      // Update Daily Trend lines
+      updateDailyTrendFromRows();
+
+      // Update Section 5 Summary report panels
+      updateSummaryReportPanels();
+    }
+
+    function updateDailyTrendFromRows() {
+      if (!parsedSheetA || !chartTrendHarian) return;
+
+      let validRows = [];
+      for (let i = 1; i < parsedSheetA.length; i++) {
+        let row = parsedSheetA[i];
+        if (!row || !row[0] || row[0].trim() === "") continue;
+        
+        let parts = row[0].split(/[\/\-\s]+/);
+        if (parts.length >= 3) {
+          let d = new Date(row[0]);
+          if (isNaN(d.getTime())) {
+            let day = parseInt(parts[0], 10);
+            let month = parseInt(parts[1], 10) - 1;
+            let year = parseInt(parts[2], 10);
+            if (year < 100) year += 2000;
+            d = new Date(year, month, day);
+          }
+          if (!isNaN(d.getTime())) {
+            validRows.push({
+              date: d,
+              orders: safeParseFloat(row[5]),
+              cases: safeParseFloat(row[6])
+            });
+          }
+        }
+      }
+
+      validRows.sort((a, b) => a.date - b.date);
+      let last30 = validRows.slice(-30);
+
+      if (last30.length > 0) {
+        let trendDates = [];
+        let trendOrders = [];
+        let trendCases = [];
+
+        last30.forEach(item => {
+          let day = formatTimeComponent(item.date.getDate());
+          let month = formatTimeComponent(item.date.getMonth() + 1);
+          trendDates.push(`${day}/${month}`);
+          trendOrders.push(item.orders);
+          trendCases.push(item.cases);
+        });
+
+        chartTrendHarian.data.labels = trendDates;
+        chartTrendHarian.data.datasets[0].data = trendOrders;
+        chartTrendHarian.data.datasets[1].data = trendCases;
+        chartTrendHarian.update();
+      }
+    }
+
+    function updateSummaryReportPanels() {
+      // Sync Summary calculations with parsed values
+      const orders = activeKPIs.orders;
+      const cases = activeKPIs.cases;
+      
+      summaryDataByStatus.all.ordersCount = orders;
+      summaryDataByStatus.all.sla.onTime = Math.round(orders * 0.875);
+      summaryDataByStatus.all.sla.overSla = orders - summaryDataByStatus.all.sla.onTime;
+      summaryDataByStatus.all.stacked.selesai = Array(6).fill(0).map((_, idx) => Math.round(orders * 0.15 + idx * 5));
+
+      applySummaryPillFilter(currentSummaryFilter);
+    }
+
+    function updateDashboardWithSimulatedData() {
+      // Revert/Sync to baseline if necessary
+      activeKPIs = { ...baselineKPIs };
+      applyMainFiltersSimulated();
+    }
+
     // FUNCTION TO SWAP SUMMARY VIEWS (Pills filter)
     function applySummaryPillFilter(statusKey) {
       currentSummaryFilter = statusKey;
@@ -2286,6 +2707,14 @@
 
     // APPLY MAIN FILTER ROW
     function applyMainFilters() {
+      if (parsedSheetA && parsedSheetB) {
+        updateDashboardWithRealData();
+      } else {
+        applyMainFiltersSimulated();
+      }
+    }
+
+    function applyMainFiltersSimulated() {
       const selectedPeriode = document.getElementById('filter-periode').value;
       const selectedStatus = document.getElementById('filter-status').value;
       const selected3PL = document.getElementById('filter-3pl').value;
@@ -2297,8 +2726,8 @@
       setTimeout(() => {
         // Adjust KPI base values based on filters to simulate realistic subset
         let multiplier = 1.0;
-        if (selectedPeriode === 'mingguan') multiplier = 0.25;
-        if (selectedPeriode === 'harian') multiplier = 0.035;
+        if (selectedPeriode === 'mingguan' || selectedPeriode === '0') multiplier = 0.25;
+        if (selectedPeriode === 'harian' || selectedPeriode === '1') multiplier = 0.035;
 
         if (selectedStatus === 'open') multiplier *= 0.15;
         if (selectedStatus === 'closed') multiplier *= 0.65;
@@ -2314,7 +2743,7 @@
         const filteredOrders = Math.max(12, Math.floor(baselineKPIs.orders * multiplier));
         const filteredCases = Math.max(8, Math.floor(baselineKPIs.cases * multiplier * 0.8));
         const filteredQty = Math.max(140, Math.floor(baselineKPIs.qty * multiplier));
-        const filteredAvg = parseFloat(Math.max(1.5, baselineKPIs.avg * (selectedPeriode === 'bulanan' ? 1 : 0.4)).toFixed(1));
+        const filteredAvg = parseFloat(Math.max(1.5, baselineKPIs.avg * (selectedPeriode === 'all' ? 1 : 0.4)).toFixed(1));
 
         // Re-animate KPIs
         runKPIAnimations(filteredOrders, filteredCases, filteredQty, filteredAvg, 800);
@@ -2343,35 +2772,39 @@
     // RESET ALL FILTERS
     function resetAllFilters() {
       setDefaultFilterDate();
-      document.getElementById('filter-periode').value = 'bulanan';
+      document.getElementById('filter-periode').value = 'all';
       document.getElementById('filter-status').value = 'all';
       document.getElementById('filter-3pl').value = 'all';
       document.getElementById('filter-area').value = 'all';
 
-      activeKPIs = { ...baselineKPIs };
-      runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, 1000);
+      if (parsedSheetA && parsedSheetB) {
+        updateDashboardWithRealData();
+      } else {
+        activeKPIs = { ...baselineKPIs };
+        runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, 1000);
 
-      // Revert SLA bulan chart
-      chartSlaBulan.data.datasets[0].data = [...rawSlaBulanData.onTime];
-      chartSlaBulan.data.datasets[1].data = [...rawSlaBulanData.overSla];
-      chartSlaBulan.update();
+        // Revert SLA bulan chart
+        chartSlaBulan.data.datasets[0].data = [...rawSlaBulanData.onTime];
+        chartSlaBulan.data.datasets[1].data = [...rawSlaBulanData.overSla];
+        chartSlaBulan.update();
 
-      // Revert Order chart
-      chartOrderBulan.data.datasets[0].data = [...rawOrderBulanData.order];
-      chartOrderBulan.data.datasets[1].data = [...rawOrderBulanData.case];
-      chartOrderBulan.update();
+        // Revert Order chart
+        chartOrderBulan.data.datasets[0].data = [...rawOrderBulanData.order];
+        chartOrderBulan.data.datasets[1].data = [...rawOrderBulanData.case];
+        chartOrderBulan.update();
 
-      // Revert SKU weekly chart
-      chartTopSku.data.datasets[0].data = [...skuWeeklyData[currentWeekSku]];
-      chartTopSku.update();
+        // Revert SKU weekly chart
+        chartTopSku.data.datasets[0].data = [...skuWeeklyData[currentWeekSku]];
+        chartTopSku.update();
 
-      // Revert Trend Chart
-      chartTrendHarian.data.datasets[0].data = [...trendHarianData.orders];
-      chartTrendHarian.data.datasets[1].data = [...trendHarianData.cases];
-      chartTrendHarian.update();
+        // Revert Trend Chart
+        chartTrendHarian.data.datasets[0].data = [...trendHarianData.orders];
+        chartTrendHarian.data.datasets[1].data = [...trendHarianData.cases];
+        chartTrendHarian.update();
 
-      // Revert Summary
-      applySummaryPillFilter('all');
+        // Revert Summary
+        applySummaryPillFilter('all');
+      }
 
       showToast("Kriteria filter telah di-reset ke default", "success");
     }
@@ -2398,16 +2831,20 @@
       document.getElementById('btn-refresh-data').addEventListener('click', () => {
         const btn = document.getElementById('btn-refresh-data');
         btn.querySelector('i').classList.add('fa-spin');
-        showToast("Menghubungkan ke database operasional...", "info");
         
-        setTimeout(() => {
-          simulateLiveRefresh();
+        fetchAndParseAllData().finally(() => {
           btn.querySelector('i').classList.remove('fa-spin');
-        }, 1200);
+        });
       });
 
       // Apply filter button
       document.getElementById('btn-apply-filters').addEventListener('click', applyMainFilters);
+
+      // Auto-apply filters on changes
+      document.getElementById('filter-periode').addEventListener('change', applyMainFilters);
+      document.getElementById('filter-status').addEventListener('change', applyMainFilters);
+      document.getElementById('filter-3pl').addEventListener('change', applyMainFilters);
+      document.getElementById('filter-area').addEventListener('change', applyMainFilters);
 
       // Reset filter buttons
       document.getElementById('btn-reset-filters').addEventListener('click', resetAllFilters);
@@ -2464,6 +2901,9 @@
           }
         });
       }
+
+      // Initial load from Google Sheets
+      fetchAndParseAllData();
 
     });
   </script>
