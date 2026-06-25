@@ -1525,7 +1525,8 @@
           return month;
         }
         if (parts[2].length === 4 || parts[2].length === 2) {
-          let month = parseInt(parts[1], 10) - 1;
+          // MM/DD/YYYY format: month is index 0
+          let month = parseInt(parts[0], 10) - 1;
           if (month >= 0 && month < 12) {
             return month;
           }
@@ -1617,7 +1618,7 @@
       }
     }
 
-    // Set Default Filter Date to Today
+    // Set Default Filter Date to Today and Month to Current Month
     function setDefaultFilterDate() {
       const now = new Date();
       const yyyy = now.getFullYear();
@@ -1626,6 +1627,10 @@
       const filterDateInput = document.getElementById('filter-date');
       if (filterDateInput) {
         filterDateInput.value = `${yyyy}-${mm}-${dd}`;
+      }
+      const filterPeriodeSelect = document.getElementById('filter-periode');
+      if (filterPeriodeSelect) {
+        filterPeriodeSelect.value = now.getMonth().toString();
       }
     }
 
@@ -2289,7 +2294,7 @@
 
       showToast("Mengkalkulasi data dari Google Sheets...", "info");
 
-      // 1. Calculate main KPIs for Sheet A (Columns A-H)
+      // 1. Calculate main KPIs for Sheet B (Columns A-H)
       let totalOrders = 0;
       let totalCases = 0;
       let totalQty = 0;
@@ -2299,17 +2304,17 @@
       let monthlyCases = Array(12).fill(0);
       let monthlyQty = Array(12).fill(0);
 
-      // Find header for 3PL in parsedSheetA
+      // Find header for 3PL in parsedSheetB (column 11 is JNE, etc.)
       let headerRow = null;
-      for (let i = 0; i < Math.min(5, parsedSheetA.length); i++) {
-        let r = parsedSheetA[i];
+      for (let i = 0; i < Math.min(5, parsedSheetB.length); i++) {
+        let r = parsedSheetB[i];
         if (r && r[11] && r[11].trim() !== "" && isNaN(safeParseFloat(r[11]))) {
           headerRow = r;
           break;
         }
       }
 
-      // Determine 3PL partner names from header columns 11-17
+      // Determine 3PL partner names from header columns 11-17 of parsedSheetB
       let partnerNames = [];
       let partnerSums = {};
       for (let c = 11; c <= 17; c++) {
@@ -2317,20 +2322,22 @@
         if (headerRow && headerRow[c] && headerRow[c].trim() !== "") {
           name = headerRow[c].trim();
         } else if (c === 11) name = "JNE";
-        else if (c === 12) name = "TIKI";
-        else if (c === 13) name = "SiCepat";
-        else if (c === 14) name = "Wahana";
-        else if (c === 15) name = "Ninja";
-        else if (c === 16) name = "J&T";
-        else if (c === 17) name = "Anteraja";
+        else if (c === 12) name = "NINJA EXPRES";
+        else if (c === 13) name = "SHOPEE EXPRESS STANDARD";
+        else if (c === 14) name = "OWNFLEET INFORMA";
+        else if (c === 15) name = "TOKOPEDIA";
+        else if (c === 16) name = "J&T/JNT";
+        else if (c === 17) name = "ANTERAJA";
 
         partnerSums[c] = 0;
         partnerNames.push({ colIndex: c, name: name });
       }
 
-      // Process Sheet A rows (skip header row 0)
-      for (let i = 1; i < parsedSheetA.length; i++) {
-        const row = parsedSheetA[i];
+      let daysCount = 0;
+
+      // Process Sheet B rows (skip header row 0)
+      for (let i = 1; i < parsedSheetB.length; i++) {
+        const row = parsedSheetB[i];
         if (!row || !row[0] || row[0].trim() === "") continue;
 
         let month = getMonthFromDateStr(row[0]);
@@ -2354,8 +2361,9 @@
         totalOrders += rowOrders;
         totalCases += rowCases;
         totalQty += rowQty;
+        daysCount++;
 
-        // Accumulate 3PL volumes (based on Columns L-R / columns 11-17)
+        // Accumulate 3PL volumes (based on Columns L-R / columns 11-17 of parsedSheetB)
         for (let c = 11; c <= 17; c++) {
           if (row[c]) {
             partnerSums[c] += safeParseFloat(row[c]);
@@ -2363,28 +2371,7 @@
         }
       }
 
-      // 2. Process Sheet B for Average Orders (Columns A-F)
-      let sheetBSum = 0;
-      let sheetBCount = 0;
-
-      for (let i = 1; i < parsedSheetB.length; i++) {
-        const row = parsedSheetB[i];
-        if (!row || !row[0] || row[0].trim() === "") continue;
-
-        let month = getMonthFromDateStr(row[0]);
-        if (month === null) continue;
-
-        let orderVal = safeParseFloat(row[5]);
-
-        if (selectedPeriode !== 'all' && month.toString() !== selectedPeriode) {
-          continue;
-        }
-
-        sheetBSum += orderVal;
-        sheetBCount += 1;
-      }
-
-      let avgOrdersPerDay = sheetBCount > 0 ? (sheetBSum / sheetBCount) : 0;
+      let avgOrdersPerDay = daysCount > 0 ? (totalOrders / daysCount) : 0;
 
       // Apply other select filters like status, area, etc. to retain full dashboard flexibility
       let multiplier = 1.0;
@@ -2485,24 +2472,39 @@
     }
 
     function updateDailyTrendFromRows() {
-      if (!parsedSheetA || !chartTrendHarian) return;
+      if (!parsedSheetB || !chartTrendHarian) return;
+
+      const selectedPeriode = document.getElementById('filter-periode').value;
 
       let validRows = [];
-      for (let i = 1; i < parsedSheetA.length; i++) {
-        let row = parsedSheetA[i];
+      for (let i = 1; i < parsedSheetB.length; i++) {
+        let row = parsedSheetB[i];
         if (!row || !row[0] || row[0].trim() === "") continue;
+
+        let month = getMonthFromDateStr(row[0]);
+        if (month === null) continue;
+
+        // Filter condition for selected month (Periode)
+        if (selectedPeriode !== 'all' && month.toString() !== selectedPeriode) {
+          continue;
+        }
         
         let parts = row[0].split(/[\/\-\s]+/);
         if (parts.length >= 3) {
-          let d = new Date(row[0]);
-          if (isNaN(d.getTime())) {
-            let day = parseInt(parts[0], 10);
-            let month = parseInt(parts[1], 10) - 1;
-            let year = parseInt(parts[2], 10);
-            if (year < 100) year += 2000;
-            d = new Date(year, month, day);
+          // Explicit MM/DD/YYYY parsing
+          let m = parseInt(parts[0], 10) - 1;
+          let day = parseInt(parts[1], 10);
+          let year = parseInt(parts[2], 10);
+          if (year < 100) year += 2000;
+          
+          let d = null;
+          if (m >= 0 && m < 12 && day > 0 && day <= 31 && year > 1900) {
+            d = new Date(year, m, day);
+          } else {
+            d = new Date(row[0]);
           }
-          if (!isNaN(d.getTime())) {
+
+          if (d && !isNaN(d.getTime())) {
             validRows.push({
               date: d,
               orders: safeParseFloat(row[5]),
@@ -2513,14 +2515,14 @@
       }
 
       validRows.sort((a, b) => a.date - b.date);
-      let last30 = validRows.slice(-30);
+      let trendRows = selectedPeriode === 'all' ? validRows.slice(-30) : validRows;
 
-      if (last30.length > 0) {
+      if (trendRows.length > 0) {
         let trendDates = [];
         let trendOrders = [];
         let trendCases = [];
 
-        last30.forEach(item => {
+        trendRows.forEach(item => {
           let day = formatTimeComponent(item.date.getDate());
           let month = formatTimeComponent(item.date.getMonth() + 1);
           trendDates.push(`${day}/${month}`);
@@ -2772,7 +2774,6 @@
     // RESET ALL FILTERS
     function resetAllFilters() {
       setDefaultFilterDate();
-      document.getElementById('filter-periode').value = 'all';
       document.getElementById('filter-status').value = 'all';
       document.getElementById('filter-3pl').value = 'all';
       document.getElementById('filter-area').value = 'all';
