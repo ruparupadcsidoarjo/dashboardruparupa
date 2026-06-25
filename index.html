@@ -230,9 +230,10 @@
     }
 
     .header-title {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 24px;
+      font-weight: 800;
       color: var(--text-primary);
+      letter-spacing: -0.5px;
     }
 
     .header-subtitle {
@@ -445,16 +446,17 @@
     /* Section 1 - KPI Cards Grid */
     .kpi-row {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
     }
 
     .kpi-card {
-      height: 130px;
+      min-height: 140px;
+      height: auto;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      overflow: hidden;
+      overflow: visible;
       border-left: 5px solid transparent;
     }
 
@@ -462,7 +464,6 @@
     .kpi-card-2 { border-left-color: #2E7D32; }
     .kpi-card-3 { border-left-color: #F57C00; }
     .kpi-card-4 { border-left-color: #6A1B9A; }
-    .kpi-card-5 { border-left-color: #0277BD; }
 
     .kpi-top-row {
       display: flex;
@@ -495,7 +496,7 @@
     .kpi-card-5 .kpi-circle-icon { background-color: rgba(2, 119, 189, 0.1); }
 
     .kpi-label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--text-secondary);
       text-transform: uppercase;
@@ -511,14 +512,14 @@
     }
 
     .kpi-subtext {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--text-secondary);
       font-weight: 500;
     }
 
     .kpi-trend {
-      font-size: 10px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       display: flex;
       align-items: center;
       gap: 4px;
@@ -528,35 +529,22 @@
     .trend-down { color: var(--danger); }
     .trend-neutral { color: var(--text-secondary); }
 
-    /* Card 4 - Mini progress bars styling */
-    .top-3pl-bars {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      width: 100%;
-      margin-top: 6px;
+    /* Clean, highly readable Top 3PL Card spacing with Pie Chart layout */
+    #kpi-card-top-3pl {
+      padding: 12px 14px;
     }
-
-    .bar-item-3pl {
+    #kpi-card-top-3pl .kpi-circle-icon {
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
       display: flex;
-      flex-direction: column;
-      gap: 1px;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
     }
-
-    .bar-info-3pl {
-      display: flex;
-      justify-content: space-between;
-      font-size: 9px;
-      font-weight: 600;
-      color: var(--text-secondary);
-    }
-
-    .progress-track-3pl {
-      height: 4px;
-      background-color: #E2E8F0;
-      border-radius: 2px;
-      overflow: hidden;
-      width: 100%;
+    #kpi-card-top-3pl .kpi-label {
+      font-size: 10px;
+      margin-top: 1px;
     }
 
     .progress-fill-3pl {
@@ -923,7 +911,7 @@
     /* Responsive adjustments */
     @media (max-width: 1200px) {
       .kpi-row {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
       .charts-row {
         grid-template-columns: 1fr;
@@ -1064,8 +1052,7 @@
           <i class="fa-solid fa-bars"></i>
         </button>
         <div class="header-title-container">
-          <h1 class="header-title">MONITORING DASHBOARD RETURN</h1>
-          <p class="header-subtitle">Dashboard Monitoring Operasional Return & SLA</p>
+          <h1 class="header-title">MONITORING DASHBOARD RUPA-RUPA</h1>
         </div>
       </div>
 
@@ -1090,55 +1077,12 @@
     <!-- FILTER BAR -->
     <div class="filter-bar">
       <div class="filter-group">
-        <label class="filter-label">Tanggal</label>
-        <input type="date" class="filter-input" id="filter-date">
+        <label class="filter-label">Tanggal Mulai</label>
+        <input type="date" class="filter-input" id="filter-date-start">
       </div>
       <div class="filter-group">
-        <label class="filter-label">Periode</label>
-        <select class="filter-select" id="filter-periode">
-          <option value="all" selected>Semua Bulan</option>
-          <option value="0">Januari</option>
-          <option value="1">Februari</option>
-          <option value="2">Maret</option>
-          <option value="3">April</option>
-          <option value="4">Mei</option>
-          <option value="5">Juni</option>
-          <option value="6">Juli</option>
-          <option value="7">Agustus</option>
-          <option value="8">September</option>
-          <option value="9">Oktober</option>
-          <option value="10">November</option>
-          <option value="11">Desember</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label class="filter-label">Status</label>
-        <select class="filter-select" id="filter-status">
-          <option value="all" selected>Semua Status</option>
-          <option value="open">Open</option>
-          <option value="closed">Closed</option>
-          <option value="in_process">In Process</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label class="filter-label">3PL Partner</label>
-        <select class="filter-select" id="filter-3pl">
-          <option value="all" selected>Semua 3PL</option>
-          <option value="jne">JNE</option>
-          <option value="tiki">TIKI</option>
-          <option value="sicepat">SiCepat</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label class="filter-label">Area</label>
-        <select class="filter-select" id="filter-area">
-          <option value="all" selected>Semua Area</option>
-          <option value="jabodetabek">Jabodetabek</option>
-          <option value="jawa_barat">Jawa Barat</option>
-          <option value="jawa_tengah">Jawa Tengah</option>
-          <option value="jawa_timur">Jawa Timur</option>
-          <option value="luar_jawa">Luar Jawa</option>
-        </select>
+        <label class="filter-label">Tanggal Selesai</label>
+        <input type="date" class="filter-input" id="filter-date-end">
       </div>
       <div class="filter-actions">
         <button class="btn-apply" id="btn-apply-filters">
@@ -1156,7 +1100,7 @@
         
         <!-- CARD 1: TOTAL ORDER -->
         <div class="dashboard-card kpi-card kpi-card-1" id="kpi-card-total-order">
-          <div class="kpi-top-row">
+          <div class="kpi-top-row" style="margin-bottom: 4px;">
             <div>
               <span class="kpi-val" id="kpi-orders">1,284</span>
               <div class="kpi-label">TOTAL ORDER</div>
@@ -1165,17 +1109,18 @@
               📋
             </div>
           </div>
-          <div class="kpi-footer">
-            <span class="kpi-subtext">100% dari total order</span>
-            <span class="kpi-trend trend-up" id="kpi-orders-trend">
-              <i class="fa-solid fa-caret-up"></i> ▲ 12% dari bulan lalu
-            </span>
+          <!-- Sub-scope: Average Order -->
+          <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
+            <div class="kpi-nested-box" style="background: rgba(21, 101, 192, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #1565C0; min-width: 120px; text-align: left;">
+              <span class="kpi-sub-val" id="kpi-avg" style="font-size: 14px; font-weight: 700; color: #1565C0; display: block; line-height: 1.2;">42,8</span>
+              <span class="kpi-sub-label" style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG ORDER / HARI</span>
+            </div>
           </div>
         </div>
 
         <!-- CARD 2: TOTAL CASE ID -->
         <div class="dashboard-card kpi-card kpi-card-2" id="kpi-card-total-case">
-          <div class="kpi-top-row">
+          <div class="kpi-top-row" style="margin-bottom: 4px;">
             <div>
               <span class="kpi-val" id="kpi-cases">987</span>
               <div class="kpi-label">TOTAL CASE ID</div>
@@ -1184,17 +1129,18 @@
               🔑
             </div>
           </div>
-          <div class="kpi-footer">
-            <span class="kpi-subtext" id="kpi-cases-subtext">76,87% dari total order</span>
-            <span class="kpi-trend trend-up" id="kpi-cases-trend">
-              <i class="fa-solid fa-caret-up"></i> ▲ 8% dari bulan lalu
-            </span>
+          <!-- Sub-scope: Average Case ID -->
+          <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
+            <div class="kpi-nested-box" style="background: rgba(46, 125, 80, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #2E7D32; min-width: 120px; text-align: left;">
+              <span class="kpi-sub-val" id="kpi-avg-case" style="font-size: 14px; font-weight: 700; color: #2E7D32; display: block; line-height: 1.2;">32,9</span>
+              <span class="kpi-sub-label" style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG CASE / HARI</span>
+            </div>
           </div>
         </div>
 
         <!-- CARD 3: TOTAL QTY -->
         <div class="dashboard-card kpi-card kpi-card-3" id="kpi-card-total-qty">
-          <div class="kpi-top-row">
+          <div class="kpi-top-row" style="margin-bottom: 4px;">
             <div>
               <span class="kpi-val" id="kpi-qty">14,320</span>
               <div class="kpi-label">TOTAL QTY</div>
@@ -1203,60 +1149,31 @@
               📦
             </div>
           </div>
-          <div class="kpi-footer">
-            <span class="kpi-subtext">rata-rata 11,15 qty/order</span>
-            <span class="kpi-trend trend-down" id="kpi-qty-trend">
-              <i class="fa-solid fa-caret-down"></i> ▼ 3% dari bulan lalu
-            </span>
+          <!-- Sub-scope: Average Qty -->
+          <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
+            <div class="kpi-nested-box" style="background: rgba(245, 124, 0, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #F57C00; min-width: 120px; text-align: left;">
+              <span class="kpi-sub-val" id="kpi-avg-qty" style="font-size: 14px; font-weight: 700; color: #F57C00; display: block; line-height: 1.2;">477,3</span>
+              <span class="kpi-sub-label" style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG QTY / HARI</span>
+            </div>
           </div>
         </div>
 
         <!-- CARD 4: TOP 3PL -->
-        <div class="dashboard-card kpi-card kpi-card-4" id="kpi-card-top-3pl">
-          <div class="kpi-top-row" style="margin-bottom: 0px;">
-            <div>
-              <span class="kpi-val" style="font-size: 26px;">JNE</span>
-              <div class="kpi-label">TOP 3PL PARTNER</div>
+        <div class="dashboard-card kpi-card kpi-card-4" id="kpi-card-top-3pl" style="min-height: 140px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px;">
+          <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+              <span class="kpi-circle-icon" style="margin: 0; width: 28px; height: 28px; font-size: 14px;">🚚</span>
+              <span class="kpi-val" style="font-size: 18px; font-weight: 800; color: #6A1B9A;" id="top-3pl-name">JNE</span>
             </div>
-            <div class="kpi-circle-icon">
-              🚚
+            <div class="kpi-label" style="font-size: 10px; font-weight: 700; color: var(--text-secondary);">TOP 3PL PARTNER</div>
+            <div id="top-3pl-legend-container" style="margin-top: 8px; font-size: 10px; font-weight: 600; color: var(--text-secondary); display: flex; flex-direction: column; gap: 3px;">
             </div>
           </div>
-          <div class="top-3pl-bars">
-            <div class="bar-item-3pl">
-              <div class="bar-info-3pl"><span>JNE</span><span id="bar-val-jne">42%</span></div>
-              <div class="progress-track-3pl"><div class="progress-fill-3pl" id="bar-fill-jne" style="width: 42%;"></div></div>
-            </div>
-            <div class="bar-item-3pl">
-              <div class="bar-info-3pl"><span>TIKI</span><span id="bar-val-tiki">31%</span></div>
-              <div class="progress-track-3pl"><div class="progress-fill-3pl" id="bar-fill-tiki" style="width: 31%; background-color: #8E24AA;"></div></div>
-            </div>
-            <div class="bar-item-3pl">
-              <div class="bar-info-3pl"><span>SiCepat</span><span id="bar-val-sicepat">27%</span></div>
-              <div class="progress-track-3pl"><div class="progress-fill-3pl" id="bar-fill-sicepat" style="width: 27%; background-color: #BA68C8;"></div></div>
-            </div>
+          <div style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; position: relative;">
+            <canvas id="chart-3pl-pie" style="max-width: 100px; max-height: 100px;"></canvas>
           </div>
         </div>
-
-        <!-- CARD 5: AVERAGE PER DAY -->
-        <div class="dashboard-card kpi-card kpi-card-5" id="kpi-card-avg-day">
-          <div class="kpi-top-row">
-            <div>
-              <span class="kpi-val" id="kpi-avg">42.8</span>
-              <div class="kpi-label">AVG ORDER / HARI</div>
-            </div>
-            <div class="kpi-circle-icon">
-              📅
-            </div>
-          </div>
-          <div class="kpi-footer">
-            <span class="kpi-subtext">Rata-rata case: 32,9/hari</span>
-            <span class="kpi-trend trend-up" id="kpi-avg-trend">
-              <i class="fa-solid fa-caret-up"></i> ▲ 5% dari minggu lalu
-            </span>
-          </div>
-        </div>
-
+        
       </section>
 
       <!-- SECTION 2 — CHARTS ROW -->
@@ -1433,10 +1350,13 @@
       orders: 1284,
       cases: 987,
       qty: 14320,
-      avg: 42.8
+      avg: 43,
+      avgCase: 33,
+      avgQty: 477
     };
 
     let activeKPIs = { ...baselineKPIs };
+    let chart3PlPie = null;
     let currentWeekSku = "1";
     let currentSummaryFilter = "all";
 
@@ -1446,6 +1366,29 @@
 
     let parsedSheetA = null;
     let parsedSheetB = null;
+
+    // Simulated Monthly Data for dynamic trends comparison when offline/simulated
+    const simMonthlyData = [
+      { month: 0, orders: 180, cases: 140, qty: 2010, days: 31 }, // Jan
+      { month: 1, orders: 210, cases: 168, qty: 2350, days: 28 }, // Feb
+      { month: 2, orders: 195, cases: 152, qty: 2180, days: 31 }, // Mar
+      { month: 3, orders: 240, cases: 187, qty: 2680, days: 30 }, // Apr
+      { month: 4, orders: 220, cases: 174, qty: 2460, days: 31 }, // Mei
+      { month: 5, orders: 260, cases: 198, qty: 2910, days: 30 }, // Jun
+      { month: 6, orders: 230, cases: 180, qty: 2500, days: 31 }, // Jul
+      { month: 7, orders: 245, cases: 190, qty: 2700, days: 31 }, // Agu
+      { month: 8, orders: 250, cases: 195, qty: 2750, days: 30 }, // Sep
+      { month: 9, orders: 255, cases: 200, qty: 2800, days: 31 }, // Okt
+      { month: 10, orders: 240, cases: 185, qty: 2650, days: 30 }, // Nov
+      { month: 11, orders: 270, cases: 210, qty: 3000, days: 31 } // Des
+    ];
+
+    function calculatePercentageChange(current, previous) {
+      if (previous <= 0) {
+        return current > 0 ? 100 : 0;
+      }
+      return parseFloat((((current - previous) / previous) * 100).toFixed(1));
+    }
 
     // RFC-4180 compliant CSV parser
     function parseCSV(text) {
@@ -1618,20 +1561,85 @@
       }
     }
 
-    // Set Default Filter Date to Today and Month to Current Month
+    // Robust Date Month parser and object creator
+    function parseDateFromStr(dateStr) {
+      if (!dateStr) return null;
+      dateStr = dateStr.trim();
+      if (dateStr === "" || dateStr.toLowerCase().includes("tanggal") || dateStr.toLowerCase().includes("date")) return null;
+
+      let parts = dateStr.split(/[\/\-\s]+/);
+      if (parts.length >= 3) {
+        // YYYY-MM-DD
+        if (parts[0].length === 4) {
+          let y = parseInt(parts[0], 10);
+          let m = parseInt(parts[1], 10) - 1;
+          let d = parseInt(parts[2], 10);
+          return new Date(y, m, d);
+        }
+        // MM/DD/YYYY or DD/MM/YYYY
+        if (parts[2].length === 4 || parts[2].length === 2) {
+          let y = parseInt(parts[2], 10);
+          if (parts[2].length === 2) y += 2000;
+          let p0 = parseInt(parts[0], 10);
+          let p1 = parseInt(parts[1], 10);
+          
+          if (p0 > 12) {
+            return new Date(y, p1 - 1, p0);
+          } else {
+            return new Date(y, p0 - 1, p1);
+          }
+        }
+      }
+      let d = new Date(dateStr);
+      if (!isNaN(d.getTime())) {
+        return d;
+      }
+      return null;
+    }
+
+    function parseInputDate(dateStr) {
+      if (!dateStr) return null;
+      let parts = dateStr.split('-');
+      if (parts.length === 3) {
+        let y = parseInt(parts[0], 10);
+        let m = parseInt(parts[1], 10) - 1;
+        let d = parseInt(parts[2], 10);
+        return new Date(y, m, d);
+      }
+      return new Date(dateStr);
+    }
+
+    function formatDateToInputString(date) {
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const dd = String(date.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    }
+
+    // Set Default Filter Date range from sheet data or use default simulated range
     function setDefaultFilterDate() {
-      const now = new Date();
-      const yyyy = now.getFullYear();
-      const mm = formatTimeComponent(now.getMonth() + 1);
-      const dd = formatTimeComponent(now.getDate());
-      const filterDateInput = document.getElementById('filter-date');
-      if (filterDateInput) {
-        filterDateInput.value = `${yyyy}-${mm}-${dd}`;
+      if (parsedSheetB && parsedSheetB.length > 1) {
+        let minDate = null;
+        let maxDate = null;
+        for (let i = 1; i < parsedSheetB.length; i++) {
+          let row = parsedSheetB[i];
+          if (!row || !row[0] || row[0].trim() === "") continue;
+          let d = parseDateFromStr(row[0]);
+          if (d && !isNaN(d.getTime())) {
+            if (!minDate || d < minDate) minDate = d;
+            if (!maxDate || d > maxDate) maxDate = d;
+          }
+        }
+        if (minDate && maxDate) {
+          document.getElementById('filter-date-start').value = formatDateToInputString(minDate);
+          document.getElementById('filter-date-end').value = formatDateToInputString(maxDate);
+          return;
+        }
       }
-      const filterPeriodeSelect = document.getElementById('filter-periode');
-      if (filterPeriodeSelect) {
-        filterPeriodeSelect.value = now.getMonth().toString();
-      }
+
+      // Default fallback for simulation or initial load
+      document.getElementById('filter-date-start').value = "2026-06-01";
+      document.getElementById('filter-date-end').value = "2026-06-30";
     }
 
     // Custom Toast Notifications
@@ -1706,33 +1714,18 @@
     }
 
     // Animate KPI Elements
-    function runKPIAnimations(orders, cases, qty, avg, duration = 1000) {
+    function runKPIAnimations(orders, cases, qty, avg, avgCase, avgQty, duration = 1000) {
       animateValue('kpi-orders', 0, orders, duration);
       animateValue('kpi-cases', 0, cases, duration);
       animateValue('kpi-qty', 0, qty, duration);
-      animateValue('kpi-avg', 0, avg, duration, true);
       
-      // Update cases subtext percent
-      const casesPct = ((cases / orders) * 100).toFixed(2).replace('.', ',');
-      const subtextElem = document.getElementById('kpi-cases-subtext');
-      if (subtextElem) {
-        subtextElem.textContent = `${casesPct}% dari total order`;
-      }
+      // Fallback defaults if not passed (e.g. initial loads)
+      if (avgCase === undefined) avgCase = Math.round(cases / 30);
+      if (avgQty === undefined) avgQty = Math.round(qty / 30);
 
-      // Animate top 3PL mini progress bars
-      const jneFill = document.getElementById('bar-fill-jne');
-      const tikiFill = document.getElementById('bar-fill-tiki');
-      const sicepatFill = document.getElementById('bar-fill-sicepat');
-
-      if (jneFill) jneFill.style.width = '0%';
-      if (tikiFill) tikiFill.style.width = '0%';
-      if (sicepatFill) sicepatFill.style.width = '0%';
-
-      setTimeout(() => {
-        if (jneFill) jneFill.style.width = '42%';
-        if (tikiFill) tikiFill.style.width = '31%';
-        if (sicepatFill) sicepatFill.style.width = '27%';
-      }, 100);
+      animateValue('kpi-avg', 0, avg, duration, false);
+      animateValue('kpi-avg-case', 0, avgCase, duration, false);
+      animateValue('kpi-avg-qty', 0, avgQty, duration, false);
     }
 
     // DUMMY DATA FOR CHARTS & SYSTEMS
@@ -2281,16 +2274,147 @@
           }
         }
       });
+
+      // 8. 3PL Partner Pie Chart
+      const ctx3Pl = document.getElementById('chart-3pl-pie').getContext('2d');
+      chart3PlPie = new Chart(ctx3Pl, {
+        type: 'pie',
+        data: {
+          labels: ['JNE', 'NINJA EXPRES', 'SHOPEE EXPRESS STANDARD'],
+          datasets: [{
+            data: [50, 30, 20],
+            backgroundColor: ['#3B82F6', '#EF4444', '#FF5722'],
+            borderWidth: 1,
+            borderColor: '#ffffff'
+          }]
+        },
+        plugins: [{
+          id: 'pieLabels',
+          afterDatasetsDraw(chart) {
+            const { ctx } = chart;
+            chart.data.datasets.forEach((dataset, i) => {
+              const meta = chart.getDatasetMeta(i);
+              meta.data.forEach((element, index) => {
+                const percentage = dataset.data[index];
+                if (percentage > 5) {
+                  const { x, y } = element.tooltipPosition();
+                  ctx.save();
+                  ctx.fillStyle = '#ffffff';
+                  ctx.font = 'bold 9px var(--font-sans), sans-serif';
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'middle';
+                  ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+                  ctx.shadowBlur = 4;
+                  ctx.fillText(`${percentage}%`, x, y);
+                  ctx.restore();
+                }
+              });
+            });
+          }
+        }],
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              enabled: true,
+              callbacks: {
+                label: function(context) {
+                  return ` ${context.label}: ${context.raw}%`;
+                }
+              }
+            }
+          }
+        }
+      });
     }
 
     // UPDATE DASHBOARD WITH REAL SHEET DATA
+    const partnerColorMap = {
+      "JNE": "#3B82F6",                 // Vibrant Royal Blue
+      "NINJA EXPRES": "#EF4444",         // Vibrant Cherry Red
+      "SHOPEE EXPRESS STANDARD": "#FF5722", // Vibrant Shopee Orange/Red
+      "OWNFLEET INFORMA": "#06B6D4",     // Vibrant Cyan
+      "TOKOPEDIA": "#10B981",            // Vibrant Emerald Green
+      "J&T/JNT": "#EC4899",              // Vibrant Hot Pink
+      "ANTERAJA": "#F59E0B"              // Vibrant Amber/Gold
+    };
+
+    function getPartnerColor(name, index) {
+      const normName = name.toUpperCase().trim();
+      if (partnerColorMap[normName]) return partnerColorMap[normName];
+      const fallbacks = ["#3B82F6", "#EF4444", "#FF5722", "#06B6D4", "#10B981", "#EC4899", "#F59E0B", "#84CC16", "#A855F7", "#F43F5E", "#14B8A6", "#0EA5E9"];
+      return fallbacks[index % fallbacks.length];
+    }
+
+    // UPDATE DASHBOARD WITH REAL SHEET DATA
+    function update3PLPartnerPie(sortedPartners, total3PLSum) {
+      // Update Top 3PL Card Main Text with top partner name
+      const top3PLNameElem = document.getElementById('top-3pl-name');
+      if (top3PLNameElem && sortedPartners.length > 0) {
+        const name = sortedPartners[0].name;
+        top3PLNameElem.textContent = name;
+        
+        const nameUpper = name.toUpperCase().trim();
+        if (nameUpper === "SHOPEE EXPRESS STANDARD" || name.length > 20) {
+          top3PLNameElem.style.fontSize = "13px";
+          top3PLNameElem.style.lineHeight = "1.2";
+        } else if (name.length > 15) {
+          top3PLNameElem.style.fontSize = "15px";
+          top3PLNameElem.style.lineHeight = "1.2";
+        } else if (name.length > 10) {
+          top3PLNameElem.style.fontSize = "18px";
+          top3PLNameElem.style.lineHeight = "1.2";
+        } else {
+          top3PLNameElem.style.fontSize = "22px";
+          top3PLNameElem.style.lineHeight = "1.2";
+        }
+      }
+
+      // Update Chart.js Pie Chart with custom mapped colors
+      if (chart3PlPie) {
+        chart3PlPie.data.labels = sortedPartners.map(p => p.name);
+        chart3PlPie.data.datasets[0].data = sortedPartners.map(p => {
+          return total3PLSum > 0 ? Math.round((p.sum / total3PLSum) * 100) : 0;
+        });
+        chart3PlPie.data.datasets[0].backgroundColor = sortedPartners.map((p, idx) => getPartnerColor(p.name, idx));
+        chart3PlPie.update();
+      }
+
+      // Update Legend HTML
+      const legendContainer = document.getElementById('top-3pl-legend-container');
+      if (legendContainer) {
+        let html = "";
+        for (let i = 0; i < Math.min(4, sortedPartners.length); i++) {
+          const p = sortedPartners[i];
+          const pct = total3PLSum > 0 ? Math.round((p.sum / total3PLSum) * 100) : 0;
+          if (pct === 0 && sortedPartners.length > 3) continue; // skip 0% items
+          const color = getPartnerColor(p.name, i);
+          html += `
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 4px;">
+              <div style="display: flex; align-items: center; gap: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 90px;">
+                <span style="display: inline-block; width: 6.5px; height: 6.5px; background-color: ${color}; border-radius: 50%; flex-shrink: 0;"></span>
+                <span style="font-size: 8.5px; font-weight: 700;" title="${p.name}">${p.name}</span>
+              </div>
+              <span style="font-size: 8.5px; font-weight: 700; color: #334155;">${pct}%</span>
+            </div>
+          `;
+        }
+        legendContainer.innerHTML = html;
+      }
+    }
+
     function updateDashboardWithRealData() {
       if (!parsedSheetA || !parsedSheetB) return;
 
-      const selectedPeriode = document.getElementById('filter-periode').value; // 'all' or month index "0" to "11"
-      const selectedStatus = document.getElementById('filter-status').value;
-      const selected3PL = document.getElementById('filter-3pl').value;
-      const selectedArea = document.getElementById('filter-area').value;
+      const dateStartVal = document.getElementById('filter-date-start').value;
+      const dateEndVal = document.getElementById('filter-date-end').value;
+
+      const dateStart = dateStartVal ? parseInputDate(dateStartVal) : null;
+      if (dateStart) dateStart.setHours(0,0,0,0);
+      const dateEnd = dateEndVal ? parseInputDate(dateEndVal) : null;
+      if (dateEnd) dateEnd.setHours(23,59,59,999);
 
       showToast("Mengkalkulasi data dari Google Sheets...", "info");
 
@@ -2303,6 +2427,14 @@
       let monthlyOrders = Array(12).fill(0);
       let monthlyCases = Array(12).fill(0);
       let monthlyQty = Array(12).fill(0);
+
+      // 12-month accumulator for real data to compute comparison trends
+      let realMonthlyKPIs = Array(12).fill(null).map(() => ({
+        orders: 0,
+        cases: 0,
+        qty: 0,
+        days: 0
+      }));
 
       // Find header for 3PL in parsedSheetB (column 11 is JNE, etc.)
       let headerRow = null;
@@ -2340,8 +2472,10 @@
         const row = parsedSheetB[i];
         if (!row || !row[0] || row[0].trim() === "") continue;
 
-        let month = getMonthFromDateStr(row[0]);
-        if (month === null) continue;
+        let rowDate = parseDateFromStr(row[0]);
+        if (!rowDate) continue;
+
+        let month = rowDate.getMonth();
 
         // Accumulate monthly totals for monthly chart
         let rowOrders = safeParseFloat(row[5]);
@@ -2352,10 +2486,16 @@
         monthlyCases[month] += rowCases;
         monthlyQty[month] += rowQty;
 
-        // Filter condition for selected month (Periode)
-        if (selectedPeriode !== 'all' && month.toString() !== selectedPeriode) {
-          continue;
-        }
+        realMonthlyKPIs[month].orders += rowOrders;
+        realMonthlyKPIs[month].cases += rowCases;
+        realMonthlyKPIs[month].qty += rowQty;
+        realMonthlyKPIs[month].days += 1;
+
+        // FILTER CONDITION BY DATE RANGE
+        let tempDate = new Date(rowDate);
+        tempDate.setHours(12,0,0,0);
+        if (dateStart && tempDate < dateStart) continue;
+        if (dateEnd && tempDate > dateEnd) continue;
 
         // Accumulate filtered KPIs
         totalOrders += rowOrders;
@@ -2371,70 +2511,42 @@
         }
       }
 
-      let avgOrdersPerDay = daysCount > 0 ? (totalOrders / daysCount) : 0;
+      // Calculate days count difference in date range
+      let selectedDays = daysCount;
+      if (dateStart && dateEnd) {
+        let startMidnight = new Date(dateStart.getFullYear(), dateStart.getMonth(), dateStart.getDate());
+        let endMidnight = new Date(dateEnd.getFullYear(), dateEnd.getMonth(), dateEnd.getDate());
+        let diffMs = endMidnight.getTime() - startMidnight.getTime();
+        let diffDaysCalculated = Math.round(diffMs / (1000 * 60 * 60 * 24)) + 1;
+        if (diffDaysCalculated > 0) {
+          selectedDays = diffDaysCalculated;
+        }
+      }
+      if (selectedDays <= 0) selectedDays = 1;
 
-      // Apply other select filters like status, area, etc. to retain full dashboard flexibility
-      let multiplier = 1.0;
-      if (selectedStatus === 'open') multiplier *= 0.15;
-      if (selectedStatus === 'closed') multiplier *= 0.65;
-      if (selectedStatus === 'in_process') multiplier *= 0.20;
-
-      if (selected3PL === 'jne') multiplier *= 0.42;
-      if (selected3PL === 'tiki') multiplier *= 0.31;
-      if (selected3PL === 'sicepat') multiplier *= 0.27;
-
-      if (selectedArea === 'jabodetabek') multiplier *= 0.45;
-      else if (selectedArea !== 'all') multiplier *= 0.13;
-
-      totalOrders = Math.round(totalOrders * multiplier);
-      totalCases = Math.round(totalCases * multiplier);
-      totalQty = Math.round(totalQty * multiplier);
-      avgOrdersPerDay = avgOrdersPerDay * multiplier;
+      let avgOrdersPerDay = Math.round(totalOrders / selectedDays);
+      let avgCasesPerDay = Math.round(totalCases / selectedDays);
+      let avgQtyPerDay = Math.round(totalQty / selectedDays);
 
       // Update activeKPI state values
       activeKPIs.orders = totalOrders;
       activeKPIs.cases = totalCases;
       activeKPIs.qty = totalQty;
-      activeKPIs.avg = parseFloat(avgOrdersPerDay.toFixed(1));
+      activeKPIs.avg = avgOrdersPerDay;
+      activeKPIs.avgCase = avgCasesPerDay;
+      activeKPIs.avgQty = avgQtyPerDay;
 
       // Run KPI counter animations
-      runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, 1000);
+      runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, activeKPIs.avgCase, activeKPIs.avgQty, 1000);
 
       // Update 3PL Partner UI
-      const top3PlContainer = document.querySelector('.top-3pl-bars');
-      if (top3PlContainer) {
-        let sortedPartners = [...partnerNames].map(p => ({
-          name: p.name,
-          sum: partnerSums[p.colIndex]
-        })).sort((a, b) => b.sum - a.sum);
+      let sortedPartners = [...partnerNames].map(p => ({
+        name: p.name,
+        sum: partnerSums[p.colIndex]
+      })).sort((a, b) => b.sum - a.sum);
 
-        let total3PLSum = sortedPartners.reduce((acc, curr) => acc + curr.sum, 0);
-
-        // Update Top 3PL Card Main Text
-        const top3PLNameElem = document.querySelector('#kpi-card-top-3pl .kpi-val');
-        if (top3PLNameElem && sortedPartners.length > 0) {
-          top3PLNameElem.textContent = sortedPartners[0].name;
-        }
-
-        let html = "";
-        const colors = ["#1565C0", "#8E24AA", "#BA68C8", "#2E7D32", "#F57C00", "#C62828"];
-        for (let i = 0; i < Math.min(3, sortedPartners.length); i++) {
-          const p = sortedPartners[i];
-          const pct = total3PLSum > 0 ? Math.round((p.sum / total3PLSum) * 100) : 0;
-          html += `
-            <div class="bar-item-3pl">
-              <div class="bar-info-3pl">
-                <span>${p.name}</span>
-                <span>${pct}% (${Math.round(p.sum).toLocaleString('id-ID')})</span>
-              </div>
-              <div class="progress-track-3pl">
-                <div class="progress-fill-3pl" style="width: ${pct}%; background-color: ${colors[i % colors.length]};"></div>
-              </div>
-            </div>
-          `;
-        }
-        top3PlContainer.innerHTML = html;
-      }
+      let total3PLSum = sortedPartners.reduce((acc, curr) => acc + curr.sum, 0);
+      update3PLPartnerPie(sortedPartners, total3PLSum);
 
       // Update Order & Case monthly line chart with actual monthly sums
       if (chartOrderBulan) {
@@ -2474,48 +2586,37 @@
     function updateDailyTrendFromRows() {
       if (!parsedSheetB || !chartTrendHarian) return;
 
-      const selectedPeriode = document.getElementById('filter-periode').value;
+      const dateStartVal = document.getElementById('filter-date-start').value;
+      const dateEndVal = document.getElementById('filter-date-end').value;
+
+      const dateStart = dateStartVal ? parseInputDate(dateStartVal) : null;
+      if (dateStart) dateStart.setHours(0,0,0,0);
+      const dateEnd = dateEndVal ? parseInputDate(dateEndVal) : null;
+      if (dateEnd) dateEnd.setHours(23,59,59,999);
 
       let validRows = [];
       for (let i = 1; i < parsedSheetB.length; i++) {
         let row = parsedSheetB[i];
         if (!row || !row[0] || row[0].trim() === "") continue;
 
-        let month = getMonthFromDateStr(row[0]);
-        if (month === null) continue;
+        let rowDate = parseDateFromStr(row[0]);
+        if (!rowDate) continue;
 
-        // Filter condition for selected month (Periode)
-        if (selectedPeriode !== 'all' && month.toString() !== selectedPeriode) {
-          continue;
-        }
-        
-        let parts = row[0].split(/[\/\-\s]+/);
-        if (parts.length >= 3) {
-          // Explicit MM/DD/YYYY parsing
-          let m = parseInt(parts[0], 10) - 1;
-          let day = parseInt(parts[1], 10);
-          let year = parseInt(parts[2], 10);
-          if (year < 100) year += 2000;
-          
-          let d = null;
-          if (m >= 0 && m < 12 && day > 0 && day <= 31 && year > 1900) {
-            d = new Date(year, m, day);
-          } else {
-            d = new Date(row[0]);
-          }
+        // FILTER CONDITION BY DATE RANGE
+        let tempDate = new Date(rowDate);
+        tempDate.setHours(12,0,0,0);
+        if (dateStart && tempDate < dateStart) continue;
+        if (dateEnd && tempDate > dateEnd) continue;
 
-          if (d && !isNaN(d.getTime())) {
-            validRows.push({
-              date: d,
-              orders: safeParseFloat(row[5]),
-              cases: safeParseFloat(row[6])
-            });
-          }
-        }
+        validRows.push({
+          date: rowDate,
+          orders: safeParseFloat(row[5]),
+          cases: safeParseFloat(row[6])
+        });
       }
 
       validRows.sort((a, b) => a.date - b.date);
-      let trendRows = selectedPeriode === 'all' ? validRows.slice(-30) : validRows;
+      let trendRows = validRows.length > 30 ? validRows.slice(-30) : validRows;
 
       if (trendRows.length > 0) {
         let trendDates = [];
@@ -2670,10 +2771,24 @@
       activeKPIs.orders = Math.floor(baselineKPIs.orders * varFactor());
       activeKPIs.cases = Math.floor(baselineKPIs.cases * varFactor());
       activeKPIs.qty = Math.floor(baselineKPIs.qty * varFactor());
-      activeKPIs.avg = parseFloat((baselineKPIs.avg * varFactor()).toFixed(1));
+      activeKPIs.avg = Math.round(baselineKPIs.avg * varFactor());
+      activeKPIs.avgCase = Math.round(baselineKPIs.avgCase * varFactor());
+      activeKPIs.avgQty = Math.round(baselineKPIs.avgQty * varFactor());
 
       // Run KPI counter animations
-      runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, 1000);
+      runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, activeKPIs.avgCase, activeKPIs.avgQty, 1000);
+
+      // Vary simulated 3PL Partner data
+      const jneVal = Math.max(10, Math.floor(50 * varFactor()));
+      const ninjaVal = Math.max(10, Math.floor(30 * varFactor()));
+      const shopeeVal = Math.max(10, Math.floor(20 * varFactor()));
+      let simulatedPartners = [
+        { name: 'JNE', sum: jneVal },
+        { name: 'NINJA EXPRES', sum: ninjaVal },
+        { name: 'SHOPEE EXPRESS STANDARD', sum: shopeeVal }
+      ];
+      let totalSimSum = simulatedPartners.reduce((acc, curr) => acc + curr.sum, 0);
+      update3PLPartnerPie(simulatedPartners.sort((a,b) => b.sum - a.sum), totalSimSum);
 
       // Vary SLA bar data
       const variedSlaOnTime = rawSlaBulanData.onTime.map(v => Math.min(100, Math.floor(v * varFactor())));
@@ -2717,55 +2832,86 @@
     }
 
     function applyMainFiltersSimulated() {
-      const selectedPeriode = document.getElementById('filter-periode').value;
-      const selectedStatus = document.getElementById('filter-status').value;
-      const selected3PL = document.getElementById('filter-3pl').value;
-      const selectedArea = document.getElementById('filter-area').value;
-      const selectedDate = document.getElementById('filter-date').value;
+      const dateStartVal = document.getElementById('filter-date-start').value;
+      const dateEndVal = document.getElementById('filter-date-end').value;
+
+      const dateStart = dateStartVal ? parseInputDate(dateStartVal) : null;
+      const dateEnd = dateEndVal ? parseInputDate(dateEndVal) : null;
 
       showToast("Menerapkan kriteria pencarian...", "info");
 
       setTimeout(() => {
-        // Adjust KPI base values based on filters to simulate realistic subset
-        let multiplier = 1.0;
-        if (selectedPeriode === 'mingguan' || selectedPeriode === '0') multiplier = 0.25;
-        if (selectedPeriode === 'harian' || selectedPeriode === '1') multiplier = 0.035;
+        let selectedDays = 30;
+        if (dateStart && dateEnd) {
+          let startMidnight = new Date(dateStart.getFullYear(), dateStart.getMonth(), dateStart.getDate());
+          let endMidnight = new Date(dateEnd.getFullYear(), dateEnd.getMonth(), dateEnd.getDate());
+          let diffMs = endMidnight.getTime() - startMidnight.getTime();
+          let calced = Math.round(diffMs / (1000 * 60 * 60 * 24)) + 1;
+          if (calced > 0) {
+            selectedDays = calced;
+          }
+        }
 
-        if (selectedStatus === 'open') multiplier *= 0.15;
-        if (selectedStatus === 'closed') multiplier *= 0.65;
-        if (selectedStatus === 'in_process') multiplier *= 0.20;
+        let scaleFactor = selectedDays / 30;
 
-        if (selected3PL === 'jne') multiplier *= 0.42;
-        if (selected3PL === 'tiki') multiplier *= 0.31;
-        if (selected3PL === 'sicepat') multiplier *= 0.27;
-
-        if (selectedArea === 'jabodetabek') multiplier *= 0.45;
-        else if (selectedArea !== 'all') multiplier *= 0.13; // Luar area
-
-        const filteredOrders = Math.max(12, Math.floor(baselineKPIs.orders * multiplier));
-        const filteredCases = Math.max(8, Math.floor(baselineKPIs.cases * multiplier * 0.8));
-        const filteredQty = Math.max(140, Math.floor(baselineKPIs.qty * multiplier));
-        const filteredAvg = parseFloat(Math.max(1.5, baselineKPIs.avg * (selectedPeriode === 'all' ? 1 : 0.4)).toFixed(1));
+        const filteredOrders = Math.max(12, Math.round(baselineKPIs.orders * scaleFactor));
+        const filteredCases = Math.max(8, Math.round(baselineKPIs.cases * scaleFactor));
+        const filteredQty = Math.max(140, Math.round(baselineKPIs.qty * scaleFactor));
+        
+        const filteredAvg = Math.round(filteredOrders / selectedDays);
+        const filteredAvgCase = Math.round(filteredCases / selectedDays);
+        const filteredAvgQty = Math.round(filteredQty / selectedDays);
 
         // Re-animate KPIs
-        runKPIAnimations(filteredOrders, filteredCases, filteredQty, filteredAvg, 800);
+        runKPIAnimations(filteredOrders, filteredCases, filteredQty, filteredAvg, filteredAvgCase, filteredAvgQty, 800);
+
+        // Update Simulated 3PL Partner share under filters
+        let simulatedPartners = [
+          { name: 'JNE', sum: 50 },
+          { name: 'NINJA EXPRES', sum: 30 },
+          { name: 'SHOPEE EXPRESS STANDARD', sum: 20 }
+        ];
+        let totalSimSum = simulatedPartners.reduce((acc, curr) => acc + curr.sum, 0);
+        update3PLPartnerPie(simulatedPartners, totalSimSum);
 
         // Apply filters to charts by scaling or slightly modifying datasets
         chartSlaBulan.data.datasets[0].data = rawSlaBulanData.onTime.map(v => Math.min(100, Math.max(40, Math.floor(v * (0.9 + Math.random() * 0.15)))));
         chartSlaBulan.data.datasets[1].data = chartSlaBulan.data.datasets[0].data.map(v => 100 - v);
         chartSlaBulan.update();
 
-        chartOrderBulan.data.datasets[0].data = rawOrderBulanData.order.map(v => Math.max(5, Math.floor(v * multiplier * 1.1)));
-        chartOrderBulan.data.datasets[1].data = rawOrderBulanData.case.map(v => Math.max(3, Math.floor(v * multiplier * 0.9)));
+        chartOrderBulan.data.datasets[0].data = rawOrderBulanData.order.map(v => Math.floor(v * scaleFactor));
+        chartOrderBulan.data.datasets[1].data = rawOrderBulanData.case.map(v => Math.floor(v * scaleFactor));
         chartOrderBulan.update();
 
-        // If specific status was filtered in main filters, also auto-update Section 5 Summary Pill
-        if (selectedStatus !== 'all') {
-          const pillMap = { 'open': 'open', 'closed': 'closed', 'in_process': 'in_process' };
-          applySummaryPillFilter(pillMap[selectedStatus] || 'all');
-        } else {
-          applySummaryPillFilter('all');
+        // Update horizontal SKU bars
+        chartTopSku.data.datasets[0].data = skuWeeklyData[currentWeekSku].map(v => Math.round(v * scaleFactor));
+        chartTopSku.update();
+
+        // Update Daily Trend
+        let pointsCount = Math.min(30, selectedDays);
+        let dailyOrders = [];
+        let dailyCases = [];
+        let dailyDates = [];
+        for (let i = 0; i < pointsCount; i++) {
+          dailyOrders.push(Math.round(filteredAvg * (0.8 + Math.random() * 0.4)));
+          dailyCases.push(Math.round(filteredAvgCase * (0.8 + Math.random() * 0.4)));
+          let d = new Date();
+          d.setDate(d.getDate() - (pointsCount - i));
+          dailyDates.push(`${formatTimeComponent(d.getDate())}/${formatTimeComponent(d.getMonth()+1)}`);
         }
+        chartTrendHarian.data.labels = dailyDates;
+        chartTrendHarian.data.datasets[0].data = dailyOrders;
+        chartTrendHarian.data.datasets[1].data = dailyCases;
+        chartTrendHarian.update();
+
+        // Update Section 5 Summary Panels
+        activeKPIs.orders = filteredOrders;
+        activeKPIs.cases = filteredCases;
+        activeKPIs.qty = filteredQty;
+        activeKPIs.avg = filteredAvg;
+        activeKPIs.avgCase = filteredAvgCase;
+        activeKPIs.avgQty = filteredAvgQty;
+        updateSummaryReportPanels();
 
         showToast("Filter berhasil diterapkan ke seluruh panel!", "success");
       }, 500);
@@ -2774,15 +2920,20 @@
     // RESET ALL FILTERS
     function resetAllFilters() {
       setDefaultFilterDate();
-      document.getElementById('filter-status').value = 'all';
-      document.getElementById('filter-3pl').value = 'all';
-      document.getElementById('filter-area').value = 'all';
 
       if (parsedSheetA && parsedSheetB) {
         updateDashboardWithRealData();
       } else {
         activeKPIs = { ...baselineKPIs };
-        runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, 1000);
+        runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, activeKPIs.avgCase, activeKPIs.avgQty, 1000);
+
+        // Reset simulated 3PL partner data
+        let defaultSimPartners = [
+          { name: 'JNE', sum: 50 },
+          { name: 'NINJA EXPRES', sum: 30 },
+          { name: 'SHOPEE EXPRESS STANDARD', sum: 20 }
+        ];
+        update3PLPartnerPie(defaultSimPartners, 100);
 
         // Revert SLA bulan chart
         chartSlaBulan.data.datasets[0].data = [...rawSlaBulanData.onTime];
@@ -2792,6 +2943,7 @@
         // Revert Order chart
         chartOrderBulan.data.datasets[0].data = [...rawOrderBulanData.order];
         chartOrderBulan.data.datasets[1].data = [...rawOrderBulanData.case];
+        chartOrderBulan.update();
         chartOrderBulan.update();
 
         // Revert SKU weekly chart
@@ -2824,7 +2976,15 @@
       initCharts();
 
       // Run Counters Animations
-      runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, 1200);
+      runKPIAnimations(activeKPIs.orders, activeKPIs.cases, activeKPIs.qty, activeKPIs.avg, activeKPIs.avgCase, activeKPIs.avgQty, 1200);
+
+      // Render initial 3PL Partner Pie chart
+      let defaultSimPartners = [
+        { name: 'JNE', sum: 50 },
+        { name: 'NINJA EXPRES', sum: 30 },
+        { name: 'SHOPEE EXPRESS STANDARD', sum: 20 }
+      ];
+      update3PLPartnerPie(defaultSimPartners, 100);
 
       // EVENT LISTENERS
       
@@ -2842,10 +3002,8 @@
       document.getElementById('btn-apply-filters').addEventListener('click', applyMainFilters);
 
       // Auto-apply filters on changes
-      document.getElementById('filter-periode').addEventListener('change', applyMainFilters);
-      document.getElementById('filter-status').addEventListener('change', applyMainFilters);
-      document.getElementById('filter-3pl').addEventListener('change', applyMainFilters);
-      document.getElementById('filter-area').addEventListener('change', applyMainFilters);
+      document.getElementById('filter-date-start').addEventListener('change', applyMainFilters);
+      document.getElementById('filter-date-end').addEventListener('change', applyMainFilters);
 
       // Reset filter buttons
       document.getElementById('btn-reset-filters').addEventListener('click', resetAllFilters);
