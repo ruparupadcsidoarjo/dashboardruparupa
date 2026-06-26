@@ -1058,22 +1058,7 @@
           <a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="showFeatureAlert('Data Order')"><i class="fa-solid fa-box"></i> Data Order</a>
-        </li>
-        <li class="nav-item">
           <a href="#" onclick="showFeatureAlert('Return Management')"><i class="fa-solid fa-rotate-left"></i> Return Management</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="showFeatureAlert('3PL Partner')"><i class="fa-solid fa-truck"></i> 3PL Partner</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="showFeatureAlert('Laporan SLA')"><i class="fa-solid fa-file-invoice"></i> Laporan SLA</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="showFeatureAlert('Master Data')"><i class="fa-solid fa-database"></i> Master Data</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="showFeatureAlert('Pengaturan')"><i class="fa-solid fa-gears"></i> Pengaturan</a>
         </li>
       </ul>
     </div>
@@ -1279,132 +1264,61 @@
 
       </section>
 
-      <!-- SECTION 3 — BAR CHART (Full Width) -->
-      <section class="dashboard-card">
+      <!-- SECTION 3 — SKU DATA (Table & Group Chart) -->
+      <section class="dashboard-card" style="grid-column: span 12;">
         <div class="card-header">
           <h3 class="card-header-title">
             <i class="fa-solid fa-cubes" style="color: var(--purple);"></i>
-            TOP 10 SKU BY QTY — WEEKLY VIEW (MEI 2025)
+            TOP 10 SKU & SKU GROUP BY QTY
           </h3>
-          <div class="tab-group" id="sku-week-tabs">
+          <div class="tab-group" id="sku-week-tabs" style="display: none;">
             <button class="tab-btn active" data-week="1">Week 1</button>
             <button class="tab-btn" data-week="2">Week 2</button>
             <button class="tab-btn" data-week="3">Week 3</button>
             <button class="tab-btn" data-week="4">Week 4</button>
           </div>
         </div>
-        <div class="chart-container-380">
-          <canvas id="chart-top-sku"></canvas>
+        
+        <div class="sku-content-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 24px; margin-top: 15px; align-items: stretch;">
+          <!-- Left: Table -->
+          <div class="table-card" style="display: flex; flex-direction: column; height: 100%;">
+            <h4 style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+              <span style="width: 8px; height: 8px; background: var(--purple); border-radius: 2px;"></span>
+              Top 10 SKU By Quantity
+            </h4>
+            <div class="table-container" style="flex: 1; min-height: 550px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; overflow: hidden;">
+              <table class="data-table" id="sku-data-table">
+                <thead>
+                  <tr>
+                    <th style="padding: 12px 15px; font-size: 14px;">No</th>
+                    <th style="padding: 12px 15px; font-size: 14px;">SKU</th>
+                    <th style="padding: 12px 15px; font-size: 14px;">Deskripsi</th>
+                    <th style="padding: 12px 15px; font-size: 14px; text-align: right;">Qty</th>
+                  </tr>
+                </thead>
+                <tbody id="sku-table-body">
+                  <tr>
+                    <td colspan="4" style="text-align: center; padding: 100px 20px; color: #94a3b8;">Memuat data SKU...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Right: Group Chart -->
+          <div class="chart-card" style="display: flex; flex-direction: column; height: 100%;">
+            <h4 style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+              <span style="width: 8px; height: 8px; background: #3b82f6; border-radius: 2px;"></span>
+              Top SKU Group By Quantity
+            </h4>
+            <div class="chart-container" style="flex: 1; min-height: 550px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; background: #fff; position: relative;">
+              <canvas id="chart-sku-group"></canvas>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- SECTION 4 — TREND HARIAN (Full Width) -->
-      <section class="dashboard-card">
-        <div class="card-header">
-          <h3 class="card-header-title">
-            <i class="fa-solid fa-chart-area" style="color: var(--info);"></i>
-            TREND HARIAN — TOTAL ORDER &amp; TOTAL QTY (DAILY 2026)
-          </h3>
-          <button class="btn-export-outline" id="btn-export-csv-trend">
-            <i class="fa-solid fa-file-csv"></i> Export CSV
-          </button>
-        </div>
-        <div class="chart-container-260">
-          <canvas id="chart-trend-harian"></canvas>
-        </div>
-      </section>
 
-      <!-- SECTION 5 — SUMMARY REPORT RETURN (Full Width) -->
-      <section class="dashboard-card">
-        <div class="summary-filter-row">
-          <h3 class="card-header-title" style="font-size: 14px; text-transform: uppercase;">
-            <i class="fa-solid fa-paste" style="color: var(--primary-accent);"></i>
-            SUMMARY REPORT RETURN — SLA, QTY & STATUS
-          </h3>
-          
-          <div class="pill-group" id="summary-status-pills">
-            <button class="pill-btn active" data-status="all">Semua</button>
-            <button class="pill-btn" data-status="open">Open</button>
-            <button class="pill-btn" data-status="closed">Closed</button>
-            <button class="pill-btn" data-status="in_process">In Process</button>
-          </div>
-
-          <div class="export-actions-row">
-            <button class="btn-export-accent" onclick="triggerDownload('Excel')">
-              <i class="fa-solid fa-file-excel"></i> Export Excel
-            </button>
-            <button class="btn-export-accent" onclick="triggerDownload('PDF')">
-              <i class="fa-solid fa-file-pdf"></i> Export PDF
-            </button>
-          </div>
-        </div>
-
-        <div class="summary-grid">
-          
-          <!-- LEFT — Donut Chart: Status Distribution -->
-          <div class="summary-col">
-            <div class="chart-container-240">
-              <canvas id="chart-status-donut"></canvas>
-              <!-- Center text inside donut -->
-              <div class="donut-center-container">
-                <span class="donut-center-num" id="donut-center-total">1,284</span>
-                <span class="donut-center-label">ORDER</span>
-              </div>
-            </div>
-            <h4 class="summary-col-title">DISTRIBUSI STATUS ORDER</h4>
-          </div>
-
-          <!-- MIDDLE — Bar Chart: QTY per Status per Bulan -->
-          <div class="summary-col">
-            <div class="chart-container-240">
-              <canvas id="chart-qty-status-stacked"></canvas>
-            </div>
-            <h4 class="summary-col-title">QTY RETURN PER STATUS/BULAN</h4>
-          </div>
-
-          <!-- RIGHT — Gauge/Progress: SLA Achievement -->
-          <div class="summary-col">
-            <div class="chart-container-240" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-              <div style="height: 120px; width: 100%; position: relative;">
-                <canvas id="chart-sla-gauge"></canvas>
-                <div class="gauge-center-container">
-                  <span class="gauge-center-num" id="gauge-percent">87,5%</span>
-                  <span class="gauge-center-label">ACHIEVEMENT</span>
-                </div>
-              </div>
-              
-              <div class="gauge-metrics">
-                <div class="gauge-metric-row">
-                  <span class="gauge-metric-label">
-                    <span class="gauge-metric-dot green"></span> On Time
-                  </span>
-                  <span class="gauge-metric-val" id="gauge-val-ontime">1,124 order (87.5%)</span>
-                </div>
-                <div class="gauge-metric-row">
-                  <span class="gauge-metric-label">
-                    <span class="gauge-metric-dot red"></span> Over SLA
-                  </span>
-                  <span class="gauge-metric-val" id="gauge-val-oversla">160 order (12.5%)</span>
-                </div>
-                <div class="gauge-metric-row">
-                  <span class="gauge-metric-label">
-                    <span class="gauge-metric-dot orange"></span> Target SLA
-                  </span>
-                  <span class="gauge-metric-val">95,0%</span>
-                </div>
-              </div>
-
-              <div>
-                <span class="status-badge orange" id="sla-badge">
-                  <i class="fa-solid fa-triangle-exclamation"></i> BELOW TARGET
-                </span>
-              </div>
-            </div>
-            <h4 class="summary-col-title" style="margin-top: 12px;">SLA ACHIEVEMENT</h4>
-          </div>
-
-        </div>
-      </section>
 
     </main>
 
@@ -1428,14 +1342,15 @@
     let activeKPIs = { ...baselineKPIs };
     let chart3PlPie = null;
     let currentWeekSku = "1";
-    let currentSummaryFilter = "all";
 
     // Google Sheets URLs (fetched directly from client-side via Google's CORS-enabled gviz/tq API)
     const SHEET_SLA_URL = "https://docs.google.com/spreadsheets/d/1AXqJ7plwv7p3KVD8VQ7d_EY-EX87RPJGlIDGxam_6Fo/gviz/tq?tqx=out:csv&gid=1894847581";
     const SHEET_B_URL = "https://docs.google.com/spreadsheets/d/1AXqJ7plwv7p3KVD8VQ7d_EY-EX87RPJGlIDGxam_6Fo/gviz/tq?tqx=out:csv&gid=263708152";
+    const SHEET_SKU_URL = "https://docs.google.com/spreadsheets/d/1AXqJ7plwv7p3KVD8VQ7d_EY-EX87RPJGlIDGxam_6Fo/gviz/tq?tqx=out:csv&gid=1103038378";
 
     let parsedSheetSLA = null;
     let parsedSheetB = null;
+    let parsedSheetSKU = null;
 
     // Simulated Monthly Data for dynamic trends comparison when offline/simulated
     const simMonthlyData = [
@@ -1663,7 +1578,7 @@
     async function fetchAndParseAllData() {
       showToast("Menghubungkan ke Google Sheets...", "info");
       try {
-        const [resSLA, resB] = await Promise.all([
+        const [resSLA, resB, resSKU] = await Promise.all([
           fetch(SHEET_SLA_URL).then(r => {
             if (!r.ok) throw new Error("SLA: " + r.status);
             return r.text();
@@ -1671,11 +1586,19 @@
           fetch(SHEET_B_URL).then(r => {
             if (!r.ok) throw new Error("B: " + r.status);
             return r.text();
+          }),
+          fetch(SHEET_SKU_URL).then(r => {
+            if (!r.ok) throw new Error("SKU: " + r.status);
+            return r.text();
           })
         ]);
 
         parsedSheetSLA = parseCSV(resSLA);
         parsedSheetB = parseCSV(resB);
+        parsedSheetSKU = parseCSV(resSKU);
+
+        // Update default date filters based on real data ranges
+        setDefaultFilterDate();
 
         showToast("Berhasil sinkronisasi dengan Google Sheets!", "success");
         updateDashboardWithRealData();
@@ -1689,11 +1612,7 @@
     // Chart Global References
     let chartSlaBulan = null;
     let chartOrderBulan = null;
-    let chartTopSku = null;
-    let chartTrendHarian = null;
-    let chartStatusDonut = null;
-    let chartQtyStatusStacked = null;
-    let chartSlaGauge = null;
+    let chartSkuGroup = null;
 
     // Helper functions for localized date & time
     function getIndonesianDayName(dayIndex) {
@@ -1906,14 +1825,6 @@
       case: [140, 168, 152, 187, 174, 198]
     };
 
-    const skuWeeklyData = {
-      "1": [450, 380, 320, 290, 265, 240, 210, 195, 180, 160],
-      "2": [490, 410, 355, 310, 280, 255, 225, 205, 185, 170],
-      "3": [420, 360, 300, 275, 250, 230, 200, 185, 170, 150],
-      "4": [510, 430, 370, 330, 295, 270, 235, 215, 190, 175]
-    };
-    const skuLabels = ['SKU-A001','SKU-B234','SKU-C089','SKU-D445','SKU-E312','SKU-F678','SKU-G901','SKU-H123','SKU-I456','SKU-J789'];
-
     // Generate 30 days dummy trend data
     function generateTrend30Days() {
       const dates = [];
@@ -1945,74 +1856,6 @@
       return { dates, orders, qty };
     }
     const trendHarianData = generateTrend30Days();
-
-    // Summary Section data by status filter
-    const summaryDataByStatus = {
-      all: {
-        donut: [62.8, 16.0, 11.5, 9.7], // Selesai, In Process, Antri, Belum Datang
-        donutLabels: ['Selesai/Closed', 'In Process', 'Antri/Open', 'Belum Datang'],
-        ordersCount: 1284,
-        stacked: {
-          selesai: [110, 130, 120, 155, 140, 168],
-          inProcess: [30, 35, 32, 40, 36, 42],
-          antri: [25, 28, 26, 28, 25, 30],
-          belumDatang: [15, 17, 17, 17, 19, 20]
-        },
-        sla: {
-          achievement: 87.5,
-          onTime: 1124,
-          overSla: 160
-        }
-      },
-      open: {
-        donut: [0, 0, 100, 0],
-        donutLabels: ['Selesai/Closed', 'In Process', 'Antri/Open', 'Belum Datang'],
-        ordersCount: 148,
-        stacked: {
-          selesai: [0, 0, 0, 0, 0, 0],
-          inProcess: [0, 0, 0, 0, 0, 0],
-          antri: [25, 28, 26, 28, 25, 30],
-          belumDatang: [0, 0, 0, 0, 0, 0]
-        },
-        sla: {
-          achievement: 0.0,
-          onTime: 0,
-          overSla: 148
-        }
-      },
-      closed: {
-        donut: [100, 0, 0, 0],
-        donutLabels: ['Selesai/Closed', 'In Process', 'Antri/Open', 'Belum Datang'],
-        ordersCount: 823,
-        stacked: {
-          selesai: [110, 130, 120, 155, 140, 168],
-          inProcess: [0, 0, 0, 0, 0, 0],
-          antri: [0, 0, 0, 0, 0, 0],
-          belumDatang: [0, 0, 0, 0, 0, 0]
-        },
-        sla: {
-          achievement: 100.0,
-          onTime: 823,
-          overSla: 0
-        }
-      },
-      in_process: {
-        donut: [0, 100, 0, 0],
-        donutLabels: ['Selesai/Closed', 'In Process', 'Antri/Open', 'Belum Datang'],
-        ordersCount: 205,
-        stacked: {
-          selesai: [0, 0, 0, 0, 0, 0],
-          inProcess: [30, 35, 32, 40, 36, 42],
-          antri: [0, 0, 0, 0, 0, 0],
-          belumDatang: [0, 0, 0, 0, 0, 0]
-        },
-        sla: {
-          achievement: 72.4,
-          onTime: 148,
-          overSla: 57
-        }
-      }
-    };
 
     // Custom inline plugin for displaying data labels on Chart.js
     const datalabelsPlugin = {
@@ -2229,293 +2072,7 @@
        });
 
       // 3. TOP 10 SKU BY QTY — HORIZONTAL BAR CHART (Weekly Views)
-      const ctxSku = document.getElementById('chart-top-sku').getContext('2d');
-      
-      // Build dynamic colors: top index is Gold, rest are gradients
-      const generateSkuColors = (count) => {
-        const colors = ['#FFD700']; // Top SKU is Gold
-        for (let i = 1; i < count; i++) {
-          // Purple to Blue gradient-like colors
-          const ratio = i / (count - 1);
-          const r = Math.floor(21 + (106 - 21) * ratio);
-          const g = Math.floor(101 + (27 - 101) * ratio);
-          const b = Math.floor(192 + (154 - 192) * ratio);
-          colors.push(`rgb(${r}, ${g}, ${b})`);
-        }
-        return colors;
-      };
-      
-      chartTopSku = new Chart(ctxSku, {
-        type: 'bar',
-        data: {
-          labels: [...skuLabels],
-          datasets: [{
-            label: 'Quantity Return',
-            data: [...skuWeeklyData["1"]],
-            backgroundColor: generateSkuColors(10),
-            borderRadius: { topRight: 6, bottomRight: 6 },
-            borderSkipped: 'start',
-            barThickness: 18
-          }]
-        },
-        options: {
-          indexAxis: 'y',
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  return ` Qty: ${context.raw} pcs`;
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              grid: { color: '#E3E8EF' },
-              ticks: { font: { family: 'Inter', size: 11 }, color: '#546E7A' }
-            },
-            y: {
-              grid: { display: false },
-              ticks: { font: { family: 'Inter', size: 11, weight: '600' }, color: '#1A237E' }
-            }
-          }
-        }
-      });
-
-      // 4. TREND HARIAN — CASE ID & ORDER (Dual-axis Line)
-      const ctxTrend = document.getElementById('chart-trend-harian').getContext('2d');
-      chartTrendHarian = new Chart(ctxTrend, {
-        type: 'bar',
-        data: {
-          labels: [...trendHarianData.dates],
-          datasets: [
-            {
-              type: 'bar',
-              label: 'Total Order (Batang)',
-              data: [...trendHarianData.orders],
-              backgroundColor: 'rgba(21, 101, 192, 0.75)',
-              borderColor: '#1565C0',
-              borderWidth: 1.5,
-              borderRadius: 4,
-              yAxisID: 'yLeft'
-            },
-            {
-              type: 'line',
-              label: 'Total Qty (Grafik)',
-              data: [...trendHarianData.qty],
-              borderColor: '#F57C00',
-              backgroundColor: '#F57C00',
-              yAxisID: 'yRight',
-              borderWidth: 3,
-              pointRadius: 3,
-              pointHoverRadius: 6,
-              tension: 0.2
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'top',
-              align: 'end',
-              labels: {
-                boxWidth: 12,
-                font: { family: 'Inter', size: 11, weight: '500' },
-                color: '#546E7A'
-              }
-            }
-          },
-          scales: {
-            x: {
-              grid: { display: false },
-              ticks: {
-                font: { family: 'Inter', size: 10 },
-                color: '#546E7A',
-                callback: function(val, index) {
-                  // Show every 3rd label to avoid cluttering
-                  return index % 3 === 0 ? this.getLabelForValue(val) : '';
-                }
-              }
-            },
-            yLeft: {
-              type: 'linear',
-              position: 'left',
-              min: 0,
-              ticks: { font: { family: 'Inter', size: 11 }, color: '#1565C0' },
-              grid: { color: '#E3E8EF' },
-              title: { display: true, text: 'Total Order (Pcs)', font: { size: 11, weight: '600' }, color: '#1565C0' }
-            },
-            yRight: {
-              type: 'linear',
-              position: 'right',
-              min: 0,
-              ticks: { font: { family: 'Inter', size: 11 }, color: '#F57C00' },
-              grid: { drawOnChartArea: false }, // avoid overlapping grids
-              title: { display: true, text: 'Total Qty (Pcs)', font: { size: 11, weight: '600' }, color: '#F57C00' }
-            }
-          }
-        }
-      });
-
-      // 5. SUMMARY DONUT — Status Distribution
-      const ctxDonut = document.getElementById('chart-status-donut').getContext('2d');
-      chartStatusDonut = new Chart(ctxDonut, {
-        type: 'doughnut',
-        data: {
-          labels: [...summaryDataByStatus.all.donutLabels],
-          datasets: [{
-            data: [...summaryDataByStatus.all.donut],
-            backgroundColor: ['#2E7D32', '#1565C0', '#F57C00', '#C62828'],
-            borderWidth: 2,
-            borderColor: '#FFFFFF',
-            hoverOffset: 6
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: '75%',
-          plugins: {
-            legend: {
-              position: 'right',
-              labels: {
-                boxWidth: 12,
-                font: { family: 'Inter', size: 11, weight: '500' },
-                color: '#546E7A',
-                generateLabels: function(chart) {
-                  const data = chart.data;
-                  if (data.labels.length && data.datasets.length) {
-                    return data.labels.map(function(label, i) {
-                      const meta = chart.getDatasetMeta(0);
-                      const style = meta.controller.getStyle(i);
-                      const val = data.datasets[0].data[i];
-                      
-                      // Calculate order number based on active filter
-                      let absoluteVal = 0;
-                      const activeFilter = currentSummaryFilter;
-                      if (activeFilter === 'all') {
-                        if (i === 0) absoluteVal = 806;
-                        if (i === 1) absoluteVal = 205;
-                        if (i === 2) absoluteVal = 148;
-                        if (i === 3) absoluteVal = 125;
-                      } else {
-                        // For solo filters, the focused segment gets total count, others 0
-                        absoluteVal = val > 0 ? summaryDataByStatus[activeFilter].ordersCount : 0;
-                      }
-
-                      return {
-                        text: `${label} — ${val.toFixed(1).replace('.', ',')}% (${absoluteVal} ord)`,
-                        fillStyle: style.backgroundColor,
-                        strokeStyle: style.borderColor,
-                        lineWidth: style.borderWidth,
-                        hidden: isNaN(data.datasets[0].data[i]) || meta.data[i].hidden,
-                        index: i
-                      };
-                    });
-                  }
-                  return [];
-                }
-              }
-            },
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  return ` ${context.label}: ${context.raw.toFixed(1).replace('.', ',')}%`;
-                }
-              }
-            }
-          }
-        }
-      });
-
-      // 6. SUMMARY STACKED BAR — QTY per Status per Bulan
-      const ctxStacked = document.getElementById('chart-qty-status-stacked').getContext('2d');
-      chartQtyStatusStacked = new Chart(ctxStacked, {
-        type: 'bar',
-        data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
-          datasets: [
-            {
-              label: 'Selesai/Closed',
-              data: [...summaryDataByStatus.all.stacked.selesai],
-              backgroundColor: '#2E7D32',
-              barPercentage: 0.6
-            },
-            {
-              label: 'In Process',
-              data: [...summaryDataByStatus.all.stacked.inProcess],
-              backgroundColor: '#1565C0',
-              barPercentage: 0.6
-            },
-            {
-              label: 'Antri/Open',
-              data: [...summaryDataByStatus.all.stacked.antri],
-              backgroundColor: '#F57C00',
-              barPercentage: 0.6
-            },
-            {
-              label: 'Belum Datang',
-              data: [...summaryDataByStatus.all.stacked.belumDatang],
-              backgroundColor: '#C62828',
-              barPercentage: 0.6
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: {
-              stacked: true,
-              grid: { display: false },
-              ticks: { font: { family: 'Inter', size: 10 }, color: '#546E7A' }
-            },
-            y: {
-              stacked: true,
-              min: 0,
-              max: 3000,
-              ticks: { font: { family: 'Inter', size: 10 }, color: '#546E7A' },
-              grid: { color: '#E3E8EF' }
-            }
-          },
-          plugins: {
-            legend: { display: false } // Hidden to prevent duplicated legends
-          }
-        }
-      });
-
-      // 7. SEMI-CIRCULAR GAUGE — SLA Achievement
-      const ctxGauge = document.getElementById('chart-sla-gauge').getContext('2d');
-      chartSlaGauge = new Chart(ctxGauge, {
-        type: 'doughnut',
-        data: {
-          labels: ['Achieved', 'Remaining'],
-          datasets: [{
-            data: [87.5, 12.5],
-            backgroundColor: ['#1565C0', '#E2E8F0'],
-            borderWidth: 0,
-            hoverOffset: 0
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          circumference: 180,
-          rotation: -90,
-          cutout: '80%',
-          plugins: {
-            legend: { display: false },
-            tooltip: { enabled: false }
-          }
-        }
-      });
-
-      // 8. 3PL Partner Pie Chart
+      // 4. 3PL Partner Pie Chart
       const ctx3Pl = document.getElementById('chart-3pl-pie').getContext('2d');
       chart3PlPie = new Chart(ctx3Pl, {
         type: 'pie',
@@ -2792,24 +2349,15 @@
       let total3PLSum = sortedPartners.reduce((acc, curr) => acc + curr.sum, 0);
       update3PLPartnerPie(sortedPartners, total3PLSum);
 
-      // Update SKU horizontal bar chart with scaled quantities
-      if (chartTopSku) {
-        let qtyScale = totalQty / baselineKPIs.qty;
-        if (qtyScale === 0) qtyScale = 0.1;
-        const weekData = skuWeeklyData[currentWeekSku].map(v => Math.round(v * qtyScale));
-        chartTopSku.data.datasets[0].data = weekData;
-        chartTopSku.update();
-      }
+      // Update SKU Table
+      updateSkuTable();
 
       // Update Daily Trend lines
       updateDailyTrendFromRows();
-
-      // Update Section 5 Summary report panels
-      updateSummaryReportPanels();
     }
 
     function updateDailyTrendFromRows() {
-      if (!parsedSheetB || !chartTrendHarian) return;
+      if (!parsedSheetB) return;
 
       const dateStartVal = document.getElementById('filter-date-start').value;
       const dateEndVal = document.getElementById('filter-date-end').value;
@@ -2841,7 +2389,7 @@
       }
 
       validRows.sort((a, b) => a.date - b.date);
-      let trendRows = validRows.length > 30 ? validRows.slice(-30) : validRows;
+      let trendRows = validRows;
 
       if (trendRows.length > 0) {
         let trendDates = [];
@@ -2856,16 +2404,14 @@
           trendQty.push(item.qty);
         });
 
-        chartTrendHarian.data.labels = trendDates;
-        chartTrendHarian.data.datasets[0].data = trendOrders;
-        chartTrendHarian.data.datasets[1].data = trendQty;
-        chartTrendHarian.update();
-
         // Update Section 2 Total Order Chart (Bar + Line)
         if (chartSlaBulan) {
           chartSlaBulan.data.labels = trendDates;
           chartSlaBulan.data.datasets[0].data = trendOrders;
           chartSlaBulan.data.datasets[1].data = trendOrders;
+          if (chartSlaBulan.options.scales.y) {
+            chartSlaBulan.options.scales.y.max = 400;
+          }
           chartSlaBulan.update();
         }
 
@@ -2874,6 +2420,9 @@
           chartOrderBulan.data.labels = trendDates;
           chartOrderBulan.data.datasets[0].data = trendQty;
           chartOrderBulan.data.datasets[1].data = trendQty;
+          if (chartOrderBulan.options.scales.y) {
+            chartOrderBulan.options.scales.y.max = 400;
+          }
           chartOrderBulan.update();
         }
 
@@ -2886,117 +2435,10 @@
       }
     }
 
-    function updateSummaryReportPanels() {
-      // Sync Summary calculations with parsed values
-      const orders = activeKPIs.orders;
-      const cases = activeKPIs.cases;
-      
-      summaryDataByStatus.all.ordersCount = orders;
-      summaryDataByStatus.all.sla.onTime = Math.round(orders * 0.875);
-      summaryDataByStatus.all.sla.overSla = orders - summaryDataByStatus.all.sla.onTime;
-      summaryDataByStatus.all.stacked.selesai = Array(6).fill(0).map((_, idx) => Math.round(orders * 0.15 + idx * 5));
-
-      applySummaryPillFilter(currentSummaryFilter);
-    }
-
     function updateDashboardWithSimulatedData() {
       // Revert/Sync to baseline if necessary
       activeKPIs = { ...baselineKPIs };
       applyMainFiltersSimulated();
-    }
-
-    // FUNCTION TO SWAP SUMMARY VIEWS (Pills filter)
-    function applySummaryPillFilter(statusKey) {
-      currentSummaryFilter = statusKey;
-      const data = summaryDataByStatus[statusKey];
-      if (!data) return;
-
-      // Update active state in UI
-      const pills = document.querySelectorAll('#summary-status-pills .pill-btn');
-      pills.forEach(p => {
-        if (p.getAttribute('data-status') === statusKey) {
-          p.classList.add('active');
-        } else {
-          p.classList.remove('active');
-        }
-      });
-
-      // Update Center Donut Total
-      const totalLabel = document.getElementById('donut-center-total');
-      if (totalLabel) {
-        animateValue('donut-center-total', parseInt(totalLabel.textContent.replace(/\./g, '')) || 0, data.ordersCount, 500);
-      }
-
-      // Update Donut Chart
-      chartStatusDonut.data.datasets[0].data = [...data.donut];
-      chartStatusDonut.update('active');
-
-      // Update Stacked Bar
-      chartQtyStatusStacked.data.datasets[0].data = [...data.stacked.selesai];
-      chartQtyStatusStacked.data.datasets[1].data = [...data.stacked.inProcess];
-      chartQtyStatusStacked.data.datasets[2].data = [...data.stacked.antri];
-      chartQtyStatusStacked.data.datasets[3].data = [...data.stacked.belumDatang];
-      
-      // Dynamic Y-axis adjustments for single stacked views to look proportional
-      if (statusKey === 'all') {
-        chartQtyStatusStacked.options.scales.y.max = 3000;
-      } else if (statusKey === 'closed') {
-        chartQtyStatusStacked.options.scales.y.max = 2000;
-      } else if (statusKey === 'in_process' || statusKey === 'open') {
-        chartQtyStatusStacked.options.scales.y.max = 400;
-      }
-      chartQtyStatusStacked.update('active');
-
-      // Update Gauge SLA Achievement
-      const percentLabel = document.getElementById('gauge-percent');
-      if (percentLabel) {
-        const startVal = parseFloat(percentLabel.textContent.replace(',', '.')) || 0;
-        animateValue('gauge-percent', startVal, data.sla.achievement, 500, true);
-        // append '%' mark in the animation callback or directly afterward in UI
-        setTimeout(() => {
-          percentLabel.textContent = data.sla.achievement.toFixed(1).replace('.', ',') + '%';
-        }, 510);
-      }
-
-      chartSlaGauge.data.datasets[0].data = [data.sla.achievement, 100 - data.sla.achievement];
-      
-      // Update Gauge colors based on achievement level
-      if (data.sla.achievement >= 95) {
-        chartSlaGauge.data.datasets[0].backgroundColor = ['#2E7D32', '#E2E8F0'];
-        const badge = document.getElementById('sla-badge');
-        if (badge) {
-          badge.className = "status-badge";
-          badge.style.backgroundColor = "rgba(46, 125, 50, 0.1)";
-          badge.style.color = "var(--success)";
-          badge.style.border = "1px solid rgba(46, 125, 50, 0.2)";
-          badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> TARGET ACHIEVED`;
-        }
-      } else {
-        chartSlaGauge.data.datasets[0].backgroundColor = ['#1565C0', '#E2E8F0'];
-        const badge = document.getElementById('sla-badge');
-        if (badge) {
-          badge.className = "status-badge orange";
-          badge.style.backgroundColor = "";
-          badge.style.color = "";
-          badge.style.border = "";
-          badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> BELOW TARGET`;
-        }
-      }
-      chartSlaGauge.update('active');
-
-      // Update metrics below gauge
-      const ontimeText = document.getElementById('gauge-val-ontime');
-      const overslaText = document.getElementById('gauge-val-oversla');
-      
-      if (ontimeText) {
-        ontimeText.textContent = `${data.sla.onTime.toLocaleString('id-ID')} order (${data.sla.onTime === 0 ? '0' : data.sla.achievement.toFixed(1).replace('.', ',')}%)`;
-      }
-      if (overslaText) {
-        const overslaPct = data.ordersCount === 0 ? 0 : (100 - data.sla.achievement).toFixed(1).replace('.', ',');
-        overslaText.textContent = `${data.sla.overSla.toLocaleString('id-ID')} order (${overslaPct}%)`;
-      }
-
-      showToast(`Filter Summary: Status ${statusKey.toUpperCase()} diterapkan`, 'success');
     }
 
     // SIMULATED FRESH LIVE REFRESH DATA (With dynamic animations)
@@ -3042,10 +2484,6 @@
       const variedTrendOrders = trendHarianData.orders.map(v => Math.floor(v * varFactor()));
       const variedTrendQty = trendHarianData.qty.map(v => Math.floor(v * varFactor()));
 
-      chartTrendHarian.data.datasets[0].data = variedTrendOrders;
-      chartTrendHarian.data.datasets[1].data = variedTrendQty;
-      chartTrendHarian.update();
-
       // Update Section 2 Total Order Chart (Bar + Line)
       if (chartSlaBulan) {
         chartSlaBulan.data.datasets[0].data = variedTrendOrders;
@@ -3060,13 +2498,8 @@
         chartOrderBulan.update();
       }
 
-      // Refresh currently selected weekly SKU view with variation
-      const weekData = skuWeeklyData[currentWeekSku].map(v => Math.floor(v * varFactor()));
-      chartTopSku.data.datasets[0].data = weekData;
-      chartTopSku.update();
-
-      // Sync summary report dataset based on selected pill
-      applySummaryPillFilter(currentSummaryFilter);
+      // Re-animate SKU Table (simulated)
+      updateSkuTable();
 
       showToast("Sinkronisasi real-time berhasil! Data diperbarui.", "success");
     }
@@ -3168,27 +2601,205 @@
         const orderChartBadge = document.getElementById('order-chart-badge');
         if (orderChartBadge) orderChartBadge.textContent = badgeLabel;
 
-        // Update horizontal SKU bars
-        chartTopSku.data.datasets[0].data = skuWeeklyData[currentWeekSku].map(v => Math.round(v * scaleFactor));
-        chartTopSku.update();
-
-        // Update Daily Trend Chart
-        chartTrendHarian.data.labels = dailyDates;
-        chartTrendHarian.data.datasets[0].data = dailyOrders;
-        chartTrendHarian.data.datasets[1].data = dailyQty;
-        chartTrendHarian.update();
-
-        // Update Section 5 Summary Panels
-        activeKPIs.orders = filteredOrders;
-        activeKPIs.cases = filteredCases;
-        activeKPIs.qty = filteredQty;
-        activeKPIs.avg = filteredAvg;
-        activeKPIs.avgCase = filteredAvgCase;
-        activeKPIs.avgQty = filteredAvgQty;
-        updateSummaryReportPanels();
+        // Update SKU Table
+        updateSkuTable();
 
         showToast("Filter berhasil diterapkan ke seluruh panel!", "success");
       }, 500);
+    }
+
+    function updateSkuTable() {
+      const tableBody = document.getElementById('sku-table-body');
+      if (!tableBody) return;
+
+      tableBody.innerHTML = '';
+
+      if (!parsedSheetSKU || parsedSheetSKU.length <= 1) {
+        tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #94a3b8;">Tidak ada data SKU tersedia</td></tr>';
+        return;
+      }
+
+      // Get Global Filters
+      const dateStartVal = document.getElementById('filter-date-start').value;
+      const dateEndVal = document.getElementById('filter-date-end').value;
+      const dateStart = dateStartVal ? parseInputDate(dateStartVal) : null;
+      const dateEnd = dateEndVal ? parseInputDate(dateEndVal) : null;
+
+      // Prepare timestamps for faster and more accurate comparison
+      const startTimeTs = dateStart ? new Date(dateStart).setHours(0, 0, 0, 0) : -Infinity;
+      const endTimeTs = dateEnd ? new Date(dateEnd).setHours(23, 59, 59, 999) : Infinity;
+
+      // Data source columns: 
+      // Column B(1)=Date, Column S(18)=SKU, Column T(19)=Deskripsi, Column V(21)=Qty
+      // For Group Chart: Column U(20)=Group, Column AF(31)=Group Desc
+      const skuMap = new Map();
+      const groupMap = new Map();
+
+      for (let i = 1; i < parsedSheetSKU.length; i++) {
+        const row = parsedSheetSKU[i];
+        if (!row || row.length < 22) continue;
+
+        // Use the robust parser for Column B (Index 1)
+        let rowDate = null;
+        let dateVal = row[1];
+        if (typeof dateVal === 'number') {
+          rowDate = new Date((dateVal - 25569) * 86400 * 1000);
+        } else if (dateVal) {
+          rowDate = parseDateFromStr(dateVal.toString());
+        }
+        
+        if (!rowDate || isNaN(rowDate.getTime())) continue;
+
+        // Check if row date falls within filtered range
+        const rowTime = rowDate.setHours(12, 0, 0, 0); // Use mid-day for safer comparison
+        if (rowTime < startTimeTs || rowTime > endTimeTs) continue;
+
+        // Parse Quantity Robustly - Strict sum of Column V (Index 21)
+        let qty = safeParseFloat(row[21]);
+
+        // SKU Table Data
+        const sku = (row[18] || '').toString().trim();
+        if (sku !== "") {
+          const desc = (row[19] || '').toString().trim();
+          if (skuMap.has(sku)) {
+            skuMap.get(sku).qty += qty;
+          } else {
+            skuMap.set(sku, { sku, desc, qty });
+          }
+        }
+
+        // SKU Group Data
+        const groupCode = (row[20] || '').toString().trim();
+        const groupLabel = (row[31] || groupCode || 'Other').toString().trim();
+        
+        if (groupCode !== "" || groupLabel !== "Other") {
+          const key = groupCode || groupLabel;
+          if (groupMap.has(key)) {
+            groupMap.get(key).qty += qty;
+          } else {
+            groupMap.set(key, { name: groupLabel, qty: qty });
+          }
+        }
+      }
+
+      // 1. Render SKU Table
+      const skuData = Array.from(skuMap.values())
+        .filter(item => item.qty > 0)
+        .sort((a, b) => b.qty - a.qty)
+        .slice(0, 10);
+      
+      tableBody.innerHTML = '';
+      if (skuData.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 100px 20px; color: #94a3b8; font-size: 14px;">Tidak ada data SKU ditemukan untuk periode ini</td></tr>';
+      } else {
+        skuData.forEach((item, index) => {
+          const tr = document.createElement('tr');
+          tr.style.height = '48px'; 
+          tr.innerHTML = `
+            <td style="font-size: 14px; padding: 12px 15px; border-bottom: 1px solid #f1f5f9; text-align: center;">${index + 1}</td>
+            <td style="padding: 12px 15px; border-bottom: 1px solid #f1f5f9;"><span class="sku-badge" style="background: rgba(107, 70, 193, 0.1); color: var(--purple); font-weight: 700; padding: 5px 12px; border-radius: 6px; font-size: 13.5px; border: 1px solid rgba(107, 70, 193, 0.2);">${item.sku}</span></td>
+            <td style="font-size: 14px; color: #334155; font-weight: 600; max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 12px 15px; border-bottom: 1px solid #f1f5f9;" title="${item.desc}">${item.desc}</td>
+            <td style="text-align: right; font-weight: 800; color: var(--purple); font-size: 16px; padding: 12px 15px; border-bottom: 1px solid #f1f5f9;">${Math.round(item.qty).toLocaleString('id-ID')}</td>
+          `;
+          tableBody.appendChild(tr);
+        });
+      }
+
+      // 2. Render SKU Group Chart
+      const groupData = Array.from(groupMap.values())
+        .filter(item => item.qty > 0)
+        .sort((a, b) => b.qty - a.qty)
+        .slice(0, 10);
+
+      updateSkuGroupChart(groupData);
+    }
+
+    function updateSkuGroupChart(data) {
+      const ctx = document.getElementById('chart-sku-group');
+      if (!ctx) return;
+
+      const labels = data.map(item => item.name);
+      const values = data.map(item => item.qty);
+      
+      if (chartSkuGroup) {
+        chartSkuGroup.data.labels = labels;
+        chartSkuGroup.data.datasets[0].data = values;
+        chartSkuGroup.update();
+      } else {
+        chartSkuGroup = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Total Qty',
+              data: values,
+              backgroundColor: 'rgba(59, 130, 246, 0.8)',
+              hoverBackgroundColor: 'rgba(59, 130, 246, 1)',
+              borderColor: '#3b82f6',
+              borderWidth: 1,
+              borderRadius: 6,
+              barThickness: 24
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: '#1e293b',
+                titleFont: { size: 12, weight: 'bold' },
+                bodyFont: { size: 12 },
+                padding: 10,
+                callbacks: {
+                  label: function(context) {
+                    return ` Qty: ${context.raw.toLocaleString('id-ID')} pcs`;
+                  }
+                }
+              }
+            },
+            layout: {
+              padding: { right: 60, top: 10, bottom: 10 }
+            },
+            scales: {
+              x: {
+                grid: { color: '#f1f5f9', drawBorder: false },
+                ticks: { font: { size: 11, weight: '500' }, color: '#64748b' }
+              },
+              y: {
+                grid: { display: false },
+                ticks: { 
+                  font: { size: 11, weight: '600' },
+                  color: '#1e293b',
+                  callback: function(value) {
+                    const label = this.getLabelForValue(value);
+                    return label.length > 25 ? label.substring(0, 22) + '...' : label;
+                  }
+                }
+              }
+            },
+            animation: {
+              onComplete: function() {
+                const chartInstance = this;
+                const ctx = chartInstance.ctx;
+                ctx.font = 'bold 11px Inter, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#1e293b';
+
+                chartInstance.data.datasets.forEach(function(dataset, i) {
+                  const meta = chartInstance.getDatasetMeta(i);
+                  meta.data.forEach(function(bar, index) {
+                    const data = dataset.data[index];
+                    ctx.fillText(data.toLocaleString('id-ID'), bar.x + 8, bar.y);
+                  });
+                });
+              }
+            }
+          }
+        });
+      }
     }
 
     // RESET ALL FILTERS
@@ -3232,17 +2843,8 @@
         const orderChartBadge = document.getElementById('order-chart-badge');
         if (orderChartBadge) orderChartBadge.textContent = "30 Hari Terakhir";
 
-        // Revert SKU weekly chart
-        chartTopSku.data.datasets[0].data = [...skuWeeklyData[currentWeekSku]];
-        chartTopSku.update();
-
-        // Revert Trend Chart
-        chartTrendHarian.data.datasets[0].data = [...trendHarianData.orders];
-        chartTrendHarian.data.datasets[1].data = [...trendHarianData.qty];
-        chartTrendHarian.update();
-
-        // Revert Summary
-        applySummaryPillFilter('all');
+        // Update SKU Table
+        updateSkuTable();
       }
 
       showToast("Kriteria filter telah di-reset ke default", "success");
@@ -3303,31 +2905,9 @@
           tab.classList.add('active');
           
           currentWeekSku = tab.getAttribute('data-week');
-          const newData = skuWeeklyData[currentWeekSku];
-          
-          if (newData && chartTopSku) {
-            chartTopSku.data.datasets[0].data = [...newData];
-            chartTopSku.update('active');
-            showToast(`Menampilkan SKU Return: Week ${currentWeekSku}`, "success");
-          }
+          updateSkuTable();
+          showToast(`Menampilkan SKU Return: Week ${currentWeekSku}`, "success");
         });
-      });
-
-      // Summary Report Status Pills change event
-      const summaryPills = document.querySelectorAll('#summary-status-pills .pill-btn');
-      summaryPills.forEach(pill => {
-        pill.addEventListener('click', () => {
-          const statusKey = pill.getAttribute('data-status');
-          applySummaryPillFilter(statusKey);
-        });
-      });
-
-      // Export CSV Trend button
-      document.getElementById('btn-export-csv-trend').addEventListener('click', () => {
-        showToast("Mengekspor data trend harian ke format CSV...", "info");
-        setTimeout(() => {
-          showToast("File DAILY_TREND_RETURN_30DAYS.csv berhasil diunduh!", "success");
-        }, 1000);
       });
 
       // Mobile Hamburger Toggle
