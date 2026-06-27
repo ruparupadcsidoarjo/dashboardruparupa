@@ -13,6 +13,7 @@
   
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
 
   <style>
     /* DESIGN SYSTEM & VISUAL STYLE variables */
@@ -541,7 +542,83 @@
     .kpi-card-2 .kpi-circle-icon { background-color: rgba(46, 125, 50, 0.1); }
     .kpi-card-3 .kpi-circle-icon { background-color: rgba(245, 124, 0, 0.1); }
     .kpi-card-4 .kpi-circle-icon { background-color: rgba(106, 27, 154, 0.1); }
-    .kpi-card-5 .kpi-circle-icon { background-color: rgba(2, 119, 189, 0.1); }
+    .rtn-kpi-card {
+      border-radius: 16px !important;
+      border: 1px solid rgba(226, 232, 240, 0.8) !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04) !important;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      background: #ffffff;
+    }
+    .rtn-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .rtn-kpi-card::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+      transform: rotate(45deg);
+      pointer-events: none;
+    }
+    .rtn-kpi-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08) !important;
+    }
+    .rtn-kpi-card .kpi-label {
+      letter-spacing: 0.5px;
+      font-size: 10px;
+      opacity: 0.8;
+      font-weight: 800;
+    }
+    .rtn-kpi-card .kpi-val {
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -1.5px;
+      font-size: 28px !important;
+      margin-bottom: 2px;
+    }
+    .rtn-kpi-card .kpi-circle-icon {
+      width: 45px !important;
+      height: 45px !important;
+      font-size: 20px !important;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    /* Redesigned Return Trend Badge Styling */
+    .rtn-trend-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    }
+    .rtn-trend-badge.up {
+      background-color: #dcfce7;
+      color: #15803d;
+      border: 1px solid rgba(34, 197, 94, 0.15);
+    }
+    .rtn-trend-badge.down {
+      background-color: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid rgba(239, 68, 68, 0.15);
+    }
+    .rtn-trend-badge.neutral {
+      background-color: #f1f5f9;
+      color: #475569;
+      border: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
 
     .kpi-label {
       font-size: 12px;
@@ -958,7 +1035,7 @@
 
     /* Responsive adjustments */
     @media (max-width: 1200px) {
-      .kpi-row {
+      .kpi-row, .rtn-kpi-row {
         grid-template-columns: repeat(2, 1fr);
       }
       .charts-row {
@@ -1008,7 +1085,7 @@
         display: none;
       }
 
-      .kpi-row {
+      .kpi-row, .rtn-kpi-row {
         grid-template-columns: 1fr;
       }
 
@@ -1036,6 +1113,55 @@
         align-items: center;
       }
     }
+
+    /* Print styling to capture the summary report card (Raport) perfectly */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11px !important;
+      }
+      
+      /* Hide all UI scaffolding, sidebar, filters, trend charts, and actions */
+      .no-print, .sidebar, .header-bar, .filter-card, #btn-apply-filters, #btn-print-report, #rtn-tab-selector-container, .charts-row, .kpi-row, .rtn-kpi-row, .chart-container-280, .dashboard-card:not(#rtn-summary-section), #toast-container, .hamburger, #link-reset-top, .sidebar-top, .nav-menu {
+        display: none !important;
+      }
+      
+      #rtn-summary-section {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        display: block !important;
+      }
+      
+      #rtn-tables-grid-container {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 15px !important;
+        width: 100% !important;
+      }
+      
+      #rtn-section-onprogress, #rtn-section-claim3pl, #rtn-section-soreturn {
+        display: flex !important;
+        border: 1px solid #94a3b8 !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        background: #ffffff !important;
+        padding: 8px !important;
+      }
+      
+      .table-container {
+        display: block !important;
+        overflow: visible !important;
+      }
+      
+      @page {
+        size: landscape;
+        margin: 1cm;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1054,11 +1180,11 @@
       </div>
       
       <ul class="nav-menu">
-        <li class="nav-item active">
-          <a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        <li class="nav-item active" id="nav-dashboard">
+          <a href="#" onclick="switchView('dashboard')"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
         </li>
-        <li class="nav-item">
-          <a href="#" onclick="showFeatureAlert('Return Management')"><i class="fa-solid fa-rotate-left"></i> Return Management</a>
+        <li class="nav-item" id="nav-return">
+          <a href="#" onclick="switchView('return')"><i class="fa-solid fa-rotate-left"></i> Return Management</a>
         </li>
       </ul>
     </div>
@@ -1120,6 +1246,24 @@
 
     <!-- FILTER BAR -->
     <div class="filter-bar">
+      <div class="filter-group" id="month-filter-group" style="display: none;">
+        <label class="filter-label">Pilih Bulan</label>
+        <select class="filter-select" id="filter-month">
+          <option value="">-- Semua Bulan --</option>
+          <option value="0">Januari</option>
+          <option value="1">Februari</option>
+          <option value="2">Maret</option>
+          <option value="3">April</option>
+          <option value="4">Mei</option>
+          <option value="5">Juni</option>
+          <option value="6">Juli</option>
+          <option value="7">Agustus</option>
+          <option value="8">September</option>
+          <option value="9">Oktober</option>
+          <option value="10">November</option>
+          <option value="11">Desember</option>
+        </select>
+      </div>
       <div class="filter-group">
         <label class="filter-label">Tanggal Mulai</label>
         <input type="date" class="filter-input" id="filter-date-start">
@@ -1150,173 +1294,432 @@
     <!-- MAIN CONTENT CONTAINER -->
     <main class="content-container">
       
-      <!-- SECTION 1 — KPI CARDS ROW -->
-      <section class="kpi-row">
-        
-        <!-- CARD 1: TOTAL ORDER -->
-        <div class="dashboard-card kpi-card kpi-card-1" id="kpi-card-total-order">
-          <div class="kpi-top-row" style="margin-bottom: 4px;">
-            <div>
-              <span class="kpi-val" id="kpi-orders">1,284</span>
-              <div class="kpi-label">TOTAL ORDER</div>
+      <!-- DASHBOARD VIEW -->
+      <div id="dashboard-view">
+        <!-- SECTION 1 — KPI CARDS ROW -->
+        <section class="kpi-row">
+          
+          <!-- CARD 1: TOTAL ORDER -->
+          <div class="dashboard-card kpi-card kpi-card-1" id="kpi-card-total-order">
+            <div class="kpi-top-row" style="margin-bottom: 4px;">
+              <div>
+                <span class="kpi-val" id="kpi-orders">1,284</span>
+                <div class="kpi-label">TOTAL ORDER</div>
+              </div>
+              <div class="kpi-circle-icon">
+                📋
+              </div>
             </div>
-            <div class="kpi-circle-icon">
-              📋
+            <!-- Sub-scope: Average Order -->
+            <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
+              <div class="kpi-nested-box" style="background: rgba(21, 101, 192, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #1565C0; min-width: 120px; text-align: left;">
+                <span class="kpi-sub-val" id="kpi-avg" style="font-size: 14px; font-weight: 700; color: #1565C0; display: block; line-height: 1.2;">42,8</span>
+                <span class="kpi-sub-label" style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG ORDER / HARI</span>
+              </div>
             </div>
           </div>
-          <!-- Sub-scope: Average Order -->
-          <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
-            <div class="kpi-nested-box" style="background: rgba(21, 101, 192, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #1565C0; min-width: 120px; text-align: left;">
-              <span class="kpi-sub-val" id="kpi-avg" style="font-size: 14px; font-weight: 700; color: #1565C0; display: block; line-height: 1.2;">42,8</span>
-              <span class="kpi-sub-label" style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG ORDER / HARI</span>
-            </div>
-          </div>
-        </div>
 
-        <!-- CARD 2: TOTAL CASE ID -->
-        <div class="dashboard-card kpi-card kpi-card-2" id="kpi-card-total-case">
-          <div class="kpi-top-row" style="margin-bottom: 4px;">
-            <div>
-              <span class="kpi-val" id="kpi-cases">987</span>
-              <div class="kpi-label">TOTAL CASE ID</div>
+          <!-- CARD 2: TOTAL CASE ID -->
+          <div class="dashboard-card kpi-card kpi-card-2" id="kpi-card-total-case">
+            <div class="kpi-top-row" style="margin-bottom: 4px;">
+              <div>
+                <span class="kpi-val" id="kpi-cases">987</span>
+                <div class="kpi-label">TOTAL CASE ID</div>
+              </div>
+              <div class="kpi-circle-icon">
+                🔑
+              </div>
             </div>
-            <div class="kpi-circle-icon">
-              🔑
+            <!-- Sub-scope: Average Case ID -->
+            <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
+              <div class="kpi-nested-box" style="background: rgba(46, 125, 80, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #2E7D32; min-width: 120px; text-align: left;">
+                <span class="kpi-sub-val" id="kpi-avg-case" style="font-size: 14px; font-weight: 700; color: #2E7D32; display: block; line-height: 1.2;">32,9</span>
+                <span class="kpi-sub-label" style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG CASE / HARI</span>
+              </div>
             </div>
           </div>
-          <!-- Sub-scope: Average Case ID -->
-          <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
-            <div class="kpi-nested-box" style="background: rgba(46, 125, 80, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #2E7D32; min-width: 120px; text-align: left;">
-              <span class="kpi-sub-val" id="kpi-avg-case" style="font-size: 14px; font-weight: 700; color: #2E7D32; display: block; line-height: 1.2;">32,9</span>
-              <span class="kpi-sub-label" style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG CASE / HARI</span>
-            </div>
-          </div>
-        </div>
 
-        <!-- CARD 3: TOTAL QTY -->
-        <div class="dashboard-card kpi-card kpi-card-3" id="kpi-card-total-qty">
-          <div class="kpi-top-row" style="margin-bottom: 4px;">
-            <div>
-              <span class="kpi-val" id="kpi-qty">14,320</span>
-              <div class="kpi-label">TOTAL QTY</div>
+          <!-- CARD 3: TOTAL QTY -->
+          <div class="dashboard-card kpi-card kpi-card-3" id="kpi-card-total-qty">
+            <div class="kpi-top-row" style="margin-bottom: 4px;">
+              <div>
+                <span class="kpi-val" id="kpi-qty">14,320</span>
+                <div class="kpi-label">TOTAL QTY</div>
+              </div>
+              <div class="kpi-circle-icon">
+                📦
+              </div>
             </div>
-            <div class="kpi-circle-icon">
-              📦
+            <!-- Sub-scope: Average Qty -->
+            <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
+              <div class="kpi-nested-box" style="background: rgba(245, 124, 0, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #F57C00; min-width: 120px; text-align: left;">
+                <span class="kpi-sub-val" id="kpi-avg-qty" style="font-size: 14px; font-weight: 700; color: #F57C00; display: block; line-height: 1.2;">477,3</span>
+                <span class="kpi-sub-label" style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG QTY / HARI</span>
+              </div>
             </div>
           </div>
-          <!-- Sub-scope: Average Qty -->
-          <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
-            <div class="kpi-nested-box" style="background: rgba(245, 124, 0, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #F57C00; min-width: 120px; text-align: left;">
-              <span class="kpi-sub-val" id="kpi-avg-qty" style="font-size: 14px; font-weight: 700; color: #F57C00; display: block; line-height: 1.2;">477,3</span>
-              <span class="kpi-sub-label" style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG QTY / HARI</span>
-            </div>
-          </div>
-        </div>
 
-        <!-- CARD 4: TOP 3PL -->
-        <div class="dashboard-card kpi-card kpi-card-4" id="kpi-card-top-3pl" style="min-height: 140px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px;">
-          <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
-            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-              <span class="kpi-circle-icon" style="margin: 0; width: 28px; height: 28px; font-size: 14px;">🚚</span>
-              <span class="kpi-val" style="font-size: 18px; font-weight: 800; color: #6A1B9A;" id="top-3pl-name">JNE</span>
+          <!-- CARD 4: TOP 3PL -->
+          <div class="dashboard-card kpi-card kpi-card-4" id="kpi-card-top-3pl" style="min-height: 140px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                <span class="kpi-circle-icon" style="margin: 0; width: 28px; height: 28px; font-size: 14px;">🚚</span>
+                <span class="kpi-val" style="font-size: 18px; font-weight: 800; color: #6A1B9A;" id="top-3pl-name">JNE</span>
+              </div>
+              <div class="kpi-label" style="font-size: 10px; font-weight: 700; color: var(--text-secondary);">TOP 3PL PARTNER</div>
+              <div id="top-3pl-legend-container" style="margin-top: 8px; font-size: 10px; font-weight: 600; color: var(--text-secondary); display: flex; flex-direction: column; gap: 3px;">
+              </div>
             </div>
-            <div class="kpi-label" style="font-size: 10px; font-weight: 700; color: var(--text-secondary);">TOP 3PL PARTNER</div>
-            <div id="top-3pl-legend-container" style="margin-top: 8px; font-size: 10px; font-weight: 600; color: var(--text-secondary); display: flex; flex-direction: column; gap: 3px;">
+            <div style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; position: relative;">
+              <canvas id="chart-3pl-pie" style="max-width: 100px; max-height: 100px;"></canvas>
             </div>
           </div>
-          <div style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; position: relative;">
-            <canvas id="chart-3pl-pie" style="max-width: 100px; max-height: 100px;"></canvas>
-          </div>
-        </div>
-        
-      </section>
+          
+        </section>
 
-      <!-- SECTION 2 — CHARTS ROW -->
-      <section class="charts-row">
-        
-        <!-- LEFT CHART — TOTAL ORDER HARIAN -->
-        <div class="dashboard-card">
+        <!-- SECTION 2 — CHARTS ROW -->
+        <section class="charts-row">
+          
+          <!-- LEFT CHART — TOTAL ORDER HARIAN -->
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h3 class="card-header-title">
+                <i class="fa-solid fa-chart-bar" style="color: var(--primary-accent);"></i>
+                TOTAL ORDER HARIAN
+              </h3>
+              <span class="card-header-badge" id="sla-chart-badge">30 Hari Terakhir</span>
+            </div>
+            <div class="chart-container-280">
+              <canvas id="chart-sla-bulan"></canvas>
+            </div>
+          </div>
+
+          <!-- RIGHT CHART — TOTAL QTY HARIAN -->
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h3 class="card-header-title">
+                <i class="fa-solid fa-chart-line" style="color: var(--warning);"></i>
+                TOTAL QTY HARIAN
+              </h3>
+              <span class="card-header-badge" id="order-chart-badge">30 Hari Terakhir</span>
+            </div>
+            <div class="chart-container-280">
+              <canvas id="chart-order-bulan"></canvas>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- SECTION 3 — SKU DATA (Table & Group Chart) -->
+        <section class="dashboard-card" style="grid-column: span 12;">
           <div class="card-header">
             <h3 class="card-header-title">
-              <i class="fa-solid fa-chart-bar" style="color: var(--primary-accent);"></i>
-              TOTAL ORDER HARIAN
+              <i class="fa-solid fa-cubes" style="color: var(--purple);"></i>
+              TOP 10 SKU & SKU GROUP BY QTY
             </h3>
-            <span class="card-header-badge" id="sla-chart-badge">30 Hari Terakhir</span>
+            <div class="tab-group" id="sku-week-tabs" style="display: none;">
+              <button class="tab-btn active" data-week="1">Week 1</button>
+              <button class="tab-btn" data-week="2">Week 2</button>
+              <button class="tab-btn" data-week="3">Week 3</button>
+              <button class="tab-btn" data-week="4">Week 4</button>
+            </div>
           </div>
-          <div class="chart-container-280">
-            <canvas id="chart-sla-bulan"></canvas>
-          </div>
-        </div>
+          
+          <div class="sku-content-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 24px; margin-top: 15px; align-items: stretch;">
+            <!-- Left: Table -->
+            <div class="table-card" style="display: flex; flex-direction: column; height: 100%;">
+              <h4 style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                <span style="width: 8px; height: 8px; background: var(--purple); border-radius: 2px;"></span>
+                Top 10 SKU By Quantity
+              </h4>
+              <div class="table-container" style="flex: 1; min-height: 550px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; overflow: hidden;">
+                <table class="data-table" id="sku-data-table">
+                  <thead>
+                    <tr>
+                      <th style="padding: 12px 15px; font-size: 14px;">No</th>
+                      <th style="padding: 12px 15px; font-size: 14px;">SKU</th>
+                      <th style="padding: 12px 15px; font-size: 14px;">Deskripsi</th>
+                      <th style="padding: 12px 15px; font-size: 14px; text-align: right;">Qty</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sku-table-body">
+                    <tr>
+                      <td colspan="4" style="text-align: center; padding: 100px 20px; color: #94a3b8;">Memuat data SKU...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-        <!-- RIGHT CHART — TOTAL QTY HARIAN -->
-        <div class="dashboard-card">
+            <!-- Right: Group Chart -->
+            <div class="chart-card" style="display: flex; flex-direction: column; height: 100%;">
+              <h4 style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                <span style="width: 8px; height: 8px; background: #3b82f6; border-radius: 2px;"></span>
+                Top SKU Group By Quantity
+              </h4>
+              <div class="chart-container" style="flex: 1; min-height: 550px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; background: #fff; position: relative;">
+                <canvas id="chart-sku-group"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- RETURN MANAGEMENT VIEW -->
+      <div id="return-view" style="display: none;">
+        <!-- KPI ROW -->
+        <section class="rtn-kpi-row">
+          <!-- Card 1: On Progress -->
+          <div id="rtn-card-onprogress" class="dashboard-card rtn-kpi-card" style="border-radius: 16px; border: 1px solid rgba(79, 70, 229, 0.15) !important; background: #ffffff; box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.05); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; min-height: 145px; position: relative; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+            <!-- Top section: title and trend badge -->
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(79, 70, 229, 0.1); color: #4f46e5; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold;">⏳</div>
+                <span style="font-size: 11px; font-weight: 800; color: #4f46e5; letter-spacing: 0.8px; text-transform: uppercase;">ON PROGRESS</span>
+              </div>
+              <span id="rtn-trend-onprogress-badge" class="rtn-trend-badge neutral">0%</span>
+            </div>
+            <!-- Middle section: large invoice number -->
+            <div style="margin-top: 15px; display: flex; flex-direction: column;">
+              <span style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Jumlah Invoice</span>
+              <span class="kpi-val" id="rtn-kpi-onprogress-invoice" style="font-size: 34px !important; font-weight: 800; color: #1e1b4b; line-height: 1;">0</span>
+            </div>
+            <!-- Bottom right section: total qty scope -->
+            <div style="position: absolute; bottom: 15px; right: 15px; display: flex; align-items: center;">
+              <div style="background: rgba(79, 70, 229, 0.06); border: 1px dashed rgba(79, 70, 229, 0.2); padding: 6px 12px; border-radius: 12px; display: flex; align-items: center; gap: 6px; box-shadow: inset 0 2px 4px rgba(79, 70, 229, 0.02);">
+                <i class="fa-solid fa-boxes-stacked" style="color: #4f46e5; font-size: 12px;"></i>
+                <span style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Qty:</span>
+                <span style="font-size: 15px; font-weight: 800; color: #4f46e5;" id="rtn-kpi-onprogress-qty">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Claim 3PL -->
+          <div id="rtn-card-claim3pl" class="dashboard-card rtn-kpi-card" style="border-radius: 16px; border: 1px solid rgba(217, 119, 6, 0.15) !important; background: #ffffff; box-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.05); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; min-height: 145px; position: relative; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+            <!-- Top section: title and trend badge -->
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(217, 119, 6, 0.1); color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold;">🚚</div>
+                <span style="font-size: 11px; font-weight: 800; color: #d97706; letter-spacing: 0.8px; text-transform: uppercase;">CLAIM 3PL</span>
+              </div>
+              <span id="rtn-trend-claim3pl-badge" class="rtn-trend-badge neutral">0%</span>
+            </div>
+            <!-- Middle section: large invoice number -->
+            <div style="margin-top: 15px; display: flex; flex-direction: column;">
+              <span style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Jumlah Invoice</span>
+              <span class="kpi-val" id="rtn-kpi-claim3pl-invoice" style="font-size: 34px !important; font-weight: 800; color: #451a03; line-height: 1;">0</span>
+            </div>
+            <!-- Bottom right section: total qty scope -->
+            <div style="position: absolute; bottom: 15px; right: 15px; display: flex; align-items: center;">
+              <div style="background: rgba(217, 119, 6, 0.06); border: 1px dashed rgba(217, 119, 6, 0.2); padding: 6px 12px; border-radius: 12px; display: flex; align-items: center; gap: 6px; box-shadow: inset 0 2px 4px rgba(217, 119, 6, 0.02);">
+                <i class="fa-solid fa-boxes-stacked" style="color: #d97706; font-size: 12px;"></i>
+                <span style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Qty:</span>
+                <span style="font-size: 15px; font-weight: 800; color: #d97706;" id="rtn-kpi-claim3pl-qty">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: SO Return -->
+          <div id="rtn-card-soreturn" class="dashboard-card rtn-kpi-card" style="border-radius: 16px; border: 1px solid rgba(13, 148, 136, 0.15) !important; background: #ffffff; box-shadow: 0 10px 25px -5px rgba(13, 148, 136, 0.05); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; min-height: 145px; position: relative; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+            <!-- Top section: title and trend badge -->
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(13, 148, 136, 0.1); color: #0d9488; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold;">🔄</div>
+                <span style="font-size: 11px; font-weight: 800; color: #0d9488; letter-spacing: 0.8px; text-transform: uppercase;">SO RETURN</span>
+              </div>
+              <span id="rtn-trend-soreturn-badge" class="rtn-trend-badge neutral">0%</span>
+            </div>
+            <!-- Middle section: large invoice number -->
+            <div style="margin-top: 15px; display: flex; flex-direction: column;">
+              <span style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Jumlah Invoice</span>
+              <span class="kpi-val" id="rtn-kpi-soreturn-invoice" style="font-size: 34px !important; font-weight: 800; color: #042f2e; line-height: 1;">0</span>
+            </div>
+            <!-- Bottom right section: total qty scope -->
+            <div style="position: absolute; bottom: 15px; right: 15px; display: flex; align-items: center;">
+              <div style="background: rgba(13, 148, 136, 0.06); border: 1px dashed rgba(13, 148, 136, 0.2); padding: 6px 12px; border-radius: 12px; display: flex; align-items: center; gap: 6px; box-shadow: inset 0 2px 4px rgba(13, 148, 136, 0.02);">
+                <i class="fa-solid fa-boxes-stacked" style="color: #0d9488; font-size: 12px;"></i>
+                <span style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Qty:</span>
+                <span style="font-size: 15px; font-weight: 800; color: #0d9488;" id="rtn-kpi-soreturn-qty">0</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TREND CHART -->
+        <section class="dashboard-card" style="margin-top: 20px;">
           <div class="card-header">
             <h3 class="card-header-title">
-              <i class="fa-solid fa-chart-line" style="color: var(--warning);"></i>
-              TOTAL QTY HARIAN
+              <i class="fa-solid fa-chart-line" style="color: var(--primary-accent);"></i>
+              TREND RETURN HARIAN (QTY)
             </h3>
-            <span class="card-header-badge" id="order-chart-badge">30 Hari Terakhir</span>
           </div>
           <div class="chart-container-280">
-            <canvas id="chart-order-bulan"></canvas>
+            <canvas id="chart-rtn-trend"></canvas>
           </div>
-        </div>
+        </section>
 
-      </section>
-
-      <!-- SECTION 3 — SKU DATA (Table & Group Chart) -->
-      <section class="dashboard-card" style="grid-column: span 12;">
-        <div class="card-header">
-          <h3 class="card-header-title">
-            <i class="fa-solid fa-cubes" style="color: var(--purple);"></i>
-            TOP 10 SKU & SKU GROUP BY QTY
-          </h3>
-          <div class="tab-group" id="sku-week-tabs" style="display: none;">
-            <button class="tab-btn active" data-week="1">Week 1</button>
-            <button class="tab-btn" data-week="2">Week 2</button>
-            <button class="tab-btn" data-week="3">Week 3</button>
-            <button class="tab-btn" data-week="4">Week 4</button>
-          </div>
-        </div>
-        
-        <div class="sku-content-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 24px; margin-top: 15px; align-items: stretch;">
-          <!-- Left: Table -->
-          <div class="table-card" style="display: flex; flex-direction: column; height: 100%;">
-            <h4 style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-              <span style="width: 8px; height: 8px; background: var(--purple); border-radius: 2px;"></span>
-              Top 10 SKU By Quantity
-            </h4>
-            <div class="table-container" style="flex: 1; min-height: 550px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; overflow: hidden;">
-              <table class="data-table" id="sku-data-table">
-                <thead>
-                  <tr>
-                    <th style="padding: 12px 15px; font-size: 14px;">No</th>
-                    <th style="padding: 12px 15px; font-size: 14px;">SKU</th>
-                    <th style="padding: 12px 15px; font-size: 14px;">Deskripsi</th>
-                    <th style="padding: 12px 15px; font-size: 14px; text-align: right;">Qty</th>
-                  </tr>
-                </thead>
-                <tbody id="sku-table-body">
-                  <tr>
-                    <td colspan="4" style="text-align: center; padding: 100px 20px; color: #94a3b8;">Memuat data SKU...</td>
-                  </tr>
-                </tbody>
-              </table>
+        <!-- SUMMARY TABLE SECTION -->
+        <section class="dashboard-card" style="margin-top: 20px; border: 2px solid #e3e8ef;" id="rtn-summary-section">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 15px;">
+            <div>
+              <h3 class="card-header-title" style="margin: 0; font-size: 15px; display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-file-invoice" style="color: var(--purple); font-size: 18px;"></i>
+                Detail Barang Return
+              </h3>
             </div>
+            
+            <!-- Actions -->
+            <button onclick="window.print()" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; background: #4f46e5; border-radius: 6px; padding: 6px 12px; color: white; border: none; font-weight: 600; font-size: 11px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#3730a3'" onmouseout="this.style.background='#4f46e5'" id="btn-print-report">
+              <i class="fa-solid fa-print"></i> Cetak Raport / Simpan PDF
+            </button>
           </div>
 
-          <!-- Right: Group Chart -->
-          <div class="chart-card" style="display: flex; flex-direction: column; height: 100%;">
-            <h4 style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-              <span style="width: 8px; height: 8px; background: #3b82f6; border-radius: 2px;"></span>
-              Top SKU Group By Quantity
-            </h4>
-            <div class="chart-container" style="flex: 1; min-height: 550px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; background: #fff; position: relative;">
-              <canvas id="chart-sku-group"></canvas>
+          <!-- RAPORT TABLES CONTAINER (SIDE-BY-SIDE GRID OR SELECTIVE DISPLAY) -->
+          <div id="rtn-tables-grid-container" style="display: grid; gap: 16px; width: 100%;">
+            
+            <!-- ON PROGRESS TABLE CARD -->
+            <div id="rtn-section-onprogress" style="border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.01); display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 8px; cursor: pointer; user-select: none;" onclick="toggleRtnAccordion('onprogress')">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #4f46e5; display: inline-block;"></span>
+                  <h4 style="font-size: 12px; font-weight: 700; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">ON PROGRESS</h4>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 10px; font-weight: 700; background: rgba(79, 70, 229, 0.08); color: #4f46e5; padding: 1px 6px; border-radius: 10px;" id="rtn-header-badge-onprogress">0 Inv</span>
+                  <i class="fa-solid fa-chevron-down" id="rtn-arrow-onprogress" style="font-size: 11px; color: #64748b; transition: transform 0.2s;"></i>
+                </div>
+              </div>
+
+              <!-- Sorting Dropdown -->
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
+                <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
+                  <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
+                </span>
+                <select id="rtn-sort-select-onprogress" onchange="changeRtnSort('onprogress', this.value)" style="font-size: 10px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
+                  <option value="aging_desc">Aging Terlama</option>
+                  <option value="aging_asc">Aging Tercepat</option>
+                  <option value="qty_desc">Qty Terbanyak</option>
+                  <option value="qty_asc">Qty Tersedikit</option>
+                  <option value="invoice_asc">No. Invoice</option>
+                </select>
+              </div>
+
+              <div class="table-container" id="rtn-collapse-onprogress" style="overflow-x: auto; flex-grow: 1;">
+                <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                  <thead>
+                    <tr style="background: #f8fafc;">
+                      <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
+                      <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice & Aging</th>
+                      <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
+                      <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rtn-table-onprogress-body">
+                    <tr>
+                      <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;">Memuat data...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
+
+            <!-- CLAIM 3PL TABLE CARD -->
+            <div id="rtn-section-claim3pl" style="border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.01); display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 8px; cursor: pointer; user-select: none;" onclick="toggleRtnAccordion('claim3pl')">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #d97706; display: inline-block;"></span>
+                  <h4 style="font-size: 12px; font-weight: 700; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">CLAIM 3PL</h4>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 10px; font-weight: 700; background: rgba(217, 119, 6, 0.08); color: #d97706; padding: 1px 6px; border-radius: 10px;" id="rtn-header-badge-claim3pl">0 Inv</span>
+                  <i class="fa-solid fa-chevron-down" id="rtn-arrow-claim3pl" style="font-size: 11px; color: #64748b; transition: transform 0.2s;"></i>
+                </div>
+              </div>
+
+              <!-- Sorting Dropdown -->
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
+                <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
+                  <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
+                </span>
+                <select id="rtn-sort-select-claim3pl" onchange="changeRtnSort('claim3pl', this.value)" style="font-size: 10px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
+                  <option value="aging_desc">Aging Terlama</option>
+                  <option value="aging_asc">Aging Tercepat</option>
+                  <option value="qty_desc">Qty Terbanyak</option>
+                  <option value="qty_asc">Qty Tersedikit</option>
+                  <option value="invoice_asc">No. Invoice</option>
+                </select>
+              </div>
+
+              <div class="table-container" id="rtn-collapse-claim3pl" style="overflow-x: auto; flex-grow: 1;">
+                <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                  <thead>
+                    <tr style="background: #f8fafc;">
+                      <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
+                      <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice & Aging</th>
+                      <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
+                      <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rtn-table-claim3pl-body">
+                    <tr>
+                      <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;">Memuat data...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- SO RETURN TABLE CARD -->
+            <div id="rtn-section-soreturn" style="border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.01); display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 8px; cursor: pointer; user-select: none;" onclick="toggleRtnAccordion('soreturn')">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #0d9488; display: inline-block;"></span>
+                  <h4 style="font-size: 12px; font-weight: 700; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">SO RETURN</h4>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 10px; font-weight: 700; background: rgba(13, 148, 136, 0.08); color: #0d9488; padding: 1px 6px; border-radius: 10px;" id="rtn-header-badge-soreturn">0 Inv</span>
+                  <i class="fa-solid fa-chevron-down" id="rtn-arrow-soreturn" style="font-size: 11px; color: #64748b; transition: transform 0.2s;"></i>
+                </div>
+              </div>
+
+              <!-- Sorting Dropdown -->
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
+                <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
+                  <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
+                </span>
+                <select id="rtn-sort-select-soreturn" onchange="changeRtnSort('soreturn', this.value)" style="font-size: 10px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
+                  <option value="aging_desc">Aging Terlama</option>
+                  <option value="aging_asc">Aging Tercepat</option>
+                  <option value="qty_desc">Qty Terbanyak</option>
+                  <option value="qty_asc">Qty Tersedikit</option>
+                  <option value="invoice_asc">No. Invoice</option>
+                </select>
+              </div>
+
+              <div class="table-container" id="rtn-collapse-soreturn" style="overflow-x: auto; flex-grow: 1;">
+                <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                  <thead>
+                    <tr style="background: #f8fafc;">
+                      <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
+                      <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice & Aging</th>
+                      <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
+                      <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rtn-table-soreturn-body">
+                    <tr>
+                      <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;">Memuat data...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+
+    </main>
 
 
 
@@ -1342,15 +1745,44 @@
     let activeKPIs = { ...baselineKPIs };
     let chart3PlPie = null;
     let currentWeekSku = "1";
+    let currentView = 'dashboard';
 
-    // Google Sheets URLs (fetched directly from client-side via Google's CORS-enabled gviz/tq API)
+    // Google Sheets URLs
     const SHEET_SLA_URL = "https://docs.google.com/spreadsheets/d/1AXqJ7plwv7p3KVD8VQ7d_EY-EX87RPJGlIDGxam_6Fo/gviz/tq?tqx=out:csv&gid=1894847581";
     const SHEET_B_URL = "https://docs.google.com/spreadsheets/d/1AXqJ7plwv7p3KVD8VQ7d_EY-EX87RPJGlIDGxam_6Fo/gviz/tq?tqx=out:csv&gid=263708152";
     const SHEET_SKU_URL = "https://docs.google.com/spreadsheets/d/1AXqJ7plwv7p3KVD8VQ7d_EY-EX87RPJGlIDGxam_6Fo/gviz/tq?tqx=out:csv&gid=1103038378";
+    const SHEET_RETURN_URL = "https://docs.google.com/spreadsheets/d/1T9uV6PyiKflDaruPYbMid5WOooPlHWZP5nbxpodRGsA/gviz/tq?tqx=out:csv&gid=0";
 
     let parsedSheetSLA = null;
     let parsedSheetB = null;
     let parsedSheetSKU = null;
+    let parsedSheetReturn = null;
+    
+    function switchView(view) {
+      currentView = view;
+      
+      // Reset month filter and status filter
+      document.getElementById('filter-month').value = "";
+      activeRtnStatusFilter = 'ALL';
+      
+      document.getElementById('dashboard-view').style.display = view === 'dashboard' ? 'block' : 'none';
+      document.getElementById('return-view').style.display = view === 'return' ? 'block' : 'none';
+      
+      // Toggle month filter visibility
+      document.getElementById('month-filter-group').style.display = view === 'return' ? 'flex' : 'none';
+      
+      // Hide SLA box in Return view
+      document.getElementById('filter-sla-info-box').style.display = view === 'dashboard' ? 'flex' : 'none';
+      
+      document.getElementById('nav-dashboard').classList.toggle('active', view === 'dashboard');
+      document.getElementById('nav-return').classList.toggle('active', view === 'return');
+      
+      // Auto-adjust date filter inputs to fit the active tab's dataset range
+      updateFilterDateRangeForActiveView();
+
+      // Auto-apply filters on view switch
+      applyMainFilters();
+    }
 
     // Simulated Monthly Data for dynamic trends comparison when offline/simulated
     const simMonthlyData = [
@@ -1578,33 +2010,24 @@
     async function fetchAndParseAllData() {
       showToast("Menghubungkan ke Google Sheets...", "info");
       try {
-        const [resSLA, resB, resSKU] = await Promise.all([
-          fetch(SHEET_SLA_URL).then(r => {
-            if (!r.ok) throw new Error("SLA: " + r.status);
-            return r.text();
-          }),
-          fetch(SHEET_B_URL).then(r => {
-            if (!r.ok) throw new Error("B: " + r.status);
-            return r.text();
-          }),
-          fetch(SHEET_SKU_URL).then(r => {
-            if (!r.ok) throw new Error("SKU: " + r.status);
-            return r.text();
-          })
+        const [resSLA, resB, resSKU, resReturn] = await Promise.all([
+          fetch(SHEET_SLA_URL).then(r => r.ok ? r.text() : ""),
+          fetch(SHEET_B_URL).then(r => r.ok ? r.text() : ""),
+          fetch(SHEET_SKU_URL).then(r => r.ok ? r.text() : ""),
+          fetch(SHEET_RETURN_URL).then(r => r.ok ? r.text() : "")
         ]);
 
-        parsedSheetSLA = parseCSV(resSLA);
-        parsedSheetB = parseCSV(resB);
-        parsedSheetSKU = parseCSV(resSKU);
+        parsedSheetSLA = resSLA ? parseCSV(resSLA) : null;
+        parsedSheetB = resB ? parseCSV(resB) : null;
+        parsedSheetSKU = resSKU ? parseCSV(resSKU) : null;
+        parsedSheetReturn = resReturn ? parseCSV(resReturn) : null;
 
-        // Update default date filters based on real data ranges
         setDefaultFilterDate();
-
-        showToast("Berhasil sinkronisasi dengan Google Sheets!", "success");
-        updateDashboardWithRealData();
+        showToast("Sinkronisasi Berhasil!", "success");
+        applyMainFilters(); 
       } catch (error) {
         console.error("Error fetching Google Sheets:", error);
-        showToast("Gagal memuat Google Sheets. Pastikan Spreadsheet diset ke public ('Anyone with the link can view'). Menampilkan data simulasi.", "warning");
+        showToast("Gagal memuat Google Sheets. Menggunakan data simulasi.", "warning");
         updateDashboardWithSimulatedData();
       }
     }
@@ -1613,6 +2036,11 @@
     let chartSlaBulan = null;
     let chartOrderBulan = null;
     let chartSkuGroup = null;
+    let chartRtnTrend = null;
+    let activeRtnStatusFilter = 'ALL'; // Can be 'ALL', 'ON PROGRESS', 'CLAIM 3PL', or 'SO RETURN'
+    let sortOnProgress = 'aging_desc';
+    let sortClaim3PL = 'aging_desc';
+    let sortSoReturn = 'aging_desc';
 
     // Helper functions for localized date & time
     function getIndonesianDayName(dayIndex) {
@@ -1726,6 +2154,60 @@
       // Default fallback for simulation or initial load
       document.getElementById('filter-date-start').value = "2026-06-01";
       document.getElementById('filter-date-end').value = "2026-06-30";
+    }
+
+    // Dynamic Filter Date Range updater depending on currentView's active dataset
+    function updateFilterDateRangeForActiveView() {
+      if (currentView === 'dashboard') {
+        if (parsedSheetB && parsedSheetB.length > 1) {
+          let minDate = null;
+          let maxDate = null;
+          for (let i = 1; i < parsedSheetB.length; i++) {
+            let row = parsedSheetB[i];
+            if (!row || !row[0] || row[0].trim() === "") continue;
+            let d = parseDateFromStr(row[0]);
+            if (d && !isNaN(d.getTime())) {
+              if (!minDate || d < minDate) minDate = d;
+              if (!maxDate || d > maxDate) maxDate = d;
+            }
+          }
+          if (minDate && maxDate) {
+            document.getElementById('filter-date-start').value = formatDateToInputString(minDate);
+            document.getElementById('filter-date-end').value = formatDateToInputString(maxDate);
+          }
+        } else {
+          document.getElementById('filter-date-start').value = "2026-06-01";
+          document.getElementById('filter-date-end').value = "2026-06-30";
+        }
+      } else if (currentView === 'return') {
+        if (parsedSheetReturn && parsedSheetReturn.length > 1) {
+          let minDate = null;
+          let maxDate = null;
+          const COL_DATE = 2;
+          for (let i = 1; i < parsedSheetReturn.length; i++) {
+            let row = parsedSheetReturn[i];
+            if (!row || row.length <= COL_DATE) continue;
+            let rowDate = null;
+            let dateVal = row[COL_DATE];
+            if (typeof dateVal === 'number') {
+              rowDate = new Date((dateVal - 25569) * 86400 * 1000);
+            } else if (dateVal) {
+              rowDate = parseDateFromStr(dateVal.toString());
+            }
+            if (rowDate && !isNaN(rowDate.getTime())) {
+              if (!minDate || rowDate < minDate) minDate = rowDate;
+              if (!maxDate || rowDate > maxDate) maxDate = rowDate;
+            }
+          }
+          if (minDate && maxDate) {
+            document.getElementById('filter-date-start').value = formatDateToInputString(minDate);
+            document.getElementById('filter-date-end').value = formatDateToInputString(maxDate);
+          }
+        } else {
+          document.getElementById('filter-date-start').value = "2025-01-01";
+          document.getElementById('filter-date-end').value = "2025-01-31";
+        }
+      }
     }
 
     // Custom Toast Notifications
@@ -2207,6 +2689,7 @@
 
       const dateStartVal = document.getElementById('filter-date-start').value;
       const dateEndVal = document.getElementById('filter-date-end').value;
+      const filterMonth = document.getElementById('filter-month').value;
 
       const dateStart = dateStartVal ? parseInputDate(dateStartVal) : null;
       if (dateStart) dateStart.setHours(0,0,0,0);
@@ -2289,8 +2772,10 @@
 
         realMonthlyKPIs[month].orders += rowOrders;
         realMonthlyKPIs[month].cases += rowCases;
-        realMonthlyKPIs[month].qty += rowQty;
         realMonthlyKPIs[month].days += 1;
+
+        // FILTER CONDITION BY MONTH
+        if (filterMonth !== "" && month.toString() !== filterMonth) continue;
 
         // FILTER CONDITION BY DATE RANGE
         let tempDate = new Date(rowDate);
@@ -2361,6 +2846,7 @@
 
       const dateStartVal = document.getElementById('filter-date-start').value;
       const dateEndVal = document.getElementById('filter-date-end').value;
+      const filterMonth = document.getElementById('filter-month').value;
 
       const dateStart = dateStartVal ? parseInputDate(dateStartVal) : null;
       if (dateStart) dateStart.setHours(0,0,0,0);
@@ -2374,6 +2860,9 @@
 
         let rowDate = parseDateFromStr(row[0]);
         if (!rowDate) continue;
+
+        // FILTER CONDITION BY MONTH
+        if (filterMonth !== "" && rowDate.getMonth().toString() !== filterMonth) continue;
 
         // FILTER CONDITION BY DATE RANGE
         let tempDate = new Date(rowDate);
@@ -2506,10 +2995,644 @@
 
     // APPLY MAIN FILTER ROW
     function applyMainFilters() {
-      if (parsedSheetSLA && parsedSheetB) {
-        updateDashboardWithRealData();
+      showToast("Menerapkan kriteria pencarian...", "info");
+      
+      if (currentView === 'dashboard') {
+        if (parsedSheetSLA && parsedSheetB) {
+          updateDashboardWithRealData();
+        } else {
+          applyMainFiltersSimulated();
+        }
+      } else if (currentView === 'return') {
+        if (parsedSheetReturn) {
+          updateReturnView();
+        } else {
+          showToast("Data Return tidak tersedia.", "warning");
+        }
+      }
+    }
+
+    function updateReturnView() {
+      if (!parsedSheetReturn || parsedSheetReturn.length <= 1) return;
+      
+      const dateStartVal = document.getElementById('filter-date-start').value;
+      const dateEndVal = document.getElementById('filter-date-end').value;
+      const filterMonth = document.getElementById('filter-month').value;
+      
+      const dateStart = dateStartVal ? parseInputDate(dateStartVal) : null;
+      const dateEnd = dateEndVal ? parseInputDate(dateEndVal) : null;
+
+      // Find min and max date in return sheet to serve as fallback
+      let sheetMinDate = null;
+      let sheetMaxDate = null;
+      const COL_DATE = 2;
+      const COL_INVOICE = 3;
+      const COL_QTY = 8;
+      const COL_STATUS = 9;
+      const COL_SKU = 4;
+      const COL_DESCRIPTION = 5;
+      const COL_AGING_CAT = 1;
+
+      for (let i = 1; i < parsedSheetReturn.length; i++) {
+        const row = parsedSheetReturn[i];
+        if (!row || row.length <= COL_DATE) continue;
+        let rowDate = null;
+        let dateVal = row[COL_DATE];
+        if (typeof dateVal === 'number') {
+          rowDate = new Date((dateVal - 25569) * 86400 * 1000);
+        } else if (dateVal) {
+          rowDate = parseDateFromStr(dateVal.toString());
+        }
+        if (rowDate && !isNaN(rowDate.getTime())) {
+          if (!sheetMinDate || rowDate < sheetMinDate) sheetMinDate = new Date(rowDate);
+          if (!sheetMaxDate || rowDate > sheetMaxDate) sheetMaxDate = new Date(rowDate);
+        }
+      }
+
+      // Establish current start/end times
+      let currentStart = dateStart ? new Date(dateStart) : (sheetMinDate ? new Date(sheetMinDate) : new Date("2025-01-01"));
+      currentStart.setHours(0,0,0,0);
+      let currentEnd = dateEnd ? new Date(dateEnd) : (sheetMaxDate ? new Date(sheetMaxDate) : new Date("2025-12-31"));
+      currentEnd.setHours(23,59,59,999);
+
+      // Overwrite if filterMonth is specified (though date inputs are now synchronized, we keep this as a robust fallback)
+      if (filterMonth !== "") {
+        const activeYear = sheetMaxDate ? sheetMaxDate.getFullYear() : 2026;
+        const mIdx = parseInt(filterMonth, 10);
+        currentStart = new Date(activeYear, mIdx, 1, 0, 0, 0, 0);
+        currentEnd = new Date(activeYear, mIdx + 1, 0, 23, 59, 59, 999);
+      }
+
+      // Compute previous period of equal duration for trend calculations
+      const diffMs = currentEnd.getTime() - currentStart.getTime();
+      let prevStart = new Date(currentStart.getTime() - diffMs - 1000);
+      prevStart.setHours(0,0,0,0);
+      let prevEnd = new Date(currentStart.getTime() - 1000);
+      prevEnd.setHours(23,59,59,999);
+
+      // Initialize trendMap with 0 for every single day in the current period to ensure a continuous daily line trend
+      let trendMap = {};
+      let iterDate = new Date(currentStart);
+      let safetyCounter = 0;
+      while (iterDate <= currentEnd && safetyCounter < 366) {
+        const dateKey = `${iterDate.getFullYear()}-${iterDate.getMonth()+1}-${iterDate.getDate()}`;
+        trendMap[dateKey] = 0;
+        iterDate.setDate(iterDate.getDate() + 1);
+        safetyCounter++;
+      }
+
+      let totalInvoice = 0;
+      let totalQty = 0;
+      let statusMap = {};
+      let summaryMap = {};
+      
+      const invoicesSet = new Set();
+      const today = new Date();
+
+      const onProgressItems = [];
+      const claim3PLItems = [];
+      const soReturnItems = [];
+
+      // New status-specific sets, row counts and qty accumulators for CURRENT period
+      const onProgressInvoicesCur = new Set();
+      let onProgressInvoiceCountCur = 0;
+      let onProgressQtyCur = 0;
+
+      const claim3PLInvoicesCur = new Set();
+      let claim3PLInvoiceCountCur = 0;
+      let claim3PLQtyCur = 0;
+
+      const soReturnInvoicesCur = new Set();
+      let soReturnInvoiceCountCur = 0;
+      let soReturnQtyCur = 0;
+
+      // Status-specific sets, row counts and qty accumulators for PREVIOUS period (to calculate trends)
+      const onProgressInvoicesPrev = new Set();
+      let onProgressInvoiceCountPrev = 0;
+      let onProgressQtyPrev = 0;
+
+      const claim3PLInvoicesPrev = new Set();
+      let claim3PLInvoiceCountPrev = 0;
+      let claim3PLQtyPrev = 0;
+
+      const soReturnInvoicesPrev = new Set();
+      let soReturnInvoiceCountPrev = 0;
+      let soReturnQtyPrev = 0;
+
+      for (let i = 1; i < parsedSheetReturn.length; i++) {
+        const row = parsedSheetReturn[i];
+        if (!row || row.length <= Math.max(COL_DATE, COL_INVOICE, COL_STATUS, COL_QTY)) continue;
+
+        let rowDate = null;
+        let dateVal = row[COL_DATE];
+        if (typeof dateVal === 'number') {
+          rowDate = new Date((dateVal - 25569) * 86400 * 1000);
+        } else if (dateVal) {
+          rowDate = parseDateFromStr(dateVal.toString());
+        }
+        
+        if (!rowDate || isNaN(rowDate.getTime())) continue;
+
+        const rowTime = rowDate.getTime();
+        const invoice = (row[COL_INVOICE] || "").toString().trim();
+        const status = (row[COL_STATUS] || "Unknown").toString().trim();
+        const qty = safeParseFloat(row[COL_QTY]);
+        const statusUpper = status.toUpperCase().trim();
+
+        // Check if row falls in CURRENT period
+        if (rowTime >= currentStart.getTime() && rowTime <= currentEnd.getTime()) {
+          const sku = (row[COL_SKU] || "").toString().trim();
+          const description = (row[COL_DESCRIPTION] || "").toString().trim();
+          const agingCat = (row[COL_AGING_CAT] || "").toString().trim();
+          const agingDays = Math.max(0, Math.floor((today - rowDate) / (1000 * 60 * 60 * 24)));
+
+          const itemObj = {
+            date: rowDate,
+            agingDays: agingDays,
+            agingCat: agingCat,
+            invoice: invoice,
+            sku: sku,
+            description: description,
+            qty: qty
+          };
+
+          if (statusUpper === 'ON PROGRESS') {
+            if (invoice) {
+              onProgressInvoicesCur.add(invoice);
+              onProgressInvoiceCountCur++;
+            }
+            onProgressQtyCur += qty;
+            onProgressItems.push(itemObj);
+          } else if (statusUpper === 'CLAIM 3PL') {
+            if (invoice) {
+              claim3PLInvoicesCur.add(invoice);
+              claim3PLInvoiceCountCur++;
+            }
+            claim3PLQtyCur += qty;
+            claim3PLItems.push(itemObj);
+          } else if (statusUpper === 'SO RETURN') {
+            if (invoice) {
+              soReturnInvoicesCur.add(invoice);
+              soReturnInvoiceCountCur++;
+            }
+            soReturnQtyCur += qty;
+            soReturnItems.push(itemObj);
+          }
+
+          // Apply status-specific filtering to trend and summary representations
+          if (activeRtnStatusFilter === 'ALL' || statusUpper === activeRtnStatusFilter) {
+            if (invoice) {
+              invoicesSet.add(invoice);
+            }
+            totalQty += qty;
+
+            // Status Map (using raw status)
+            statusMap[status] = (statusMap[status] || 0) + qty;
+
+            // Trend Map
+            const dateKey = `${rowDate.getFullYear()}-${rowDate.getMonth()+1}-${rowDate.getDate()}`;
+            trendMap[dateKey] = (trendMap[dateKey] || 0) + qty;
+
+            // Summary Map
+            if (!summaryMap[status]) {
+              summaryMap[status] = { invoices: new Set(), rowCount: 0, qty: 0, minDate: new Date(rowDate) };
+            }
+            summaryMap[status].invoices.add(invoice);
+            summaryMap[status].rowCount++;
+            summaryMap[status].qty += qty;
+            if (rowDate < summaryMap[status].minDate) {
+              summaryMap[status].minDate = new Date(rowDate);
+            }
+          }
+        }
+        // Check if row falls in PREVIOUS period for percentage trends
+        else if (rowTime >= prevStart.getTime() && rowTime <= prevEnd.getTime()) {
+          if (statusUpper === 'ON PROGRESS') {
+            if (invoice) {
+              onProgressInvoicesPrev.add(invoice);
+              onProgressInvoiceCountPrev++;
+            }
+            onProgressQtyPrev += qty;
+          } else if (statusUpper === 'CLAIM 3PL') {
+            if (invoice) {
+              claim3PLInvoicesPrev.add(invoice);
+              claim3PLInvoiceCountPrev++;
+            }
+            claim3PLQtyPrev += qty;
+          } else if (statusUpper === 'SO RETURN') {
+            if (invoice) {
+              soReturnInvoicesPrev.add(invoice);
+              soReturnInvoiceCountPrev++;
+            }
+            soReturnQtyPrev += qty;
+          }
+        }
+      }
+
+      totalInvoice = invoicesSet.size;
+      
+      // Update our redesigned KPI cards (using invoiceCount to match the exact Excel row frequencies)
+      animateValue('rtn-kpi-onprogress-invoice', 0, onProgressInvoiceCountCur, 1000);
+      animateValue('rtn-kpi-onprogress-qty', 0, onProgressQtyCur, 1000);
+
+      animateValue('rtn-kpi-claim3pl-invoice', 0, claim3PLInvoiceCountCur, 1000);
+      animateValue('rtn-kpi-claim3pl-qty', 0, claim3PLQtyCur, 1000);
+
+      animateValue('rtn-kpi-soreturn-invoice', 0, soReturnInvoiceCountCur, 1000);
+      animateValue('rtn-kpi-soreturn-qty', 0, soReturnQtyCur, 1000);
+
+      // Percentage Change Calculation Helper
+      function calculatePercentageChange(curr, prev) {
+        if (prev === 0) {
+          return curr > 0 ? { val: "100", isUp: true, isNew: true } : { val: "0", isUp: false, isNew: false };
+        }
+        const diff = curr - prev;
+        const pct = (diff / prev) * 100;
+        return {
+          val: Math.abs(pct).toFixed(1),
+          isUp: pct >= 0,
+          isNew: false
+        };
+      }
+
+      function updateTrendBadge(elemId, currentVal, prevVal) {
+        const elem = document.getElementById(elemId);
+        if (!elem) return;
+        
+        const pctObj = calculatePercentageChange(currentVal, prevVal);
+        if (pctObj.isNew) {
+          elem.className = "rtn-trend-badge up";
+          elem.innerHTML = `<i class="fa-solid fa-arrow-trend-up"></i> Baru`;
+        } else if (currentVal === prevVal) {
+          elem.className = "rtn-trend-badge neutral";
+          elem.innerHTML = `<i class="fa-solid fa-minus"></i> 0%`;
+        } else if (pctObj.isUp) {
+          elem.className = "rtn-trend-badge up";
+          elem.innerHTML = `<i class="fa-solid fa-arrow-trend-up"></i> +${pctObj.val}%`;
+        } else {
+          elem.className = "rtn-trend-badge down";
+          elem.innerHTML = `<i class="fa-solid fa-arrow-trend-down"></i> -${pctObj.val}%`;
+        }
+      }
+
+      // Update Trend Badges based on Invoice Count
+      updateTrendBadge('rtn-trend-onprogress-badge', onProgressInvoiceCountCur, onProgressInvoiceCountPrev);
+      updateTrendBadge('rtn-trend-claim3pl-badge', claim3PLInvoiceCountCur, claim3PLInvoiceCountPrev);
+      updateTrendBadge('rtn-trend-soreturn-badge', soReturnInvoiceCountCur, soReturnInvoiceCountPrev);
+
+      // Update Trend Chart
+      updateReturnTrendChart(trendMap);
+
+      // Apply KPI card borders, shadows and dimming effects depending on selection state
+      updateRtnKpiCardSelectionStyles();
+
+      // Sort items dynamically based on dropdown values
+      const sortItems = (items, sortOpt) => {
+        if (sortOpt === 'aging_desc') {
+          items.sort((a, b) => b.agingDays - a.agingDays);
+        } else if (sortOpt === 'aging_asc') {
+          items.sort((a, b) => a.agingDays - b.agingDays);
+        } else if (sortOpt === 'qty_desc') {
+          items.sort((a, b) => b.qty - a.qty);
+        } else if (sortOpt === 'qty_asc') {
+          items.sort((a, b) => a.qty - b.qty);
+        } else if (sortOpt === 'invoice_asc') {
+          items.sort((a, b) => (a.invoice || '').localeCompare(b.invoice || ''));
+        }
+      };
+
+      sortItems(onProgressItems, sortOnProgress);
+      sortItems(claim3PLItems, sortClaim3PL);
+      sortItems(soReturnItems, sortSoReturn);
+
+      // Keep dropdown selections visually in sync with the state variables
+      const syncDropdownValue = (id, val) => {
+        const elem = document.getElementById(id);
+        if (elem) elem.value = val;
+      };
+      syncDropdownValue('rtn-sort-select-onprogress', sortOnProgress);
+      syncDropdownValue('rtn-sort-select-claim3pl', sortClaim3PL);
+      syncDropdownValue('rtn-sort-select-soreturn', sortSoReturn);
+
+      const updateBadgeText = (id, text) => {
+        const elem = document.getElementById(id);
+        if (elem) elem.textContent = text;
+      };
+
+      // Header Badges on each Table Card
+      updateBadgeText('rtn-header-badge-onprogress', `${onProgressInvoicesCur.size} Inv / ${onProgressQtyCur.toLocaleString('id-ID')} Pcs`);
+      updateBadgeText('rtn-header-badge-claim3pl', `${claim3PLInvoicesCur.size} Inv / ${claim3PLQtyCur.toLocaleString('id-ID')} Pcs`);
+      updateBadgeText('rtn-header-badge-soreturn', `${soReturnInvoicesCur.size} Inv / ${soReturnQtyCur.toLocaleString('id-ID')} Pcs`);
+
+      // Render Table Helper (combined, dense 4-column layout)
+      const renderDetailedTable = (tbodyId, items) => {
+        const tbody = document.getElementById(tbodyId);
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        if (items.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;"><i class="fa-solid fa-folder-open" style="font-size: 16px; display: block; margin-bottom: 4px; color: #cbd5e1;"></i> Tidak ada data</td></tr>`;
+        } else {
+          items.forEach((item, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td style="padding: 8px 6px; text-align: center; font-size: 10px; font-weight: 500; color: #64748b; border-bottom: 1px solid #f1f5f9;">${index + 1}</td>
+              <td style="padding: 8px 6px; border-bottom: 1px solid #f1f5f9;">
+                <div style="font-weight: 700; color: #1e293b; font-size: 10px;">${item.invoice}</div>
+                <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-top: 2px;">
+                  <span class="status-badge" style="background: ${item.agingDays > 30 ? '#fee2e2' : '#fef9c3'}; color: ${item.agingDays > 30 ? '#ef4444' : '#a16207'}; font-weight: 700; font-size: 8px; padding: 1px 4px; border-radius: 4px; line-height: 1;">${item.agingDays} H</span>
+                  <span style="font-size: 8px; color: #94a3b8; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${item.agingCat}">${item.agingCat}</span>
+                </div>
+              </td>
+              <td style="padding: 8px 6px; border-bottom: 1px solid #f1f5f9; max-width: 140px; overflow: hidden;">
+                <div style="font-weight: 700; color: #334155; font-size: 10px; font-family: var(--font-mono);">${item.sku}</div>
+                <div style="color: #64748b; font-size: 9px; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px;" title="${item.description}">${item.description}</div>
+              </td>
+              <td style="padding: 8px 6px; text-align: center; font-weight: 700; color: var(--primary-accent); font-size: 10px; border-bottom: 1px solid #f1f5f9;">${item.qty.toLocaleString('id-ID')}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      };
+
+      renderDetailedTable('rtn-table-onprogress-body', onProgressItems);
+      renderDetailedTable('rtn-table-claim3pl-body', claim3PLItems);
+      renderDetailedTable('rtn-table-soreturn-body', soReturnItems);
+
+      // Trigger Tab UI Layout update
+      updateReturnTabUI();
+    }
+
+    // Accordion state tracker for collapsible table dropdown lists
+    const rtnAccordionState = {
+      onprogress: true,
+      claim3pl: true,
+      soreturn: true
+    };
+
+    function toggleRtnAccordion(sectionId) {
+      const container = document.getElementById(`rtn-collapse-${sectionId}`);
+      const arrow = document.getElementById(`rtn-arrow-${sectionId}`);
+      if (!container || !arrow) return;
+      
+      rtnAccordionState[sectionId] = !rtnAccordionState[sectionId];
+      if (rtnAccordionState[sectionId]) {
+        container.style.display = 'block';
+        arrow.style.transform = 'rotate(0deg)';
       } else {
-        applyMainFiltersSimulated();
+        container.style.display = 'none';
+        arrow.style.transform = 'rotate(-90deg)';
+      }
+    }
+
+    // Sort trigger function called when table dropdown is changed
+    function changeRtnSort(sectionId, val) {
+      if (sectionId === 'onprogress') sortOnProgress = val;
+      else if (sectionId === 'claim3pl') sortClaim3PL = val;
+      else if (sectionId === 'soreturn') sortSoReturn = val;
+      
+      updateReturnView();
+    }
+
+    // Handles layout visibility and side-by-side layout of Return tables
+    function updateReturnTabUI() {
+      const gridContainer = document.getElementById('rtn-tables-grid-container');
+      const sectionOnProgress = document.getElementById('rtn-section-onprogress');
+      const sectionClaim3PL = document.getElementById('rtn-section-claim3pl');
+      const sectionSoReturn = document.getElementById('rtn-section-soreturn');
+
+      if (!gridContainer || !sectionOnProgress || !sectionClaim3PL || !sectionSoReturn) return;
+
+      gridContainer.style.display = 'grid';
+      gridContainer.style.gap = '16px';
+
+      if (activeRtnStatusFilter === 'ALL') {
+        sectionOnProgress.style.display = 'flex';
+        sectionClaim3PL.style.display = 'flex';
+        sectionSoReturn.style.display = 'flex';
+        
+        if (window.innerWidth >= 1200) {
+          gridContainer.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        } else if (window.innerWidth >= 768) {
+          gridContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        } else {
+          gridContainer.style.gridTemplateColumns = '1fr';
+        }
+      } else {
+        sectionOnProgress.style.display = activeRtnStatusFilter === 'ON PROGRESS' ? 'flex' : 'none';
+        sectionClaim3PL.style.display = activeRtnStatusFilter === 'CLAIM 3PL' ? 'flex' : 'none';
+        sectionSoReturn.style.display = activeRtnStatusFilter === 'SO RETURN' ? 'flex' : 'none';
+        gridContainer.style.gridTemplateColumns = '1fr';
+      }
+    }
+
+    // Responsive listener for column adjustments
+    window.addEventListener('resize', () => {
+      if (currentView === 'return') {
+        updateReturnTabUI();
+      }
+    });
+
+    function updateRtnKpiCardSelectionStyles() {
+      const cardOnProgress = document.getElementById('rtn-card-onprogress');
+      const cardClaim3PL = document.getElementById('rtn-card-claim3pl');
+      const cardSoReturn = document.getElementById('rtn-card-soreturn');
+      
+      if (!cardOnProgress || !cardClaim3PL || !cardSoReturn) return;
+      
+      const defaultBorderOnProgress = '1px solid rgba(79, 70, 229, 0.15)';
+      const defaultBorderClaim3PL = '1px solid rgba(217, 119, 6, 0.15)';
+      const defaultBorderSoReturn = '1px solid rgba(13, 148, 136, 0.15)';
+      const defaultShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.05)';
+      
+      if (activeRtnStatusFilter === 'ALL') {
+        cardOnProgress.style.border = defaultBorderOnProgress;
+        cardOnProgress.style.boxShadow = defaultShadow;
+        cardOnProgress.style.opacity = '1';
+        cardOnProgress.style.transform = 'none';
+        
+        cardClaim3PL.style.border = defaultBorderClaim3PL;
+        cardClaim3PL.style.boxShadow = defaultShadow;
+        cardClaim3PL.style.opacity = '1';
+        cardClaim3PL.style.transform = 'none';
+        
+        cardSoReturn.style.border = defaultBorderSoReturn;
+        cardSoReturn.style.boxShadow = defaultShadow;
+        cardSoReturn.style.opacity = '1';
+        cardSoReturn.style.transform = 'none';
+      } else {
+        // Dim unselected cards and scale them down slightly
+        cardOnProgress.style.opacity = '0.5';
+        cardOnProgress.style.border = '1px solid rgba(0, 0, 0, 0.06)';
+        cardOnProgress.style.boxShadow = 'none';
+        cardOnProgress.style.transform = 'scale(0.97)';
+        
+        cardClaim3PL.style.opacity = '0.5';
+        cardClaim3PL.style.border = '1px solid rgba(0, 0, 0, 0.06)';
+        cardClaim3PL.style.boxShadow = 'none';
+        cardClaim3PL.style.transform = 'scale(0.97)';
+        
+        cardSoReturn.style.opacity = '0.5';
+        cardSoReturn.style.border = '1px solid rgba(0, 0, 0, 0.06)';
+        cardSoReturn.style.boxShadow = 'none';
+        cardSoReturn.style.transform = 'scale(0.97)';
+        
+        // Highlight the selected card with thick borders and custom shadows
+        if (activeRtnStatusFilter === 'ON PROGRESS') {
+          cardOnProgress.style.opacity = '1';
+          cardOnProgress.style.border = '2px solid #4f46e5';
+          cardOnProgress.style.boxShadow = '0 10px 25px -5px rgba(79, 70, 229, 0.2)';
+          cardOnProgress.style.transform = 'scale(1.02)';
+        } else if (activeRtnStatusFilter === 'CLAIM 3PL') {
+          cardClaim3PL.style.opacity = '1';
+          cardClaim3PL.style.border = '2px solid #d97706';
+          cardClaim3PL.style.boxShadow = '0 10px 25px -5px rgba(217, 119, 6, 0.2)';
+          cardClaim3PL.style.transform = 'scale(1.02)';
+        } else if (activeRtnStatusFilter === 'SO RETURN') {
+          cardSoReturn.style.opacity = '1';
+          cardSoReturn.style.border = '2px solid #0d9488';
+          cardSoReturn.style.boxShadow = '0 10px 25px -5px rgba(13, 148, 136, 0.2)';
+          cardSoReturn.style.transform = 'scale(1.02)';
+        }
+      }
+    }
+
+    function updateReturnTrendChart(trendMap) {
+      const ctx = document.getElementById('chart-rtn-trend');
+      if (!ctx) return;
+
+      const sortedDates = Object.keys(trendMap).sort((a,b) => new Date(a) - new Date(b));
+      const labels = sortedDates.map(d => {
+        const parts = d.split('-');
+        return `${parts[2]}/${parts[1]}`;
+      });
+      const dataValues = sortedDates.map(d => trendMap[d]);
+
+      if (chartRtnTrend) {
+        chartRtnTrend.data.labels = labels;
+        chartRtnTrend.data.datasets[0].data = dataValues;
+        chartRtnTrend.data.datasets[1].data = dataValues;
+        chartRtnTrend.update();
+      } else {
+        chartRtnTrend = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                type: 'bar',
+                label: 'Qty Return (Batang)',
+                data: dataValues,
+                backgroundColor: 'rgba(79, 70, 229, 0.35)',
+                hoverBackgroundColor: 'rgba(79, 70, 229, 0.6)',
+                borderRadius: 4,
+                borderWidth: 0,
+                barPercentage: 0.6,
+                categoryPercentage: 0.8,
+                datalabels: {
+                  display: false // Hide on bar to prevent duplicate/overlapping labels
+                }
+              },
+              {
+                type: 'line',
+                label: 'Qty Return (Tren)',
+                data: dataValues,
+                borderColor: '#1565C0',
+                backgroundColor: 'transparent',
+                fill: false,
+                tension: 0.35,
+                pointRadius: 5,
+                pointHoverRadius: 8,
+                pointBackgroundColor: '#1565C0',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 1.5,
+                datalabels: {
+                  display: function(context) {
+                    // Only display label if total days shown is <= 45 and quantity is > 0
+                    return context.chart.data.labels.length <= 45 && context.dataset.data[context.dataIndex] > 0;
+                  },
+                  align: 'top',
+                  anchor: 'end',
+                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                  borderColor: '#1565C0',
+                  borderWidth: 1,
+                  borderRadius: 4,
+                  color: '#1e293b',
+                  font: {
+                    weight: 'bold',
+                    size: 10,
+                    family: 'Inter'
+                  },
+                  formatter: function(value) {
+                    return value.toLocaleString('id-ID');
+                  },
+                  offset: 6,
+                  padding: {
+                    top: 3,
+                    bottom: 3,
+                    left: 6,
+                    right: 6
+                  },
+                  shadowColor: 'rgba(0,0,0,0.06)',
+                  shadowBlur: 3
+                }
+              }
+            ]
+          },
+          plugins: [ChartDataLabels],
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { 
+                display: true,
+                position: 'top',
+                labels: {
+                  boxWidth: 12,
+                  font: { family: 'Inter', size: 11 }
+                }
+              },
+              datalabels: {
+                // Default global fallback is turned off since we explicitly configured it per dataset
+                display: false
+              }
+            },
+            scales: {
+              y: { 
+                beginAtZero: true, 
+                max: 15,
+                grid: { color: '#f1f5f9' },
+                ticks: {
+                  font: { family: 'Inter', size: 10 },
+                  stepSize: 3
+                },
+                title: {
+                  display: true,
+                  text: 'Quantity Return',
+                  font: { family: 'Inter', size: 11, weight: 'bold' }
+                }
+              },
+              x: { 
+                grid: { display: false },
+                ticks: {
+                  font: { family: 'Inter', size: 10 }
+                },
+                title: {
+                  display: true,
+                  text: 'Tanggal',
+                  font: { family: 'Inter', size: 11, weight: 'bold' }
+                }
+              }
+            },
+            layout: {
+              padding: {
+                top: 25, // Extra top space to make sure labels on high peaks are completely visible
+                right: 15,
+                left: 10,
+                bottom: 10
+              }
+            }
+          }
+        });
       }
     }
 
@@ -2622,6 +3745,8 @@
       // Get Global Filters
       const dateStartVal = document.getElementById('filter-date-start').value;
       const dateEndVal = document.getElementById('filter-date-end').value;
+      const filterMonth = document.getElementById('filter-month').value;
+      
       const dateStart = dateStartVal ? parseInputDate(dateStartVal) : null;
       const dateEnd = dateEndVal ? parseInputDate(dateEndVal) : null;
 
@@ -2629,9 +3754,6 @@
       const startTimeTs = dateStart ? new Date(dateStart).setHours(0, 0, 0, 0) : -Infinity;
       const endTimeTs = dateEnd ? new Date(dateEnd).setHours(23, 59, 59, 999) : Infinity;
 
-      // Data source columns: 
-      // Column B(1)=Date, Column S(18)=SKU, Column T(19)=Deskripsi, Column V(21)=Qty
-      // For Group Chart: Column U(20)=Group, Column AF(31)=Group Desc
       const skuMap = new Map();
       const groupMap = new Map();
 
@@ -2639,7 +3761,6 @@
         const row = parsedSheetSKU[i];
         if (!row || row.length < 22) continue;
 
-        // Use the robust parser for Column B (Index 1)
         let rowDate = null;
         let dateVal = row[1];
         if (typeof dateVal === 'number') {
@@ -2650,8 +3771,11 @@
         
         if (!rowDate || isNaN(rowDate.getTime())) continue;
 
+        // Month filter
+        if (filterMonth !== "" && rowDate.getMonth().toString() !== filterMonth) continue;
+
         // Check if row date falls within filtered range
-        const rowTime = rowDate.setHours(12, 0, 0, 0); // Use mid-day for safer comparison
+        const rowTime = rowDate.setHours(12, 0, 0, 0);
         if (rowTime < startTimeTs || rowTime > endTimeTs) continue;
 
         // Parse Quantity Robustly - Strict sum of Column V (Index 21)
@@ -2804,6 +3928,10 @@
 
     // RESET ALL FILTERS
     function resetAllFilters() {
+      // Reset active return status filter and month filter
+      activeRtnStatusFilter = 'ALL';
+      document.getElementById('filter-month').value = "";
+
       setDefaultFilterDate();
 
       if (parsedSheetSLA && parsedSheetB) {
@@ -2892,6 +4020,86 @@
       // Auto-apply filters on changes
       document.getElementById('filter-date-start').addEventListener('change', applyMainFilters);
       document.getElementById('filter-date-end').addEventListener('change', applyMainFilters);
+      document.getElementById('filter-month').addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (currentView === 'return' && parsedSheetReturn && parsedSheetReturn.length > 1) {
+          let minDate = null;
+          let maxDate = null;
+          const COL_DATE = 2;
+          for (let i = 1; i < parsedSheetReturn.length; i++) {
+            let row = parsedSheetReturn[i];
+            if (!row || row.length <= COL_DATE) continue;
+            let rowDate = null;
+            let dateVal = row[COL_DATE];
+            if (typeof dateVal === 'number') {
+              rowDate = new Date((dateVal - 25569) * 86400 * 1000);
+            } else if (dateVal) {
+              rowDate = parseDateFromStr(dateVal.toString());
+            }
+            if (rowDate && !isNaN(rowDate.getTime())) {
+              if (!minDate || rowDate < minDate) minDate = rowDate;
+              if (!maxDate || rowDate > maxDate) maxDate = rowDate;
+            }
+          }
+          if (val === "") {
+            if (minDate && maxDate) {
+              document.getElementById('filter-date-start').value = formatDateToInputString(minDate);
+              document.getElementById('filter-date-end').value = formatDateToInputString(maxDate);
+            }
+          } else {
+            const activeYear = maxDate ? maxDate.getFullYear() : 2026;
+            const mIdx = parseInt(val, 10);
+            const startOfMo = new Date(activeYear, mIdx, 1);
+            const endOfMo = new Date(activeYear, mIdx + 1, 0);
+            document.getElementById('filter-date-start').value = formatDateToInputString(startOfMo);
+            document.getElementById('filter-date-end').value = formatDateToInputString(endOfMo);
+          }
+        }
+        applyMainFilters();
+      });
+
+      // Return KPI cards interactive status filters
+      const cardOnProgress = document.getElementById('rtn-card-onprogress');
+      if (cardOnProgress) {
+        cardOnProgress.addEventListener('click', () => {
+          if (activeRtnStatusFilter === 'ON PROGRESS') {
+            activeRtnStatusFilter = 'ALL';
+            showToast("Menampilkan semua trend Return", "info");
+          } else {
+            activeRtnStatusFilter = 'ON PROGRESS';
+            showToast("Menyaring trend: ON PROGRESS", "info");
+          }
+          updateReturnView();
+        });
+      }
+
+      const cardClaim3PL = document.getElementById('rtn-card-claim3pl');
+      if (cardClaim3PL) {
+        cardClaim3PL.addEventListener('click', () => {
+          if (activeRtnStatusFilter === 'CLAIM 3PL') {
+            activeRtnStatusFilter = 'ALL';
+            showToast("Menampilkan semua trend Return", "info");
+          } else {
+            activeRtnStatusFilter = 'CLAIM 3PL';
+            showToast("Menyaring trend: CLAIM 3PL", "info");
+          }
+          updateReturnView();
+        });
+      }
+
+      const cardSoReturn = document.getElementById('rtn-card-soreturn');
+      if (cardSoReturn) {
+        cardSoReturn.addEventListener('click', () => {
+          if (activeRtnStatusFilter === 'SO RETURN') {
+            activeRtnStatusFilter = 'ALL';
+            showToast("Menampilkan semua trend Return", "info");
+          } else {
+            activeRtnStatusFilter = 'SO RETURN';
+            showToast("Menyaring trend: SO RETURN", "info");
+          }
+          updateReturnView();
+        });
+      }
 
       // Reset filter buttons
       document.getElementById('btn-reset-filters').addEventListener('click', resetAllFilters);
