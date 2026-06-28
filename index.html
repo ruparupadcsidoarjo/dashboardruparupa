@@ -1114,6 +1114,28 @@
       }
     }
 
+    /* Scope card interactive animations and styles */
+    .rtn-scope-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
+    }
+    .rtn-scope-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      border-color: #cbd5e1;
+    }
+    .rtn-scope-card:active {
+      transform: translateY(0);
+    }
+
     /* Print styling to capture the summary report card (Raport) perfectly */
     @media print {
       body {
@@ -1234,6 +1256,11 @@
       </div>
 
       <div class="header-right">
+        <!-- Global Loading Indicator -->
+        <div id="global-loading-indicator" style="display: none; align-items: center; gap: 8px; background-color: #eff6ff; border: 1px solid #bfdbfe; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; color: #1d4ed8; box-shadow: 0 1px 2px rgba(29, 78, 216, 0.05);" class="no-print animate-pulse">
+          <i class="fa-solid fa-arrows-rotate fa-spin" style="color: #1d4ed8;"></i>
+          <span>Sinkronisasi Data...</span>
+        </div>
         <div class="last-update-tag">
           <span class="dot green"></span> Last Update: <strong id="header-update-time">21:36:27</strong>
         </div>
@@ -1590,36 +1617,94 @@
                 </div>
               </div>
 
-              <!-- Sorting Dropdown -->
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
-                <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
-                  <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
-                </span>
-                <select id="rtn-sort-select-onprogress" onchange="changeRtnSort('onprogress', this.value)" style="font-size: 10px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
-                  <option value="aging_desc">Aging Terlama</option>
-                  <option value="aging_asc">Aging Tercepat</option>
-                  <option value="qty_desc">Qty Terbanyak</option>
-                  <option value="qty_asc">Qty Tersedikit</option>
-                  <option value="invoice_asc">No. Invoice</option>
-                </select>
-              </div>
+              <!-- Collapsible Wrapper -->
+              <div id="rtn-collapse-onprogress" style="display: block; width: 100%;">
+                
+                <!-- Interactive Aging Scopes Grid -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px;" class="no-print">
+                  <!-- Scope 1-3 Bulan -->
+                  <div id="rtn-scope-card-1-3" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('1_3')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">1 - 3 Bulan</span>
+                      <i class="fa-solid fa-clock-rotate-left" style="font-size: 10px; color: #4f46e5;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-1-3-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-1-3-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
 
-              <div class="table-container" id="rtn-collapse-onprogress" style="overflow-x: auto; flex-grow: 1;">
-                <table class="data-table" style="width: 100%; border-collapse: collapse;">
-                  <thead>
-                    <tr style="background: #f8fafc;">
-                      <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
-                      <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice & Aging</th>
-                      <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
-                      <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
-                    </tr>
-                  </thead>
-                  <tbody id="rtn-table-onprogress-body">
-                    <tr>
-                      <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;">Memuat data...</td>
-                    </tr>
-                  </tbody>
-                </table>
+                  <!-- Scope 5-8 Bulan -->
+                  <div id="rtn-scope-card-5-8" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('5_8')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">5 - 8 Bulan</span>
+                      <i class="fa-solid fa-hourglass-half" style="font-size: 10px; color: #d97706;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-5-8-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-5-8-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
+
+                  <!-- Scope 9-12 Bulan -->
+                  <div id="rtn-scope-card-9-12" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('9_12')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">9 - 12 Bulan</span>
+                      <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #0d9488;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-9-12-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-9-12-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
+
+                  <!-- Scope 13-16 Bulan -->
+                  <div id="rtn-scope-card-13-16" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('13_16')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">13 - 16 Bulan</span>
+                      <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #ef4444;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-13-16-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-13-16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Collapsible Detail Container -->
+                <div id="rtn-detail-container-onprogress" style="display: none; margin-top: 8px;">
+                  <!-- Sorting Dropdown -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
+                    <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
+                      <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
+                    </span>
+                    <select id="rtn-sort-select-onprogress" onchange="changeRtnSort('onprogress', this.value)" style="font-size: 10px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
+                      <option value="aging_desc">Aging Terlama</option>
+                      <option value="aging_asc">Aging Tercepat</option>
+                      <option value="qty_desc">Qty Terbanyak</option>
+                      <option value="qty_asc">Qty Tersedikit</option>
+                      <option value="invoice_asc">No. Invoice</option>
+                    </select>
+                  </div>
+
+                  <div class="table-container" style="overflow-x: auto; flex-grow: 1;">
+                    <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                      <thead>
+                        <tr style="background: #f8fafc;">
+                          <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
+                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice & Aging</th>
+                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
+                          <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
+                        </tr>
+                      </thead>
+                      <tbody id="rtn-table-onprogress-body">
+                        <tr>
+                          <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;">Memuat data...</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -1636,36 +1721,94 @@
                 </div>
               </div>
 
-              <!-- Sorting Dropdown -->
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
-                <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
-                  <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
-                </span>
-                <select id="rtn-sort-select-claim3pl" onchange="changeRtnSort('claim3pl', this.value)" style="font-size: 10px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
-                  <option value="aging_desc">Aging Terlama</option>
-                  <option value="aging_asc">Aging Tercepat</option>
-                  <option value="qty_desc">Qty Terbanyak</option>
-                  <option value="qty_asc">Qty Tersedikit</option>
-                  <option value="invoice_asc">No. Invoice</option>
-                </select>
-              </div>
+              <!-- Collapsible Wrapper -->
+              <div id="rtn-collapse-claim3pl" style="display: block; width: 100%;">
+                
+                <!-- Interactive Aging Scopes Grid -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px;" class="no-print">
+                  <!-- Scope 1-3 Bulan -->
+                  <div id="rtn-scope-card-claim3pl-1-3" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('1_3')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">1 - 3 Bulan</span>
+                      <i class="fa-solid fa-clock-rotate-left" style="font-size: 10px; color: #d97706;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-claim3pl-1-3-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-claim3pl-1-3-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
 
-              <div class="table-container" id="rtn-collapse-claim3pl" style="overflow-x: auto; flex-grow: 1;">
-                <table class="data-table" style="width: 100%; border-collapse: collapse;">
-                  <thead>
-                    <tr style="background: #f8fafc;">
-                      <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
-                      <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice & Aging</th>
-                      <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
-                      <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
-                    </tr>
-                  </thead>
-                  <tbody id="rtn-table-claim3pl-body">
-                    <tr>
-                      <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;">Memuat data...</td>
-                    </tr>
-                  </tbody>
-                </table>
+                  <!-- Scope 5-8 Bulan -->
+                  <div id="rtn-scope-card-claim3pl-5-8" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('5_8')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">5 - 8 Bulan</span>
+                      <i class="fa-solid fa-hourglass-half" style="font-size: 10px; color: #d97706;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-claim3pl-5-8-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-claim3pl-5-8-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
+
+                  <!-- Scope 9-12 Bulan -->
+                  <div id="rtn-scope-card-claim3pl-9-12" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('9_12')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">9 - 12 Bulan</span>
+                      <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #d97706;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-claim3pl-9-12-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-claim3pl-9-12-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
+
+                  <!-- Scope 13-16 Bulan -->
+                  <div id="rtn-scope-card-claim3pl-13-16" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('13_16')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">13 - 16 Bulan</span>
+                      <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #d97706;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-claim3pl-13-16-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-claim3pl-13-16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Collapsible Detail Container -->
+                <div id="rtn-detail-container-claim3pl" style="display: none; margin-top: 8px;">
+                  <!-- Sorting Dropdown -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
+                    <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
+                      <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
+                    </span>
+                    <select id="rtn-sort-select-claim3pl" onchange="changeRtnSort('claim3pl', this.value)" style="font-size: 10px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
+                      <option value="aging_desc">Aging Terlama</option>
+                      <option value="aging_asc">Aging Tercepat</option>
+                      <option value="qty_desc">Qty Terbanyak</option>
+                      <option value="qty_asc">Qty Tersedikit</option>
+                      <option value="invoice_asc">No. Invoice</option>
+                    </select>
+                  </div>
+
+                  <div class="table-container" style="overflow-x: auto; flex-grow: 1;">
+                    <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                      <thead>
+                        <tr style="background: #f8fafc;">
+                          <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
+                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice & Aging</th>
+                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
+                          <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
+                        </tr>
+                      </thead>
+                      <tbody id="rtn-table-claim3pl-body">
+                        <tr>
+                          <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;">Memuat data...</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -1682,36 +1825,94 @@
                 </div>
               </div>
 
-              <!-- Sorting Dropdown -->
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
-                <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
-                  <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
-                </span>
-                <select id="rtn-sort-select-soreturn" onchange="changeRtnSort('soreturn', this.value)" style="font-size: 10px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
-                  <option value="aging_desc">Aging Terlama</option>
-                  <option value="aging_asc">Aging Tercepat</option>
-                  <option value="qty_desc">Qty Terbanyak</option>
-                  <option value="qty_asc">Qty Tersedikit</option>
-                  <option value="invoice_asc">No. Invoice</option>
-                </select>
-              </div>
+              <!-- Collapsible Wrapper -->
+              <div id="rtn-collapse-soreturn" style="display: block; width: 100%;">
+                
+                <!-- Interactive Aging Scopes Grid -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px;" class="no-print">
+                  <!-- Scope 1-3 Bulan -->
+                  <div id="rtn-scope-card-soreturn-1-3" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('1_3')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">1 - 3 Bulan</span>
+                      <i class="fa-solid fa-clock-rotate-left" style="font-size: 10px; color: #0d9488;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-soreturn-1-3-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-soreturn-1-3-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
 
-              <div class="table-container" id="rtn-collapse-soreturn" style="overflow-x: auto; flex-grow: 1;">
-                <table class="data-table" style="width: 100%; border-collapse: collapse;">
-                  <thead>
-                    <tr style="background: #f8fafc;">
-                      <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
-                      <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice & Aging</th>
-                      <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
-                      <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
-                    </tr>
-                  </thead>
-                  <tbody id="rtn-table-soreturn-body">
-                    <tr>
-                      <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;">Memuat data...</td>
-                    </tr>
-                  </tbody>
-                </table>
+                  <!-- Scope 5-8 Bulan -->
+                  <div id="rtn-scope-card-soreturn-5-8" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('5_8')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">5 - 8 Bulan</span>
+                      <i class="fa-solid fa-hourglass-half" style="font-size: 10px; color: #0d9488;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-soreturn-5-8-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-soreturn-5-8-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
+
+                  <!-- Scope 9-12 Bulan -->
+                  <div id="rtn-scope-card-soreturn-9-12" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('9_12')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">9 - 12 Bulan</span>
+                      <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #0d9488;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-soreturn-9-12-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-soreturn-9-12-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
+
+                  <!-- Scope 13-16 Bulan -->
+                  <div id="rtn-scope-card-soreturn-13-16" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('13_16')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">13 - 16 Bulan</span>
+                      <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #0d9488;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-soreturn-13-16-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-soreturn-13-16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Collapsible Detail Container -->
+                <div id="rtn-detail-container-soreturn" style="display: none; margin-top: 8px;">
+                  <!-- Sorting Dropdown -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
+                    <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
+                      <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
+                    </span>
+                    <select id="rtn-sort-select-soreturn" onchange="changeRtnSort('soreturn', this.value)" style="font-size: 10px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
+                      <option value="aging_desc">Aging Terlama</option>
+                      <option value="aging_asc">Aging Tercepat</option>
+                      <option value="qty_desc">Qty Terbanyak</option>
+                      <option value="qty_asc">Qty Tersedikit</option>
+                      <option value="invoice_asc">No. Invoice</option>
+                    </select>
+                  </div>
+
+                  <div class="table-container" style="overflow-x: auto; flex-grow: 1;">
+                    <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                      <thead>
+                        <tr style="background: #f8fafc;">
+                          <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
+                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice & Aging</th>
+                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
+                          <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
+                        </tr>
+                      </thead>
+                      <tbody id="rtn-table-soreturn-body">
+                        <tr>
+                          <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;">Memuat data...</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -2009,6 +2210,10 @@
     // Async function to fetch and parse Google Sheets data
     async function fetchAndParseAllData() {
       showToast("Menghubungkan ke Google Sheets...", "info");
+      const indicator = document.getElementById('global-loading-indicator');
+      if (indicator) {
+        indicator.style.display = 'flex';
+      }
       try {
         const [resSLA, resB, resSKU, resReturn] = await Promise.all([
           fetch(SHEET_SLA_URL).then(r => r.ok ? r.text() : ""),
@@ -2029,6 +2234,10 @@
         console.error("Error fetching Google Sheets:", error);
         showToast("Gagal memuat Google Sheets. Menggunakan data simulasi.", "warning");
         updateDashboardWithSimulatedData();
+      } finally {
+        if (indicator) {
+          indicator.style.display = 'none';
+        }
       }
     }
 
@@ -2038,6 +2247,9 @@
     let chartSkuGroup = null;
     let chartRtnTrend = null;
     let activeRtnStatusFilter = 'ALL'; // Can be 'ALL', 'ON PROGRESS', 'CLAIM 3PL', or 'SO RETURN'
+    let activeOnProgressAgingFilter = 'ALL'; // Can be 'ALL', '1_3', '5_8', '9_12', or '13_16'
+    let activeClaim3PLAgingFilter = 'ALL'; // Can be 'ALL', '1_3', '5_8', '9_12', or '13_16'
+    let activeSoReturnAgingFilter = 'ALL'; // Can be 'ALL', '1_3', '5_8', '9_12', or '13_16'
     let sortOnProgress = 'aging_desc';
     let sortClaim3PL = 'aging_desc';
     let sortSoReturn = 'aging_desc';
@@ -3314,15 +3526,248 @@
       syncDropdownValue('rtn-sort-select-claim3pl', sortClaim3PL);
       syncDropdownValue('rtn-sort-select-soreturn', sortSoReturn);
 
+      // Compute aging scopes for ON PROGRESS items (always use grand total list for scopes counts)
+      const scope1_3 = { invoices: new Set(), qty: 0 };
+      const scope5_8 = { invoices: new Set(), qty: 0 };
+      const scope9_12 = { invoices: new Set(), qty: 0 };
+      const scope13_16 = { invoices: new Set(), qty: 0 };
+
+      onProgressItems.forEach(item => {
+        const days = item.agingDays;
+        if (days <= 90) {
+          if (item.invoice) scope1_3.invoices.add(item.invoice);
+          scope1_3.qty += item.qty;
+        } else if (days > 90 && days <= 240) {
+          if (item.invoice) scope5_8.invoices.add(item.invoice);
+          scope5_8.qty += item.qty;
+        } else if (days > 240 && days <= 360) {
+          if (item.invoice) scope9_12.invoices.add(item.invoice);
+          scope9_12.qty += item.qty;
+        } else if (days > 360) {
+          if (item.invoice) scope13_16.invoices.add(item.invoice);
+          scope13_16.qty += item.qty;
+        }
+      });
+
+      // Compute aging scopes for CLAIM 3PL items
+      const claim3PLScope1_3 = { invoices: new Set(), qty: 0 };
+      const claim3PLScope5_8 = { invoices: new Set(), qty: 0 };
+      const claim3PLScope9_12 = { invoices: new Set(), qty: 0 };
+      const claim3PLScope13_16 = { invoices: new Set(), qty: 0 };
+
+      claim3PLItems.forEach(item => {
+        const days = item.agingDays;
+        if (days <= 90) {
+          if (item.invoice) claim3PLScope1_3.invoices.add(item.invoice);
+          claim3PLScope1_3.qty += item.qty;
+        } else if (days > 90 && days <= 240) {
+          if (item.invoice) claim3PLScope5_8.invoices.add(item.invoice);
+          claim3PLScope5_8.qty += item.qty;
+        } else if (days > 240 && days <= 360) {
+          if (item.invoice) claim3PLScope9_12.invoices.add(item.invoice);
+          claim3PLScope9_12.qty += item.qty;
+        } else if (days > 360) {
+          if (item.invoice) claim3PLScope13_16.invoices.add(item.invoice);
+          claim3PLScope13_16.qty += item.qty;
+        }
+      });
+
+      // Compute aging scopes for SO RETURN items
+      const soReturnScope1_3 = { invoices: new Set(), qty: 0 };
+      const soReturnScope5_8 = { invoices: new Set(), qty: 0 };
+      const soReturnScope9_12 = { invoices: new Set(), qty: 0 };
+      const soReturnScope13_16 = { invoices: new Set(), qty: 0 };
+
+      soReturnItems.forEach(item => {
+        const days = item.agingDays;
+        if (days <= 90) {
+          if (item.invoice) soReturnScope1_3.invoices.add(item.invoice);
+          soReturnScope1_3.qty += item.qty;
+        } else if (days > 90 && days <= 240) {
+          if (item.invoice) soReturnScope5_8.invoices.add(item.invoice);
+          soReturnScope5_8.qty += item.qty;
+        } else if (days > 240 && days <= 360) {
+          if (item.invoice) soReturnScope9_12.invoices.add(item.invoice);
+          soReturnScope9_12.qty += item.qty;
+        } else if (days > 360) {
+          if (item.invoice) soReturnScope13_16.invoices.add(item.invoice);
+          soReturnScope13_16.qty += item.qty;
+        }
+      });
+
+      const updateScopeText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+      };
+      
+      // Update ON PROGRESS scope texts
+      updateScopeText('rtn-scope-1-3-inv', `${scope1_3.invoices.size} Inv`);
+      updateScopeText('rtn-scope-1-3-qty', `${scope1_3.qty.toLocaleString('id-ID')} Pcs`);
+
+      updateScopeText('rtn-scope-5-8-inv', `${scope5_8.invoices.size} Inv`);
+      updateScopeText('rtn-scope-5-8-qty', `${scope5_8.qty.toLocaleString('id-ID')} Pcs`);
+
+      updateScopeText('rtn-scope-9-12-inv', `${scope9_12.invoices.size} Inv`);
+      updateScopeText('rtn-scope-9-12-qty', `${scope9_12.qty.toLocaleString('id-ID')} Pcs`);
+
+      updateScopeText('rtn-scope-13-16-inv', `${scope13_16.invoices.size} Inv`);
+      updateScopeText('rtn-scope-13-16-qty', `${scope13_16.qty.toLocaleString('id-ID')} Pcs`);
+
+      // Update CLAIM 3PL scope texts
+      updateScopeText('rtn-scope-claim3pl-1-3-inv', `${claim3PLScope1_3.invoices.size} Inv`);
+      updateScopeText('rtn-scope-claim3pl-1-3-qty', `${claim3PLScope1_3.qty.toLocaleString('id-ID')} Pcs`);
+
+      updateScopeText('rtn-scope-claim3pl-5-8-inv', `${claim3PLScope5_8.invoices.size} Inv`);
+      updateScopeText('rtn-scope-claim3pl-5-8-qty', `${claim3PLScope5_8.qty.toLocaleString('id-ID')} Pcs`);
+
+      updateScopeText('rtn-scope-claim3pl-9-12-inv', `${claim3PLScope9_12.invoices.size} Inv`);
+      updateScopeText('rtn-scope-claim3pl-9-12-qty', `${claim3PLScope9_12.qty.toLocaleString('id-ID')} Pcs`);
+
+      updateScopeText('rtn-scope-claim3pl-13-16-inv', `${claim3PLScope13_16.invoices.size} Inv`);
+      updateScopeText('rtn-scope-claim3pl-13-16-qty', `${claim3PLScope13_16.qty.toLocaleString('id-ID')} Pcs`);
+
+      // Update SO RETURN scope texts
+      updateScopeText('rtn-scope-soreturn-1-3-inv', `${soReturnScope1_3.invoices.size} Inv`);
+      updateScopeText('rtn-scope-soreturn-1-3-qty', `${soReturnScope1_3.qty.toLocaleString('id-ID')} Pcs`);
+
+      updateScopeText('rtn-scope-soreturn-5-8-inv', `${soReturnScope5_8.invoices.size} Inv`);
+      updateScopeText('rtn-scope-soreturn-5-8-qty', `${soReturnScope5_8.qty.toLocaleString('id-ID')} Pcs`);
+
+      updateScopeText('rtn-scope-soreturn-9-12-inv', `${soReturnScope9_12.invoices.size} Inv`);
+      updateScopeText('rtn-scope-soreturn-9-12-qty', `${soReturnScope9_12.qty.toLocaleString('id-ID')} Pcs`);
+
+      updateScopeText('rtn-scope-soreturn-13-16-inv', `${soReturnScope13_16.invoices.size} Inv`);
+      updateScopeText('rtn-scope-soreturn-13-16-qty', `${soReturnScope13_16.qty.toLocaleString('id-ID')} Pcs`);
+
+      // Highlight the active scope card helper
+      const updateScopeCardStyles = (id, filterName, activeFilter, activeBorder, activeBg) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (activeFilter === filterName) {
+          el.style.borderColor = activeBorder;
+          el.style.background = activeBg;
+          el.style.boxShadow = `0 0 0 2px ${activeBorder}33`;
+        } else {
+          el.style.borderColor = '#e2e8f0';
+          el.style.background = '#ffffff';
+          el.style.boxShadow = 'none';
+        }
+      };
+
+      // Apply highlighting for ON PROGRESS cards
+      updateScopeCardStyles('rtn-scope-card-1-3', '1_3', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
+      updateScopeCardStyles('rtn-scope-card-5-8', '5_8', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
+      updateScopeCardStyles('rtn-scope-card-9-12', '9_12', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
+      updateScopeCardStyles('rtn-scope-card-13-16', '13_16', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
+
+      // Apply highlighting for CLAIM 3PL cards
+      updateScopeCardStyles('rtn-scope-card-claim3pl-1-3', '1_3', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
+      updateScopeCardStyles('rtn-scope-card-claim3pl-5-8', '5_8', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
+      updateScopeCardStyles('rtn-scope-card-claim3pl-9-12', '9_12', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
+      updateScopeCardStyles('rtn-scope-card-claim3pl-13-16', '13_16', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
+
+      // Apply highlighting for SO RETURN cards
+      updateScopeCardStyles('rtn-scope-card-soreturn-1-3', '1_3', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
+      updateScopeCardStyles('rtn-scope-card-soreturn-5-8', '5_8', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
+      updateScopeCardStyles('rtn-scope-card-soreturn-9-12', '9_12', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
+      updateScopeCardStyles('rtn-scope-card-soreturn-13-16', '13_16', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
+
+      // Helper to show/hide detailed tables under scopes
+      const toggleDetailContainer = (containerId, filterVal) => {
+        const el = document.getElementById(containerId);
+        if (!el) return;
+        if (filterVal === 'ALL') {
+          el.style.display = 'none';
+        } else {
+          el.style.display = 'block';
+        }
+      };
+
+      toggleDetailContainer('rtn-detail-container-onprogress', activeOnProgressAgingFilter);
+      toggleDetailContainer('rtn-detail-container-claim3pl', activeClaim3PLAgingFilter);
+      toggleDetailContainer('rtn-detail-container-soreturn', activeSoReturnAgingFilter);
+
+      // Filter ON PROGRESS items based on active aging filter
+      let displayedOnProgressItems = [...onProgressItems];
+      let displayedOnProgressInvoices = new Set();
+      let displayedOnProgressQty = 0;
+
+      if (activeOnProgressAgingFilter === 'ALL') {
+        displayedOnProgressInvoices = onProgressInvoicesCur;
+        displayedOnProgressQty = onProgressQtyCur;
+      } else {
+        if (activeOnProgressAgingFilter === '1_3') {
+          displayedOnProgressItems = onProgressItems.filter(item => item.agingDays <= 90);
+        } else if (activeOnProgressAgingFilter === '5_8') {
+          displayedOnProgressItems = onProgressItems.filter(item => item.agingDays > 90 && item.agingDays <= 240);
+        } else if (activeOnProgressAgingFilter === '9_12') {
+          displayedOnProgressItems = onProgressItems.filter(item => item.agingDays > 240 && item.agingDays <= 360);
+        } else if (activeOnProgressAgingFilter === '13_16') {
+          displayedOnProgressItems = onProgressItems.filter(item => item.agingDays > 360);
+        }
+        displayedOnProgressItems.forEach(item => {
+          if (item.invoice) displayedOnProgressInvoices.add(item.invoice);
+          displayedOnProgressQty += item.qty;
+        });
+      }
+
+      // Filter CLAIM 3PL items based on active aging filter
+      let displayedClaim3PLItems = [...claim3PLItems];
+      let displayedClaim3PLInvoices = new Set();
+      let displayedClaim3PLQty = 0;
+
+      if (activeClaim3PLAgingFilter === 'ALL') {
+        displayedClaim3PLInvoices = claim3PLInvoicesCur;
+        displayedClaim3PLQty = claim3PLQtyCur;
+      } else {
+        if (activeClaim3PLAgingFilter === '1_3') {
+          displayedClaim3PLItems = claim3PLItems.filter(item => item.agingDays <= 90);
+        } else if (activeClaim3PLAgingFilter === '5_8') {
+          displayedClaim3PLItems = claim3PLItems.filter(item => item.agingDays > 90 && item.agingDays <= 240);
+        } else if (activeClaim3PLAgingFilter === '9_12') {
+          displayedClaim3PLItems = claim3PLItems.filter(item => item.agingDays > 240 && item.agingDays <= 360);
+        } else if (activeClaim3PLAgingFilter === '13_16') {
+          displayedClaim3PLItems = claim3PLItems.filter(item => item.agingDays > 360);
+        }
+        displayedClaim3PLItems.forEach(item => {
+          if (item.invoice) displayedClaim3PLInvoices.add(item.invoice);
+          displayedClaim3PLQty += item.qty;
+        });
+      }
+
+      // Filter SO RETURN items based on active aging filter
+      let displayedSoReturnItems = [...soReturnItems];
+      let displayedSoReturnInvoices = new Set();
+      let displayedSoReturnQty = 0;
+
+      if (activeSoReturnAgingFilter === 'ALL') {
+        displayedSoReturnInvoices = soReturnInvoicesCur;
+        displayedSoReturnQty = soReturnQtyCur;
+      } else {
+        if (activeSoReturnAgingFilter === '1_3') {
+          displayedSoReturnItems = soReturnItems.filter(item => item.agingDays <= 90);
+        } else if (activeSoReturnAgingFilter === '5_8') {
+          displayedSoReturnItems = soReturnItems.filter(item => item.agingDays > 90 && item.agingDays <= 240);
+        } else if (activeSoReturnAgingFilter === '9_12') {
+          displayedSoReturnItems = soReturnItems.filter(item => item.agingDays > 240 && item.agingDays <= 360);
+        } else if (activeSoReturnAgingFilter === '13_16') {
+          displayedSoReturnItems = soReturnItems.filter(item => item.agingDays > 360);
+        }
+        displayedSoReturnItems.forEach(item => {
+          if (item.invoice) displayedSoReturnInvoices.add(item.invoice);
+          displayedSoReturnQty += item.qty;
+        });
+      }
+
       const updateBadgeText = (id, text) => {
         const elem = document.getElementById(id);
         if (elem) elem.textContent = text;
       };
 
-      // Header Badges on each Table Card
-      updateBadgeText('rtn-header-badge-onprogress', `${onProgressInvoicesCur.size} Inv / ${onProgressQtyCur.toLocaleString('id-ID')} Pcs`);
-      updateBadgeText('rtn-header-badge-claim3pl', `${claim3PLInvoicesCur.size} Inv / ${claim3PLQtyCur.toLocaleString('id-ID')} Pcs`);
-      updateBadgeText('rtn-header-badge-soreturn', `${soReturnInvoicesCur.size} Inv / ${soReturnQtyCur.toLocaleString('id-ID')} Pcs`);
+      // Header Badges on each Table Card (updates with current subset count if filtered)
+      updateBadgeText('rtn-header-badge-onprogress', `${displayedOnProgressInvoices.size} Inv / ${displayedOnProgressQty.toLocaleString('id-ID')} Pcs`);
+      updateBadgeText('rtn-header-badge-claim3pl', `${displayedClaim3PLInvoices.size} Inv / ${displayedClaim3PLQty.toLocaleString('id-ID')} Pcs`);
+      updateBadgeText('rtn-header-badge-soreturn', `${displayedSoReturnInvoices.size} Inv / ${displayedSoReturnQty.toLocaleString('id-ID')} Pcs`);
 
       // Render Table Helper (combined, dense 4-column layout)
       const renderDetailedTable = (tbodyId, items) => {
@@ -3354,9 +3799,9 @@
         }
       };
 
-      renderDetailedTable('rtn-table-onprogress-body', onProgressItems);
-      renderDetailedTable('rtn-table-claim3pl-body', claim3PLItems);
-      renderDetailedTable('rtn-table-soreturn-body', soReturnItems);
+      renderDetailedTable('rtn-table-onprogress-body', displayedOnProgressItems);
+      renderDetailedTable('rtn-table-claim3pl-body', displayedClaim3PLItems);
+      renderDetailedTable('rtn-table-soreturn-body', displayedSoReturnItems);
 
       // Trigger Tab UI Layout update
       updateReturnTabUI();
@@ -3390,6 +3835,45 @@
       else if (sectionId === 'claim3pl') sortClaim3PL = val;
       else if (sectionId === 'soreturn') sortSoReturn = val;
       
+      updateReturnView();
+    }
+
+    // Toggle interactive aging filters for the ON PROGRESS section
+    function toggleOnProgressAgingFilter(filterName) {
+      if (activeOnProgressAgingFilter === filterName) {
+        activeOnProgressAgingFilter = 'ALL';
+        showToast("Menampilkan semua data On Progress", "info");
+      } else {
+        activeOnProgressAgingFilter = filterName;
+        let formattedLabel = filterName.replace('_', ' - ');
+        showToast(`Menyaring On Progress: Aging ${formattedLabel} Bulan`, "info");
+      }
+      updateReturnView();
+    }
+
+    // Toggle interactive aging filters for the CLAIM 3PL section
+    function toggleClaim3PLAgingFilter(filterName) {
+      if (activeClaim3PLAgingFilter === filterName) {
+        activeClaim3PLAgingFilter = 'ALL';
+        showToast("Menampilkan semua data Claim 3PL", "info");
+      } else {
+        activeClaim3PLAgingFilter = filterName;
+        let formattedLabel = filterName.replace('_', ' - ');
+        showToast(`Menyaring Claim 3PL: Aging ${formattedLabel} Bulan`, "info");
+      }
+      updateReturnView();
+    }
+
+    // Toggle interactive aging filters for the SO RETURN section
+    function toggleSoReturnAgingFilter(filterName) {
+      if (activeSoReturnAgingFilter === filterName) {
+        activeSoReturnAgingFilter = 'ALL';
+        showToast("Menampilkan semua data SO Return", "info");
+      } else {
+        activeSoReturnAgingFilter = filterName;
+        let formattedLabel = filterName.replace('_', ' - ');
+        showToast(`Menyaring SO Return: Aging ${formattedLabel} Bulan`, "info");
+      }
       updateReturnView();
     }
 
@@ -4007,10 +4491,18 @@
       // Refresh Data button
       document.getElementById('btn-refresh-data').addEventListener('click', () => {
         const btn = document.getElementById('btn-refresh-data');
-        btn.querySelector('i').classList.add('fa-spin');
+        const icon = btn.querySelector('i');
+        
+        btn.disabled = true;
+        btn.style.opacity = '0.6';
+        btn.style.cursor = 'not-allowed';
+        if (icon) icon.classList.add('fa-spin');
         
         fetchAndParseAllData().finally(() => {
-          btn.querySelector('i').classList.remove('fa-spin');
+          btn.disabled = false;
+          btn.style.opacity = '1';
+          btn.style.cursor = 'pointer';
+          if (icon) icon.classList.remove('fa-spin');
         });
       });
 
