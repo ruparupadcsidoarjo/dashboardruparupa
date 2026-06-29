@@ -1437,59 +1437,139 @@
 
         </section>
 
-        <!-- SECTION 3 — SKU DATA (Table & Group Chart) -->
-        <section class="dashboard-card" style="grid-column: span 12;">
-          <div class="card-header">
-            <h3 class="card-header-title">
-              <i class="fa-solid fa-cubes" style="color: var(--purple);"></i>
-              TOP 10 SKU & SKU GROUP BY QTY
-            </h3>
-            <div class="tab-group" id="sku-week-tabs" style="display: none;">
-              <button class="tab-btn active" data-week="1">Week 1</button>
-              <button class="tab-btn" data-week="2">Week 2</button>
-              <button class="tab-btn" data-week="3">Week 3</button>
-              <button class="tab-btn" data-week="4">Week 4</button>
-            </div>
-          </div>
+        <!-- Row for TOP SKU and ECOMMERCE -->
+        <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; margin-top: 24px; align-items: stretch;">
           
-          <div class="sku-content-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 24px; margin-top: 15px; align-items: stretch;">
-            <!-- Left: Table -->
-            <div class="table-card" style="display: flex; flex-direction: column; height: 100%;">
-              <h4 style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-                <span style="width: 8px; height: 8px; background: var(--purple); border-radius: 2px;"></span>
-                Top 10 SKU By Quantity
-              </h4>
-              <div class="table-container" style="flex: 1; min-height: 550px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; overflow: hidden;">
-                <table class="data-table" id="sku-data-table">
-                  <thead>
-                    <tr>
-                      <th style="padding: 12px 15px; font-size: 14px;">No</th>
-                      <th style="padding: 12px 15px; font-size: 14px;">SKU</th>
-                      <th style="padding: 12px 15px; font-size: 14px;">Deskripsi</th>
-                      <th style="padding: 12px 15px; font-size: 14px; text-align: right;">Qty</th>
-                    </tr>
-                  </thead>
-                  <tbody id="sku-table-body">
-                    <tr>
-                      <td colspan="4" style="text-align: center; padding: 100px 20px; color: #94a3b8;">Memuat data SKU...</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <!-- SECTION 3 — TOP 10 SKU & SKU GROUP (Takes 8 columns) -->
+          <section class="dashboard-card" style="grid-column: span 8; margin: 0; display: flex; flex-direction: column;">
+            <div class="card-header">
+              <h3 class="card-header-title">
+                <i class="fa-solid fa-cubes" style="color: var(--purple);"></i>
+                TOP 10 SKU & SKU GROUP BY QTY
+              </h3>
             </div>
+            
+            <div class="sku-content-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; flex: 1;">
+              <!-- Left: Table -->
+              <div class="table-card" style="display: flex; flex-direction: column; height: 100%;">
+                <h4 style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                  <span style="width: 8px; height: 8px; background: var(--purple); border-radius: 2px;"></span>
+                  Top 10 SKU By Quantity
+                </h4>
+                <div class="table-container" style="flex: 1; min-height: 400px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; overflow: hidden;">
+                  <table class="data-table" id="sku-data-table">
+                    <thead>
+                      <tr>
+                        <th style="padding: 10px; font-size: 12px;">No</th>
+                        <th style="padding: 10px; font-size: 12px;">SKU</th>
+                        <th style="padding: 10px; font-size: 12px;">Deskripsi</th>
+                        <th style="padding: 10px; font-size: 12px; text-align: right;">Qty</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sku-table-body">
+                      <tr>
+                        <td colspan="4" style="text-align: center; padding: 100px 20px; color: #94a3b8;">Memuat data...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
 
-            <!-- Right: Group Chart -->
-            <div class="chart-card" style="display: flex; flex-direction: column; height: 100%;">
-              <h4 style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-                <span style="width: 8px; height: 8px; background: #3b82f6; border-radius: 2px;"></span>
-                Top SKU Group By Quantity
-              </h4>
-              <div class="chart-container" style="flex: 1; min-height: 550px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; background: #fff; position: relative;">
-                <canvas id="chart-sku-group"></canvas>
+              <!-- Right: Group Chart -->
+              <div class="chart-card" style="display: flex; flex-direction: column; height: 100%;">
+                <h4 style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                  <span style="width: 8px; height: 8px; background: #3b82f6; border-radius: 2px;"></span>
+                  Top SKU Group By Quantity
+                </h4>
+                <div class="chart-container" style="flex: 1; min-height: 400px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; background: #fff; position: relative;">
+                  <canvas id="chart-sku-group"></canvas>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+
+          <!-- SECTION 4 — ECOMMERCE DISTRIBUTION (Takes 4 columns) -->
+          <section class="dashboard-card" style="grid-column: span 4; margin: 0; display: flex; flex-direction: column;">
+            <div class="card-header">
+              <h3 class="card-header-title">
+                <i class="fa-solid fa-chart-pie" style="color: #10b981;"></i>
+                ECOMMERCE DISTRIBUTION
+              </h3>
+            </div>
+            
+            <div style="padding: 20px; display: flex; flex-direction: column; gap: 20px; flex: 1;">
+              <!-- Doughnut Chart Container -->
+              <div style="flex: 1; min-height: 300px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; background: #fff; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); display: flex; align-items: center; justify-content: center;">
+                <div style="width: 100%; height: 100%; position: relative;">
+                  <canvas id="chart-ecommerce"></canvas>
+                  <!-- Center text container for total -->
+                  <div id="ecommerce-total-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; margin-top: -5px;">
+                    <div style="font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Total Order</div>
+                    <div id="eco-total-val" style="font-size: 28px; font-weight: 800; color: #1e293b; line-height: 1;">0</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Detailed Breakdown Legend -->
+              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+                <h4 style="font-size: 10px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px;">Order Details</h4>
+                
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <!-- Rupa-Rupa -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #fff; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div style="width: 10px; height: 10px; border-radius: 2px; background: #3b82f6;"></div>
+                      <span style="font-size: 12px; font-weight: 700; color: #334155;">Rupa-Rupa</span>
+                    </div>
+                    <div style="text-align: right;">
+                      <span id="val-rupa" style="font-family: var(--font-mono); font-weight: 800; color: #1e293b; font-size: 12px;">0</span>
+                      <span style="font-size: 9px; color: #94a3b8; font-weight: 600;"> ORDER</span>
+                    </div>
+                  </div>
+                  
+                  <!-- Shopee -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #fff; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div style="width: 10px; height: 10px; border-radius: 2px; background: #f97316;"></div>
+                      <span style="font-size: 12px; font-weight: 700; color: #334155;">Shopee</span>
+                    </div>
+                    <div style="text-align: right;">
+                      <span id="val-shopee" style="font-family: var(--font-mono); font-weight: 800; color: #1e293b; font-size: 12px;">0</span>
+                      <span style="font-size: 9px; color: #94a3b8; font-weight: 600;"> ORDER</span>
+                    </div>
+                  </div>
+                  
+                  <!-- Tokopedia -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #fff; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div style="width: 10px; height: 10px; border-radius: 2px; background: #10b981;"></div>
+                      <span style="font-size: 12px; font-weight: 700; color: #334155;">Tokopedia</span>
+                    </div>
+                    <div style="text-align: right;">
+                      <span id="val-tokopedia" style="font-family: var(--font-mono); font-weight: 800; color: #1e293b; font-size: 12px;">0</span>
+                      <span style="font-size: 9px; color: #94a3b8; font-weight: 600;"> ORDER</span>
+                    </div>
+                  </div>
+                  
+                  <!-- Tiktok -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #fff; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <div style="width: 10px; height: 10px; border-radius: 2px; background: #ec4899;"></div>
+                      <span style="font-size: 12px; font-weight: 700; color: #334155;">Tiktok</span>
+                    </div>
+                    <div style="text-align: right;">
+                      <span id="val-tiktok" style="font-family: var(--font-mono); font-weight: 800; color: #1e293b; font-size: 12px;">0</span>
+                      <span style="font-size: 9px; color: #94a3b8; font-weight: 600;"> ORDER</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+
+
       </div>
 
       <!-- RETURN MANAGEMENT VIEW -->
@@ -1692,8 +1772,9 @@
                       <thead>
                         <tr style="background: #f8fafc;">
                           <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
-                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice & Aging</th>
+                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice</th>
                           <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
+                          <th style="padding: 8px 6px; font-size: 10px; width: 50px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Aging (H)</th>
                           <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
                         </tr>
                       </thead>
@@ -1796,8 +1877,9 @@
                       <thead>
                         <tr style="background: #f8fafc;">
                           <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
-                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice & Aging</th>
+                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice</th>
                           <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
+                          <th style="padding: 8px 6px; font-size: 10px; width: 50px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Aging (H)</th>
                           <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
                         </tr>
                       </thead>
@@ -1900,8 +1982,9 @@
                       <thead>
                         <tr style="background: #f8fafc;">
                           <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
-                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice & Aging</th>
+                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice</th>
                           <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
+                          <th style="padding: 8px 6px; font-size: 10px; width: 50px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Aging (H)</th>
                           <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
                         </tr>
                       </thead>
@@ -2245,6 +2328,7 @@
     let chartSlaBulan = null;
     let chartOrderBulan = null;
     let chartSkuGroup = null;
+    let chartEcommerce = null;
     let chartRtnTrend = null;
     let activeRtnStatusFilter = 'ALL'; // Can be 'ALL', 'ON PROGRESS', 'CLAIM 3PL', or 'SO RETURN'
     let activeOnProgressAgingFilter = 'ALL'; // Can be 'ALL', '1_3', '5_8', '9_12', or '13_16'
@@ -2819,6 +2903,64 @@
           }
         }
       });
+
+      // 4. ECOMMERCE DISTRIBUTION CHART (Doughnut)
+      const ctxEcommerce = document.getElementById('chart-ecommerce').getContext('2d');
+      chartEcommerce = new Chart(ctxEcommerce, {
+        type: 'doughnut',
+        data: {
+          labels: ['RUPA-RUPA', 'SHOPEE', 'TOKOPEDIA', 'TIKTOK'],
+          datasets: [{
+            data: [0, 0, 0, 0],
+            backgroundColor: ['#3b82f6', '#f97316', '#10b981', '#ec4899'],
+            hoverOffset: 20,
+            borderWidth: 0,
+            borderRadius: 5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '80%',
+          plugins: {
+            legend: {
+              display: false
+            },
+            datalabels: {
+              display: true,
+              color: '#475569',
+              font: {
+                family: 'Inter',
+                weight: '800',
+                size: 10
+              },
+              formatter: (value, context) => {
+                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                if (total === 0) return '';
+                const pct = ((value / total) * 100).toFixed(1) + '%';
+                return value > 0 ? pct : '';
+              },
+              anchor: 'end',
+              align: 'end',
+              offset: 4
+            },
+            tooltip: {
+              backgroundColor: 'rgba(30, 41, 59, 0.95)',
+              padding: 12,
+              titleFont: { size: 13, weight: '700' },
+              bodyFont: { size: 12 },
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.raw || 0;
+                  return ` Total: ${value.toLocaleString('id-ID')} order`;
+                }
+              }
+            }
+          }
+        },
+        plugins: [ChartDataLabels]
+      });
     }
 
     // UPDATE DASHBOARD WITH REAL SHEET DATA
@@ -2919,6 +3061,14 @@
       let totalCases = 0;
       let totalQty = 0;
 
+      // Ecommerce sums for doughnut chart
+      let ecommerceSums = {
+        'RUPA-RUPA': 0,
+        'SHOPEE': 0,
+        'TOKOPEDIA': 0,
+        'TIKTOK': 0
+      };
+
       // Gather monthly orders, cases & qty for charts
       let monthlyOrders = Array(12).fill(0);
       let monthlyCases = Array(12).fill(0);
@@ -3001,6 +3151,12 @@
         totalQty += rowQty;
         daysCount++;
 
+        // Accumulate Ecommerce totals (Columns B-E / index 1-4)
+        ecommerceSums['RUPA-RUPA'] += safeParseFloat(row[1]);
+        ecommerceSums['SHOPEE'] += safeParseFloat(row[2]);
+        ecommerceSums['TOKOPEDIA'] += safeParseFloat(row[3]);
+        ecommerceSums['TIKTOK'] += safeParseFloat(row[4]);
+
         // Accumulate 3PL volumes (based on Columns L-R / columns 11-17 of parsedSheetB)
         for (let c = 11; c <= 17; c++) {
           if (row[c]) {
@@ -3051,6 +3207,38 @@
 
       // Update Daily Trend lines
       updateDailyTrendFromRows();
+
+      // Update Ecommerce Chart
+      updateEcommerceChart(ecommerceSums);
+    }
+
+    function updateEcommerceChart(sums) {
+      if (!chartEcommerce) return;
+      
+      const rupa = sums['RUPA-RUPA'] || 0;
+      const shopee = sums['SHOPEE'] || 0;
+      const tokopedia = sums['TOKOPEDIA'] || 0;
+      const tiktok = sums['TIKTOK'] || 0;
+      const total = rupa + shopee + tokopedia + tiktok;
+
+      // Update Chart Data
+      chartEcommerce.data.datasets[0].data = [rupa, shopee, tokopedia, tiktok];
+      chartEcommerce.update();
+
+      // Update Center Total
+      const totalElem = document.getElementById('eco-total-val');
+      if (totalElem) totalElem.innerText = total.toLocaleString('id-ID');
+
+      // Update Custom Legend Values
+      const updateElem = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = val.toLocaleString('id-ID');
+      };
+
+      updateElem('val-rupa', rupa);
+      updateElem('val-shopee', shopee);
+      updateElem('val-tokopedia', tokopedia);
+      updateElem('val-tiktok', tiktok);
     }
 
     function updateDailyTrendFromRows() {
@@ -3353,7 +3541,8 @@
 
         // Check if row falls in CURRENT period
         if (rowTime >= currentStart.getTime() && rowTime <= currentEnd.getTime()) {
-          const sku = (row[COL_SKU] || "").toString().trim();
+          const skuValue = row[COL_SKU];
+          const sku = (skuValue !== undefined && skuValue !== null) ? skuValue.toString().trim() : "";
           const description = (row[COL_DESCRIPTION] || "").toString().trim();
           const agingCat = (row[COL_AGING_CAT] || "").toString().trim();
           const agingDays = Math.max(0, Math.floor((today - rowDate) / (1000 * 60 * 60 * 24)));
@@ -3775,7 +3964,7 @@
         if (!tbody) return;
         tbody.innerHTML = '';
         if (items.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;"><i class="fa-solid fa-folder-open" style="font-size: 16px; display: block; margin-bottom: 4px; color: #cbd5e1;"></i> Tidak ada data</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;"><i class="fa-solid fa-folder-open" style="font-size: 16px; display: block; margin-bottom: 4px; color: #cbd5e1;"></i> Tidak ada data</td></tr>`;
         } else {
           items.forEach((item, index) => {
             const tr = document.createElement('tr');
@@ -3783,14 +3972,13 @@
               <td style="padding: 8px 6px; text-align: center; font-size: 10px; font-weight: 500; color: #64748b; border-bottom: 1px solid #f1f5f9;">${index + 1}</td>
               <td style="padding: 8px 6px; border-bottom: 1px solid #f1f5f9;">
                 <div style="font-weight: 700; color: #1e293b; font-size: 10px;">${item.invoice}</div>
-                <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-top: 2px;">
-                  <span class="status-badge" style="background: ${item.agingDays > 30 ? '#fee2e2' : '#fef9c3'}; color: ${item.agingDays > 30 ? '#ef4444' : '#a16207'}; font-weight: 700; font-size: 8px; padding: 1px 4px; border-radius: 4px; line-height: 1;">${item.agingDays} H</span>
-                  <span style="font-size: 8px; color: #94a3b8; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${item.agingCat}">${item.agingCat}</span>
-                </div>
               </td>
               <td style="padding: 8px 6px; border-bottom: 1px solid #f1f5f9; max-width: 140px; overflow: hidden;">
-                <div style="font-weight: 700; color: #334155; font-size: 10px; font-family: var(--font-mono);">${item.sku}</div>
+                <div style="font-weight: 700; color: #334155; font-size: 10px; font-family: var(--font-mono);">${item.sku || '<span style="color:#94a3b8; font-style:italic; font-weight:400;">No SKU</span>'}</div>
                 <div style="color: #64748b; font-size: 9px; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px;" title="${item.description}">${item.description}</div>
+              </td>
+              <td style="padding: 8px 6px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+                <span class="status-badge" style="background: ${item.agingDays > 30 ? '#fee2e2' : '#fef9c3'}; color: ${item.agingDays > 30 ? '#ef4444' : '#a16207'}; font-weight: 800; font-size: 12px; padding: 2px 6px; border-radius: 4px; line-height: 1; display: inline-block;">${item.agingDays}</span>
               </td>
               <td style="padding: 8px 6px; text-align: center; font-weight: 700; color: var(--primary-accent); font-size: 10px; border-bottom: 1px solid #f1f5f9;">${item.qty.toLocaleString('id-ID')}</td>
             `;
@@ -4208,6 +4396,17 @@
 
         // Update SKU Table
         updateSkuTable();
+
+        // Update Ecommerce Chart in simulated mode
+        if (chartEcommerce) {
+          const simSums = {
+            'RUPA-RUPA': Math.round(filteredOrders * 0.1),
+            'SHOPEE': Math.round(filteredOrders * 0.5),
+            'TOKOPEDIA': Math.round(filteredOrders * 0.3),
+            'TIKTOK': Math.round(filteredOrders * 0.1)
+          };
+          updateEcommerceChart(simSums);
+        }
 
         showToast("Filter berhasil diterapkan ke seluruh panel!", "success");
       }, 500);
