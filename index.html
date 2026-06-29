@@ -4031,8 +4031,8 @@
                 pointBorderWidth: 1.5,
                 datalabels: {
                   display: function(context) {
-                    // Only display label if total days shown is <= 45 and quantity is > 0
-                    return context.chart.data.labels.length <= 45 && context.dataset.data[context.dataIndex] > 0;
+                    // Always display label if quantity is > 0
+                    return context.dataset.data[context.dataIndex] > 0;
                   },
                   align: 'top',
                   anchor: 'end',
@@ -4083,11 +4083,9 @@
             scales: {
               y: { 
                 beginAtZero: true, 
-                max: 15,
                 grid: { color: '#f1f5f9' },
                 ticks: {
-                  font: { family: 'Inter', size: 10 },
-                  stepSize: 3
+                  font: { family: 'Inter', size: 10 }
                 },
                 title: {
                   display: true,
