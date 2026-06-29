@@ -1460,10 +1460,10 @@
                   <table class="data-table" id="sku-data-table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
                     <thead>
                       <tr>
-                        <th style="padding: 12px 10px; font-size: 15px; width: 45px; text-align: center; font-weight: 800; color: #475569;">No</th>
-                        <th style="padding: 12px 10px; font-size: 15px; width: 130px; text-align: left; font-weight: 800; color: #475569;">SKU</th>
-                        <th style="padding: 12px 10px; font-size: 15px; text-align: left; font-weight: 800; color: #475569;">Deskripsi</th>
-                        <th style="padding: 12px 10px; font-size: 15px; text-align: right; width: 110px; font-weight: 800; color: #475569;">Qty</th>
+                        <th style="padding: 12px 10px; font-size: 16px; width: 45px; text-align: center; font-weight: 800; color: #475569;">No</th>
+                        <th style="padding: 12px 10px; font-size: 16px; width: 130px; text-align: left; font-weight: 800; color: #475569;">SKU</th>
+                        <th style="padding: 12px 10px; font-size: 16px; text-align: left; font-weight: 800; color: #475569;">Deskripsi</th>
+                        <th style="padding: 12px 10px; font-size: 16px; text-align: right; width: 110px; font-weight: 800; color: #475569;">Qty</th>
                       </tr>
                     </thead>
                     <tbody id="sku-table-body">
@@ -1514,54 +1514,8 @@
               <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px;">
                 <h4 style="font-size: 13px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Order Details</h4>
                 
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                  <!-- Rupa-Rupa -->
-                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #fff; border-radius: 10px; border: 1px solid #e2e8f0;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                      <div style="width: 12px; height: 12px; border-radius: 3px; background: #3b82f6;"></div>
-                      <span style="font-size: 15px; font-weight: 700; color: #334155;">Rupa-Rupa</span>
-                    </div>
-                    <div style="text-align: right;">
-                      <span id="val-rupa" style="font-family: var(--font-mono); font-weight: 800; color: #1e293b; font-size: 16px;">0</span>
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 600;"> ORDER</span>
-                    </div>
-                  </div>
-                  
-                  <!-- Shopee -->
-                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #fff; border-radius: 10px; border: 1px solid #e2e8f0;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                      <div style="width: 12px; height: 12px; border-radius: 3px; background: #f97316;"></div>
-                      <span style="font-size: 15px; font-weight: 700; color: #334155;">Shopee</span>
-                    </div>
-                    <div style="text-align: right;">
-                      <span id="val-shopee" style="font-family: var(--font-mono); font-weight: 800; color: #1e293b; font-size: 16px;">0</span>
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 600;"> ORDER</span>
-                    </div>
-                  </div>
-                  
-                  <!-- Tokopedia -->
-                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #fff; border-radius: 10px; border: 1px solid #e2e8f0;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                      <div style="width: 12px; height: 12px; border-radius: 3px; background: #10b981;"></div>
-                      <span style="font-size: 15px; font-weight: 700; color: #334155;">Tokopedia</span>
-                    </div>
-                    <div style="text-align: right;">
-                      <span id="val-tokopedia" style="font-family: var(--font-mono); font-weight: 800; color: #1e293b; font-size: 16px;">0</span>
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 600;"> ORDER</span>
-                    </div>
-                  </div>
-                  
-                  <!-- Tiktok -->
-                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #fff; border-radius: 10px; border: 1px solid #e2e8f0;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                      <div style="width: 12px; height: 12px; border-radius: 3px; background: #ec4899;"></div>
-                      <span style="font-size: 15px; font-weight: 700; color: #334155;">Tiktok</span>
-                    </div>
-                    <div style="text-align: right;">
-                      <span id="val-tiktok" style="font-family: var(--font-mono); font-weight: 800; color: #1e293b; font-size: 16px;">0</span>
-                      <span style="font-size: 11px; color: #94a3b8; font-weight: 600;"> ORDER</span>
-                    </div>
-                  </div>
+                <div id="ecommerce-legend-container" style="display: flex; flex-direction: column; gap: 10px;">
+                  <!-- Dynamically populated by updateEcommerceChart -->
                 </div>
               </div>
             </div>
@@ -2932,7 +2886,7 @@
               font: {
                 family: 'Inter',
                 weight: '800',
-                size: 14
+                size: 16
               },
               formatter: (value, context) => {
                 const total = context.dataset.data.reduce((a, b) => a + b, 0);
@@ -3221,7 +3175,14 @@
       const tiktok = sums['TIKTOK'] || 0;
       const total = rupa + shopee + tokopedia + tiktok;
 
-      // Update Chart Data
+      const platforms = [
+        { name: 'Rupa-Rupa', val: rupa, color: '#3b82f6' },
+        { name: 'Shopee', val: shopee, color: '#f97316' },
+        { name: 'Tokopedia', val: tokopedia, color: '#10b981' },
+        { name: 'Tiktok', val: tiktok, color: '#ec4899' }
+      ];
+
+      // Update Chart Data (Static segment order)
       chartEcommerce.data.datasets[0].data = [rupa, shopee, tokopedia, tiktok];
       chartEcommerce.update();
 
@@ -3229,16 +3190,25 @@
       const totalElem = document.getElementById('eco-total-val');
       if (totalElem) totalElem.innerText = total.toLocaleString('id-ID');
 
-      // Update Custom Legend Values
-      const updateElem = (id, val) => {
-        const el = document.getElementById(id);
-        if (el) el.innerText = val.toLocaleString('id-ID');
-      };
+      // Sort platforms by value descending
+      const sortedPlatforms = [...platforms].sort((a, b) => b.val - a.val);
 
-      updateElem('val-rupa', rupa);
-      updateElem('val-shopee', shopee);
-      updateElem('val-tokopedia', tokopedia);
-      updateElem('val-tiktok', tiktok);
+      // Render legend
+      const container = document.getElementById('ecommerce-legend-container');
+      if (container) {
+        container.innerHTML = sortedPlatforms.map(item => `
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; transition: all 0.2s;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 12px; height: 12px; border-radius: 3px; background: ${item.color};"></div>
+              <span style="font-size: 15px; font-weight: 700; color: #334155;">${item.name}</span>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-family: var(--font-sans); font-weight: 800; color: #1e293b; font-size: 18px;">${item.val.toLocaleString('id-ID')}</span>
+              <span style="font-size: 11px; color: #94a3b8; font-weight: 600;"> ORDER</span>
+            </div>
+          </div>
+        `).join('');
+      }
     }
 
     function updateDailyTrendFromRows() {
@@ -4501,10 +4471,10 @@
           const tr = document.createElement('tr');
           tr.style.height = '48px'; 
           tr.innerHTML = `
-            <td style="font-size: 15px; padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: center;">${index + 1}</td>
-            <td style="padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: left;"><span class="sku-badge" style="background: rgba(107, 70, 193, 0.1); color: var(--purple); font-weight: 700; padding: 5px 10px; border-radius: 6px; font-size: 14px; border: 1px solid rgba(107, 70, 193, 0.2);">${item.sku}</span></td>
-            <td style="font-size: 15px; color: #334155; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: left;" title="${item.desc}">${item.desc}</td>
-            <td style="text-align: right; font-weight: 800; color: var(--purple); font-size: 16px; padding: 12px 10px; border-bottom: 1px solid #f1f5f9;">${Math.round(item.qty).toLocaleString('id-ID')}</td>
+            <td style="font-size: 16px; padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: center;">${index + 1}</td>
+            <td style="padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: left;"><span class="sku-badge" style="background: rgba(107, 70, 193, 0.1); color: var(--purple); font-weight: 700; padding: 5px 10px; border-radius: 6px; font-size: 15px; border: 1px solid rgba(107, 70, 193, 0.2);">${item.sku}</span></td>
+            <td style="font-size: 16px; color: #334155; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: left;" title="${item.desc}">${item.desc}</td>
+            <td style="text-align: right; font-weight: 800; color: var(--purple); font-size: 17px; padding: 12px 10px; border-bottom: 1px solid #f1f5f9;">${Math.round(item.qty).toLocaleString('id-ID')}</td>
           `;
           tableBody.appendChild(tr);
         });
