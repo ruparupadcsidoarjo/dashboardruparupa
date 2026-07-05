@@ -1655,11 +1655,11 @@
               <div id="rtn-collapse-onprogress" style="display: block; width: 100%;">
                 
                 <!-- Interactive Aging Scopes Grid -->
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px;" class="no-print">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; margin-bottom: 12px;" class="no-print">
                   <!-- Scope 1-3 Bulan -->
-                  <div id="rtn-scope-card-1-3" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('1_3')" title="Klik untuk menyaring data">
+                  <div id="rtn-scope-card-1-3" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('1-3 Bulan')" title="Klik untuk menyaring data">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">1 - 3 Bulan</span>
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">1-3 Bln</span>
                       <i class="fa-solid fa-clock-rotate-left" style="font-size: 10px; color: #4f46e5;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
@@ -1668,23 +1668,35 @@
                     </div>
                   </div>
 
-                  <!-- Scope 5-8 Bulan -->
-                  <div id="rtn-scope-card-5-8" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('5_8')" title="Klik untuk menyaring data">
+                  <!-- Scope 3-6 Bulan -->
+                  <div id="rtn-scope-card-3-6" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('3-6 Bulan')" title="Klik untuk menyaring data">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">5 - 8 Bulan</span>
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">3-6 Bln</span>
                       <i class="fa-solid fa-hourglass-half" style="font-size: 10px; color: #d97706;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-5-8-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-5-8-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                      <span id="rtn-scope-3-6-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-3-6-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
+
+                  <!-- Scope 7-9 Bulan -->
+                  <div id="rtn-scope-card-7-9" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('7-9 Bulan')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">7-9 Bln</span>
+                      <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #0d9488;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-7-9-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-7-9-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
 
                   <!-- Scope 9-12 Bulan -->
-                  <div id="rtn-scope-card-9-12" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('9_12')" title="Klik untuk menyaring data">
+                  <div id="rtn-scope-card-9-12" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('9-12 Bulan')" title="Klik untuk menyaring data">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">9 - 12 Bulan</span>
-                      <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #0d9488;"></i>
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">9-12 Bln</span>
+                      <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #ef4444;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
                       <span id="rtn-scope-9-12-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
@@ -1692,21 +1704,31 @@
                     </div>
                   </div>
 
-                  <!-- Scope 13-16 Bulan -->
-                  <div id="rtn-scope-card-13-16" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('13_16')" title="Klik untuk menyaring data">
+                  <!-- Scope >16 Bulan -->
+                  <div id="rtn-scope-card-gt16" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('>16 Bulan')" title="Klik untuk menyaring data">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">13 - 16 Bulan</span>
-                      <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #ef4444;"></i>
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">>16 Bln</span>
+                      <i class="fa-solid fa-fire" style="font-size: 10px; color: #b91c1c;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-13-16-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-13-16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                      <span id="rtn-scope-gt16-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-gt16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
                 </div>
 
                 <!-- Collapsible Detail Container -->
                 <div id="rtn-detail-container-onprogress" style="display: none; margin-top: 8px;">
+                  <!-- Detail Table Header with Close Button -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f1f5f9; padding: 6px 12px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
+                    <span style="font-size: 10px; font-weight: 700; color: #334155; display: flex; align-items: center; gap: 6px;">
+                      <i class="fa-solid fa-list-check" style="color: #4f46e5;"></i> 
+                      Detail: ON PROGRESS (<span id="rtn-detail-title-onprogress" style="color: #4f46e5;">-</span>)
+                    </span>
+                    <button onclick="toggleOnProgressAgingFilter(activeOnProgressAgingFilter)" style="background: none; border: none; font-size: 13px; font-weight: 700; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; transition: all 0.2s;" onmouseover="this.style.background='#e2e8f0'; this.style.color='#ef4444';" onmouseout="this.style.background='none'; this.style.color='#64748b;'" title="Tutup Tabel Detail">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
                   <!-- Sorting Dropdown -->
                   <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
                     <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
@@ -1760,11 +1782,11 @@
               <div id="rtn-collapse-claim3pl" style="display: block; width: 100%;">
                 
                 <!-- Interactive Aging Scopes Grid -->
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px;" class="no-print">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; margin-bottom: 12px;" class="no-print">
                   <!-- Scope 1-3 Bulan -->
-                  <div id="rtn-scope-card-claim3pl-1-3" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('1_3')" title="Klik untuk menyaring data">
+                  <div id="rtn-scope-card-claim3pl-1-3" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('1-3 Bulan')" title="Klik untuk menyaring data">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">1 - 3 Bulan</span>
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">1-3 Bln</span>
                       <i class="fa-solid fa-clock-rotate-left" style="font-size: 10px; color: #d97706;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
@@ -1773,23 +1795,35 @@
                     </div>
                   </div>
 
-                  <!-- Scope 5-8 Bulan -->
-                  <div id="rtn-scope-card-claim3pl-5-8" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('5_8')" title="Klik untuk menyaring data">
+                  <!-- Scope 3-6 Bulan -->
+                  <div id="rtn-scope-card-claim3pl-3-6" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('3-6 Bulan')" title="Klik untuk menyaring data">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">5 - 8 Bulan</span>
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">3-6 Bln</span>
                       <i class="fa-solid fa-hourglass-half" style="font-size: 10px; color: #d97706;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-claim3pl-5-8-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-claim3pl-5-8-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                      <span id="rtn-scope-claim3pl-3-6-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-claim3pl-3-6-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
+
+                  <!-- Scope 7-9 Bulan -->
+                  <div id="rtn-scope-card-claim3pl-7-9" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('7-9 Bulan')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">7-9 Bln</span>
+                      <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #d97706;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-claim3pl-7-9-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-claim3pl-7-9-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
 
                   <!-- Scope 9-12 Bulan -->
-                  <div id="rtn-scope-card-claim3pl-9-12" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('9_12')" title="Klik untuk menyaring data">
+                  <div id="rtn-scope-card-claim3pl-9-12" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('9-12 Bulan')" title="Klik untuk menyaring data">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">9 - 12 Bulan</span>
-                      <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #d97706;"></i>
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">9-12 Bln</span>
+                      <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #d97706;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
                       <span id="rtn-scope-claim3pl-9-12-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
@@ -1797,21 +1831,31 @@
                     </div>
                   </div>
 
-                  <!-- Scope 13-16 Bulan -->
-                  <div id="rtn-scope-card-claim3pl-13-16" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('13_16')" title="Klik untuk menyaring data">
+                  <!-- Scope >16 Bulan -->
+                  <div id="rtn-scope-card-claim3pl-gt16" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('>16 Bulan')" title="Klik untuk menyaring data">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">13 - 16 Bulan</span>
-                      <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #d97706;"></i>
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">>16 Bln</span>
+                      <i class="fa-solid fa-fire" style="font-size: 10px; color: #d97706;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-claim3pl-13-16-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-claim3pl-13-16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                      <span id="rtn-scope-claim3pl-gt16-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-claim3pl-gt16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
                 </div>
 
                 <!-- Collapsible Detail Container -->
                 <div id="rtn-detail-container-claim3pl" style="display: none; margin-top: 8px;">
+                  <!-- Detail Table Header with Close Button -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #fffbeb; padding: 6px 12px; border-radius: 6px; border: 1px solid #fef3c7;" class="no-print">
+                    <span style="font-size: 10px; font-weight: 700; color: #b45309; display: flex; align-items: center; gap: 6px;">
+                      <i class="fa-solid fa-list-check" style="color: #d97706;"></i> 
+                      Detail: CLAIM 3PL (<span id="rtn-detail-title-claim3pl" style="color: #d97706;">-</span>)
+                    </span>
+                    <button onclick="toggleClaim3PLAgingFilter(activeClaim3PLAgingFilter)" style="background: none; border: none; font-size: 13px; font-weight: 700; color: #b45309; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; transition: all 0.2s;" onmouseover="this.style.background='#fef3c7'; this.style.color='#ef4444';" onmouseout="this.style.background='none'; this.style.color='#b45309;'" title="Tutup Tabel Detail">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
                   <!-- Sorting Dropdown -->
                   <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
                     <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
@@ -1865,11 +1909,11 @@
               <div id="rtn-collapse-soreturn" style="display: block; width: 100%;">
                 
                 <!-- Interactive Aging Scopes Grid -->
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px;" class="no-print">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; margin-bottom: 12px;" class="no-print">
                   <!-- Scope 1-3 Bulan -->
-                  <div id="rtn-scope-card-soreturn-1-3" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('1_3')" title="Klik untuk menyaring data">
+                  <div id="rtn-scope-card-soreturn-1-3" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('1-3 Bulan')" title="Klik untuk menyaring data">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">1 - 3 Bulan</span>
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">1-3 Bln</span>
                       <i class="fa-solid fa-clock-rotate-left" style="font-size: 10px; color: #0d9488;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
@@ -1878,23 +1922,35 @@
                     </div>
                   </div>
 
-                  <!-- Scope 5-8 Bulan -->
-                  <div id="rtn-scope-card-soreturn-5-8" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('5_8')" title="Klik untuk menyaring data">
+                  <!-- Scope 3-6 Bulan -->
+                  <div id="rtn-scope-card-soreturn-3-6" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('3-6 Bulan')" title="Klik untuk menyaring data">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">5 - 8 Bulan</span>
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">3-6 Bln</span>
                       <i class="fa-solid fa-hourglass-half" style="font-size: 10px; color: #0d9488;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-soreturn-5-8-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-soreturn-5-8-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                      <span id="rtn-scope-soreturn-3-6-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-soreturn-3-6-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                    </div>
+                  </div>
+
+                  <!-- Scope 7-9 Bulan -->
+                  <div id="rtn-scope-card-soreturn-7-9" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('7-9 Bulan')" title="Klik untuk menyaring data">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">7-9 Bln</span>
+                      <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #0d9488;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span id="rtn-scope-soreturn-7-9-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-soreturn-7-9-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
 
                   <!-- Scope 9-12 Bulan -->
-                  <div id="rtn-scope-card-soreturn-9-12" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('9_12')" title="Klik untuk menyaring data">
+                  <div id="rtn-scope-card-soreturn-9-12" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('9-12 Bulan')" title="Klik untuk menyaring data">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">9 - 12 Bulan</span>
-                      <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #0d9488;"></i>
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">9-12 Bln</span>
+                      <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #0d9488;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
                       <span id="rtn-scope-soreturn-9-12-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
@@ -1902,21 +1958,31 @@
                     </div>
                   </div>
 
-                  <!-- Scope 13-16 Bulan -->
-                  <div id="rtn-scope-card-soreturn-13-16" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('13_16')" title="Klik untuk menyaring data">
+                  <!-- Scope >16 Bulan -->
+                  <div id="rtn-scope-card-soreturn-gt16" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('>16 Bulan')" title="Klik untuk menyaring data">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">13 - 16 Bulan</span>
-                      <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #0d9488;"></i>
+                      <span style="font-size: 10px; font-weight: 700; color: #475569;">>16 Bln</span>
+                      <i class="fa-solid fa-fire" style="font-size: 10px; color: #0d9488;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-soreturn-13-16-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-soreturn-13-16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
+                      <span id="rtn-scope-soreturn-gt16-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-soreturn-gt16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
                 </div>
 
                 <!-- Collapsible Detail Container -->
                 <div id="rtn-detail-container-soreturn" style="display: none; margin-top: 8px;">
+                  <!-- Detail Table Header with Close Button -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f0fdfa; padding: 6px 12px; border-radius: 6px; border: 1px solid #ccfbf1;" class="no-print">
+                    <span style="font-size: 10px; font-weight: 700; color: #0f766e; display: flex; align-items: center; gap: 6px;">
+                      <i class="fa-solid fa-list-check" style="color: #0d9488;"></i> 
+                      Detail: SO RETURN (<span id="rtn-detail-title-soreturn" style="color: #0d9488;">-</span>)
+                    </span>
+                    <button onclick="toggleSoReturnAgingFilter(activeSoReturnAgingFilter)" style="background: none; border: none; font-size: 13px; font-weight: 700; color: #0f766e; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; transition: all 0.2s;" onmouseover="this.style.background='#ccfbf1'; this.style.color='#ef4444';" onmouseout="this.style.background='none'; this.style.color='#0f766e;'" title="Tutup Tabel Detail">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
                   <!-- Sorting Dropdown -->
                   <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
                     <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
@@ -2285,9 +2351,9 @@
     let chartEcommerce = null;
     let chartRtnTrend = null;
     let activeRtnStatusFilter = 'ALL'; // Can be 'ALL', 'ON PROGRESS', 'CLAIM 3PL', or 'SO RETURN'
-    let activeOnProgressAgingFilter = 'ALL'; // Can be 'ALL', '1_3', '5_8', '9_12', or '13_16'
-    let activeClaim3PLAgingFilter = 'ALL'; // Can be 'ALL', '1_3', '5_8', '9_12', or '13_16'
-    let activeSoReturnAgingFilter = 'ALL'; // Can be 'ALL', '1_3', '5_8', '9_12', or '13_16'
+    let activeOnProgressAgingFilter = 'ALL'; // Can be 'ALL', '1-3 Bulan', '3-6 Bulan', '7-9 Bulan', '9-12 Bulan', or '>16 Bulan'
+    let activeClaim3PLAgingFilter = 'ALL'; // Can be 'ALL', '1-3 Bulan', '3-6 Bulan', '7-9 Bulan', '9-12 Bulan', or '>16 Bulan'
+    let activeSoReturnAgingFilter = 'ALL'; // Can be 'ALL', '1-3 Bulan', '3-6 Bulan', '7-9 Bulan', '9-12 Bulan', or '>16 Bulan'
     let sortOnProgress = 'aging_desc';
     let sortClaim3PL = 'aging_desc';
     let sortSoReturn = 'aging_desc';
@@ -3685,72 +3751,102 @@
       syncDropdownValue('rtn-sort-select-claim3pl', sortClaim3PL);
       syncDropdownValue('rtn-sort-select-soreturn', sortSoReturn);
 
+      // Helper function to match aging categories with Gsheet values or fallback to days
+      function getAgingGroup(item) {
+        const cat = (item.agingCat || "").toString().trim().toUpperCase();
+        if (cat.includes('1-3') || cat.includes('1 - 3')) return '1-3 Bulan';
+        if (cat.includes('3-6') || cat.includes('3 - 6')) return '3-6 Bulan';
+        if (cat.includes('7-9') || cat.includes('7 - 9')) return '7-9 Bulan';
+        if (cat.includes('9-12') || cat.includes('9 - 12')) return '9-12 Bulan';
+        if (cat.includes('>16') || cat.includes('16+')) return '>16 Bulan';
+
+        // Fallback to agingDays if Gsheet's AGING column is blank or different
+        const days = item.agingDays;
+        if (days <= 90) return '1-3 Bulan';
+        if (days > 90 && days <= 180) return '3-6 Bulan';
+        if (days > 180 && days <= 270) return '7-9 Bulan';
+        if (days > 270 && days <= 480) return '9-12 Bulan';
+        return '>16 Bulan';
+      }
+
       // Compute aging scopes for ON PROGRESS items (always use grand total list for scopes counts)
       const scope1_3 = { invoices: new Set(), qty: 0 };
-      const scope5_8 = { invoices: new Set(), qty: 0 };
+      const scope3_6 = { invoices: new Set(), qty: 0 };
+      const scope7_9 = { invoices: new Set(), qty: 0 };
       const scope9_12 = { invoices: new Set(), qty: 0 };
-      const scope13_16 = { invoices: new Set(), qty: 0 };
+      const scopeGt16 = { invoices: new Set(), qty: 0 };
 
       onProgressItems.forEach(item => {
-        const days = item.agingDays;
-        if (days <= 90) {
+        const group = getAgingGroup(item);
+        if (group === '1-3 Bulan') {
           if (item.invoice) scope1_3.invoices.add(item.invoice);
           scope1_3.qty += item.qty;
-        } else if (days > 90 && days <= 240) {
-          if (item.invoice) scope5_8.invoices.add(item.invoice);
-          scope5_8.qty += item.qty;
-        } else if (days > 240 && days <= 360) {
+        } else if (group === '3-6 Bulan') {
+          if (item.invoice) scope3_6.invoices.add(item.invoice);
+          scope3_6.qty += item.qty;
+        } else if (group === '7-9 Bulan') {
+          if (item.invoice) scope7_9.invoices.add(item.invoice);
+          scope7_9.qty += item.qty;
+        } else if (group === '9-12 Bulan') {
           if (item.invoice) scope9_12.invoices.add(item.invoice);
           scope9_12.qty += item.qty;
-        } else if (days > 360) {
-          if (item.invoice) scope13_16.invoices.add(item.invoice);
-          scope13_16.qty += item.qty;
+        } else if (group === '>16 Bulan') {
+          if (item.invoice) scopeGt16.invoices.add(item.invoice);
+          scopeGt16.qty += item.qty;
         }
       });
 
       // Compute aging scopes for CLAIM 3PL items
       const claim3PLScope1_3 = { invoices: new Set(), qty: 0 };
-      const claim3PLScope5_8 = { invoices: new Set(), qty: 0 };
+      const claim3PLScope3_6 = { invoices: new Set(), qty: 0 };
+      const claim3PLScope7_9 = { invoices: new Set(), qty: 0 };
       const claim3PLScope9_12 = { invoices: new Set(), qty: 0 };
-      const claim3PLScope13_16 = { invoices: new Set(), qty: 0 };
+      const claim3PLScopeGt16 = { invoices: new Set(), qty: 0 };
 
       claim3PLItems.forEach(item => {
-        const days = item.agingDays;
-        if (days <= 90) {
+        const group = getAgingGroup(item);
+        if (group === '1-3 Bulan') {
           if (item.invoice) claim3PLScope1_3.invoices.add(item.invoice);
           claim3PLScope1_3.qty += item.qty;
-        } else if (days > 90 && days <= 240) {
-          if (item.invoice) claim3PLScope5_8.invoices.add(item.invoice);
-          claim3PLScope5_8.qty += item.qty;
-        } else if (days > 240 && days <= 360) {
+        } else if (group === '3-6 Bulan') {
+          if (item.invoice) claim3PLScope3_6.invoices.add(item.invoice);
+          claim3PLScope3_6.qty += item.qty;
+        } else if (group === '7-9 Bulan') {
+          if (item.invoice) claim3PLScope7_9.invoices.add(item.invoice);
+          claim3PLScope7_9.qty += item.qty;
+        } else if (group === '9-12 Bulan') {
           if (item.invoice) claim3PLScope9_12.invoices.add(item.invoice);
           claim3PLScope9_12.qty += item.qty;
-        } else if (days > 360) {
-          if (item.invoice) claim3PLScope13_16.invoices.add(item.invoice);
-          claim3PLScope13_16.qty += item.qty;
+        } else if (group === '>16 Bulan') {
+          if (item.invoice) claim3PLScopeGt16.invoices.add(item.invoice);
+          claim3PLScopeGt16.qty += item.qty;
         }
       });
 
       // Compute aging scopes for SO RETURN items
       const soReturnScope1_3 = { invoices: new Set(), qty: 0 };
-      const soReturnScope5_8 = { invoices: new Set(), qty: 0 };
+      const soReturnScope3_6 = { invoices: new Set(), qty: 0 };
+      const soReturnScope7_9 = { invoices: new Set(), qty: 0 };
       const soReturnScope9_12 = { invoices: new Set(), qty: 0 };
-      const soReturnScope13_16 = { invoices: new Set(), qty: 0 };
+      const soReturnScopeGt16 = { invoices: new Set(), qty: 0 };
 
       soReturnItems.forEach(item => {
-        const days = item.agingDays;
-        if (days <= 90) {
+        const group = getAgingGroup(item);
+        if (group === '1-3 Bulan') {
           if (item.invoice) soReturnScope1_3.invoices.add(item.invoice);
           soReturnScope1_3.qty += item.qty;
-        } else if (days > 90 && days <= 240) {
-          if (item.invoice) soReturnScope5_8.invoices.add(item.invoice);
-          soReturnScope5_8.qty += item.qty;
-        } else if (days > 240 && days <= 360) {
+        } else if (group === '3-6 Bulan') {
+          if (item.invoice) soReturnScope3_6.invoices.add(item.invoice);
+          soReturnScope3_6.qty += item.qty;
+        } else if (group === '7-9 Bulan') {
+          if (item.invoice) soReturnScope7_9.invoices.add(item.invoice);
+          soReturnScope7_9.qty += item.qty;
+        } else if (group === '9-12 Bulan') {
           if (item.invoice) soReturnScope9_12.invoices.add(item.invoice);
           soReturnScope9_12.qty += item.qty;
-        } else if (days > 360) {
-          if (item.invoice) soReturnScope13_16.invoices.add(item.invoice);
-          soReturnScope13_16.qty += item.qty;
+        } else if (group === '>16 Bulan') {
+          if (item.invoice) soReturnScopeGt16.invoices.add(item.invoice);
+          soReturnScopeGt16.qty += item.qty;
         }
       });
 
@@ -3763,40 +3859,49 @@
       updateScopeText('rtn-scope-1-3-inv', `${scope1_3.invoices.size} Inv`);
       updateScopeText('rtn-scope-1-3-qty', `${scope1_3.qty.toLocaleString('id-ID')} Pcs`);
 
-      updateScopeText('rtn-scope-5-8-inv', `${scope5_8.invoices.size} Inv`);
-      updateScopeText('rtn-scope-5-8-qty', `${scope5_8.qty.toLocaleString('id-ID')} Pcs`);
+      updateScopeText('rtn-scope-3-6-inv', `${scope3_6.invoices.size} Inv`);
+      updateScopeText('rtn-scope-3-6-qty', `${scope3_6.qty.toLocaleString('id-ID')} Pcs`);
+
+      updateScopeText('rtn-scope-7-9-inv', `${scope7_9.invoices.size} Inv`);
+      updateScopeText('rtn-scope-7-9-qty', `${scope7_9.qty.toLocaleString('id-ID')} Pcs`);
 
       updateScopeText('rtn-scope-9-12-inv', `${scope9_12.invoices.size} Inv`);
       updateScopeText('rtn-scope-9-12-qty', `${scope9_12.qty.toLocaleString('id-ID')} Pcs`);
 
-      updateScopeText('rtn-scope-13-16-inv', `${scope13_16.invoices.size} Inv`);
-      updateScopeText('rtn-scope-13-16-qty', `${scope13_16.qty.toLocaleString('id-ID')} Pcs`);
+      updateScopeText('rtn-scope-gt16-inv', `${scopeGt16.invoices.size} Inv`);
+      updateScopeText('rtn-scope-gt16-qty', `${scopeGt16.qty.toLocaleString('id-ID')} Pcs`);
 
       // Update CLAIM 3PL scope texts
       updateScopeText('rtn-scope-claim3pl-1-3-inv', `${claim3PLScope1_3.invoices.size} Inv`);
       updateScopeText('rtn-scope-claim3pl-1-3-qty', `${claim3PLScope1_3.qty.toLocaleString('id-ID')} Pcs`);
 
-      updateScopeText('rtn-scope-claim3pl-5-8-inv', `${claim3PLScope5_8.invoices.size} Inv`);
-      updateScopeText('rtn-scope-claim3pl-5-8-qty', `${claim3PLScope5_8.qty.toLocaleString('id-ID')} Pcs`);
+      updateScopeText('rtn-scope-claim3pl-3-6-inv', `${claim3PLScope3_6.invoices.size} Inv`);
+      updateScopeText('rtn-scope-claim3pl-3-6-qty', `${claim3PLScope3_6.qty.toLocaleString('id-ID')} Pcs`);
+
+      updateScopeText('rtn-scope-claim3pl-7-9-inv', `${claim3PLScope7_9.invoices.size} Inv`);
+      updateScopeText('rtn-scope-claim3pl-7-9-qty', `${claim3PLScope7_9.qty.toLocaleString('id-ID')} Pcs`);
 
       updateScopeText('rtn-scope-claim3pl-9-12-inv', `${claim3PLScope9_12.invoices.size} Inv`);
       updateScopeText('rtn-scope-claim3pl-9-12-qty', `${claim3PLScope9_12.qty.toLocaleString('id-ID')} Pcs`);
 
-      updateScopeText('rtn-scope-claim3pl-13-16-inv', `${claim3PLScope13_16.invoices.size} Inv`);
-      updateScopeText('rtn-scope-claim3pl-13-16-qty', `${claim3PLScope13_16.qty.toLocaleString('id-ID')} Pcs`);
+      updateScopeText('rtn-scope-claim3pl-gt16-inv', `${claim3PLScopeGt16.invoices.size} Inv`);
+      updateScopeText('rtn-scope-claim3pl-gt16-qty', `${claim3PLScopeGt16.qty.toLocaleString('id-ID')} Pcs`);
 
       // Update SO RETURN scope texts
       updateScopeText('rtn-scope-soreturn-1-3-inv', `${soReturnScope1_3.invoices.size} Inv`);
       updateScopeText('rtn-scope-soreturn-1-3-qty', `${soReturnScope1_3.qty.toLocaleString('id-ID')} Pcs`);
 
-      updateScopeText('rtn-scope-soreturn-5-8-inv', `${soReturnScope5_8.invoices.size} Inv`);
-      updateScopeText('rtn-scope-soreturn-5-8-qty', `${soReturnScope5_8.qty.toLocaleString('id-ID')} Pcs`);
+      updateScopeText('rtn-scope-soreturn-3-6-inv', `${soReturnScope3_6.invoices.size} Inv`);
+      updateScopeText('rtn-scope-soreturn-3-6-qty', `${soReturnScope3_6.qty.toLocaleString('id-ID')} Pcs`);
+
+      updateScopeText('rtn-scope-soreturn-7-9-inv', `${soReturnScope7_9.invoices.size} Inv`);
+      updateScopeText('rtn-scope-soreturn-7-9-qty', `${soReturnScope7_9.qty.toLocaleString('id-ID')} Pcs`);
 
       updateScopeText('rtn-scope-soreturn-9-12-inv', `${soReturnScope9_12.invoices.size} Inv`);
       updateScopeText('rtn-scope-soreturn-9-12-qty', `${soReturnScope9_12.qty.toLocaleString('id-ID')} Pcs`);
 
-      updateScopeText('rtn-scope-soreturn-13-16-inv', `${soReturnScope13_16.invoices.size} Inv`);
-      updateScopeText('rtn-scope-soreturn-13-16-qty', `${soReturnScope13_16.qty.toLocaleString('id-ID')} Pcs`);
+      updateScopeText('rtn-scope-soreturn-gt16-inv', `${soReturnScopeGt16.invoices.size} Inv`);
+      updateScopeText('rtn-scope-soreturn-gt16-qty', `${soReturnScopeGt16.qty.toLocaleString('id-ID')} Pcs`);
 
       // Highlight the active scope card helper
       const updateScopeCardStyles = (id, filterName, activeFilter, activeBorder, activeBg) => {
@@ -3814,37 +3919,45 @@
       };
 
       // Apply highlighting for ON PROGRESS cards
-      updateScopeCardStyles('rtn-scope-card-1-3', '1_3', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
-      updateScopeCardStyles('rtn-scope-card-5-8', '5_8', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
-      updateScopeCardStyles('rtn-scope-card-9-12', '9_12', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
-      updateScopeCardStyles('rtn-scope-card-13-16', '13_16', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
+      updateScopeCardStyles('rtn-scope-card-1-3', '1-3 Bulan', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
+      updateScopeCardStyles('rtn-scope-card-3-6', '3-6 Bulan', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
+      updateScopeCardStyles('rtn-scope-card-7-9', '7-9 Bulan', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
+      updateScopeCardStyles('rtn-scope-card-9-12', '9-12 Bulan', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
+      updateScopeCardStyles('rtn-scope-card-gt16', '>16 Bulan', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
 
       // Apply highlighting for CLAIM 3PL cards
-      updateScopeCardStyles('rtn-scope-card-claim3pl-1-3', '1_3', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
-      updateScopeCardStyles('rtn-scope-card-claim3pl-5-8', '5_8', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
-      updateScopeCardStyles('rtn-scope-card-claim3pl-9-12', '9_12', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
-      updateScopeCardStyles('rtn-scope-card-claim3pl-13-16', '13_16', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
+      updateScopeCardStyles('rtn-scope-card-claim3pl-1-3', '1-3 Bulan', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
+      updateScopeCardStyles('rtn-scope-card-claim3pl-3-6', '3-6 Bulan', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
+      updateScopeCardStyles('rtn-scope-card-claim3pl-7-9', '7-9 Bulan', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
+      updateScopeCardStyles('rtn-scope-card-claim3pl-9-12', '9-12 Bulan', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
+      updateScopeCardStyles('rtn-scope-card-claim3pl-gt16', '>16 Bulan', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
 
       // Apply highlighting for SO RETURN cards
-      updateScopeCardStyles('rtn-scope-card-soreturn-1-3', '1_3', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
-      updateScopeCardStyles('rtn-scope-card-soreturn-5-8', '5_8', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
-      updateScopeCardStyles('rtn-scope-card-soreturn-9-12', '9_12', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
-      updateScopeCardStyles('rtn-scope-card-soreturn-13-16', '13_16', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
+      updateScopeCardStyles('rtn-scope-card-soreturn-1-3', '1-3 Bulan', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
+      updateScopeCardStyles('rtn-scope-card-soreturn-3-6', '3-6 Bulan', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
+      updateScopeCardStyles('rtn-scope-card-soreturn-7-9', '7-9 Bulan', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
+      updateScopeCardStyles('rtn-scope-card-soreturn-9-12', '9-12 Bulan', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
+      updateScopeCardStyles('rtn-scope-card-soreturn-gt16', '>16 Bulan', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
 
-      // Helper to show/hide detailed tables under scopes
-      const toggleDetailContainer = (containerId, filterVal) => {
+      // Helper to show/hide detailed tables under scopes and update headers
+      const toggleDetailContainer = (containerId, titleId, filterVal) => {
         const el = document.getElementById(containerId);
-        if (!el) return;
-        if (filterVal === 'ALL') {
-          el.style.display = 'none';
-        } else {
-          el.style.display = 'block';
+        const titleEl = document.getElementById(titleId);
+        if (el) {
+          if (filterVal === 'ALL') {
+            el.style.display = 'none';
+          } else {
+            el.style.display = 'block';
+          }
+        }
+        if (titleEl) {
+          titleEl.textContent = filterVal === 'ALL' ? 'Semua' : filterVal;
         }
       };
 
-      toggleDetailContainer('rtn-detail-container-onprogress', activeOnProgressAgingFilter);
-      toggleDetailContainer('rtn-detail-container-claim3pl', activeClaim3PLAgingFilter);
-      toggleDetailContainer('rtn-detail-container-soreturn', activeSoReturnAgingFilter);
+      toggleDetailContainer('rtn-detail-container-onprogress', 'rtn-detail-title-onprogress', activeOnProgressAgingFilter);
+      toggleDetailContainer('rtn-detail-container-claim3pl', 'rtn-detail-title-claim3pl', activeClaim3PLAgingFilter);
+      toggleDetailContainer('rtn-detail-container-soreturn', 'rtn-detail-title-soreturn', activeSoReturnAgingFilter);
 
       // Filter ON PROGRESS items based on active aging filter
       let displayedOnProgressItems = [...onProgressItems];
@@ -3855,15 +3968,7 @@
         displayedOnProgressInvoices = onProgressInvoicesCur;
         displayedOnProgressQty = onProgressQtyCur;
       } else {
-        if (activeOnProgressAgingFilter === '1_3') {
-          displayedOnProgressItems = onProgressItems.filter(item => item.agingDays <= 90);
-        } else if (activeOnProgressAgingFilter === '5_8') {
-          displayedOnProgressItems = onProgressItems.filter(item => item.agingDays > 90 && item.agingDays <= 240);
-        } else if (activeOnProgressAgingFilter === '9_12') {
-          displayedOnProgressItems = onProgressItems.filter(item => item.agingDays > 240 && item.agingDays <= 360);
-        } else if (activeOnProgressAgingFilter === '13_16') {
-          displayedOnProgressItems = onProgressItems.filter(item => item.agingDays > 360);
-        }
+        displayedOnProgressItems = onProgressItems.filter(item => getAgingGroup(item) === activeOnProgressAgingFilter);
         displayedOnProgressItems.forEach(item => {
           if (item.invoice) displayedOnProgressInvoices.add(item.invoice);
           displayedOnProgressQty += item.qty;
@@ -3879,15 +3984,7 @@
         displayedClaim3PLInvoices = claim3PLInvoicesCur;
         displayedClaim3PLQty = claim3PLQtyCur;
       } else {
-        if (activeClaim3PLAgingFilter === '1_3') {
-          displayedClaim3PLItems = claim3PLItems.filter(item => item.agingDays <= 90);
-        } else if (activeClaim3PLAgingFilter === '5_8') {
-          displayedClaim3PLItems = claim3PLItems.filter(item => item.agingDays > 90 && item.agingDays <= 240);
-        } else if (activeClaim3PLAgingFilter === '9_12') {
-          displayedClaim3PLItems = claim3PLItems.filter(item => item.agingDays > 240 && item.agingDays <= 360);
-        } else if (activeClaim3PLAgingFilter === '13_16') {
-          displayedClaim3PLItems = claim3PLItems.filter(item => item.agingDays > 360);
-        }
+        displayedClaim3PLItems = claim3PLItems.filter(item => getAgingGroup(item) === activeClaim3PLAgingFilter);
         displayedClaim3PLItems.forEach(item => {
           if (item.invoice) displayedClaim3PLInvoices.add(item.invoice);
           displayedClaim3PLQty += item.qty;
@@ -3903,15 +4000,7 @@
         displayedSoReturnInvoices = soReturnInvoicesCur;
         displayedSoReturnQty = soReturnQtyCur;
       } else {
-        if (activeSoReturnAgingFilter === '1_3') {
-          displayedSoReturnItems = soReturnItems.filter(item => item.agingDays <= 90);
-        } else if (activeSoReturnAgingFilter === '5_8') {
-          displayedSoReturnItems = soReturnItems.filter(item => item.agingDays > 90 && item.agingDays <= 240);
-        } else if (activeSoReturnAgingFilter === '9_12') {
-          displayedSoReturnItems = soReturnItems.filter(item => item.agingDays > 240 && item.agingDays <= 360);
-        } else if (activeSoReturnAgingFilter === '13_16') {
-          displayedSoReturnItems = soReturnItems.filter(item => item.agingDays > 360);
-        }
+        displayedSoReturnItems = soReturnItems.filter(item => getAgingGroup(item) === activeSoReturnAgingFilter);
         displayedSoReturnItems.forEach(item => {
           if (item.invoice) displayedSoReturnInvoices.add(item.invoice);
           displayedSoReturnQty += item.qty;
@@ -4003,8 +4092,7 @@
         showToast("Menampilkan semua data On Progress", "info");
       } else {
         activeOnProgressAgingFilter = filterName;
-        let formattedLabel = filterName.replace('_', ' - ');
-        showToast(`Menyaring On Progress: Aging ${formattedLabel} Bulan`, "info");
+        showToast(`Menyaring On Progress: Aging ${filterName}`, "info");
       }
       updateReturnView();
     }
@@ -4016,8 +4104,7 @@
         showToast("Menampilkan semua data Claim 3PL", "info");
       } else {
         activeClaim3PLAgingFilter = filterName;
-        let formattedLabel = filterName.replace('_', ' - ');
-        showToast(`Menyaring Claim 3PL: Aging ${formattedLabel} Bulan`, "info");
+        showToast(`Menyaring Claim 3PL: Aging ${filterName}`, "info");
       }
       updateReturnView();
     }
@@ -4029,8 +4116,7 @@
         showToast("Menampilkan semua data SO Return", "info");
       } else {
         activeSoReturnAgingFilter = filterName;
-        let formattedLabel = filterName.replace('_', ' - ');
-        showToast(`Menyaring SO Return: Aging ${formattedLabel} Bulan`, "info");
+        showToast(`Menyaring SO Return: Aging ${filterName}`, "info");
       }
       updateReturnView();
     }
