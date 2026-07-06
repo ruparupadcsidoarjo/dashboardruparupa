@@ -49,7 +49,7 @@
       background: var(--main-bg);
       color: var(--text-primary);
       display: grid;
-      grid-template-columns: 250px 1fr;
+      grid-template-columns: 220px 1fr;
       height: 100vh;
       width: 100vw;
       overflow: hidden;
@@ -64,6 +64,7 @@
       flex-direction: column;
       justify-content: space-between;
       overflow-y: auto;
+      overflow-x: hidden;
       z-index: 100;
       border-right: 1px solid rgba(255, 255, 255, 0.05);
     }
@@ -96,7 +97,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 14px;
       box-shadow: 0 4px 8px rgba(21, 101, 192, 0.3);
     }
 
@@ -107,7 +108,7 @@
 
     .logo-title {
       font-weight: 700;
-      font-size: 20px;
+      font-size: 16px;
       letter-spacing: 0.5px;
       color: #FFFFFF;
     }
@@ -128,11 +129,11 @@
     .nav-item a {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 10px 16px;
+      gap: 10px;
+      padding: 8px 14px;
       color: #E3E8EF;
       text-decoration: none;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 500;
       border-radius: 6px;
       transition: all 0.2s ease;
@@ -171,7 +172,7 @@
     .sys-info-item {
       display: flex;
       justify-content: space-between;
-      font-size: 11px;
+      font-size: 14px;
       color: #A5D6A7;
     }
 
@@ -231,7 +232,7 @@
     }
 
     .header-title {
-      font-size: 28px;
+      font-size: 14px;
       font-weight: 800;
       color: var(--text-primary);
       letter-spacing: -0.5px;
@@ -253,9 +254,9 @@
       background: #F0F4F8;
       border: 1px solid var(--border-color);
       border-radius: 20px;
-      padding: 6px 16px;
+      padding: 4px 14px;
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: 12px;
       color: var(--text-primary);
       font-weight: 500;
       display: flex;
@@ -271,7 +272,7 @@
     }
 
     .last-update-tag {
-      font-size: 11px;
+      font-size: 14px;
       color: var(--text-secondary);
       display: flex;
       align-items: center;
@@ -282,9 +283,9 @@
       background-color: var(--primary-accent);
       color: #FFFFFF;
       border: none;
-      padding: 8px 16px;
+      padding: 6px 14px;
       border-radius: 20px;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -331,7 +332,7 @@
     }
 
     .filter-label {
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--text-secondary);
       text-transform: uppercase;
@@ -340,16 +341,16 @@
 
     .filter-select, .filter-input {
       font-family: var(--font-sans);
-      font-size: 20px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--text-primary);
-      padding: 10px 16px;
+      padding: 6px 12px;
       border: 1px solid var(--border-color);
       border-radius: 6px;
       outline: none;
       background-color: #F8FAFC;
       transition: border-color 0.2s ease;
-      min-width: 200px;
+      min-width: 160px;
     }
 
     .filter-select:focus, .filter-input:focus {
@@ -383,30 +384,30 @@
     }
 
     .filter-sla-label {
-      font-size: 20px;
+      font-size: 14px;
       font-weight: 800;
       color: var(--text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
       line-height: 1;
     }
 
     .filter-sla-value-container {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       line-height: 1;
     }
 
     .filter-sla-value {
-      font-size: 64px;
+      font-size: 24px;
       font-weight: 800;
       color: var(--text-primary);
     }
 
     .filter-sla-emoji {
-      font-size: 66px;
+      font-size: 24px;
       line-height: 1;
     }
 
@@ -414,14 +415,14 @@
       background-color: var(--primary-accent);
       color: #FFFFFF;
       border: none;
-      padding: 12px 24px;
+      padding: 8px 16px;
       border-radius: 6px;
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.2s ease;
     }
 
@@ -433,9 +434,9 @@
       background: none;
       color: var(--text-secondary);
       border: 1px solid var(--border-color);
-      padding: 12px 22px;
+      padding: 8px 14px;
       border-radius: 6px;
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -449,16 +450,16 @@
     /* Main Content */
     .content-container {
       flex: 1;
-      padding: 20px 24px;
+      padding: 14px 18px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
     /* Section Labels */
     .section-label {
-      font-size: 18px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--text-primary);
       text-transform: uppercase;
@@ -482,7 +483,7 @@
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
       border: 1px solid var(--border-color);
-      padding: 20px;
+      padding: 14px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
     }
@@ -495,24 +496,41 @@
     /* Section 1 - KPI Cards Grid */
     .kpi-row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 16px;
     }
 
     .kpi-card {
-      min-height: 140px;
+      min-height: 160px;
       height: auto;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      overflow: visible;
-      border-left: 5px solid transparent;
+      overflow: hidden;
+      border-left: 6px solid transparent;
+      padding: 20px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    .kpi-card-1 { border-left-color: #1565C0; }
-    .kpi-card-2 { border-left-color: #2E7D32; }
-    .kpi-card-3 { border-left-color: #F57C00; }
-    .kpi-card-4 { border-left-color: #6A1B9A; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .kpi-card {
+      animation: fadeInUp 0.5s ease-out forwards;
+    }
+
+    .kpi-card:nth-child(1) { animation-delay: 0.1s; }
+    .kpi-card:nth-child(2) { animation-delay: 0.2s; }
+    .kpi-card:nth-child(3) { animation-delay: 0.3s; }
+    .kpi-card:nth-child(4) { animation-delay: 0.4s; }
+
+    .kpi-card-1 { border-left-color: #1565C0; background: linear-gradient(135deg, #ffffff 0%, rgba(21, 101, 192, 0.02) 100%); }
+    .kpi-card-2 { border-left-color: #2E7D32; background: linear-gradient(135deg, #ffffff 0%, rgba(46, 125, 50, 0.02) 100%); }
+    .kpi-card-3 { border-left-color: #F57C00; background: linear-gradient(135deg, #ffffff 0%, rgba(245, 124, 0, 0.02) 100%); }
+    .kpi-card-4 { border-left-color: #6A1B9A; background: linear-gradient(135deg, #ffffff 0%, rgba(106, 27, 154, 0.02) 100%); }
 
     .kpi-top-row {
       display: flex;
@@ -521,11 +539,12 @@
     }
 
     .kpi-val {
-      font-size: 68px;
+      font-size: 32px;
       font-weight: 800;
       color: var(--text-primary);
       line-height: 1;
       letter-spacing: -1.5px;
+      margin-bottom: 4px;
     }
 
     .kpi-circle-icon {
@@ -535,7 +554,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 14px;
     }
 
     .kpi-card-1 .kpi-circle-icon { background-color: rgba(21, 101, 192, 0.1); }
@@ -553,7 +572,7 @@
     }
     .rtn-kpi-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 16px;
       margin-bottom: 24px;
     }
@@ -574,14 +593,14 @@
     }
     .rtn-kpi-card .kpi-label {
       letter-spacing: 0.5px;
-      font-size: 18px;
+      font-size: 14px;
       opacity: 0.8;
       font-weight: 800;
     }
     .rtn-kpi-card .kpi-val {
       font-family: 'Inter', sans-serif;
-      letter-spacing: -1.5px;
-      font-size: 48px !important;
+      letter-spacing: -1px;
+      font-size: 32px !important;
       margin-bottom: 2px;
     }
     .rtn-kpi-card .kpi-circle-icon {
@@ -621,12 +640,12 @@
 
 
     .kpi-label {
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 800;
       color: var(--text-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-top: 4px;
+      letter-spacing: 1px;
+      margin-top: 6px;
     }
 
     .kpi-footer {
@@ -637,13 +656,13 @@
     }
 
     .kpi-subtext {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-secondary);
       font-weight: 500;
     }
 
     .kpi-trend {
-      font-size: 15px;
+      font-size: 12px;
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -682,7 +701,7 @@
     /* Section 2 - Charts Row Layout */
     .charts-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
       gap: 16px;
     }
 
@@ -694,7 +713,7 @@
     }
 
     .card-header-title {
-      font-size: 24px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--text-primary);
       display: flex;
@@ -707,7 +726,7 @@
       border: 1px solid var(--border-color);
       padding: 3px 8px;
       border-radius: 12px;
-      font-size: 15px;
+      font-size: 12px;
       font-weight: 600;
       color: var(--text-secondary);
     }
@@ -1034,12 +1053,15 @@
     .toast.danger i { color: #E57373; }
 
     /* Responsive adjustments */
+    @media (max-width: 1400px) {
+       .charts-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 1200px) {
       .kpi-row, .rtn-kpi-row {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .charts-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       }
       .summary-grid {
         grid-template-columns: 1fr;
@@ -1141,7 +1163,7 @@
       body {
         background: #ffffff !important;
         color: #000000 !important;
-        font-size: 11px !important;
+        font-size: 14px !important;
       }
       
       /* Hide all UI scaffolding, sidebar, filters, trend charts, and actions */
@@ -1257,7 +1279,7 @@
 
       <div class="header-right">
         <!-- Global Loading Indicator -->
-        <div id="global-loading-indicator" style="display: none; align-items: center; gap: 8px; background-color: #eff6ff; border: 1px solid #bfdbfe; padding: 6px 14px; border-radius: 20px; font-size: 17px; font-weight: 700; color: #1d4ed8; box-shadow: 0 1px 2px rgba(29, 78, 216, 0.05);" class="no-print animate-pulse">
+        <div id="global-loading-indicator" style="display: none; align-items: center; gap: 8px; background-color: #eff6ff; border: 1px solid #bfdbfe; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 700; color: #1d4ed8; box-shadow: 0 1px 2px rgba(29, 78, 216, 0.05);" class="no-print animate-pulse">
           <i class="fa-solid fa-arrows-rotate fa-spin" style="color: #1d4ed8;"></i>
           <span>Sinkronisasi Data...</span>
         </div>
@@ -1328,77 +1350,77 @@
           
           <!-- CARD 1: TOTAL ORDER -->
           <div class="dashboard-card kpi-card kpi-card-1" id="kpi-card-total-order">
-            <div class="kpi-top-row" style="margin-bottom: 4px;">
+            <div class="kpi-top-row">
               <div>
                 <span class="kpi-val" id="kpi-orders">1,284</span>
                 <div class="kpi-label">TOTAL ORDER</div>
               </div>
-              <div class="kpi-circle-icon">
+              <div class="kpi-circle-icon" style="width: 44px; height: 44px; font-size: 22px;">
                 📋
               </div>
             </div>
             <!-- Sub-scope: Average Order -->
-            <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
-              <div class="kpi-nested-box" style="background: rgba(21, 101, 192, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #1565C0; min-width: 160px; text-align: left;">
-                <span class="kpi-sub-val" id="kpi-avg" style="font-size: 24px; font-weight: 700; color: #1565C0; display: block; line-height: 1.2;">42,8</span>
-                <span class="kpi-sub-label" style="font-size: 20px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG ORDER / HARI</span>
+            <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto;">
+              <div class="kpi-nested-box" style="background: rgba(21, 101, 192, 0.06); padding: 8px 14px; border-radius: 8px; border-left: 4px solid #1565C0; min-width: 180px; text-align: left; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <span class="kpi-sub-val" id="kpi-avg" style="font-size: 20px; font-weight: 800; color: #1565C0; display: block; line-height: 1.2;">42,8</span>
+                <span class="kpi-sub-label" style="font-size: 14px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px;">AVG ORDER / HARI</span>
               </div>
             </div>
           </div>
 
           <!-- CARD 2: TOTAL CASE ID -->
           <div class="dashboard-card kpi-card kpi-card-2" id="kpi-card-total-case">
-            <div class="kpi-top-row" style="margin-bottom: 4px;">
+            <div class="kpi-top-row">
               <div>
                 <span class="kpi-val" id="kpi-cases">987</span>
                 <div class="kpi-label">TOTAL CASE ID</div>
               </div>
-              <div class="kpi-circle-icon">
+              <div class="kpi-circle-icon" style="width: 44px; height: 44px; font-size: 22px;">
                 🔑
               </div>
             </div>
             <!-- Sub-scope: Average Case ID -->
-            <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
-              <div class="kpi-nested-box" style="background: rgba(46, 125, 80, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #2E7D32; min-width: 160px; text-align: left;">
-                <span class="kpi-sub-val" id="kpi-avg-case" style="font-size: 24px; font-weight: 700; color: #2E7D32; display: block; line-height: 1.2;">32,9</span>
-                <span class="kpi-sub-label" style="font-size: 20px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG CASE / HARI</span>
+            <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto;">
+              <div class="kpi-nested-box" style="background: rgba(46, 125, 80, 0.06); padding: 8px 14px; border-radius: 8px; border-left: 4px solid #2E7D32; min-width: 180px; text-align: left; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <span class="kpi-sub-val" id="kpi-avg-case" style="font-size: 20px; font-weight: 800; color: #2E7D32; display: block; line-height: 1.2;">32,9</span>
+                <span class="kpi-sub-label" style="font-size: 14px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px;">AVG CASE / HARI</span>
               </div>
             </div>
           </div>
 
           <!-- CARD 3: TOTAL QTY -->
           <div class="dashboard-card kpi-card kpi-card-3" id="kpi-card-total-qty">
-            <div class="kpi-top-row" style="margin-bottom: 4px;">
+            <div class="kpi-top-row">
               <div>
                 <span class="kpi-val" id="kpi-qty">14,320</span>
                 <div class="kpi-label">TOTAL QTY</div>
               </div>
-              <div class="kpi-circle-icon">
+              <div class="kpi-circle-icon" style="width: 44px; height: 44px; font-size: 22px;">
                 📦
               </div>
             </div>
             <!-- Sub-scope: Average Qty -->
-            <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
-              <div class="kpi-nested-box" style="background: rgba(245, 124, 0, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #F57C00; min-width: 160px; text-align: left;">
-                <span class="kpi-sub-val" id="kpi-avg-qty" style="font-size: 24px; font-weight: 700; color: #F57C00; display: block; line-height: 1.2;">477,3</span>
-                <span class="kpi-sub-label" style="font-size: 20px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG QTY / HARI</span>
+            <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto;">
+              <div class="kpi-nested-box" style="background: rgba(245, 124, 0, 0.06); padding: 8px 14px; border-radius: 8px; border-left: 4px solid #F57C00; min-width: 180px; text-align: left; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <span class="kpi-sub-val" id="kpi-avg-qty" style="font-size: 20px; font-weight: 800; color: #F57C00; display: block; line-height: 1.2;">477,3</span>
+                <span class="kpi-sub-label" style="font-size: 14px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px;">AVG QTY / HARI</span>
               </div>
             </div>
           </div>
 
           <!-- CARD 4: TOP 3PL -->
-          <div class="dashboard-card kpi-card kpi-card-4" id="kpi-card-top-3pl" style="min-height: 180px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 15px; padding: 16px 20px;">
-            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0;">
-              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                <span class="kpi-circle-icon" style="margin: 0; width: 34px; height: 34px; font-size: 18px;">🚚</span>
-                <span class="kpi-val" style="font-size: 20px; font-weight: 800; color: #6A1B9A; display: none;" id="top-3pl-name">JNE</span>
-                <span style="font-size: 30px; font-weight: 800; color: #6A1B9A;">TOP 3PL PARTNER</span>
+          <div class="dashboard-card kpi-card kpi-card-4" id="kpi-card-top-3pl" style="min-height: 160px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+            <div style="flex: 1.2; display: flex; flex-direction: column; justify-content: center; min-width: 0;">
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                <span class="kpi-circle-icon" style="margin: 0; width: 36px; height: 36px; font-size: 16px;">🚚</span>
+                <span class="kpi-val" style="font-size: 14px; font-weight: 800; color: #6A1B9A; display: none;" id="top-3pl-name">JNE</span>
+                <span style="font-size: 18px; font-weight: 800; color: #6A1B9A; letter-spacing: 0.5px;">TOP 3PL PARTNER</span>
               </div>
-              <div id="top-3pl-legend-container" style="margin-top: 8px; font-size: 18px; font-weight: 600; color: var(--text-secondary); display: flex; flex-direction: column; gap: 8px; width: 100%;">
+              <div id="top-3pl-legend-container" style="margin-top: 4px; font-size: 12px; font-weight: 600; color: var(--text-secondary); display: flex; flex-direction: column; gap: 6px; width: 100%;">
               </div>
             </div>
-            <div style="width: 130px; height: 130px; display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0;">
-              <canvas id="chart-3pl-pie" style="max-width: 130px; max-height: 130px;"></canvas>
+            <div style="width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0;">
+              <canvas id="chart-3pl-pie" style="max-width: 150px; max-height: 150px;"></canvas>
             </div>
           </div>
           
@@ -1412,7 +1434,7 @@
             <div class="card-header">
               <h3 class="card-header-title">
                 <i class="fa-solid fa-chart-bar" style="color: var(--primary-accent);"></i>
-                TOTAL ORDER HARIAN
+                TOTAL ORDER
               </h3>
               <span class="card-header-badge" id="sla-chart-badge">30 Hari Terakhir</span>
             </div>
@@ -1426,7 +1448,7 @@
             <div class="card-header">
               <h3 class="card-header-title">
                 <i class="fa-solid fa-chart-line" style="color: var(--warning);"></i>
-                TOTAL QTY HARIAN
+                TOTAL QTY
               </h3>
               <span class="card-header-badge" id="order-chart-badge">30 Hari Terakhir</span>
             </div>
@@ -1438,10 +1460,10 @@
         </section>
 
         <!-- Row for TOP SKU and ECOMMERCE -->
-        <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; margin-top: 24px; align-items: stretch;">
+        <div style="display: flex; flex-wrap: wrap; gap: 24px; margin-top: 24px; align-items: stretch;">
           
-          <!-- SECTION 3 — TOP 10 SKU & SKU GROUP (Takes 8 columns) -->
-          <section class="dashboard-card" style="grid-column: span 8; margin: 0; display: flex; flex-direction: column;">
+          <!-- SECTION 3 — TOP 10 SKU & SKU GROUP (Flexible width) -->
+          <section class="dashboard-card" style="flex: 2 1 800px; margin: 0; display: flex; flex-direction: column; min-width: 0;">
             <div class="card-header">
               <h3 class="card-header-title">
                 <i class="fa-solid fa-cubes" style="color: var(--purple);"></i>
@@ -1449,21 +1471,21 @@
               </h3>
             </div>
             
-            <div class="sku-content-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; flex: 1;">
+            <div class="sku-content-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; padding: 20px; flex: 1;">
               <!-- Left: Table -->
               <div class="table-card" style="display: flex; flex-direction: column; height: 100%;">
-                <h4 style="font-size: 26px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-                  <span style="width: 12px; height: 12px; background: var(--purple); border-radius: 2px;"></span>
+                <h4 style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                  <span style="width: 10px; height: 10px; background: var(--purple); border-radius: 2px;"></span>
                   Top 10 SKU By Quantity
                 </h4>
-                <div class="table-container" style="flex: 1; min-height: 400px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; overflow: hidden;">
+                <div class="table-container" style="flex: 1; min-height: 350px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; overflow: hidden;">
                   <table class="data-table" id="sku-data-table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
                     <thead>
                       <tr>
-                        <th style="padding: 12px 10px; font-size: 18px; width: 45px; text-align: center; font-weight: 800; color: #475569;">No</th>
-                        <th style="padding: 12px 10px; font-size: 18px; width: 130px; text-align: left; font-weight: 800; color: #475569;">SKU</th>
-                        <th style="padding: 12px 10px; font-size: 18px; text-align: left; font-weight: 800; color: #475569;">Deskripsi</th>
-                        <th style="padding: 12px 10px; font-size: 18px; text-align: right; width: 110px; font-weight: 800; color: #475569;">Qty</th>
+                        <th style="padding: 10px 8px; font-size: 14px; width: 35px; text-align: center; font-weight: 800; color: #475569;">No</th>
+                        <th style="padding: 10px 8px; font-size: 14px; width: 100px; text-align: left; font-weight: 800; color: #475569;">SKU</th>
+                        <th style="padding: 10px 8px; font-size: 14px; text-align: left; font-weight: 800; color: #475569;">Deskripsi</th>
+                        <th style="padding: 10px 8px; font-size: 14px; text-align: right; width: 70px; font-weight: 800; color: #475569;">Qty</th>
                       </tr>
                     </thead>
                     <tbody id="sku-table-body">
@@ -1476,19 +1498,19 @@
               </div>
 
               <div class="chart-card" style="display: flex; flex-direction: column; height: 100%;">
-                <h4 style="font-size: 26px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-                  <span style="width: 12px; height: 12px; background: #3b82f6; border-radius: 2px;"></span>
+                <h4 style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                  <span style="width: 10px; height: 10px; background: #3b82f6; border-radius: 2px;"></span>
                   Top SKU Group By Quantity
                 </h4>
-                <div class="chart-container" style="flex: 1; min-height: 400px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; background: #fff; position: relative;">
+                <div class="chart-container" style="flex: 1; min-height: 350px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; background: #fff; position: relative;">
                   <canvas id="chart-sku-group"></canvas>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- SECTION 4 — ECOMMERCE DISTRIBUTION (Takes 4 columns) -->
-          <section class="dashboard-card" style="grid-column: span 4; margin: 0; display: flex; flex-direction: column;">
+          <!-- SECTION 4 — ECOMMERCE DISTRIBUTION (Flexible width) -->
+          <section class="dashboard-card" style="flex: 1 1 350px; margin: 0; display: flex; flex-direction: column; min-width: 0;">
             <div class="card-header">
               <h3 class="card-header-title">
                 <i class="fa-solid fa-shopping-bag" style="color: #f97316;"></i>
@@ -1496,20 +1518,20 @@
               </h3>
             </div>
             
-            <div style="padding: 20px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; flex: 1; align-items: center;">
+            <div style="padding: 20px; display: flex; flex-wrap: wrap; gap: 20px; flex: 1; align-items: center; justify-content: center;">
               <!-- Left: Doughnut Chart -->
-              <div style="position: relative; height: 100%; display: flex; align-items: center; justify-content: center; min-height: 320px;">
+              <div style="position: relative; flex: 1 1 250px; display: flex; align-items: center; justify-content: center; min-height: 300px;">
                 <div style="width: 100%; height: 100%; position: relative;">
                   <canvas id="chart-ecommerce"></canvas>
-                  <div id="ecommerce-total-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; margin-top: -10px;">
-                    <div style="font-size: 20px; font-weight: 700; color: #1e293b; text-transform: uppercase; letter-spacing: 0.5px;">TOTAL ORDER</div>
-                    <div id="eco-total-val" style="font-size: 64px; font-weight: 800; color: #1e293b; line-height: 1;">0</div>
+                  <div id="ecommerce-total-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; margin-top: -5px;">
+                    <div style="font-size: 13px; font-weight: 700; color: #1e293b; text-transform: uppercase; letter-spacing: 0.5px;">TOTAL ORDER</div>
+                    <div id="eco-total-val" style="font-size: 32px; font-weight: 800; color: #1e293b; line-height: 1;">0</div>
                   </div>
                 </div>
               </div>
 
               <!-- Right: Detailed Breakdown List (Legend) -->
-              <div id="ecommerce-legend-container" style="display: flex; flex-direction: column; gap: 10px;">
+              <div id="ecommerce-legend-container" style="display: flex; flex-direction: column; gap: 10px; flex: 1 1 200px;">
                 <!-- Dynamically populated by updateEcommerceChart -->
               </div>
             </div>
@@ -1530,21 +1552,21 @@
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
               <div style="display: flex; align-items: center; gap: 8px;">
                 <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(79, 70, 229, 0.1); color: #4f46e5; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">⏳</div>
-                <span style="font-size: 11px; font-weight: 800; color: #4f46e5; letter-spacing: 0.8px; text-transform: uppercase;">ON PROGRESS</span>
+                <span style="font-size: 14px; font-weight: 800; color: #4f46e5; letter-spacing: 0.8px; text-transform: uppercase;">ON PROGRESS</span>
               </div>
               <span id="rtn-trend-onprogress-badge" class="rtn-trend-badge neutral">0%</span>
             </div>
             <!-- Middle section: large invoice number -->
             <div style="margin-top: 15px; display: flex; flex-direction: column;">
-              <span style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Jumlah Invoice</span>
-              <span class="kpi-val" id="rtn-kpi-onprogress-invoice" style="font-size: 34px !important; font-weight: 800; color: #1e1b4b; line-height: 1;">0</span>
+              <span style="font-size: 14px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Jumlah Invoice</span>
+              <span class="kpi-val" id="rtn-kpi-onprogress-invoice" style="font-size: 24px !important; font-weight: 800; color: #1e1b4b; line-height: 1;">0</span>
             </div>
             <!-- Bottom right section: total qty scope -->
             <div style="position: absolute; bottom: 15px; right: 15px; display: flex; align-items: center;">
-              <div style="background: rgba(79, 70, 229, 0.06); border: 1px dashed rgba(79, 70, 229, 0.2); padding: 6px 12px; border-radius: 12px; display: flex; align-items: center; gap: 6px; box-shadow: inset 0 2px 4px rgba(79, 70, 229, 0.02);">
-                <i class="fa-solid fa-boxes-stacked" style="color: #4f46e5; font-size: 12px;"></i>
+              <div style="background: rgba(79, 70, 229, 0.06); border: 1px dashed rgba(79, 70, 229, 0.2); padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 6px; box-shadow: inset 0 2px 4px rgba(79, 70, 229, 0.02);">
+                <i class="fa-solid fa-boxes-stacked" style="color: #4f46e5; font-size: 14px;"></i>
                 <span style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Qty:</span>
-                <span style="font-size: 15px; font-weight: 800; color: #4f46e5;" id="rtn-kpi-onprogress-qty">0</span>
+                <span style="font-size: 13px; font-weight: 800; color: #4f46e5;" id="rtn-kpi-onprogress-qty">0</span>
               </div>
             </div>
           </div>
@@ -1555,21 +1577,21 @@
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
               <div style="display: flex; align-items: center; gap: 8px;">
                 <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(217, 119, 6, 0.1); color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">🚚</div>
-                <span style="font-size: 11px; font-weight: 800; color: #d97706; letter-spacing: 0.8px; text-transform: uppercase;">CLAIM 3PL</span>
+                <span style="font-size: 14px; font-weight: 800; color: #d97706; letter-spacing: 0.8px; text-transform: uppercase;">CLAIM 3PL</span>
               </div>
               <span id="rtn-trend-claim3pl-badge" class="rtn-trend-badge neutral">0%</span>
             </div>
             <!-- Middle section: large invoice number -->
             <div style="margin-top: 15px; display: flex; flex-direction: column;">
-              <span style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Jumlah Invoice</span>
-              <span class="kpi-val" id="rtn-kpi-claim3pl-invoice" style="font-size: 34px !important; font-weight: 800; color: #451a03; line-height: 1;">0</span>
+              <span style="font-size: 14px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Jumlah Invoice</span>
+              <span class="kpi-val" id="rtn-kpi-claim3pl-invoice" style="font-size: 24px !important; font-weight: 800; color: #451a03; line-height: 1;">0</span>
             </div>
             <!-- Bottom right section: total qty scope -->
             <div style="position: absolute; bottom: 15px; right: 15px; display: flex; align-items: center;">
-              <div style="background: rgba(217, 119, 6, 0.06); border: 1px dashed rgba(217, 119, 6, 0.2); padding: 6px 12px; border-radius: 12px; display: flex; align-items: center; gap: 6px; box-shadow: inset 0 2px 4px rgba(217, 119, 6, 0.02);">
-                <i class="fa-solid fa-boxes-stacked" style="color: #d97706; font-size: 12px;"></i>
+              <div style="background: rgba(217, 119, 6, 0.06); border: 1px dashed rgba(217, 119, 6, 0.2); padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 6px; box-shadow: inset 0 2px 4px rgba(217, 119, 6, 0.02);">
+                <i class="fa-solid fa-boxes-stacked" style="color: #d97706; font-size: 14px;"></i>
                 <span style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Qty:</span>
-                <span style="font-size: 15px; font-weight: 800; color: #d97706;" id="rtn-kpi-claim3pl-qty">0</span>
+                <span style="font-size: 13px; font-weight: 800; color: #d97706;" id="rtn-kpi-claim3pl-qty">0</span>
               </div>
             </div>
           </div>
@@ -1580,21 +1602,21 @@
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
               <div style="display: flex; align-items: center; gap: 8px;">
                 <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(13, 148, 136, 0.1); color: #0d9488; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">🔄</div>
-                <span style="font-size: 11px; font-weight: 800; color: #0d9488; letter-spacing: 0.8px; text-transform: uppercase;">SO RETURN</span>
+                <span style="font-size: 14px; font-weight: 800; color: #0d9488; letter-spacing: 0.8px; text-transform: uppercase;">SO RETURN</span>
               </div>
               <span id="rtn-trend-soreturn-badge" class="rtn-trend-badge neutral">0%</span>
             </div>
             <!-- Middle section: large invoice number -->
             <div style="margin-top: 15px; display: flex; flex-direction: column;">
-              <span style="font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Jumlah Invoice</span>
-              <span class="kpi-val" id="rtn-kpi-soreturn-invoice" style="font-size: 34px !important; font-weight: 800; color: #042f2e; line-height: 1;">0</span>
+              <span style="font-size: 14px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Jumlah Invoice</span>
+              <span class="kpi-val" id="rtn-kpi-soreturn-invoice" style="font-size: 24px !important; font-weight: 800; color: #042f2e; line-height: 1;">0</span>
             </div>
             <!-- Bottom right section: total qty scope -->
             <div style="position: absolute; bottom: 15px; right: 15px; display: flex; align-items: center;">
-              <div style="background: rgba(13, 148, 136, 0.06); border: 1px dashed rgba(13, 148, 136, 0.2); padding: 6px 12px; border-radius: 12px; display: flex; align-items: center; gap: 6px; box-shadow: inset 0 2px 4px rgba(13, 148, 136, 0.02);">
-                <i class="fa-solid fa-boxes-stacked" style="color: #0d9488; font-size: 12px;"></i>
+              <div style="background: rgba(13, 148, 136, 0.06); border: 1px dashed rgba(13, 148, 136, 0.2); padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 6px; box-shadow: inset 0 2px 4px rgba(13, 148, 136, 0.02);">
+                <i class="fa-solid fa-boxes-stacked" style="color: #0d9488; font-size: 14px;"></i>
                 <span style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Qty:</span>
-                <span style="font-size: 15px; font-weight: 800; color: #0d9488;" id="rtn-kpi-soreturn-qty">0</span>
+                <span style="font-size: 13px; font-weight: 800; color: #0d9488;" id="rtn-kpi-soreturn-qty">0</span>
               </div>
             </div>
           </div>
@@ -1617,14 +1639,14 @@
         <section class="dashboard-card" style="margin-top: 20px; border: 2px solid #e3e8ef;" id="rtn-summary-section">
           <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 15px;">
             <div>
-              <h3 class="card-header-title" style="margin: 0; font-size: 15px; display: flex; align-items: center; gap: 8px;">
-                <i class="fa-solid fa-file-invoice" style="color: var(--purple); font-size: 18px;"></i>
+              <h3 class="card-header-title" style="margin: 0; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-file-invoice" style="color: var(--purple); font-size: 14px;"></i>
                 Detail Barang Return
               </h3>
             </div>
             
             <!-- Actions -->
-            <button onclick="window.print()" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; background: #4f46e5; border-radius: 6px; padding: 6px 12px; color: white; border: none; font-weight: 600; font-size: 11px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#3730a3'" onmouseout="this.style.background='#4f46e5'" id="btn-print-report">
+            <button onclick="window.print()" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; background: #4f46e5; border-radius: 6px; padding: 6px 12px; color: white; border: none; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#3730a3'" onmouseout="this.style.background='#4f46e5'" id="btn-print-report">
               <i class="fa-solid fa-print"></i> Cetak Raport / Simpan PDF
             </button>
           </div>
@@ -1641,7 +1663,7 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <span style="font-size: 10px; font-weight: 700; background: rgba(79, 70, 229, 0.08); color: #4f46e5; padding: 1px 6px; border-radius: 10px;" id="rtn-header-badge-onprogress">0 Inv</span>
-                  <i class="fa-solid fa-chevron-down" id="rtn-arrow-onprogress" style="font-size: 11px; color: #64748b; transition: transform 0.2s;"></i>
+                  <i class="fa-solid fa-chevron-down" id="rtn-arrow-onprogress" style="font-size: 14px; color: #64748b; transition: transform 0.2s;"></i>
                 </div>
               </div>
 
@@ -1657,7 +1679,7 @@
                       <i class="fa-solid fa-clock-rotate-left" style="font-size: 10px; color: #4f46e5;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-1-3-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-1-3-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-1-3-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1669,7 +1691,7 @@
                       <i class="fa-solid fa-hourglass-half" style="font-size: 10px; color: #d97706;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-3-6-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-3-6-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-3-6-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1681,7 +1703,7 @@
                       <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #0d9488;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-7-9-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-7-9-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-7-9-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1693,7 +1715,7 @@
                       <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #ef4444;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-9-12-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-9-12-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-9-12-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1705,7 +1727,7 @@
                       <i class="fa-solid fa-fire" style="font-size: 10px; color: #b91c1c;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-gt16-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-gt16-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-gt16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1750,7 +1772,7 @@
                       </thead>
                       <tbody id="rtn-table-onprogress-body">
                         <tr>
-                          <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;">Memuat data...</td>
+                          <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 14px;">Memuat data...</td>
                         </tr>
                       </tbody>
                     </table>
@@ -1768,7 +1790,7 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <span style="font-size: 10px; font-weight: 700; background: rgba(217, 119, 6, 0.08); color: #d97706; padding: 1px 6px; border-radius: 10px;" id="rtn-header-badge-claim3pl">0 Inv</span>
-                  <i class="fa-solid fa-chevron-down" id="rtn-arrow-claim3pl" style="font-size: 11px; color: #64748b; transition: transform 0.2s;"></i>
+                  <i class="fa-solid fa-chevron-down" id="rtn-arrow-claim3pl" style="font-size: 14px; color: #64748b; transition: transform 0.2s;"></i>
                 </div>
               </div>
 
@@ -1784,7 +1806,7 @@
                       <i class="fa-solid fa-clock-rotate-left" style="font-size: 10px; color: #d97706;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-claim3pl-1-3-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-claim3pl-1-3-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-claim3pl-1-3-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1796,7 +1818,7 @@
                       <i class="fa-solid fa-hourglass-half" style="font-size: 10px; color: #d97706;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-claim3pl-3-6-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-claim3pl-3-6-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-claim3pl-3-6-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1808,7 +1830,7 @@
                       <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #d97706;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-claim3pl-7-9-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-claim3pl-7-9-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-claim3pl-7-9-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1820,7 +1842,7 @@
                       <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #d97706;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-claim3pl-9-12-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-claim3pl-9-12-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-claim3pl-9-12-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1832,7 +1854,7 @@
                       <i class="fa-solid fa-fire" style="font-size: 10px; color: #d97706;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-claim3pl-gt16-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-claim3pl-gt16-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-claim3pl-gt16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1877,7 +1899,7 @@
                       </thead>
                       <tbody id="rtn-table-claim3pl-body">
                         <tr>
-                          <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;">Memuat data...</td>
+                          <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 14px;">Memuat data...</td>
                         </tr>
                       </tbody>
                     </table>
@@ -1895,7 +1917,7 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <span style="font-size: 10px; font-weight: 700; background: rgba(13, 148, 136, 0.08); color: #0d9488; padding: 1px 6px; border-radius: 10px;" id="rtn-header-badge-soreturn">0 Inv</span>
-                  <i class="fa-solid fa-chevron-down" id="rtn-arrow-soreturn" style="font-size: 11px; color: #64748b; transition: transform 0.2s;"></i>
+                  <i class="fa-solid fa-chevron-down" id="rtn-arrow-soreturn" style="font-size: 14px; color: #64748b; transition: transform 0.2s;"></i>
                 </div>
               </div>
 
@@ -1911,7 +1933,7 @@
                       <i class="fa-solid fa-clock-rotate-left" style="font-size: 10px; color: #0d9488;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-soreturn-1-3-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-soreturn-1-3-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-soreturn-1-3-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1923,7 +1945,7 @@
                       <i class="fa-solid fa-hourglass-half" style="font-size: 10px; color: #0d9488;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-soreturn-3-6-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-soreturn-3-6-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-soreturn-3-6-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1935,7 +1957,7 @@
                       <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #0d9488;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-soreturn-7-9-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-soreturn-7-9-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-soreturn-7-9-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1947,7 +1969,7 @@
                       <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #0d9488;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-soreturn-9-12-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-soreturn-9-12-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-soreturn-9-12-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -1959,7 +1981,7 @@
                       <i class="fa-solid fa-fire" style="font-size: 10px; color: #0d9488;"></i>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-soreturn-gt16-inv" style="font-size: 11px; font-weight: 800; color: #1e293b;">0 Inv</span>
+                      <span id="rtn-scope-soreturn-gt16-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
                       <span id="rtn-scope-soreturn-gt16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
                     </div>
                   </div>
@@ -2004,7 +2026,7 @@
                       </thead>
                       <tbody id="rtn-table-soreturn-body">
                         <tr>
-                          <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;">Memuat data...</td>
+                          <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 14px;">Memuat data...</td>
                         </tr>
                       </tbody>
                     </table>
@@ -2674,7 +2696,7 @@
             
             const text = typeof val === 'number' ? val.toLocaleString('id-ID') : val;
             
-            ctx.font = 'bold 13px "Inter", sans-serif';
+            ctx.font = 'bold 11px "Inter", sans-serif';
             ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
             ctx.shadowBlur = 4;
             
@@ -2745,8 +2767,8 @@
              legend: {
                position: 'bottom',
                labels: {
-                 boxWidth: 12,
-                 font: { family: 'Inter', size: 18, weight: '600' },
+                 boxWidth: 10,
+                 font: { family: 'Inter', size: 11, weight: '600' },
                  color: '#546E7A'
                }
              },
@@ -2762,19 +2784,19 @@
            scales: {
              x: {
                grid: { display: false },
-               ticks: { font: { family: 'Inter', size: 17 }, color: '#546E7A' }
+               ticks: { font: { family: 'Inter', size: 11 }, color: '#546E7A' }
              },
              y: {
                min: 0,
                ticks: {
-                 font: { family: 'Inter', size: 17 },
+                 font: { family: 'Inter', size: 11 },
                  color: '#1565C0'
                },
                grid: { color: '#E3E8EF' },
                title: {
                  display: true,
                  text: 'Total Order',
-                 font: { family: 'Inter', size: 18, weight: '600' },
+                 font: { family: 'Inter', size: 11, weight: '600' },
                  color: '#1565C0'
                }
              }
@@ -2846,11 +2868,11 @@
            scales: {
              x: {
                grid: { display: false },
-               ticks: { font: { family: 'Inter', size: 17 }, color: '#546E7A' }
+               ticks: { font: { family: 'Inter', size: 11 }, color: '#546E7A' }
              },
              y: {
                min: 0,
-               ticks: { font: { family: 'Inter', size: 17 }, color: '#546E7A' },
+                 ticks: { font: { family: 'Inter', size: 11 }, color: '#546E7A' },
                grid: { color: '#E3E8EF' },
                title: {
                  display: true,
@@ -2946,7 +2968,7 @@
               font: {
                 family: 'Inter',
                 weight: '800',
-                size: 20
+                size: 13
               },
               formatter: (value, context) => {
                 const total = context.dataset.data.reduce((a, b) => a + b, 0);
@@ -2962,7 +2984,7 @@
               backgroundColor: 'rgba(30, 41, 59, 0.95)',
               padding: 12,
               titleFont: { size: 16, weight: '700' },
-              bodyFont: { size: 15 },
+              bodyFont: { size: 11 },
               callbacks: {
                 label: function(context) {
                   const label = context.label || '';
@@ -3040,11 +3062,11 @@
           const color = getPartnerColor(p.name, i);
           html += `
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="display: inline-block; width: 10px; height: 10px; background-color: ${color}; border-radius: 50%; flex-shrink: 0;"></span>
-                <span style="font-size: 21px; font-weight: 700;" title="${p.name}">${p.name}</span>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="display: inline-block; width: 8px; height: 8px; background-color: ${color}; border-radius: 50%; flex-shrink: 0;"></span>
+                <span style="font-size: 13px; font-weight: 700; color: #475569;" title="${p.name}">${p.name}</span>
               </div>
-              <span style="font-size: 21px; font-weight: 700; color: #334155;">${pct}%</span>
+              <span style="font-size: 13px; font-weight: 800; color: #334155;">${pct}%</span>
             </div>
           `;
         }
@@ -3267,7 +3289,7 @@
               
               <div style="display: flex; align-items: center; gap: 12px;">
                 <div style="text-align: right; min-width: 70px;">
-                  <span style="font-family: var(--font-sans); font-weight: 800; color: #1e293b; font-size: 17px;">${item.val.toLocaleString('id-ID')}</span>
+                  <span style="font-family: var(--font-sans); font-weight: 800; color: #1e293b; font-size: 14px;">${item.val.toLocaleString('id-ID')}</span>
                   <span style="font-size: 10px; color: #64748b; font-weight: 700;">ORD</span>
                 </div>
                 
@@ -4051,7 +4073,7 @@
         if (!tbody) return;
         tbody.innerHTML = '';
         if (items.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 14px;"><i class="fa-solid fa-folder-open" style="font-size: 18px; display: block; margin-bottom: 4px; color: #cbd5e1;"></i> Tidak ada data</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 14px;"><i class="fa-solid fa-folder-open" style="font-size: 14px; display: block; margin-bottom: 4px; color: #cbd5e1;"></i> Tidak ada data</td></tr>`;
         } else {
           items.forEach((item, index) => {
             const tr = document.createElement('tr');
@@ -4062,10 +4084,10 @@
               </td>
               <td style="padding: 8px 6px; border-bottom: 1px solid #f1f5f9; max-width: 140px; overflow: hidden;">
                 <div style="font-weight: 700; color: #334155; font-size: 20px; font-family: var(--font-mono);">${item.sku || '<span style="color:#94a3b8; font-style:italic; font-weight:400;">No SKU</span>'}</div>
-                <div style="color: #64748b; font-size: 15px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px;" title="${item.description}">${item.description}</div>
+                <div style="color: #64748b; font-size: 14px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px;" title="${item.description}">${item.description}</div>
               </td>
               <td style="padding: 8px 6px; text-align: center; border-bottom: 1px solid #f1f5f9;">
-                <span class="status-badge" style="background: ${item.agingDays > 30 ? '#fee2e2' : '#fef9c3'}; color: ${item.agingDays > 30 ? '#ef4444' : '#a16207'}; font-weight: 800; font-size: 17px; padding: 2px 8px; border-radius: 4px; line-height: 1; display: inline-block;">${item.agingDays}</span>
+                <span class="status-badge" style="background: ${item.agingDays > 30 ? '#fee2e2' : '#fef9c3'}; color: ${item.agingDays > 30 ? '#ef4444' : '#a16207'}; font-weight: 800; font-size: 14px; padding: 2px 8px; border-radius: 4px; line-height: 1; display: inline-block;">${item.agingDays}</span>
               </td>
               <td style="padding: 8px 6px; text-align: center; font-weight: 700; color: var(--primary-accent); font-size: 20px; border-bottom: 1px solid #f1f5f9;">${item.qty.toLocaleString('id-ID')}</td>
             `;
@@ -4585,10 +4607,10 @@
           const tr = document.createElement('tr');
           tr.style.height = '48px'; 
           tr.innerHTML = `
-            <td style="font-size: 18px; padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: center;">${index + 1}</td>
-            <td style="padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: left;"><span class="sku-badge" style="background: rgba(107, 70, 193, 0.1); color: var(--purple); font-weight: 700; padding: 5px 10px; border-radius: 6px; font-size: 17px; border: 1px solid rgba(107, 70, 193, 0.2);">${item.sku}</span></td>
-            <td style="font-size: 18px; color: #334155; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: left;" title="${item.desc}">${item.desc}</td>
-            <td style="text-align: right; font-weight: 800; color: var(--purple); font-size: 19px; padding: 12px 10px; border-bottom: 1px solid #f1f5f9;">${Math.round(item.qty).toLocaleString('id-ID')}</td>
+            <td style="font-size: 13px; padding: 10px 8px; border-bottom: 1px solid #f1f5f9; text-align: center;">${index + 1}</td>
+            <td style="padding: 10px 8px; border-bottom: 1px solid #f1f5f9; text-align: left;"><span class="sku-badge" style="background: rgba(107, 70, 193, 0.1); color: var(--purple); font-weight: 700; padding: 4px 8px; border-radius: 6px; font-size: 12px; border: 1px solid rgba(107, 70, 193, 0.2);">${item.sku}</span></td>
+            <td style="font-size: 13px; color: #334155; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 10px 8px; border-bottom: 1px solid #f1f5f9; text-align: left;" title="${item.desc}">${item.desc}</td>
+            <td style="text-align: right; font-weight: 800; color: var(--purple); font-size: 14px; padding: 10px 8px; border-bottom: 1px solid #f1f5f9;">${Math.round(item.qty).toLocaleString('id-ID')}</td>
           `;
           tableBody.appendChild(tr);
         });
@@ -4639,7 +4661,7 @@
               tooltip: {
                 backgroundColor: '#1e293b',
                 titleFont: { size: 12, weight: 'bold' },
-                bodyFont: { size: 15 },
+                bodyFont: { size: 11 },
                 padding: 10,
                 callbacks: {
                   label: function(context) {
@@ -4654,12 +4676,12 @@
             scales: {
               x: {
                 grid: { color: '#f1f5f9', drawBorder: false },
-                ticks: { font: { size: 15, weight: '500' }, color: '#64748b' }
+                ticks: { font: { size: 11, weight: '500' }, color: '#64748b' }
               },
               y: {
                 grid: { display: false },
                 ticks: { 
-                  font: { size: 15, weight: '600' },
+                  font: { size: 11, weight: '600' },
                   color: '#1e293b',
                   callback: function(value) {
                     const label = this.getLabelForValue(value);
@@ -4748,6 +4770,15 @@
       
       // Live Clock Start
       setInterval(updateLiveClock, 1000);
+      window.addEventListener('resize', () => {
+        if (chartSlaBulan) chartSlaBulan.resize();
+        if (chartOrderBulan) chartOrderBulan.resize();
+        if (chartSkuGroup) chartSkuGroup.resize();
+        if (chartEcommerce) chartEcommerce.resize();
+        if (chart3PlPie) chart3PlPie.resize();
+        if (chartRtnTrend) chartRtnTrend.resize();
+      });
+
       updateLiveClock();
 
       // Set Default Date Input
