@@ -1543,21 +1543,21 @@
               </h3>
             </div>
             
-            <div style="padding: 24px; display: flex; flex-direction: row; flex-wrap: wrap; gap: 32px; flex: 1; align-items: flex-start; justify-content: center; background: radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.02) 0%, transparent 100%); border-radius: 0 0 16px 16px;">
-              <!-- Left: Doughnut Chart -->
-              <div style="position: relative; flex: 1 1 280px; display: flex; align-items: center; justify-content: center; min-height: 320px;">
-                <div style="width: 100%; height: 100%; position: relative; max-width: 320px;">
+            <div style="padding: 24px; display: flex; flex-direction: column; gap: 32px; flex: 1; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.04) 0%, transparent 100%); border-radius: 0 0 16px 16px;">
+              <!-- Top: Large Doughnut Chart -->
+              <div style="position: relative; width: 100%; display: flex; align-items: center; justify-content: center; min-height: 380px;">
+                <div style="width: 100%; height: 100%; position: relative; max-width: 380px;">
                   <canvas id="chart-ecommerce"></canvas>
-                  <div id="ecommerce-total-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; margin-top: -5px; background: rgba(255,255,255,0.8); backdrop-filter: blur(4px); padding: 15px; border-radius: 50%; width: 120px; height: 120px; display: flex; flex-direction: column; justify-content: center; border: 1px solid rgba(226, 232, 240, 0.5); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);">
-                    <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">TOTAL</div>
-                    <div id="eco-total-val" style="font-size: 28px; font-weight: 900; color: var(--text-primary); line-height: 1;">0</div>
-                    <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); margin-top: 2px;">ORDERS</div>
+                  <div id="ecommerce-total-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; margin-top: -5px; background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); padding: 20px; border-radius: 50%; width: 140px; height: 140px; display: flex; flex-direction: column; justify-content: center; border: 1px solid rgba(226, 232, 240, 0.8); box-shadow: 0 15px 25px -5px rgba(0,0,0,0.08);">
+                    <div style="font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px;">TOTAL</div>
+                    <div id="eco-total-val" style="font-size: 36px; font-weight: 900; color: var(--text-primary); line-height: 1;">0</div>
+                    <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); margin-top: 4px; letter-spacing: 0.5px;">ORDERS</div>
                   </div>
                 </div>
               </div>
 
-              <!-- Right: Detailed Breakdown List (Legend) -->
-              <div id="ecommerce-legend-container" style="display: flex; flex-direction: column; gap: 12px; flex: 1 1 240px; margin-top: 10px;">
+              <!-- Bottom: Grid-based Detailed Breakdown List (Legend) -->
+              <div id="ecommerce-legend-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; width: 100%; margin-top: 0;">
                 <!-- Dynamically populated by updateEcommerceChart -->
               </div>
             </div>
@@ -2727,7 +2727,7 @@
             ctx.shadowBlur = 4;
             
             if (chart.canvas.id === 'chart-sla-bulan') {
-              ctx.fillStyle = '#4F46E5'; 
+              ctx.fillStyle = '#2563EB'; 
             } else {
               ctx.fillStyle = '#D97706'; 
             }
@@ -2757,8 +2757,8 @@
       // 1. DAILY TOTAL ORDERS CHART (Bar + Line)
       const ctxSla = document.getElementById('chart-sla-bulan').getContext('2d');
       const orderGradient = ctxSla.createLinearGradient(0, 0, 0, 400);
-      orderGradient.addColorStop(0, 'rgba(79, 70, 229, 0.8)');
-      orderGradient.addColorStop(1, 'rgba(79, 70, 229, 0.1)');
+      orderGradient.addColorStop(0, 'rgba(59, 130, 246, 0.8)');
+      orderGradient.addColorStop(1, 'rgba(59, 130, 246, 0.1)');
 
       chartSlaBulan = new Chart(ctxSla, {
         type: 'bar',
@@ -2770,8 +2770,8 @@
               label: 'Total Order',
               data: [...trendHarianData.orders],
               backgroundColor: orderGradient,
-              hoverBackgroundColor: 'rgba(79, 70, 229, 1)',
-              borderColor: '#4F46E5',
+              hoverBackgroundColor: 'rgba(59, 130, 246, 1)',
+              borderColor: '#3B82F6',
               borderWidth: 0,
               borderRadius: 4,
               barPercentage: 0.6,
@@ -2781,10 +2781,10 @@
               type: 'line',
               label: 'Tren Line',
               data: [...trendHarianData.orders],
-              borderColor: '#4F46E5',
+              borderColor: '#2563EB',
               backgroundColor: 'transparent',
               borderWidth: 2,
-              pointBackgroundColor: '#4F46E5',
+              pointBackgroundColor: '#2563EB',
               pointBorderColor: '#FFFFFF',
               pointBorderWidth: 1.5,
               pointRadius: 3,
@@ -3322,34 +3322,34 @@
       const container = document.getElementById('ecommerce-legend-container');
       if (container) {
         let legendHeader = `
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 4px 8px 4px; border-bottom: 1px solid var(--border-color); margin-bottom: 8px;">
-            <span style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 4px;">
-              <i class="fa-solid fa-table" style="font-size: 10px;"></i> Platform
+          <div style="grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; padding: 0 4px 12px 4px; border-bottom: 2px solid #f1f5f9; margin-bottom: 8px;">
+            <span style="font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-table-list" style="font-size: 12px; color: var(--primary-accent);"></i> Distribusi Platform
             </span>
-            <span style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Performance</span>
+            <span style="font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em;">Metrik Performa</span>
           </div>
         `;
         
         container.innerHTML = legendHeader + sortedPlatforms.map((item, index) => {
           const pct = total > 0 ? ((item.val / total) * 100).toFixed(1) : "0.0";
           return `
-            <div style="display: flex; flex-direction: column; gap: 6px; padding: 14px; background: #fff; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); animation: fadeInUp 0.4s ease-out forwards; animation-delay: ${index * 0.1}s; opacity: 0; transform: translateY(10px); transition: transform 0.2s ease;">
+            <div style="display: flex; flex-direction: column; gap: 8px; padding: 18px; background: #fff; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); animation: fadeInUp 0.5s ease-out forwards; animation-delay: ${index * 0.1}s; opacity: 0; transform: translateY(15px); transition: all 0.3s ease; border-left: 4px solid ${item.color};">
               <div style="display: flex; align-items: center; justify-content: space-between;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <div style="width: 10px; height: 10px; border-radius: 50%; background: ${item.color}; box-shadow: 0 0 10px ${item.color}66;"></div>
-                  <span style="font-size: 14px; font-weight: 700; color: var(--text-primary);">${item.name}</span>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div style="width: 12px; height: 12px; border-radius: 50%; background: ${item.color}; box-shadow: 0 0 12px ${item.color}88;"></div>
+                  <span style="font-size: 16px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.3px;">${item.name}</span>
                 </div>
                 <div style="display: flex; align-items: baseline; gap: 4px;">
-                  <span style="font-family: var(--font-mono); font-weight: 800; color: var(--text-primary); font-size: 16px;">${item.val.toLocaleString('id-ID')}</span>
-                  <span style="font-size: 9px; color: var(--text-muted); font-weight: 700;">UNIT</span>
+                  <span style="font-family: var(--font-mono); font-weight: 900; color: var(--text-primary); font-size: 20px; line-height: 1;">${item.val.toLocaleString('id-ID')}</span>
+                  <span style="font-size: 10px; color: var(--text-muted); font-weight: 800; text-transform: uppercase;">Unit</span>
                 </div>
               </div>
               
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="flex: 1; height: 8px; background: #f1f5f9; border-radius: 4px; overflow: hidden; position: relative;">
-                  <div style="position: absolute; top: 0; left: 0; width: ${pct}%; height: 100%; background: linear-gradient(90deg, ${item.color}CC, ${item.color}); border-radius: 4px; transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);"></div>
+              <div style="display: flex; align-items: center; gap: 16px; margin-top: 4px;">
+                <div style="flex: 1; height: 10px; background: #f8fafc; border-radius: 6px; overflow: hidden; position: relative; border: 1px solid #f1f5f9;">
+                  <div style="position: absolute; top: 0; left: 0; width: ${pct}%; height: 100%; background: linear-gradient(90deg, ${item.color}DD, ${item.color}); border-radius: 6px; transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);"></div>
                 </div>
-                <div style="font-family: var(--font-mono); font-weight: 800; font-size: 12px; color: ${item.color}; min-width: 50px; text-align: right;">
+                <div style="font-family: var(--font-mono); font-weight: 900; font-size: 15px; color: ${item.color}; min-width: 60px; text-align: right; letter-spacing: -0.5px;">
                   ${pct}%
                 </div>
               </div>
