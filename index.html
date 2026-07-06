@@ -22,7 +22,7 @@
       --sidebar-hover: #1B263B;
       --sidebar-active: #1565C0;
       --sidebar-accent: #64B5F6;
-      --main-bg: #F0F4F8;
+      --main-bg: linear-gradient(135deg, #a5ccff 0%, #ffd0a5 100%);
       --card-bg: #FFFFFF;
       --primary-accent: #1565C0;
       --success: #2E7D32;
@@ -46,10 +46,10 @@
 
     body {
       font-family: var(--font-sans);
-      background-color: var(--main-bg);
+      background: var(--main-bg);
       color: var(--text-primary);
       display: grid;
-      grid-template-columns: 220px 1fr;
+      grid-template-columns: 250px 1fr;
       height: 100vh;
       width: 100vw;
       overflow: hidden;
@@ -107,13 +107,13 @@
 
     .logo-title {
       font-weight: 700;
-      font-size: 14px;
+      font-size: 20px;
       letter-spacing: 0.5px;
       color: #FFFFFF;
     }
 
     .logo-subtitle {
-      font-size: 10px;
+      font-size: 12px;
       color: #90CAF9;
       font-weight: 500;
     }
@@ -132,7 +132,7 @@
       padding: 10px 16px;
       color: #E3E8EF;
       text-decoration: none;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 500;
       border-radius: 6px;
       transition: all 0.2s ease;
@@ -231,14 +231,14 @@
     }
 
     .header-title {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 800;
       color: var(--text-primary);
       letter-spacing: -0.5px;
     }
 
     .header-subtitle {
-      font-size: 11px;
+      font-size: 14px;
       color: var(--text-secondary);
       font-weight: 500;
     }
@@ -255,7 +255,7 @@
       border-radius: 20px;
       padding: 6px 16px;
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 14px;
       color: var(--text-primary);
       font-weight: 500;
       display: flex;
@@ -284,7 +284,7 @@
       border: none;
       padding: 8px 16px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -300,7 +300,7 @@
     }
 
     .link-reset-filter {
-      font-size: 11px;
+      font-size: 13px;
       color: var(--text-secondary);
       text-decoration: none;
       cursor: pointer;
@@ -331,7 +331,7 @@
     }
 
     .filter-label {
-      font-size: 10px;
+      font-size: 18px;
       font-weight: 700;
       color: var(--text-secondary);
       text-transform: uppercase;
@@ -340,16 +340,16 @@
 
     .filter-select, .filter-input {
       font-family: var(--font-sans);
-      font-size: 12px;
+      font-size: 20px;
       font-weight: 500;
       color: var(--text-primary);
-      padding: 6px 12px;
+      padding: 10px 16px;
       border: 1px solid var(--border-color);
       border-radius: 6px;
       outline: none;
       background-color: #F8FAFC;
       transition: border-color 0.2s ease;
-      min-width: 140px;
+      min-width: 200px;
     }
 
     .filter-select:focus, .filter-input:focus {
@@ -383,11 +383,11 @@
     }
 
     .filter-sla-label {
-      font-size: 10px;
+      font-size: 20px;
       font-weight: 800;
       color: var(--text-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
       margin-bottom: 3px;
       line-height: 1;
     }
@@ -400,13 +400,13 @@
     }
 
     .filter-sla-value {
-      font-size: 24px;
+      font-size: 64px;
       font-weight: 800;
       color: var(--text-primary);
     }
 
     .filter-sla-emoji {
-      font-size: 26px;
+      font-size: 66px;
       line-height: 1;
     }
 
@@ -414,14 +414,14 @@
       background-color: var(--primary-accent);
       color: #FFFFFF;
       border: none;
-      padding: 7px 16px;
+      padding: 12px 24px;
       border-radius: 6px;
-      font-size: 12px;
+      font-size: 18px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       transition: all 0.2s ease;
     }
 
@@ -433,9 +433,9 @@
       background: none;
       color: var(--text-secondary);
       border: 1px solid var(--border-color);
-      padding: 6px 14px;
+      padding: 12px 22px;
       border-radius: 6px;
-      font-size: 12px;
+      font-size: 18px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -458,7 +458,7 @@
 
     /* Section Labels */
     .section-label {
-      font-size: 14px;
+      font-size: 18px;
       font-weight: 700;
       color: var(--text-primary);
       text-transform: uppercase;
@@ -521,11 +521,11 @@
     }
 
     .kpi-val {
-      font-size: 32px;
+      font-size: 68px;
       font-weight: 800;
       color: var(--text-primary);
       line-height: 1;
-      letter-spacing: -0.5px;
+      letter-spacing: -1.5px;
     }
 
     .kpi-circle-icon {
@@ -574,14 +574,14 @@
     }
     .rtn-kpi-card .kpi-label {
       letter-spacing: 0.5px;
-      font-size: 10px;
+      font-size: 18px;
       opacity: 0.8;
       font-weight: 800;
     }
     .rtn-kpi-card .kpi-val {
       font-family: 'Inter', sans-serif;
       letter-spacing: -1.5px;
-      font-size: 28px !important;
+      font-size: 48px !important;
       margin-bottom: 2px;
     }
     .rtn-kpi-card .kpi-circle-icon {
@@ -596,7 +596,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 700;
       padding: 4px 10px;
       border-radius: 9999px;
@@ -621,7 +621,7 @@
 
 
     .kpi-label {
-      font-size: 12px;
+      font-size: 20px;
       font-weight: 700;
       color: var(--text-secondary);
       text-transform: uppercase;
@@ -637,13 +637,13 @@
     }
 
     .kpi-subtext {
-      font-size: 11px;
+      font-size: 13px;
       color: var(--text-secondary);
       font-weight: 500;
     }
 
     .kpi-trend {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -694,8 +694,8 @@
     }
 
     .card-header-title {
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 24px;
+      font-weight: 700;
       color: var(--text-primary);
       display: flex;
       align-items: center;
@@ -707,7 +707,7 @@
       border: 1px solid var(--border-color);
       padding: 3px 8px;
       border-radius: 12px;
-      font-size: 10px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text-secondary);
     }
@@ -731,7 +731,7 @@
       border: none;
       padding: 4px 12px;
       font-family: var(--font-sans);
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--text-secondary);
       border-radius: 6px;
@@ -762,7 +762,7 @@
       border: 1px solid var(--border-color);
       padding: 6px 12px;
       border-radius: 6px;
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -797,7 +797,7 @@
       padding: 4px 14px;
       border-radius: 16px;
       font-family: var(--font-sans);
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--text-secondary);
       cursor: pointer;
@@ -826,7 +826,7 @@
       border: 1px solid var(--primary-accent);
       padding: 6px 14px;
       border-radius: 6px;
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -858,7 +858,7 @@
     }
 
     .summary-col-title {
-      font-size: 11px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--text-secondary);
       text-transform: uppercase;
@@ -889,14 +889,14 @@
     }
 
     .donut-center-num {
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 800;
       color: var(--text-primary);
       line-height: 1.1;
     }
 
     .donut-center-label {
-      font-size: 8px;
+      font-size: 10px;
       font-weight: 700;
       color: var(--text-secondary);
       text-transform: uppercase;
@@ -918,14 +918,14 @@
     }
 
     .gauge-center-num {
-      font-size: 26px;
+      font-size: 30px;
       font-weight: 800;
       color: var(--primary-accent);
       line-height: 1;
     }
 
     .gauge-center-label {
-      font-size: 9px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--text-secondary);
       text-transform: uppercase;
@@ -944,7 +944,7 @@
     .gauge-metric-row {
       display: flex;
       justify-content: space-between;
-      font-size: 11px;
+      font-size: 13px;
       color: var(--text-secondary);
       font-weight: 500;
     }
@@ -976,7 +976,7 @@
       gap: 4px;
       padding: 3px 10px;
       border-radius: 4px;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
       margin-top: 10px;
@@ -999,7 +999,7 @@
       z-index: 1000;
     }
 
-    .toast {
+      .toast {
       background-color: var(--sidebar-bg);
       color: #FFFFFF;
       padding: 12px 20px;
@@ -1008,7 +1008,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 500;
       transform: translateY(100px);
       opacity: 0;
@@ -1027,7 +1027,7 @@
     .toast.danger { border-left-color: var(--danger); }
 
     .toast i {
-      font-size: 16px;
+      font-size: 20px;
     }
     .toast.success i { color: #81C784; }
     .toast.warning i { color: #FFB74D; }
@@ -1064,7 +1064,7 @@
       .sidebar {
         transform: translateX(-100%);
         position: fixed;
-        width: 220px;
+        width: 250px;
         transition: transform 0.3s ease;
       }
 
@@ -1257,7 +1257,7 @@
 
       <div class="header-right">
         <!-- Global Loading Indicator -->
-        <div id="global-loading-indicator" style="display: none; align-items: center; gap: 8px; background-color: #eff6ff; border: 1px solid #bfdbfe; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; color: #1d4ed8; box-shadow: 0 1px 2px rgba(29, 78, 216, 0.05);" class="no-print animate-pulse">
+        <div id="global-loading-indicator" style="display: none; align-items: center; gap: 8px; background-color: #eff6ff; border: 1px solid #bfdbfe; padding: 6px 14px; border-radius: 20px; font-size: 17px; font-weight: 700; color: #1d4ed8; box-shadow: 0 1px 2px rgba(29, 78, 216, 0.05);" class="no-print animate-pulse">
           <i class="fa-solid fa-arrows-rotate fa-spin" style="color: #1d4ed8;"></i>
           <span>Sinkronisasi Data...</span>
         </div>
@@ -1339,9 +1339,9 @@
             </div>
             <!-- Sub-scope: Average Order -->
             <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
-              <div class="kpi-nested-box" style="background: rgba(21, 101, 192, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #1565C0; min-width: 120px; text-align: left;">
-                <span class="kpi-sub-val" id="kpi-avg" style="font-size: 14px; font-weight: 700; color: #1565C0; display: block; line-height: 1.2;">42,8</span>
-                <span class="kpi-sub-label" style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG ORDER / HARI</span>
+              <div class="kpi-nested-box" style="background: rgba(21, 101, 192, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #1565C0; min-width: 160px; text-align: left;">
+                <span class="kpi-sub-val" id="kpi-avg" style="font-size: 24px; font-weight: 700; color: #1565C0; display: block; line-height: 1.2;">42,8</span>
+                <span class="kpi-sub-label" style="font-size: 20px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG ORDER / HARI</span>
               </div>
             </div>
           </div>
@@ -1359,9 +1359,9 @@
             </div>
             <!-- Sub-scope: Average Case ID -->
             <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
-              <div class="kpi-nested-box" style="background: rgba(46, 125, 80, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #2E7D32; min-width: 120px; text-align: left;">
-                <span class="kpi-sub-val" id="kpi-avg-case" style="font-size: 14px; font-weight: 700; color: #2E7D32; display: block; line-height: 1.2;">32,9</span>
-                <span class="kpi-sub-label" style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG CASE / HARI</span>
+              <div class="kpi-nested-box" style="background: rgba(46, 125, 80, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #2E7D32; min-width: 160px; text-align: left;">
+                <span class="kpi-sub-val" id="kpi-avg-case" style="font-size: 24px; font-weight: 700; color: #2E7D32; display: block; line-height: 1.2;">32,9</span>
+                <span class="kpi-sub-label" style="font-size: 20px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG CASE / HARI</span>
               </div>
             </div>
           </div>
@@ -1379,26 +1379,26 @@
             </div>
             <!-- Sub-scope: Average Qty -->
             <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: auto; padding-top: 6px;">
-              <div class="kpi-nested-box" style="background: rgba(245, 124, 0, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #F57C00; min-width: 120px; text-align: left;">
-                <span class="kpi-sub-val" id="kpi-avg-qty" style="font-size: 14px; font-weight: 700; color: #F57C00; display: block; line-height: 1.2;">477,3</span>
-                <span class="kpi-sub-label" style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG QTY / HARI</span>
+              <div class="kpi-nested-box" style="background: rgba(245, 124, 0, 0.04); padding: 5px 10px; border-radius: 6px; border-left: 3px solid #F57C00; min-width: 160px; text-align: left;">
+                <span class="kpi-sub-val" id="kpi-avg-qty" style="font-size: 24px; font-weight: 700; color: #F57C00; display: block; line-height: 1.2;">477,3</span>
+                <span class="kpi-sub-label" style="font-size: 20px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">AVG QTY / HARI</span>
               </div>
             </div>
           </div>
 
           <!-- CARD 4: TOP 3PL -->
-          <div class="dashboard-card kpi-card kpi-card-4" id="kpi-card-top-3pl" style="min-height: 140px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px;">
-            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
-              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-                <span class="kpi-circle-icon" style="margin: 0; width: 28px; height: 28px; font-size: 14px;">🚚</span>
-                <span class="kpi-val" style="font-size: 18px; font-weight: 800; color: #6A1B9A;" id="top-3pl-name">JNE</span>
+          <div class="dashboard-card kpi-card kpi-card-4" id="kpi-card-top-3pl" style="min-height: 180px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 15px; padding: 16px 20px;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0;">
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                <span class="kpi-circle-icon" style="margin: 0; width: 34px; height: 34px; font-size: 18px;">🚚</span>
+                <span class="kpi-val" style="font-size: 20px; font-weight: 800; color: #6A1B9A; display: none;" id="top-3pl-name">JNE</span>
+                <span style="font-size: 30px; font-weight: 800; color: #6A1B9A;">TOP 3PL PARTNER</span>
               </div>
-              <div class="kpi-label" style="font-size: 10px; font-weight: 700; color: var(--text-secondary);">TOP 3PL PARTNER</div>
-              <div id="top-3pl-legend-container" style="margin-top: 8px; font-size: 10px; font-weight: 600; color: var(--text-secondary); display: flex; flex-direction: column; gap: 3px;">
+              <div id="top-3pl-legend-container" style="margin-top: 8px; font-size: 18px; font-weight: 600; color: var(--text-secondary); display: flex; flex-direction: column; gap: 8px; width: 100%;">
               </div>
             </div>
-            <div style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; position: relative;">
-              <canvas id="chart-3pl-pie" style="max-width: 100px; max-height: 100px;"></canvas>
+            <div style="width: 130px; height: 130px; display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0;">
+              <canvas id="chart-3pl-pie" style="max-width: 130px; max-height: 130px;"></canvas>
             </div>
           </div>
           
@@ -1452,18 +1452,18 @@
             <div class="sku-content-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; flex: 1;">
               <!-- Left: Table -->
               <div class="table-card" style="display: flex; flex-direction: column; height: 100%;">
-                <h4 style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-                  <span style="width: 8px; height: 8px; background: var(--purple); border-radius: 2px;"></span>
+                <h4 style="font-size: 26px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                  <span style="width: 12px; height: 12px; background: var(--purple); border-radius: 2px;"></span>
                   Top 10 SKU By Quantity
                 </h4>
                 <div class="table-container" style="flex: 1; min-height: 400px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; overflow: hidden;">
                   <table class="data-table" id="sku-data-table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
                     <thead>
                       <tr>
-                        <th style="padding: 12px 10px; font-size: 16px; width: 45px; text-align: center; font-weight: 800; color: #475569;">No</th>
-                        <th style="padding: 12px 10px; font-size: 16px; width: 130px; text-align: left; font-weight: 800; color: #475569;">SKU</th>
-                        <th style="padding: 12px 10px; font-size: 16px; text-align: left; font-weight: 800; color: #475569;">Deskripsi</th>
-                        <th style="padding: 12px 10px; font-size: 16px; text-align: right; width: 110px; font-weight: 800; color: #475569;">Qty</th>
+                        <th style="padding: 12px 10px; font-size: 18px; width: 45px; text-align: center; font-weight: 800; color: #475569;">No</th>
+                        <th style="padding: 12px 10px; font-size: 18px; width: 130px; text-align: left; font-weight: 800; color: #475569;">SKU</th>
+                        <th style="padding: 12px 10px; font-size: 18px; text-align: left; font-weight: 800; color: #475569;">Deskripsi</th>
+                        <th style="padding: 12px 10px; font-size: 18px; text-align: right; width: 110px; font-weight: 800; color: #475569;">Qty</th>
                       </tr>
                     </thead>
                     <tbody id="sku-table-body">
@@ -1475,10 +1475,9 @@
                 </div>
               </div>
 
-              <!-- Right: Group Chart -->
               <div class="chart-card" style="display: flex; flex-direction: column; height: 100%;">
-                <h4 style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-                  <span style="width: 8px; height: 8px; background: #3b82f6; border-radius: 2px;"></span>
+                <h4 style="font-size: 26px; font-weight: 700; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                  <span style="width: 12px; height: 12px; background: #3b82f6; border-radius: 2px;"></span>
                   Top SKU Group By Quantity
                 </h4>
                 <div class="chart-container" style="flex: 1; min-height: 400px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; background: #fff; position: relative;">
@@ -1492,31 +1491,26 @@
           <section class="dashboard-card" style="grid-column: span 4; margin: 0; display: flex; flex-direction: column;">
             <div class="card-header">
               <h3 class="card-header-title">
-                <i class="fa-solid fa-chart-pie" style="color: #10b981;"></i>
+                <i class="fa-solid fa-shopping-bag" style="color: #f97316;"></i>
                 ECOMMERCE DISTRIBUTION
               </h3>
             </div>
             
-            <div style="padding: 20px; display: flex; flex-direction: column; gap: 20px; flex: 1;">
-              <!-- Doughnut Chart Container -->
-              <div style="flex: 1; min-height: 300px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; background: #fff; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); display: flex; align-items: center; justify-content: center;">
+            <div style="padding: 20px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; flex: 1; align-items: center;">
+              <!-- Left: Doughnut Chart -->
+              <div style="position: relative; height: 100%; display: flex; align-items: center; justify-content: center; min-height: 320px;">
                 <div style="width: 100%; height: 100%; position: relative;">
                   <canvas id="chart-ecommerce"></canvas>
-                  <!-- Center text container for total -->
                   <div id="ecommerce-total-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; margin-top: -10px;">
-                    <div style="font-size: 14px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Total Order</div>
-                    <div id="eco-total-val" style="font-size: 48px; font-weight: 800; color: #1e293b; line-height: 1;">0</div>
+                    <div style="font-size: 20px; font-weight: 700; color: #1e293b; text-transform: uppercase; letter-spacing: 0.5px;">TOTAL ORDER</div>
+                    <div id="eco-total-val" style="font-size: 64px; font-weight: 800; color: #1e293b; line-height: 1;">0</div>
                   </div>
                 </div>
               </div>
 
-              <!-- Detailed Breakdown Legend -->
-              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px;">
-                <h4 style="font-size: 13px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Order Details</h4>
-                
-                <div id="ecommerce-legend-container" style="display: flex; flex-direction: column; gap: 10px;">
-                  <!-- Dynamically populated by updateEcommerceChart -->
-                </div>
+              <!-- Right: Detailed Breakdown List (Legend) -->
+              <div id="ecommerce-legend-container" style="display: flex; flex-direction: column; gap: 10px;">
+                <!-- Dynamically populated by updateEcommerceChart -->
               </div>
             </div>
           </section>
@@ -1535,7 +1529,7 @@
             <!-- Top section: title and trend badge -->
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
               <div style="display: flex; align-items: center; gap: 8px;">
-                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(79, 70, 229, 0.1); color: #4f46e5; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold;">⏳</div>
+                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(79, 70, 229, 0.1); color: #4f46e5; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">⏳</div>
                 <span style="font-size: 11px; font-weight: 800; color: #4f46e5; letter-spacing: 0.8px; text-transform: uppercase;">ON PROGRESS</span>
               </div>
               <span id="rtn-trend-onprogress-badge" class="rtn-trend-badge neutral">0%</span>
@@ -1560,7 +1554,7 @@
             <!-- Top section: title and trend badge -->
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
               <div style="display: flex; align-items: center; gap: 8px;">
-                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(217, 119, 6, 0.1); color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold;">🚚</div>
+                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(217, 119, 6, 0.1); color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">🚚</div>
                 <span style="font-size: 11px; font-weight: 800; color: #d97706; letter-spacing: 0.8px; text-transform: uppercase;">CLAIM 3PL</span>
               </div>
               <span id="rtn-trend-claim3pl-badge" class="rtn-trend-badge neutral">0%</span>
@@ -1585,7 +1579,7 @@
             <!-- Top section: title and trend badge -->
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
               <div style="display: flex; align-items: center; gap: 8px;">
-                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(13, 148, 136, 0.1); color: #0d9488; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold;">🔄</div>
+                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(13, 148, 136, 0.1); color: #0d9488; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">🔄</div>
                 <span style="font-size: 11px; font-weight: 800; color: #0d9488; letter-spacing: 0.8px; text-transform: uppercase;">SO RETURN</span>
               </div>
               <span id="rtn-trend-soreturn-badge" class="rtn-trend-badge neutral">0%</span>
@@ -1731,10 +1725,10 @@
                   </div>
                   <!-- Sorting Dropdown -->
                   <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
-                    <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
+                    <span style="font-size: 13px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
                       <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
                     </span>
-                    <select id="rtn-sort-select-onprogress" onchange="changeRtnSort('onprogress', this.value)" style="font-size: 10px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
+                    <select id="rtn-sort-select-onprogress" onchange="changeRtnSort('onprogress', this.value)" style="font-size: 13px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
                       <option value="aging_desc">Aging Terlama</option>
                       <option value="aging_asc">Aging Tercepat</option>
                       <option value="qty_desc">Qty Terbanyak</option>
@@ -1747,11 +1741,11 @@
                     <table class="data-table" style="width: 100%; border-collapse: collapse;">
                       <thead>
                         <tr style="background: #f8fafc;">
-                          <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
-                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice</th>
-                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
-                          <th style="padding: 8px 6px; font-size: 10px; width: 50px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Aging (H)</th>
-                          <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
+                          <th style="padding: 8px 6px; font-size: 13px; width: 40px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
+                          <th style="padding: 8px 6px; font-size: 13px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice</th>
+                          <th style="padding: 8px 6px; font-size: 13px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
+                          <th style="padding: 8px 6px; font-size: 13px; width: 65px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Aging (H)</th>
+                          <th style="padding: 8px 6px; font-size: 13px; width: 60px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
                         </tr>
                       </thead>
                       <tbody id="rtn-table-onprogress-body">
@@ -1858,10 +1852,10 @@
                   </div>
                   <!-- Sorting Dropdown -->
                   <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
-                    <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
+                    <span style="font-size: 13px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
                       <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
                     </span>
-                    <select id="rtn-sort-select-claim3pl" onchange="changeRtnSort('claim3pl', this.value)" style="font-size: 10px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
+                    <select id="rtn-sort-select-claim3pl" onchange="changeRtnSort('claim3pl', this.value)" style="font-size: 13px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
                       <option value="aging_desc">Aging Terlama</option>
                       <option value="aging_asc">Aging Tercepat</option>
                       <option value="qty_desc">Qty Terbanyak</option>
@@ -1874,11 +1868,11 @@
                     <table class="data-table" style="width: 100%; border-collapse: collapse;">
                       <thead>
                         <tr style="background: #f8fafc;">
-                          <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
-                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice</th>
-                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
-                          <th style="padding: 8px 6px; font-size: 10px; width: 50px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Aging (H)</th>
-                          <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
+                          <th style="padding: 8px 6px; font-size: 13px; width: 40px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
+                          <th style="padding: 8px 6px; font-size: 13px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice</th>
+                          <th style="padding: 8px 6px; font-size: 13px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
+                          <th style="padding: 8px 6px; font-size: 13px; width: 65px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Aging (H)</th>
+                          <th style="padding: 8px 6px; font-size: 13px; width: 60px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
                         </tr>
                       </thead>
                       <tbody id="rtn-table-claim3pl-body">
@@ -1985,10 +1979,10 @@
                   </div>
                   <!-- Sorting Dropdown -->
                   <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
-                    <span style="font-size: 10px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
+                    <span style="font-size: 13px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
                       <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
                     </span>
-                    <select id="rtn-sort-select-soreturn" onchange="changeRtnSort('soreturn', this.value)" style="font-size: 10px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
+                    <select id="rtn-sort-select-soreturn" onchange="changeRtnSort('soreturn', this.value)" style="font-size: 13px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
                       <option value="aging_desc">Aging Terlama</option>
                       <option value="aging_asc">Aging Tercepat</option>
                       <option value="qty_desc">Qty Terbanyak</option>
@@ -2001,11 +1995,11 @@
                     <table class="data-table" style="width: 100%; border-collapse: collapse;">
                       <thead>
                         <tr style="background: #f8fafc;">
-                          <th style="padding: 8px 6px; font-size: 10px; width: 30px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
-                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice</th>
-                          <th style="padding: 8px 6px; font-size: 10px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
-                          <th style="padding: 8px 6px; font-size: 10px; width: 50px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Aging (H)</th>
-                          <th style="padding: 8px 6px; font-size: 10px; width: 45px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
+                          <th style="padding: 8px 6px; font-size: 13px; width: 40px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
+                          <th style="padding: 8px 6px; font-size: 13px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice</th>
+                          <th style="padding: 8px 6px; font-size: 13px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
+                          <th style="padding: 8px 6px; font-size: 13px; width: 65px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Aging (H)</th>
+                          <th style="padding: 8px 6px; font-size: 13px; width: 60px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
                         </tr>
                       </thead>
                       <tbody id="rtn-table-soreturn-body">
@@ -2680,7 +2674,7 @@
             
             const text = typeof val === 'number' ? val.toLocaleString('id-ID') : val;
             
-            ctx.font = 'bold 8px "Inter", sans-serif';
+            ctx.font = 'bold 13px "Inter", sans-serif';
             ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
             ctx.shadowBlur = 4;
             
@@ -2752,7 +2746,7 @@
                position: 'bottom',
                labels: {
                  boxWidth: 12,
-                 font: { family: 'Inter', size: 11, weight: '600' },
+                 font: { family: 'Inter', size: 18, weight: '600' },
                  color: '#546E7A'
                }
              },
@@ -2768,19 +2762,19 @@
            scales: {
              x: {
                grid: { display: false },
-               ticks: { font: { family: 'Inter', size: 10 }, color: '#546E7A' }
+               ticks: { font: { family: 'Inter', size: 17 }, color: '#546E7A' }
              },
              y: {
                min: 0,
                ticks: {
-                 font: { family: 'Inter', size: 10 },
+                 font: { family: 'Inter', size: 17 },
                  color: '#1565C0'
                },
                grid: { color: '#E3E8EF' },
                title: {
                  display: true,
                  text: 'Total Order',
-                 font: { family: 'Inter', size: 15, weight: '600' },
+                 font: { family: 'Inter', size: 18, weight: '600' },
                  color: '#1565C0'
                }
              }
@@ -2852,11 +2846,11 @@
            scales: {
              x: {
                grid: { display: false },
-               ticks: { font: { family: 'Inter', size: 10 }, color: '#546E7A' }
+               ticks: { font: { family: 'Inter', size: 17 }, color: '#546E7A' }
              },
              y: {
                min: 0,
-               ticks: { font: { family: 'Inter', size: 10 }, color: '#546E7A' },
+               ticks: { font: { family: 'Inter', size: 17 }, color: '#546E7A' },
                grid: { color: '#E3E8EF' },
                title: {
                  display: true,
@@ -2952,7 +2946,7 @@
               font: {
                 family: 'Inter',
                 weight: '800',
-                size: 16
+                size: 20
               },
               formatter: (value, context) => {
                 const total = context.dataset.data.reduce((a, b) => a + b, 0);
@@ -2967,8 +2961,8 @@
             tooltip: {
               backgroundColor: 'rgba(30, 41, 59, 0.95)',
               padding: 12,
-              titleFont: { size: 13, weight: '700' },
-              bodyFont: { size: 12 },
+              titleFont: { size: 16, weight: '700' },
+              bodyFont: { size: 15 },
               callbacks: {
                 label: function(context) {
                   const label = context.label || '';
@@ -3045,12 +3039,12 @@
           if (pct === 0 && sortedPartners.length > 3) continue; // skip 0% items
           const color = getPartnerColor(p.name, i);
           html += `
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 4px;">
-              <div style="display: flex; align-items: center; gap: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 90px;">
-                <span style="display: inline-block; width: 6.5px; height: 6.5px; background-color: ${color}; border-radius: 50%; flex-shrink: 0;"></span>
-                <span style="font-size: 8.5px; font-weight: 700;" title="${p.name}">${p.name}</span>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="display: inline-block; width: 10px; height: 10px; background-color: ${color}; border-radius: 50%; flex-shrink: 0;"></span>
+                <span style="font-size: 21px; font-weight: 700;" title="${p.name}">${p.name}</span>
               </div>
-              <span style="font-size: 8.5px; font-weight: 700; color: #334155;">${pct}%</span>
+              <span style="font-size: 21px; font-weight: 700; color: #334155;">${pct}%</span>
             </div>
           `;
         }
@@ -3262,18 +3256,28 @@
       // Render legend
       const container = document.getElementById('ecommerce-legend-container');
       if (container) {
-        container.innerHTML = sortedPlatforms.map(item => `
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; transition: all 0.2s;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <div style="width: 12px; height: 12px; border-radius: 3px; background: ${item.color};"></div>
-              <span style="font-size: 15px; font-weight: 700; color: #334155;">${item.name}</span>
+        container.innerHTML = sortedPlatforms.map(item => {
+          const pct = total > 0 ? ((item.val / total) * 100).toFixed(1) : "0.0";
+          return `
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #fff; border-radius: 10px; border: 1px solid #f1f5f9; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 18px; height: 18px; border-radius: 5px; background: ${item.color};"></div>
+                <span style="font-size: 14px; font-weight: 700; color: #1e293b;">${item.name}</span>
+              </div>
+              
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="text-align: right; min-width: 70px;">
+                  <span style="font-family: var(--font-sans); font-weight: 800; color: #1e293b; font-size: 17px;">${item.val.toLocaleString('id-ID')}</span>
+                  <span style="font-size: 10px; color: #64748b; font-weight: 700;">ORD</span>
+                </div>
+                
+                <div style="background: #f0fdf4; color: #166534; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 13px; min-width: 50px; text-align: center;">
+                  ${pct}%
+                </div>
+              </div>
             </div>
-            <div style="text-align: right;">
-              <span style="font-family: var(--font-sans); font-weight: 800; color: #1e293b; font-size: 18px;">${item.val.toLocaleString('id-ID')}</span>
-              <span style="font-size: 11px; color: #94a3b8; font-weight: 600;"> ORDER</span>
-            </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       }
     }
 
@@ -3314,29 +3318,50 @@
       }
 
       validRows.sort((a, b) => a.date - b.date);
-      let trendRows = validRows;
 
-      if (trendRows.length > 0) {
-        let trendDates = [];
-        let trendOrders = [];
-        let trendQty = [];
+      let trendDates = [];
+      let trendOrders = [];
+      let trendQty = [];
 
-        trendRows.forEach(item => {
+      // If no specific month is selected (All Months / filterMonth === ""), group by month
+      if (filterMonth === "" && validRows.length > 31) {
+        let monthlyData = {}; // key: monthIndex, val: { orders, qty }
+        validRows.forEach(item => {
+          let m = item.date.getMonth();
+          if (!monthlyData[m]) monthlyData[m] = { orders: 0, qty: 0 };
+          monthlyData[m].orders += item.orders;
+          monthlyData[m].qty += item.qty;
+        });
+        
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+        Object.keys(monthlyData).sort((a, b) => a - b).forEach(mIdx => {
+          trendDates.push(monthNames[mIdx]);
+          trendOrders.push(monthlyData[mIdx].orders);
+          trendQty.push(monthlyData[mIdx].qty);
+        });
+      } else {
+        // Daily grouping
+        validRows.forEach(item => {
           let day = formatTimeComponent(item.date.getDate());
           let month = formatTimeComponent(item.date.getMonth() + 1);
           trendDates.push(`${day}/${month}`);
           trendOrders.push(item.orders);
           trendQty.push(item.qty);
         });
+      }
 
+      if (trendDates.length > 0) {
         // Update Section 2 Total Order Chart (Bar + Line)
         if (chartSlaBulan) {
           chartSlaBulan.data.labels = trendDates;
           chartSlaBulan.data.datasets[0].data = trendOrders;
           chartSlaBulan.data.datasets[1].data = trendOrders;
-          if (chartSlaBulan.options.scales.y) {
-            chartSlaBulan.options.scales.y.max = 400;
-          }
+          
+          // Auto-calculate scale max
+          const maxVal = Math.max(...trendOrders, 0);
+          chartSlaBulan.options.scales.y.suggestedMax = Math.ceil(maxVal * 1.15 / 10) * 10;
+          delete chartSlaBulan.options.scales.y.max;
+          
           chartSlaBulan.update();
         }
 
@@ -3345,14 +3370,17 @@
           chartOrderBulan.data.labels = trendDates;
           chartOrderBulan.data.datasets[0].data = trendQty;
           chartOrderBulan.data.datasets[1].data = trendQty;
-          if (chartOrderBulan.options.scales.y) {
-            chartOrderBulan.options.scales.y.max = 400;
-          }
+          
+          // Auto-calculate scale max
+          const maxVal = Math.max(...trendQty, 0);
+          chartOrderBulan.options.scales.y.suggestedMax = Math.ceil(maxVal * 1.15 / 10) * 10;
+          delete chartOrderBulan.options.scales.y.max;
+          
           chartOrderBulan.update();
         }
 
-        // Update badges to match the number of active days
-        const badgeLabel = `${trendRows.length} Hari Terakhir`;
+        // Update badges
+        const badgeLabel = filterMonth === "" && validRows.length > 31 ? "Rekap Bulanan" : `${trendDates.length} Hari Terakhir`;
         const slaChartBadge = document.getElementById('sla-chart-badge');
         if (slaChartBadge) slaChartBadge.textContent = badgeLabel;
         const orderChartBadge = document.getElementById('order-chart-badge');
@@ -4017,29 +4045,29 @@
       updateBadgeText('rtn-header-badge-claim3pl', `${displayedClaim3PLInvoices.size} Inv / ${displayedClaim3PLQty.toLocaleString('id-ID')} Pcs`);
       updateBadgeText('rtn-header-badge-soreturn', `${displayedSoReturnInvoices.size} Inv / ${displayedSoReturnQty.toLocaleString('id-ID')} Pcs`);
 
-      // Render Table Helper (combined, dense 4-column layout)
+      // Render Detailed Table Helper
       const renderDetailedTable = (tbodyId, items) => {
         const tbody = document.getElementById(tbodyId);
         if (!tbody) return;
         tbody.innerHTML = '';
         if (items.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 11px;"><i class="fa-solid fa-folder-open" style="font-size: 16px; display: block; margin-bottom: 4px; color: #cbd5e1;"></i> Tidak ada data</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 14px;"><i class="fa-solid fa-folder-open" style="font-size: 18px; display: block; margin-bottom: 4px; color: #cbd5e1;"></i> Tidak ada data</td></tr>`;
         } else {
           items.forEach((item, index) => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-              <td style="padding: 8px 6px; text-align: center; font-size: 10px; font-weight: 500; color: #64748b; border-bottom: 1px solid #f1f5f9;">${index + 1}</td>
+              <td style="padding: 8px 6px; text-align: center; font-size: 20px; font-weight: 500; color: #64748b; border-bottom: 1px solid #f1f5f9;">${index + 1}</td>
               <td style="padding: 8px 6px; border-bottom: 1px solid #f1f5f9;">
-                <div style="font-weight: 700; color: #1e293b; font-size: 10px;">${item.invoice}</div>
+                <div style="font-weight: 700; color: #1e293b; font-size: 20px;">${item.invoice}</div>
               </td>
               <td style="padding: 8px 6px; border-bottom: 1px solid #f1f5f9; max-width: 140px; overflow: hidden;">
-                <div style="font-weight: 700; color: #334155; font-size: 10px; font-family: var(--font-mono);">${item.sku || '<span style="color:#94a3b8; font-style:italic; font-weight:400;">No SKU</span>'}</div>
-                <div style="color: #64748b; font-size: 9px; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px;" title="${item.description}">${item.description}</div>
+                <div style="font-weight: 700; color: #334155; font-size: 20px; font-family: var(--font-mono);">${item.sku || '<span style="color:#94a3b8; font-style:italic; font-weight:400;">No SKU</span>'}</div>
+                <div style="color: #64748b; font-size: 15px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px;" title="${item.description}">${item.description}</div>
               </td>
               <td style="padding: 8px 6px; text-align: center; border-bottom: 1px solid #f1f5f9;">
-                <span class="status-badge" style="background: ${item.agingDays > 30 ? '#fee2e2' : '#fef9c3'}; color: ${item.agingDays > 30 ? '#ef4444' : '#a16207'}; font-weight: 800; font-size: 12px; padding: 2px 6px; border-radius: 4px; line-height: 1; display: inline-block;">${item.agingDays}</span>
+                <span class="status-badge" style="background: ${item.agingDays > 30 ? '#fee2e2' : '#fef9c3'}; color: ${item.agingDays > 30 ? '#ef4444' : '#a16207'}; font-weight: 800; font-size: 17px; padding: 2px 8px; border-radius: 4px; line-height: 1; display: inline-block;">${item.agingDays}</span>
               </td>
-              <td style="padding: 8px 6px; text-align: center; font-weight: 700; color: var(--primary-accent); font-size: 10px; border-bottom: 1px solid #f1f5f9;">${item.qty.toLocaleString('id-ID')}</td>
+              <td style="padding: 8px 6px; text-align: center; font-weight: 700; color: var(--primary-accent); font-size: 20px; border-bottom: 1px solid #f1f5f9;">${item.qty.toLocaleString('id-ID')}</td>
             `;
             tbody.appendChild(tr);
           });
@@ -4557,10 +4585,10 @@
           const tr = document.createElement('tr');
           tr.style.height = '48px'; 
           tr.innerHTML = `
-            <td style="font-size: 16px; padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: center;">${index + 1}</td>
-            <td style="padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: left;"><span class="sku-badge" style="background: rgba(107, 70, 193, 0.1); color: var(--purple); font-weight: 700; padding: 5px 10px; border-radius: 6px; font-size: 15px; border: 1px solid rgba(107, 70, 193, 0.2);">${item.sku}</span></td>
-            <td style="font-size: 16px; color: #334155; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: left;" title="${item.desc}">${item.desc}</td>
-            <td style="text-align: right; font-weight: 800; color: var(--purple); font-size: 17px; padding: 12px 10px; border-bottom: 1px solid #f1f5f9;">${Math.round(item.qty).toLocaleString('id-ID')}</td>
+            <td style="font-size: 18px; padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: center;">${index + 1}</td>
+            <td style="padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: left;"><span class="sku-badge" style="background: rgba(107, 70, 193, 0.1); color: var(--purple); font-weight: 700; padding: 5px 10px; border-radius: 6px; font-size: 17px; border: 1px solid rgba(107, 70, 193, 0.2);">${item.sku}</span></td>
+            <td style="font-size: 18px; color: #334155; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 12px 10px; border-bottom: 1px solid #f1f5f9; text-align: left;" title="${item.desc}">${item.desc}</td>
+            <td style="text-align: right; font-weight: 800; color: var(--purple); font-size: 19px; padding: 12px 10px; border-bottom: 1px solid #f1f5f9;">${Math.round(item.qty).toLocaleString('id-ID')}</td>
           `;
           tableBody.appendChild(tr);
         });
@@ -4611,7 +4639,7 @@
               tooltip: {
                 backgroundColor: '#1e293b',
                 titleFont: { size: 12, weight: 'bold' },
-                bodyFont: { size: 12 },
+                bodyFont: { size: 15 },
                 padding: 10,
                 callbacks: {
                   label: function(context) {
@@ -4626,12 +4654,12 @@
             scales: {
               x: {
                 grid: { color: '#f1f5f9', drawBorder: false },
-                ticks: { font: { size: 11, weight: '500' }, color: '#64748b' }
+                ticks: { font: { size: 15, weight: '500' }, color: '#64748b' }
               },
               y: {
                 grid: { display: false },
                 ticks: { 
-                  font: { size: 11, weight: '600' },
+                  font: { size: 15, weight: '600' },
                   color: '#1e293b',
                   callback: function(value) {
                     const label = this.getLabelForValue(value);
@@ -4644,7 +4672,7 @@
               onComplete: function() {
                 const chartInstance = this;
                 const ctx = chartInstance.ctx;
-                ctx.font = 'bold 11px Inter, sans-serif';
+                ctx.font = 'bold 16px Inter, sans-serif';
                 ctx.textAlign = 'left';
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = '#1e293b';
