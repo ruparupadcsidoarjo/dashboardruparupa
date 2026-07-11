@@ -1261,6 +1261,200 @@
         margin: 1cm;
       }
     }
+
+    /* Unified Return Dashboard styles */
+    .rtn-tab-btn {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .rtn-tab-btn:hover {
+      background-color: #f1f5f9 !important;
+      border-color: #94a3b8 !important;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .rtn-tab-btn:active {
+      transform: translateY(0);
+    }
+    .rtn-tab-btn.active-all {
+      background-color: #e2e8f0 !important;
+      border-color: #475569 !important;
+      color: #1e293b !important;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+    }
+    .rtn-tab-btn.active-onprogress {
+      background-color: rgba(79, 70, 229, 0.12) !important;
+      border-color: #4f46e5 !important;
+      color: #4f46e5 !important;
+      box-shadow: inset 0 2px 4px rgba(79, 70, 229, 0.06);
+    }
+    .rtn-tab-btn.active-claim3pl {
+      background-color: rgba(217, 119, 6, 0.12) !important;
+      border-color: #d97706 !important;
+      color: #d97706 !important;
+      box-shadow: inset 0 2px 4px rgba(217, 119, 6, 0.06);
+    }
+    .rtn-tab-btn.active-soreturn {
+      background-color: rgba(13, 148, 136, 0.12) !important;
+      border-color: #0d9488 !important;
+      color: #0d9488 !important;
+      box-shadow: inset 0 2px 4px rgba(13, 148, 136, 0.06);
+    }
+
+    .rtn-aging-btn {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .rtn-aging-btn:hover {
+      background-color: #f1f5f9 !important;
+      border-color: #cbd5e1 !important;
+      color: #1e293b !important;
+    }
+    .rtn-aging-btn.active-pill {
+      background-color: #4f46e5 !important;
+      color: #ffffff !important;
+      border-color: #4f46e5 !important;
+      box-shadow: 0 2px 4px rgba(79, 70, 229, 0.25);
+    }
+
+    /* Advanced Responsiveness & Zoom Compatibility (Optimized for 60% - 100% zoom levels) */
+    @media (min-width: 1800px) {
+      body {
+        grid-template-columns: 280px 1fr !important;
+      }
+      .sidebar-top {
+        padding: 40px 24px !important;
+      }
+      .logo-title {
+        font-size: 18px !important;
+      }
+      .logo-icon {
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 18px !important;
+      }
+      .nav-item a {
+        font-size: 15px !important;
+        padding: 12px 18px !important;
+      }
+      .header-title {
+        font-size: 26px !important;
+      }
+      .header-subtitle {
+        font-size: 13px !important;
+      }
+      .kpi-val {
+        font-size: 28px !important;
+      }
+      .kpi-label {
+        font-size: 13px !important;
+      }
+      .kpi-sub-val {
+        font-size: 22px !important;
+      }
+      .kpi-sub-label {
+        font-size: 13px !important;
+      }
+      .card-header-title {
+        font-size: 16px !important;
+      }
+      .data-table th, .data-table td {
+        font-size: 13px !important;
+        padding: 12px 10px !important;
+      }
+    }
+
+    @media (min-width: 2500px) {
+      body {
+        grid-template-columns: 320px 1fr !important;
+      }
+      .sidebar-top {
+        padding: 48px 28px !important;
+      }
+      .logo-title {
+        font-size: 20px !important;
+      }
+      .logo-icon {
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 20px !important;
+      }
+      .nav-item a {
+        font-size: 16px !important;
+        padding: 14px 20px !important;
+        gap: 16px !important;
+      }
+      .header-title {
+        font-size: 30px !important;
+      }
+      .header-subtitle {
+        font-size: 14px !important;
+      }
+      .kpi-val {
+        font-size: 32px !important;
+      }
+      .kpi-label {
+        font-size: 14px !important;
+      }
+      .kpi-sub-val {
+        font-size: 24px !important;
+      }
+      .kpi-sub-label {
+        font-size: 14px !important;
+      }
+      .card-header-title {
+        font-size: 18px !important;
+      }
+      .data-table th, .data-table td {
+        font-size: 14px !important;
+        padding: 14px 12px !important;
+      }
+    }
+
+    @media (min-width: 3200px) {
+      body {
+        grid-template-columns: 360px 1fr !important;
+      }
+      .sidebar-top {
+        padding: 56px 32px !important;
+      }
+      .logo-title {
+        font-size: 22px !important;
+      }
+      .logo-icon {
+        width: 54px !important;
+        height: 54px !important;
+        font-size: 22px !important;
+      }
+      .nav-item a {
+        font-size: 18px !important;
+        padding: 16px 24px !important;
+        gap: 18px !important;
+      }
+      .header-title {
+        font-size: 34px !important;
+      }
+      .header-subtitle {
+        font-size: 16px !important;
+      }
+      .kpi-val {
+        font-size: 36px !important;
+      }
+      .kpi-label {
+        font-size: 16px !important;
+      }
+      .kpi-sub-val {
+        font-size: 28px !important;
+      }
+      .kpi-sub-label {
+        font-size: 16px !important;
+      }
+      .card-header-title {
+        font-size: 20px !important;
+      }
+      .data-table th, .data-table td {
+        font-size: 15px !important;
+        padding: 16px 14px !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1283,7 +1477,7 @@
           <a href="#" onclick="switchView('dashboard')"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
         </li>
         <li class="nav-item" id="nav-return">
-          <a href="#" onclick="switchView('return')"><i class="fa-solid fa-rotate-left"></i> Return Management</a>
+          <a href="#" onclick="switchView('return')"><i class="fa-solid fa-rotate-left"></i> Monitoring Return Rupa-Rupa</a>
         </li>
       </ul>
     </div>
@@ -1324,7 +1518,7 @@
           <span class="header-subtitle">Logistics &amp; Operations Center</span>
           <h1 class="header-title">
             <i class="fa-solid fa-square-poll-vertical" style="color: var(--primary-accent); font-size: 22px;"></i>
-            Monitoring Dashboard Rupa-Rupa
+            <span id="header-title-text">Monitoring Dashboard Rupa-Rupa</span>
             <span class="title-badge">
               <i class="fa-solid fa-warehouse" style="font-size: 10px; opacity: 0.95;"></i>
               DC HCI Sidoarjo
@@ -1527,15 +1721,18 @@
           
           <!-- CARD 1 — TOP 10 SKU (Equal 1/3 Width) -->
           <section class="dashboard-card" style="flex: 1 1 350px; margin: 0; display: flex; flex-direction: column; min-width: 0;">
-            <div class="card-header">
-              <h3 class="card-header-title">
-                <i class="fa-solid fa-cubes" style="color: var(--purple);"></i>
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 12px;">
+              <h3 class="card-header-title" style="margin: 0; font-size: 15px; font-weight: 800; color: #1e293b; text-transform: uppercase;">
+                <i class="fa-solid fa-cubes" style="color: var(--purple); margin-right: 6px;"></i>
                 TOP 10 SKU BY QUANTITY
               </h3>
+              <button id="btn-toggle-sku-table" onclick="toggleTableHeight('sku-table-container', 'btn-toggle-sku-table', 380)" class="no-print" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" onmouseover="this.style.background='#e2e8f0'; this.style.borderColor='#94a3b8';" onmouseout="this.style.background='#f1f5f9'; this.style.borderColor='#cbd5e1';" title="Expand / Slide Down Table">
+                <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i> Drop Down
+              </button>
             </div>
             
             <div style="padding: 24px; flex: 1; display: flex; flex-direction: column; gap: 16px;">
-              <div class="table-container" style="flex: 1; height: 380px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; overflow-y: auto;">
+              <div class="table-container" id="sku-table-container" style="flex: 1; height: 380px; max-height: 380px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; overflow-y: auto; transition: all 0.4s ease;">
                 <table class="data-table" id="sku-data-table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
                   <thead>
                     <tr>
@@ -1685,421 +1882,171 @@
           </div>
         </section>
 
-        <!-- TREND CHART -->
-        <section class="dashboard-card" style="margin-top: 20px;">
-          <div class="card-header">
-            <h3 class="card-header-title">
-              <i class="fa-solid fa-chart-line" style="color: var(--primary-accent);"></i>
-              TREND RETURN HARIAN (QTY)
-            </h3>
+        <!-- SECTION — RETURN CHARTS ROW -->
+        <section class="charts-row" style="margin-top: 24px;">
+          <!-- LEFT CARD — TABEL TOP 10 SKU RETURN BY QTY -->
+          <div class="dashboard-card" style="border: 2px solid #e2e8f0; border-radius: 16px; display: flex; flex-direction: column;">
+            <div class="card-header" style="border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <h3 class="card-header-title" style="font-size: 15px; font-weight: 800; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">
+                  <i class="fa-solid fa-table-list" style="color: #4f46e5; margin-right: 6px;"></i>
+                  Top SKU by Qty
+                </h3>
+                <span class="card-header-badge" style="background: #eef2ff; color: #4f46e5; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 12px;">Tabel Ringkasan</span>
+              </div>
+              <button id="btn-toggle-rtn-top-sku" onclick="toggleTableHeight('rtn-top-sku-table-container', 'btn-toggle-rtn-top-sku', 280)" class="no-print" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" onmouseover="this.style.background='#e2e8f0'; this.style.borderColor='#94a3b8';" onmouseout="this.style.background='#f1f5f9'; this.style.borderColor='#cbd5e1';" title="Expand / Slide Down Table">
+                <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i> Drop Down
+              </button>
+            </div>
+            <div id="rtn-top-sku-table-container" style="flex-grow: 1; overflow-y: auto; max-height: 280px; height: 280px; border: 1px solid #e2e8f0; border-radius: 8px; transition: all 0.4s ease;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 11px; text-align: left;">
+                <thead>
+                  <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0; position: sticky; top: 0; z-index: 10;">
+                    <th style="padding: 10px 8px; font-weight: 800; color: #475569; width: 40px; text-align: center;">NO</th>
+                    <th style="padding: 10px 8px; font-weight: 800; color: #475569; width: 100px;">SKU</th>
+                    <th style="padding: 10px 8px; font-weight: 800; color: #475569;">DESKRIPSI</th>
+                    <th style="padding: 10px 8px; font-weight: 800; color: #475569; width: 70px; text-align: center;">QTY</th>
+                  </tr>
+                </thead>
+                <tbody id="rtn-top-sku-tbody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div class="chart-container-280">
-            <canvas id="chart-rtn-trend"></canvas>
-          </div>
-        </section>
 
-        <!-- SUMMARY TABLE SECTION -->
-        <section class="dashboard-card" style="margin-top: 20px; border: 2px solid #e3e8ef;" id="rtn-summary-section">
-          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 15px;">
-            <div>
-              <h3 class="card-header-title" style="margin: 0; font-size: 14px; display: flex; align-items: center; gap: 8px;">
-                <i class="fa-solid fa-file-invoice" style="color: var(--purple); font-size: 14px;"></i>
-                Detail Barang Return
+          <!-- RIGHT CARD — TOP DEPARTMENT RETURN BY QTY -->
+          <div class="dashboard-card" style="border: 2px solid #e2e8f0; border-radius: 16px; display: flex; flex-direction: column;">
+            <div class="card-header" style="border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 16px;">
+              <h3 class="card-header-title" style="font-size: 15px; font-weight: 800; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">
+                <i class="fa-solid fa-building-user" style="color: #0d9488; margin-right: 6px;"></i>
+                Top Department by Qty
               </h3>
+              <span class="card-header-badge" id="rtn-dept-chart-badge" style="background: #e6fffa; color: #0d9488; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 12px;">Berdasarkan Departemen</span>
             </div>
-            
-            <!-- Actions -->
-            <button onclick="window.print()" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; background: #4f46e5; border-radius: 6px; padding: 6px 12px; color: white; border: none; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#3730a3'" onmouseout="this.style.background='#4f46e5'" id="btn-print-report">
-              <i class="fa-solid fa-print"></i> Cetak Raport / Simpan PDF
-            </button>
-          </div>
-
-          <!-- RAPORT TABLES CONTAINER (SIDE-BY-SIDE GRID OR SELECTIVE DISPLAY) -->
-          <div id="rtn-tables-grid-container" style="display: grid; gap: 16px; width: 100%;">
-            
-            <!-- ON PROGRESS TABLE CARD -->
-            <div id="rtn-section-onprogress" style="border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.01); display: flex; flex-direction: column;">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 8px; cursor: pointer; user-select: none;" onclick="toggleRtnAccordion('onprogress')">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #4f46e5; display: inline-block;"></span>
-                  <h4 style="font-size: 12px; font-weight: 700; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">ON PROGRESS</h4>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="font-size: 10px; font-weight: 700; background: rgba(79, 70, 229, 0.08); color: #4f46e5; padding: 1px 6px; border-radius: 10px;" id="rtn-header-badge-onprogress">0 Inv</span>
-                  <i class="fa-solid fa-chevron-down" id="rtn-arrow-onprogress" style="font-size: 14px; color: #64748b; transition: transform 0.2s;"></i>
-                </div>
-              </div>
-
-              <!-- Collapsible Wrapper -->
-              <div id="rtn-collapse-onprogress" style="display: block; width: 100%;">
-                
-                <!-- Interactive Aging Scopes Grid -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; margin-bottom: 12px;" class="no-print">
-                  <!-- Scope 1-3 Bulan -->
-                  <div id="rtn-scope-card-1-3" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('1-3 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">1-3 Bln</span>
-                      <i class="fa-solid fa-clock-rotate-left" style="font-size: 10px; color: #4f46e5;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-1-3-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-1-3-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-
-                  <!-- Scope 3-6 Bulan -->
-                  <div id="rtn-scope-card-3-6" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('3-6 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">3-6 Bln</span>
-                      <i class="fa-solid fa-hourglass-half" style="font-size: 10px; color: #d97706;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-3-6-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-3-6-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-
-                  <!-- Scope 7-9 Bulan -->
-                  <div id="rtn-scope-card-7-9" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('7-9 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">7-9 Bln</span>
-                      <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #0d9488;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-7-9-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-7-9-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-
-                  <!-- Scope 9-12 Bulan -->
-                  <div id="rtn-scope-card-9-12" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('9-12 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">9-12 Bln</span>
-                      <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #ef4444;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-9-12-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-9-12-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-
-                  <!-- Scope >16 Bulan -->
-                  <div id="rtn-scope-card-gt16" class="rtn-scope-card" onclick="toggleOnProgressAgingFilter('>16 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">>16 Bln</span>
-                      <i class="fa-solid fa-fire" style="font-size: 10px; color: #b91c1c;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-gt16-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-gt16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Collapsible Detail Container -->
-                <div id="rtn-detail-container-onprogress" style="display: none; margin-top: 8px;">
-                  <!-- Detail Table Header with Close Button -->
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f1f5f9; padding: 6px 12px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
-                    <span style="font-size: 10px; font-weight: 700; color: #334155; display: flex; align-items: center; gap: 6px;">
-                      <i class="fa-solid fa-list-check" style="color: #4f46e5;"></i> 
-                      Detail: ON PROGRESS (<span id="rtn-detail-title-onprogress" style="color: #4f46e5;">-</span>)
-                    </span>
-                    <button onclick="toggleOnProgressAgingFilter(activeOnProgressAgingFilter)" style="background: none; border: none; font-size: 13px; font-weight: 700; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; transition: all 0.2s;" onmouseover="this.style.background='#e2e8f0'; this.style.color='#ef4444';" onmouseout="this.style.background='none'; this.style.color='#64748b;'" title="Tutup Tabel Detail">
-                      <i class="fa-solid fa-xmark"></i>
-                    </button>
-                  </div>
-                  <!-- Sorting Dropdown -->
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
-                    <span style="font-size: 13px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
-                      <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
-                    </span>
-                    <select id="rtn-sort-select-onprogress" onchange="changeRtnSort('onprogress', this.value)" style="font-size: 13px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
-                      <option value="aging_desc">Aging Terlama</option>
-                      <option value="aging_asc">Aging Tercepat</option>
-                      <option value="qty_desc">Qty Terbanyak</option>
-                      <option value="qty_asc">Qty Tersedikit</option>
-                      <option value="invoice_asc">No. Invoice</option>
-                    </select>
-                  </div>
-
-                  <div class="table-container" style="overflow-x: auto; flex-grow: 1;">
-                    <table class="data-table" style="width: 100%; border-collapse: collapse;">
-                      <thead>
-                        <tr style="background: #f8fafc;">
-                          <th style="padding: 8px 6px; font-size: 13px; width: 40px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
-                          <th style="padding: 8px 6px; font-size: 13px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice</th>
-                          <th style="padding: 8px 6px; font-size: 13px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
-                          <th style="padding: 8px 6px; font-size: 13px; width: 65px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Aging (H)</th>
-                          <th style="padding: 8px 6px; font-size: 13px; width: 60px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
-                        </tr>
-                      </thead>
-                      <tbody id="rtn-table-onprogress-body">
-                        <tr>
-                          <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 14px;">Memuat data...</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+            <div class="chart-container-280" style="height: 280px; position: relative; flex-grow: 1;">
+              <canvas id="chart-rtn-dept-qty"></canvas>
             </div>
-
-            <!-- CLAIM 3PL TABLE CARD -->
-            <div id="rtn-section-claim3pl" style="border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.01); display: flex; flex-direction: column;">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 8px; cursor: pointer; user-select: none;" onclick="toggleRtnAccordion('claim3pl')">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #d97706; display: inline-block;"></span>
-                  <h4 style="font-size: 12px; font-weight: 700; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">CLAIM 3PL</h4>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="font-size: 10px; font-weight: 700; background: rgba(217, 119, 6, 0.08); color: #d97706; padding: 1px 6px; border-radius: 10px;" id="rtn-header-badge-claim3pl">0 Inv</span>
-                  <i class="fa-solid fa-chevron-down" id="rtn-arrow-claim3pl" style="font-size: 14px; color: #64748b; transition: transform 0.2s;"></i>
-                </div>
-              </div>
-
-              <!-- Collapsible Wrapper -->
-              <div id="rtn-collapse-claim3pl" style="display: block; width: 100%;">
-                
-                <!-- Interactive Aging Scopes Grid -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; margin-bottom: 12px;" class="no-print">
-                  <!-- Scope 1-3 Bulan -->
-                  <div id="rtn-scope-card-claim3pl-1-3" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('1-3 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">1-3 Bln</span>
-                      <i class="fa-solid fa-clock-rotate-left" style="font-size: 10px; color: #d97706;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-claim3pl-1-3-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-claim3pl-1-3-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-
-                  <!-- Scope 3-6 Bulan -->
-                  <div id="rtn-scope-card-claim3pl-3-6" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('3-6 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">3-6 Bln</span>
-                      <i class="fa-solid fa-hourglass-half" style="font-size: 10px; color: #d97706;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-claim3pl-3-6-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-claim3pl-3-6-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-
-                  <!-- Scope 7-9 Bulan -->
-                  <div id="rtn-scope-card-claim3pl-7-9" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('7-9 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">7-9 Bln</span>
-                      <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #d97706;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-claim3pl-7-9-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-claim3pl-7-9-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-
-                  <!-- Scope 9-12 Bulan -->
-                  <div id="rtn-scope-card-claim3pl-9-12" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('9-12 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">9-12 Bln</span>
-                      <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #d97706;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-claim3pl-9-12-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-claim3pl-9-12-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-
-                  <!-- Scope >16 Bulan -->
-                  <div id="rtn-scope-card-claim3pl-gt16" class="rtn-scope-card" onclick="toggleClaim3PLAgingFilter('>16 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">>16 Bln</span>
-                      <i class="fa-solid fa-fire" style="font-size: 10px; color: #d97706;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-claim3pl-gt16-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-claim3pl-gt16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Collapsible Detail Container -->
-                <div id="rtn-detail-container-claim3pl" style="display: none; margin-top: 8px;">
-                  <!-- Detail Table Header with Close Button -->
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #fffbeb; padding: 6px 12px; border-radius: 6px; border: 1px solid #fef3c7;" class="no-print">
-                    <span style="font-size: 10px; font-weight: 700; color: #b45309; display: flex; align-items: center; gap: 6px;">
-                      <i class="fa-solid fa-list-check" style="color: #d97706;"></i> 
-                      Detail: CLAIM 3PL (<span id="rtn-detail-title-claim3pl" style="color: #d97706;">-</span>)
-                    </span>
-                    <button onclick="toggleClaim3PLAgingFilter(activeClaim3PLAgingFilter)" style="background: none; border: none; font-size: 13px; font-weight: 700; color: #b45309; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; transition: all 0.2s;" onmouseover="this.style.background='#fef3c7'; this.style.color='#ef4444';" onmouseout="this.style.background='none'; this.style.color='#b45309;'" title="Tutup Tabel Detail">
-                      <i class="fa-solid fa-xmark"></i>
-                    </button>
-                  </div>
-                  <!-- Sorting Dropdown -->
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
-                    <span style="font-size: 13px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
-                      <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
-                    </span>
-                    <select id="rtn-sort-select-claim3pl" onchange="changeRtnSort('claim3pl', this.value)" style="font-size: 13px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
-                      <option value="aging_desc">Aging Terlama</option>
-                      <option value="aging_asc">Aging Tercepat</option>
-                      <option value="qty_desc">Qty Terbanyak</option>
-                      <option value="qty_asc">Qty Tersedikit</option>
-                      <option value="invoice_asc">No. Invoice</option>
-                    </select>
-                  </div>
-
-                  <div class="table-container" style="overflow-x: auto; flex-grow: 1;">
-                    <table class="data-table" style="width: 100%; border-collapse: collapse;">
-                      <thead>
-                        <tr style="background: #f8fafc;">
-                          <th style="padding: 8px 6px; font-size: 13px; width: 40px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
-                          <th style="padding: 8px 6px; font-size: 13px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice</th>
-                          <th style="padding: 8px 6px; font-size: 13px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
-                          <th style="padding: 8px 6px; font-size: 13px; width: 65px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Aging (H)</th>
-                          <th style="padding: 8px 6px; font-size: 13px; width: 60px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
-                        </tr>
-                      </thead>
-                      <tbody id="rtn-table-claim3pl-body">
-                        <tr>
-                          <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 14px;">Memuat data...</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- SO RETURN TABLE CARD -->
-            <div id="rtn-section-soreturn" style="border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.01); display: flex; flex-direction: column;">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 8px; cursor: pointer; user-select: none;" onclick="toggleRtnAccordion('soreturn')">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #0d9488; display: inline-block;"></span>
-                  <h4 style="font-size: 12px; font-weight: 700; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">SO RETURN</h4>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="font-size: 10px; font-weight: 700; background: rgba(13, 148, 136, 0.08); color: #0d9488; padding: 1px 6px; border-radius: 10px;" id="rtn-header-badge-soreturn">0 Inv</span>
-                  <i class="fa-solid fa-chevron-down" id="rtn-arrow-soreturn" style="font-size: 14px; color: #64748b; transition: transform 0.2s;"></i>
-                </div>
-              </div>
-
-              <!-- Collapsible Wrapper -->
-              <div id="rtn-collapse-soreturn" style="display: block; width: 100%;">
-                
-                <!-- Interactive Aging Scopes Grid -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; margin-bottom: 12px;" class="no-print">
-                  <!-- Scope 1-3 Bulan -->
-                  <div id="rtn-scope-card-soreturn-1-3" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('1-3 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">1-3 Bln</span>
-                      <i class="fa-solid fa-clock-rotate-left" style="font-size: 10px; color: #0d9488;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-soreturn-1-3-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-soreturn-1-3-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-
-                  <!-- Scope 3-6 Bulan -->
-                  <div id="rtn-scope-card-soreturn-3-6" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('3-6 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">3-6 Bln</span>
-                      <i class="fa-solid fa-hourglass-half" style="font-size: 10px; color: #0d9488;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-soreturn-3-6-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-soreturn-3-6-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-
-                  <!-- Scope 7-9 Bulan -->
-                  <div id="rtn-scope-card-soreturn-7-9" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('7-9 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">7-9 Bln</span>
-                      <i class="fa-solid fa-calendar-day" style="font-size: 10px; color: #0d9488;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-soreturn-7-9-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-soreturn-7-9-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-
-                  <!-- Scope 9-12 Bulan -->
-                  <div id="rtn-scope-card-soreturn-9-12" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('9-12 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">9-12 Bln</span>
-                      <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; color: #0d9488;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-soreturn-9-12-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-soreturn-9-12-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-
-                  <!-- Scope >16 Bulan -->
-                  <div id="rtn-scope-card-soreturn-gt16" class="rtn-scope-card" onclick="toggleSoReturnAgingFilter('>16 Bulan')" title="Klik untuk menyaring data">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                      <span style="font-size: 10px; font-weight: 700; color: #475569;">>16 Bln</span>
-                      <i class="fa-solid fa-fire" style="font-size: 10px; color: #0d9488;"></i>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                      <span id="rtn-scope-soreturn-gt16-inv" style="font-size: 14px; font-weight: 800; color: #1e293b;">0 Inv</span>
-                      <span id="rtn-scope-soreturn-gt16-qty" style="font-size: 9px; font-weight: 600; color: #64748b;">0 Pcs</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Collapsible Detail Container -->
-                <div id="rtn-detail-container-soreturn" style="display: none; margin-top: 8px;">
-                  <!-- Detail Table Header with Close Button -->
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f0fdfa; padding: 6px 12px; border-radius: 6px; border: 1px solid #ccfbf1;" class="no-print">
-                    <span style="font-size: 10px; font-weight: 700; color: #0f766e; display: flex; align-items: center; gap: 6px;">
-                      <i class="fa-solid fa-list-check" style="color: #0d9488;"></i> 
-                      Detail: SO RETURN (<span id="rtn-detail-title-soreturn" style="color: #0d9488;">-</span>)
-                    </span>
-                    <button onclick="toggleSoReturnAgingFilter(activeSoReturnAgingFilter)" style="background: none; border: none; font-size: 13px; font-weight: 700; color: #0f766e; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; transition: all 0.2s;" onmouseover="this.style.background='#ccfbf1'; this.style.color='#ef4444';" onmouseout="this.style.background='none'; this.style.color='#0f766e;'" title="Tutup Tabel Detail">
-                      <i class="fa-solid fa-xmark"></i>
-                    </button>
-                  </div>
-                  <!-- Sorting Dropdown -->
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0;" class="no-print">
-                    <span style="font-size: 13px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 4px;">
-                      <i class="fa-solid fa-sort" style="color: #64748b;"></i> Urutkan:
-                    </span>
-                    <select id="rtn-sort-select-soreturn" onchange="changeRtnSort('soreturn', this.value)" style="font-size: 13px; font-weight: 600; color: #475569; background: transparent; border: none; outline: none; cursor: pointer; padding: 2px 4px;">
-                      <option value="aging_desc">Aging Terlama</option>
-                      <option value="aging_asc">Aging Tercepat</option>
-                      <option value="qty_desc">Qty Terbanyak</option>
-                      <option value="qty_asc">Qty Tersedikit</option>
-                      <option value="invoice_asc">No. Invoice</option>
-                    </select>
-                  </div>
-
-                  <div class="table-container" style="overflow-x: auto; flex-grow: 1;">
-                    <table class="data-table" style="width: 100%; border-collapse: collapse;">
-                      <thead>
-                        <tr style="background: #f8fafc;">
-                          <th style="padding: 8px 6px; font-size: 13px; width: 40px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">No</th>
-                          <th style="padding: 8px 6px; font-size: 13px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">Invoice</th>
-                          <th style="padding: 8px 6px; font-size: 13px; border-bottom: 1px solid #cbd5e1; text-align: left; color: #475569;">SKU & Deskripsi</th>
-                          <th style="padding: 8px 6px; font-size: 13px; width: 65px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Aging (H)</th>
-                          <th style="padding: 8px 6px; font-size: 13px; width: 60px; text-align: center; border-bottom: 1px solid #cbd5e1; color: #475569;">Qty</th>
-                        </tr>
-                      </thead>
-                      <tbody id="rtn-table-soreturn-body">
-                        <tr>
-                          <td colspan="4" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 14px;">Memuat data...</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
         </section>
+
+        <!-- UNIFIED DASHBOARD TABLE LAYER -->
+        <section class="dashboard-card" style="margin-top: 20px; border: 2px solid #e2e8f0; padding: 20px; border-radius: 16px; background: #ffffff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);" id="rtn-unified-dashboard-card">
+          <!-- CARD HEADER -->
+          <div style="display: flex; flex-direction: column; gap: 16px; border-bottom: 2px solid #f1f5f9; padding-bottom: 16px; margin-bottom: 16px;">
+            
+            <!-- Row 1: Left Section Title & Right Search/Print -->
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; width: 100%;">
+              <!-- Section Title -->
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <h3 style="font-size: 15px; font-weight: 800; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">
+                  <i class="fa-solid fa-list-check" style="color: #4f46e5;"></i>
+                  DETAIL TRANSAKSI RETURN
+                </h3>
+              </div>
+              
+              <!-- Right Action Controls: PDF Print only -->
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <button onclick="window.print()" class="btn-primary" style="display: inline-flex; align-items: center; gap: 6px; background: #4f46e5; border-radius: 8px; padding: 6px 12px; color: white; border: none; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#3730a3'" onmouseout="this.style.background='#4f46e5'" id="btn-print-report-unified">
+                  <i class="fa-solid fa-print"></i> PDF
+                </button>
+              </div>
+            </div>
+
+            <!-- Row 2: Left Scopes (Tabs) & Right Sorting/Close -->
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; width: 100%;">
+              
+              <!-- Left Side: Scopes (Tabs) -->
+              <div id="rtn-tab-selector-container" style="display: flex; gap: 8px; flex-wrap: wrap;" class="no-print">
+                <button id="rtn-tab-all" onclick="setRtnCategory('ALL')" class="rtn-tab-btn" style="border: 1px solid #cbd5e1; background: #f1f5f9; color: #1e293b; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s;">
+                  All <span id="rtn-badge-all" style="background: rgba(100,116,139,0.1); color: #475569; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 8px;">0</span>
+                </button>
+                <button id="rtn-tab-onprogress" onclick="setRtnCategory('ON PROGRESS')" class="rtn-tab-btn" style="border: 1px solid #e2e8f0; background: #ffffff; color: #64748b; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s;">
+                  On Progress <span id="rtn-badge-onprogress" style="background: rgba(79,70,229,0.1); color: #4f46e5; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 8px;">0</span>
+                </button>
+                <button id="rtn-tab-claim3pl" onclick="setRtnCategory('CLAIM 3PL')" class="rtn-tab-btn" style="border: 1px solid #e2e8f0; background: #ffffff; color: #64748b; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s;">
+                  Claim <span id="rtn-badge-claim3pl" style="background: rgba(217,119,6,0.1); color: #d97706; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 8px;">0</span>
+                </button>
+                <button id="rtn-tab-soreturn" onclick="setRtnCategory('SO RETURN')" class="rtn-tab-btn" style="border: 1px solid #e2e8f0; background: #ffffff; color: #64748b; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s;">
+                  SO Return <span id="rtn-badge-soreturn" style="background: rgba(13,148,136,0.1); color: #0d9488; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 8px;">0</span>
+                </button>
+              </div>
+
+              <!-- Right Side: Sorting & Close Button -->
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <!-- Sort Dropdown -->
+                <div style="display: flex; align-items: center; background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 8px;" class="no-print">
+                  <span style="font-size: 12px; font-weight: 700; color: #64748b; margin-right: 6px;"><i class="fa-solid fa-sort"></i> URUTKAN:</span>
+                  <select id="rtn-unified-sort" onchange="changeRtnUnifiedSort(this.value)" style="border: none; background: transparent; font-size: 12px; font-weight: 700; color: #1e293b; outline: none; cursor: pointer;">
+                    <option value="aging_desc">Aging Terlama</option>
+                    <option value="aging_asc">Aging Tercepat</option>
+                    <option value="qty_desc">Qty Terbanyak</option>
+                    <option value="qty_asc">Qty Tersedikit</option>
+                    <option value="invoice_asc">No. Invoice</option>
+                  </select>
+                </div>
+                
+                <!-- Close Table Button (X) -->
+                <button onclick="toggleUnifiedTableVisibility()" style="background: #f1f5f9; border: none; font-size: 14px; font-weight: 800; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; transition: all 0.2s;" onmouseover="this.style.background='#fee2e2'; this.style.color='#ef4444';" onmouseout="this.style.background='#f1f5f9'; this.style.color='#64748b';" title="Tutup / Buka Tabel Detail" class="no-print">
+                  <i class="fa-solid fa-xmark" id="rtn-close-icon"></i>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- TABLE CONTAINER (With display: block/none to handle toggle) -->
+          <div id="rtn-unified-table-container" style="display: block; transition: all 0.3s ease;">
+            <!-- Active Filter Summary Breadcrumbs -->
+            <div style="background: #f8fafc; padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <span style="font-size: 12px; font-weight: 700; color: #475569; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-filter" style="color: #4f46e5;"></i>
+                Kategori: <span id="breadcrumb-category" style="color: #4f46e5; font-weight: 800;">SEMUA</span> 
+              </span>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span id="rtn-unified-badge-count" style="font-size: 12px; font-weight: 800; background: #eef2ff; color: #4f46e5; padding: 3px 10px; border-radius: 12px;">0 Items</span>
+                <button id="btn-toggle-rtn-unified" onclick="toggleTableHeight('rtn-unified-table-scroll-container', 'btn-toggle-rtn-unified', 450)" class="no-print" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" onmouseover="this.style.background='#e2e8f0'; this.style.borderColor='#94a3b8';" onmouseout="this.style.background='#f1f5f9'; this.style.borderColor='#cbd5e1';" title="Expand / Slide Down Table">
+                  <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i> Drop Down
+                </button>
+              </div>
+            </div>
+
+            <div class="table-container" id="rtn-unified-table-scroll-container" style="overflow-x: auto; overflow-y: auto; max-height: 450px; width: 100%; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; transition: all 0.4s ease;">
+              <table class="data-table" style="width: 100%; border-collapse: collapse; min-width: 1000px; table-layout: fixed;">
+                <thead>
+                  <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0;">
+                    <th style="padding: 10px 8px; font-size: 11px; width: 50px; text-align: center; font-weight: 800; color: #475569;">NO</th>
+                    <th style="padding: 10px 8px; font-size: 11px; width: 130px; text-align: center; font-weight: 800; color: #475569;">TANGGAL TERIMA</th>
+                    <th style="padding: 10px 8px; font-size: 11px; width: 180px; text-align: left; font-weight: 800; color: #475569;">INVOICE</th>
+                    <th style="padding: 10px 8px; font-size: 11px; width: 120px; text-align: left; font-weight: 800; color: #475569;">ARTIKEL</th>
+                    <th style="padding: 10px 8px; font-size: 11px; width: 250px; text-align: left; font-weight: 800; color: #475569;">DESKRIPSI</th>
+                    <th style="padding: 10px 8px; font-size: 11px; width: 80px; text-align: center; font-weight: 800; color: #475569;">QTY</th>
+                    <th style="padding: 10px 8px; font-size: 11px; width: 100px; text-align: center; font-weight: 800; color: #475569;">AGING</th>
+                    <th style="padding: 10px 8px; font-size: 11px; width: 220px; text-align: left; font-weight: 800; color: #475569;">REASON CANCEL</th>
+                  </tr>
+                </thead>
+                <tbody id="rtn-unified-table-body">
+                  <tr>
+                    <td colspan="8" style="text-align: center; padding: 100px 20px; color: #94a3b8; font-size: 14px;">
+                      <i class="fa-solid fa-folder-open" style="font-size: 24px; display: block; margin-bottom: 8px; color: #cbd5e1;"></i>
+                      Memuat data Return...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table footer stats / pagination simulation row -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; flex-wrap: wrap; gap: 8px;">
+              <span id="rtn-pagination-text" style="font-size: 12px; font-weight: 600; color: #64748b;">Menampilkan 0 dari 0 data</span>
+              <div style="display: flex; gap: 4px;" class="no-print" id="rtn-pagination-buttons">
+                <!-- Simple mock pagination triggers -->
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
       </div>
 
     </main>
@@ -2115,6 +2062,36 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
+    // Smooth Table Expand & Collapse (Drop Down / Drop Up) Function
+    function toggleTableHeight(containerId, buttonId, defaultHeight) {
+      const container = document.getElementById(containerId);
+      const button = document.getElementById(buttonId);
+      if (!container || !button) return;
+      
+      const isExpanded = container.classList.contains('table-expanded');
+      if (isExpanded) {
+        // Collapse (Slide Up / Drop Up)
+        container.style.maxHeight = defaultHeight + 'px';
+        if (containerId === 'sku-table-container') {
+          container.style.height = defaultHeight + 'px';
+        } else {
+          container.style.height = 'auto';
+        }
+        container.classList.remove('table-expanded');
+        button.innerHTML = '<i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i> Drop Down';
+        button.title = "Expand / Slide Down Table";
+      } else {
+        // Expand (Slide Down / Drop Down)
+        container.style.maxHeight = '2000px'; // sufficiently large
+        if (containerId === 'sku-table-container') {
+          container.style.height = 'auto';
+        }
+        container.classList.add('table-expanded');
+        button.innerHTML = '<i class="fa-solid fa-chevron-up" style="font-size: 10px;"></i> Drop Up';
+        button.title = "Collapse / Slide Up Table";
+      }
+    }
+
     // System Config & Global States
     const baselineKPIs = {
       orders: 1284,
@@ -2143,6 +2120,12 @@
     
     function switchView(view) {
       currentView = view;
+      
+      // Dynamic header title update based on current active view
+      const titleElem = document.getElementById('header-title-text');
+      if (titleElem) {
+        titleElem.textContent = view === 'dashboard' ? 'Monitoring Dashboard Rupa-Rupa' : 'Monitoring Return Rupa-Rupa';
+      }
       
       // Reset month filter and status filter
       document.getElementById('filter-month').value = "";
@@ -2428,7 +2411,9 @@
     let chartOrderBulan = null;
     let chartSkuGroup = null;
     let chartEcommerce = null;
+    let chartRtnDeptQty = null;
     let chartRtnTrend = null;
+    let chartRtnSkuQty = null;
     let activeRtnStatusFilter = 'ALL'; // Can be 'ALL', 'ON PROGRESS', 'CLAIM 3PL', or 'SO RETURN'
     let activeOnProgressAgingFilter = 'ALL'; // Can be 'ALL', '1-3 Bulan', '3-6 Bulan', '7-9 Bulan', '9-12 Bulan', or '>16 Bulan'
     let activeClaim3PLAgingFilter = 'ALL'; // Can be 'ALL', '1-3 Bulan', '3-6 Bulan', '7-9 Bulan', '9-12 Bulan', or '>16 Bulan'
@@ -2436,6 +2421,17 @@
     let sortOnProgress = 'aging_desc';
     let sortClaim3PL = 'aging_desc';
     let sortSoReturn = 'aging_desc';
+
+    // Unified Return Dashboard States
+    let rtnCategory = 'ALL';
+    let rtnAgingFilter = 'ALL';
+    let rtnAreaFilter = 'ALL';
+    let rtnSearchQuery = '';
+    let rtnSortOrder = 'aging_desc';
+    let rtnCurrentPage = 1;
+    const rtnPageSize = 25;
+    let rtnTableVisible = true;
+    let rtnAllItems = [];
 
     // Helper functions for localized date & time
     function getIndonesianDayName(dayIndex) {
@@ -3611,13 +3607,33 @@
       // Find min and max date in return sheet to serve as fallback
       let sheetMinDate = null;
       let sheetMaxDate = null;
-      const COL_DATE = 2;
-      const COL_INVOICE = 3;
-      const COL_QTY = 8;
-      const COL_STATUS = 9;
-      const COL_SKU = 4;
-      const COL_DESCRIPTION = 5;
-      const COL_AGING_CAT = 1;
+
+      // Find column headers and map indices dynamically
+      const headers = parsedSheetReturn[0] ? parsedSheetReturn[0].map(h => (h || '').toString().trim().toUpperCase()) : [];
+      
+      const findColIndex = (possibleNames, defaultIdx) => {
+        for (let name of possibleNames) {
+          const idx = headers.indexOf(name.toUpperCase());
+          if (idx !== -1) return idx;
+        }
+        return defaultIdx;
+      };
+
+      const COL_AREA = findColIndex(['Area', 'Wilayah', 'Cabang', 'Lokasi'], 0);
+      const COL_AGING_CAT = findColIndex(['Aging', 'Aging Cat', 'Kategori Aging', 'Aging Category'], 1);
+      const COL_DATE = findColIndex(['Tanggal', 'Date', 'Tgl', 'Tanggal Masuk'], 2);
+      const COL_INVOICE = findColIndex(['Case ID', 'Invoice', 'No Invoice', 'No. Invoice', 'Case ID / Invoice'], 3);
+      const COL_SKU = findColIndex(['SKU', 'Artikel', 'Kode SKU', 'Sku / Artikel'], 4);
+      const COL_DESCRIPTION = findColIndex(['Nama Barang', 'Description', 'Desc', 'Nama Produk', 'Nama'], 5);
+      const COL_USER = findColIndex(['User', 'Admin', 'Operator', 'Checker', 'Petugas'], 6);
+      const COL_NAMA = findColIndex(['Nama Customer', 'Customer', 'Nama', 'Penerima', 'Nama Pembeli'], 7);
+      const COL_QTY = findColIndex(['Qty', 'Quantity', 'Jumlah', 'Pcs'], 8);
+      const COL_STATUS = findColIndex(['Status', 'Kategori', 'Status Return'], 9);
+      const COL_CHECK = findColIndex(['Check', 'QC Check', 'Keterangan Check', 'Qc'], 10);
+      const COL_REASON = findColIndex(['Reason', 'Alasan', 'Keterangan', 'Alasan Return'], 11);
+      const COL_ACTION = findColIndex(['Action', 'Tindakan', 'Solusi', 'Follow Up'], 12);
+      const COL_DISC = findColIndex(['Disc', 'Discount', 'Selisih', 'Potongan'], 13);
+      const COL_DEPART = findColIndex(['Nama Depart', 'Depart', 'Department', 'Nama Departemen', 'Departemen'], 7);
 
       for (let i = 1; i < parsedSheetReturn.length; i++) {
         const row = parsedSheetReturn[i];
@@ -3641,7 +3657,7 @@
       let currentEnd = dateEnd ? new Date(dateEnd) : (sheetMaxDate ? new Date(sheetMaxDate) : new Date("2025-12-31"));
       currentEnd.setHours(23,59,59,999);
 
-      // Overwrite if filterMonth is specified (though date inputs are now synchronized, we keep this as a robust fallback)
+      // Overwrite if filterMonth is specified
       if (filterMonth !== "") {
         const activeYear = sheetMaxDate ? sheetMaxDate.getFullYear() : 2026;
         const mIdx = parseInt(filterMonth, 10);
@@ -3656,7 +3672,7 @@
       let prevEnd = new Date(currentStart.getTime() - 1000);
       prevEnd.setHours(23,59,59,999);
 
-      // Initialize trendMap with 0 for every single day in the current period to ensure a continuous daily line trend
+      // Initialize trendMap with 0 for every single day
       let trendMap = {};
       let iterDate = new Date(currentStart);
       let safetyCounter = 0;
@@ -3667,43 +3683,32 @@
         safetyCounter++;
       }
 
-      let totalInvoice = 0;
-      let totalQty = 0;
-      let statusMap = {};
-      let summaryMap = {};
-      
-      const invoicesSet = new Set();
       const today = new Date();
+      rtnAllItems = [];
 
-      const onProgressItems = [];
-      const claim3PLItems = [];
-      const soReturnItems = [];
-
-      // New status-specific sets, row counts and qty accumulators for CURRENT period
-      const onProgressInvoicesCur = new Set();
+      // Accumulators for top KPIs (CURRENT and PREVIOUS periods)
       let onProgressInvoiceCountCur = 0;
       let onProgressQtyCur = 0;
-
-      const claim3PLInvoicesCur = new Set();
       let claim3PLInvoiceCountCur = 0;
       let claim3PLQtyCur = 0;
-
-      const soReturnInvoicesCur = new Set();
       let soReturnInvoiceCountCur = 0;
       let soReturnQtyCur = 0;
 
-      // Status-specific sets, row counts and qty accumulators for PREVIOUS period (to calculate trends)
-      const onProgressInvoicesPrev = new Set();
       let onProgressInvoiceCountPrev = 0;
       let onProgressQtyPrev = 0;
-
-      const claim3PLInvoicesPrev = new Set();
       let claim3PLInvoiceCountPrev = 0;
       let claim3PLQtyPrev = 0;
-
-      const soReturnInvoicesPrev = new Set();
       let soReturnInvoiceCountPrev = 0;
       let soReturnQtyPrev = 0;
+
+      // Sets to track unique invoice numbers
+      const onProgressInvoicesCur = new Set();
+      const claim3PLInvoicesCur = new Set();
+      const soReturnInvoicesCur = new Set();
+
+      const onProgressInvoicesPrev = new Set();
+      const claim3PLInvoicesPrev = new Set();
+      const soReturnInvoicesPrev = new Set();
 
       for (let i = 1; i < parsedSheetReturn.length; i++) {
         const row = parsedSheetReturn[i];
@@ -3733,6 +3738,16 @@
           const agingCat = (row[COL_AGING_CAT] || "").toString().trim();
           const agingDays = Math.max(0, Math.floor((today - rowDate) / (1000 * 60 * 60 * 24)));
 
+          const area = (row[COL_AREA] || "").toString().trim();
+          const user = (row[COL_USER] || "").toString().trim();
+          const nama = (row[COL_NAMA] || "").toString().trim();
+          const department = (row[COL_DEPART] || "").toString().trim();
+          const check = (row[COL_CHECK] || "").toString().trim();
+          const reason = (row[COL_REASON] || "").toString().trim();
+          const reasonCancel = (row[10] || "").toString().trim();
+          const action = (row[COL_ACTION] || "").toString().trim();
+          const disc = (row[COL_DISC] || "").toString().trim();
+
           const itemObj = {
             date: rowDate,
             agingDays: agingDays,
@@ -3740,56 +3755,43 @@
             invoice: invoice,
             sku: sku,
             description: description,
-            qty: qty
+            qty: qty,
+            area: area,
+            user: user,
+            nama: nama,
+            department: department,
+            check: check,
+            reason: reason,
+            reasonCancel: reasonCancel,
+            action: action,
+            disc: disc,
+            status: status,
+            statusUpper: statusUpper
           };
+
+          rtnAllItems.push(itemObj);
 
           if (statusUpper === 'ON PROGRESS') {
             if (invoice) {
               onProgressInvoicesCur.add(invoice);
-              onProgressInvoiceCountCur++;
             }
             onProgressQtyCur += qty;
-            onProgressItems.push(itemObj);
           } else if (statusUpper === 'CLAIM 3PL') {
             if (invoice) {
               claim3PLInvoicesCur.add(invoice);
-              claim3PLInvoiceCountCur++;
             }
             claim3PLQtyCur += qty;
-            claim3PLItems.push(itemObj);
           } else if (statusUpper === 'SO RETURN') {
             if (invoice) {
               soReturnInvoicesCur.add(invoice);
-              soReturnInvoiceCountCur++;
             }
             soReturnQtyCur += qty;
-            soReturnItems.push(itemObj);
           }
 
-          // Apply status-specific filtering to trend and summary representations
+          // Apply status-specific filtering to trend map
           if (activeRtnStatusFilter === 'ALL' || statusUpper === activeRtnStatusFilter) {
-            if (invoice) {
-              invoicesSet.add(invoice);
-            }
-            totalQty += qty;
-
-            // Status Map (using raw status)
-            statusMap[status] = (statusMap[status] || 0) + qty;
-
-            // Trend Map
             const dateKey = `${rowDate.getFullYear()}-${rowDate.getMonth()+1}-${rowDate.getDate()}`;
             trendMap[dateKey] = (trendMap[dateKey] || 0) + qty;
-
-            // Summary Map
-            if (!summaryMap[status]) {
-              summaryMap[status] = { invoices: new Set(), rowCount: 0, qty: 0, minDate: new Date(rowDate) };
-            }
-            summaryMap[status].invoices.add(invoice);
-            summaryMap[status].rowCount++;
-            summaryMap[status].qty += qty;
-            if (rowDate < summaryMap[status].minDate) {
-              summaryMap[status].minDate = new Date(rowDate);
-            }
           }
         }
         // Check if row falls in PREVIOUS period for percentage trends
@@ -3797,28 +3799,31 @@
           if (statusUpper === 'ON PROGRESS') {
             if (invoice) {
               onProgressInvoicesPrev.add(invoice);
-              onProgressInvoiceCountPrev++;
             }
             onProgressQtyPrev += qty;
           } else if (statusUpper === 'CLAIM 3PL') {
             if (invoice) {
               claim3PLInvoicesPrev.add(invoice);
-              claim3PLInvoiceCountPrev++;
             }
             claim3PLQtyPrev += qty;
           } else if (statusUpper === 'SO RETURN') {
             if (invoice) {
               soReturnInvoicesPrev.add(invoice);
-              soReturnInvoiceCountPrev++;
             }
             soReturnQtyPrev += qty;
           }
         }
       }
 
-      totalInvoice = invoicesSet.size;
-      
-      // Update our redesigned KPI cards (using invoiceCount to match the exact Excel row frequencies)
+      onProgressInvoiceCountCur = onProgressInvoicesCur.size;
+      claim3PLInvoiceCountCur = claim3PLInvoicesCur.size;
+      soReturnInvoiceCountCur = soReturnInvoicesCur.size;
+
+      onProgressInvoiceCountPrev = onProgressInvoicesPrev.size;
+      claim3PLInvoiceCountPrev = claim3PLInvoicesPrev.size;
+      soReturnInvoiceCountPrev = soReturnInvoicesPrev.size;
+
+      // Update redesigned KPI cards (animated counters)
       animateValue('rtn-kpi-onprogress-invoice', 0, onProgressInvoiceCountCur, 1000);
       animateValue('rtn-kpi-onprogress-qty', 0, onProgressQtyCur, 1000);
 
@@ -3867,448 +3872,491 @@
       updateTrendBadge('rtn-trend-claim3pl-badge', claim3PLInvoiceCountCur, claim3PLInvoiceCountPrev);
       updateTrendBadge('rtn-trend-soreturn-badge', soReturnInvoiceCountCur, soReturnInvoiceCountPrev);
 
-      // Update Trend Chart
-      updateReturnTrendChart(trendMap);
+      // Update Trend Chart (disabled as requested by user)
+      // updateReturnTrendChart(trendMap);
 
-      // Apply KPI card borders, shadows and dimming effects depending on selection state
+      // Synchronize category variable with activeRtnStatusFilter if triggered via top KPI card clicks
+      rtnCategory = activeRtnStatusFilter;
+
+      // Update KPI Selection Styles
       updateRtnKpiCardSelectionStyles();
 
-      // Sort items dynamically based on dropdown values
-      const sortItems = (items, sortOpt) => {
-        if (sortOpt === 'aging_desc') {
-          items.sort((a, b) => b.agingDays - a.agingDays);
-        } else if (sortOpt === 'aging_asc') {
-          items.sort((a, b) => a.agingDays - b.agingDays);
-        } else if (sortOpt === 'qty_desc') {
-          items.sort((a, b) => b.qty - a.qty);
-        } else if (sortOpt === 'qty_asc') {
-          items.sort((a, b) => a.qty - b.qty);
-        } else if (sortOpt === 'invoice_asc') {
-          items.sort((a, b) => (a.invoice || '').localeCompare(b.invoice || ''));
-        }
-      };
-
-      sortItems(onProgressItems, sortOnProgress);
-      sortItems(claim3PLItems, sortClaim3PL);
-      sortItems(soReturnItems, sortSoReturn);
-
-      // Keep dropdown selections visually in sync with the state variables
-      const syncDropdownValue = (id, val) => {
-        const elem = document.getElementById(id);
-        if (elem) elem.value = val;
-      };
-      syncDropdownValue('rtn-sort-select-onprogress', sortOnProgress);
-      syncDropdownValue('rtn-sort-select-claim3pl', sortClaim3PL);
-      syncDropdownValue('rtn-sort-select-soreturn', sortSoReturn);
-
-      // Helper function to match aging categories with Gsheet values or fallback to days
-      function getAgingGroup(item) {
-        const cat = (item.agingCat || "").toString().trim().toUpperCase();
-        if (cat.includes('1-3') || cat.includes('1 - 3')) return '1-3 Bulan';
-        if (cat.includes('3-6') || cat.includes('3 - 6')) return '3-6 Bulan';
-        if (cat.includes('7-9') || cat.includes('7 - 9')) return '7-9 Bulan';
-        if (cat.includes('9-12') || cat.includes('9 - 12')) return '9-12 Bulan';
-        if (cat.includes('>16') || cat.includes('16+')) return '>16 Bulan';
-
-        // Fallback to agingDays if Gsheet's AGING column is blank or different
-        const days = item.agingDays;
-        if (days <= 90) return '1-3 Bulan';
-        if (days > 90 && days <= 180) return '3-6 Bulan';
-        if (days > 180 && days <= 270) return '7-9 Bulan';
-        if (days > 270 && days <= 480) return '9-12 Bulan';
-        return '>16 Bulan';
-      }
-
-      // Compute aging scopes for ON PROGRESS items (always use grand total list for scopes counts)
-      const scope1_3 = { invoices: new Set(), qty: 0 };
-      const scope3_6 = { invoices: new Set(), qty: 0 };
-      const scope7_9 = { invoices: new Set(), qty: 0 };
-      const scope9_12 = { invoices: new Set(), qty: 0 };
-      const scopeGt16 = { invoices: new Set(), qty: 0 };
-
-      onProgressItems.forEach(item => {
-        const group = getAgingGroup(item);
-        if (group === '1-3 Bulan') {
-          if (item.invoice) scope1_3.invoices.add(item.invoice);
-          scope1_3.qty += item.qty;
-        } else if (group === '3-6 Bulan') {
-          if (item.invoice) scope3_6.invoices.add(item.invoice);
-          scope3_6.qty += item.qty;
-        } else if (group === '7-9 Bulan') {
-          if (item.invoice) scope7_9.invoices.add(item.invoice);
-          scope7_9.qty += item.qty;
-        } else if (group === '9-12 Bulan') {
-          if (item.invoice) scope9_12.invoices.add(item.invoice);
-          scope9_12.qty += item.qty;
-        } else if (group === '>16 Bulan') {
-          if (item.invoice) scopeGt16.invoices.add(item.invoice);
-          scopeGt16.qty += item.qty;
-        }
-      });
-
-      // Compute aging scopes for CLAIM 3PL items
-      const claim3PLScope1_3 = { invoices: new Set(), qty: 0 };
-      const claim3PLScope3_6 = { invoices: new Set(), qty: 0 };
-      const claim3PLScope7_9 = { invoices: new Set(), qty: 0 };
-      const claim3PLScope9_12 = { invoices: new Set(), qty: 0 };
-      const claim3PLScopeGt16 = { invoices: new Set(), qty: 0 };
-
-      claim3PLItems.forEach(item => {
-        const group = getAgingGroup(item);
-        if (group === '1-3 Bulan') {
-          if (item.invoice) claim3PLScope1_3.invoices.add(item.invoice);
-          claim3PLScope1_3.qty += item.qty;
-        } else if (group === '3-6 Bulan') {
-          if (item.invoice) claim3PLScope3_6.invoices.add(item.invoice);
-          claim3PLScope3_6.qty += item.qty;
-        } else if (group === '7-9 Bulan') {
-          if (item.invoice) claim3PLScope7_9.invoices.add(item.invoice);
-          claim3PLScope7_9.qty += item.qty;
-        } else if (group === '9-12 Bulan') {
-          if (item.invoice) claim3PLScope9_12.invoices.add(item.invoice);
-          claim3PLScope9_12.qty += item.qty;
-        } else if (group === '>16 Bulan') {
-          if (item.invoice) claim3PLScopeGt16.invoices.add(item.invoice);
-          claim3PLScopeGt16.qty += item.qty;
-        }
-      });
-
-      // Compute aging scopes for SO RETURN items
-      const soReturnScope1_3 = { invoices: new Set(), qty: 0 };
-      const soReturnScope3_6 = { invoices: new Set(), qty: 0 };
-      const soReturnScope7_9 = { invoices: new Set(), qty: 0 };
-      const soReturnScope9_12 = { invoices: new Set(), qty: 0 };
-      const soReturnScopeGt16 = { invoices: new Set(), qty: 0 };
-
-      soReturnItems.forEach(item => {
-        const group = getAgingGroup(item);
-        if (group === '1-3 Bulan') {
-          if (item.invoice) soReturnScope1_3.invoices.add(item.invoice);
-          soReturnScope1_3.qty += item.qty;
-        } else if (group === '3-6 Bulan') {
-          if (item.invoice) soReturnScope3_6.invoices.add(item.invoice);
-          soReturnScope3_6.qty += item.qty;
-        } else if (group === '7-9 Bulan') {
-          if (item.invoice) soReturnScope7_9.invoices.add(item.invoice);
-          soReturnScope7_9.qty += item.qty;
-        } else if (group === '9-12 Bulan') {
-          if (item.invoice) soReturnScope9_12.invoices.add(item.invoice);
-          soReturnScope9_12.qty += item.qty;
-        } else if (group === '>16 Bulan') {
-          if (item.invoice) soReturnScopeGt16.invoices.add(item.invoice);
-          soReturnScopeGt16.qty += item.qty;
-        }
-      });
-
-      const updateScopeText = (id, text) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = text;
-      };
-      
-      // Update ON PROGRESS scope texts
-      updateScopeText('rtn-scope-1-3-inv', `${scope1_3.invoices.size} Inv`);
-      updateScopeText('rtn-scope-1-3-qty', `${scope1_3.qty.toLocaleString('id-ID')} Pcs`);
-
-      updateScopeText('rtn-scope-3-6-inv', `${scope3_6.invoices.size} Inv`);
-      updateScopeText('rtn-scope-3-6-qty', `${scope3_6.qty.toLocaleString('id-ID')} Pcs`);
-
-      updateScopeText('rtn-scope-7-9-inv', `${scope7_9.invoices.size} Inv`);
-      updateScopeText('rtn-scope-7-9-qty', `${scope7_9.qty.toLocaleString('id-ID')} Pcs`);
-
-      updateScopeText('rtn-scope-9-12-inv', `${scope9_12.invoices.size} Inv`);
-      updateScopeText('rtn-scope-9-12-qty', `${scope9_12.qty.toLocaleString('id-ID')} Pcs`);
-
-      updateScopeText('rtn-scope-gt16-inv', `${scopeGt16.invoices.size} Inv`);
-      updateScopeText('rtn-scope-gt16-qty', `${scopeGt16.qty.toLocaleString('id-ID')} Pcs`);
-
-      // Update CLAIM 3PL scope texts
-      updateScopeText('rtn-scope-claim3pl-1-3-inv', `${claim3PLScope1_3.invoices.size} Inv`);
-      updateScopeText('rtn-scope-claim3pl-1-3-qty', `${claim3PLScope1_3.qty.toLocaleString('id-ID')} Pcs`);
-
-      updateScopeText('rtn-scope-claim3pl-3-6-inv', `${claim3PLScope3_6.invoices.size} Inv`);
-      updateScopeText('rtn-scope-claim3pl-3-6-qty', `${claim3PLScope3_6.qty.toLocaleString('id-ID')} Pcs`);
-
-      updateScopeText('rtn-scope-claim3pl-7-9-inv', `${claim3PLScope7_9.invoices.size} Inv`);
-      updateScopeText('rtn-scope-claim3pl-7-9-qty', `${claim3PLScope7_9.qty.toLocaleString('id-ID')} Pcs`);
-
-      updateScopeText('rtn-scope-claim3pl-9-12-inv', `${claim3PLScope9_12.invoices.size} Inv`);
-      updateScopeText('rtn-scope-claim3pl-9-12-qty', `${claim3PLScope9_12.qty.toLocaleString('id-ID')} Pcs`);
-
-      updateScopeText('rtn-scope-claim3pl-gt16-inv', `${claim3PLScopeGt16.invoices.size} Inv`);
-      updateScopeText('rtn-scope-claim3pl-gt16-qty', `${claim3PLScopeGt16.qty.toLocaleString('id-ID')} Pcs`);
-
-      // Update SO RETURN scope texts
-      updateScopeText('rtn-scope-soreturn-1-3-inv', `${soReturnScope1_3.invoices.size} Inv`);
-      updateScopeText('rtn-scope-soreturn-1-3-qty', `${soReturnScope1_3.qty.toLocaleString('id-ID')} Pcs`);
-
-      updateScopeText('rtn-scope-soreturn-3-6-inv', `${soReturnScope3_6.invoices.size} Inv`);
-      updateScopeText('rtn-scope-soreturn-3-6-qty', `${soReturnScope3_6.qty.toLocaleString('id-ID')} Pcs`);
-
-      updateScopeText('rtn-scope-soreturn-7-9-inv', `${soReturnScope7_9.invoices.size} Inv`);
-      updateScopeText('rtn-scope-soreturn-7-9-qty', `${soReturnScope7_9.qty.toLocaleString('id-ID')} Pcs`);
-
-      updateScopeText('rtn-scope-soreturn-9-12-inv', `${soReturnScope9_12.invoices.size} Inv`);
-      updateScopeText('rtn-scope-soreturn-9-12-qty', `${soReturnScope9_12.qty.toLocaleString('id-ID')} Pcs`);
-
-      updateScopeText('rtn-scope-soreturn-gt16-inv', `${soReturnScopeGt16.invoices.size} Inv`);
-      updateScopeText('rtn-scope-soreturn-gt16-qty', `${soReturnScopeGt16.qty.toLocaleString('id-ID')} Pcs`);
-
-      // Highlight the active scope card helper
-      const updateScopeCardStyles = (id, filterName, activeFilter, activeBorder, activeBg) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        if (activeFilter === filterName) {
-          el.style.borderColor = activeBorder;
-          el.style.background = activeBg;
-          el.style.boxShadow = `0 0 0 2px ${activeBorder}33`;
-        } else {
-          el.style.borderColor = '#e2e8f0';
-          el.style.background = '#ffffff';
-          el.style.boxShadow = 'none';
-        }
-      };
-
-      // Apply highlighting for ON PROGRESS cards
-      updateScopeCardStyles('rtn-scope-card-1-3', '1-3 Bulan', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
-      updateScopeCardStyles('rtn-scope-card-3-6', '3-6 Bulan', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
-      updateScopeCardStyles('rtn-scope-card-7-9', '7-9 Bulan', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
-      updateScopeCardStyles('rtn-scope-card-9-12', '9-12 Bulan', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
-      updateScopeCardStyles('rtn-scope-card-gt16', '>16 Bulan', activeOnProgressAgingFilter, '#4f46e5', '#eef2ff');
-
-      // Apply highlighting for CLAIM 3PL cards
-      updateScopeCardStyles('rtn-scope-card-claim3pl-1-3', '1-3 Bulan', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
-      updateScopeCardStyles('rtn-scope-card-claim3pl-3-6', '3-6 Bulan', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
-      updateScopeCardStyles('rtn-scope-card-claim3pl-7-9', '7-9 Bulan', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
-      updateScopeCardStyles('rtn-scope-card-claim3pl-9-12', '9-12 Bulan', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
-      updateScopeCardStyles('rtn-scope-card-claim3pl-gt16', '>16 Bulan', activeClaim3PLAgingFilter, '#d97706', '#fffbeb');
-
-      // Apply highlighting for SO RETURN cards
-      updateScopeCardStyles('rtn-scope-card-soreturn-1-3', '1-3 Bulan', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
-      updateScopeCardStyles('rtn-scope-card-soreturn-3-6', '3-6 Bulan', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
-      updateScopeCardStyles('rtn-scope-card-soreturn-7-9', '7-9 Bulan', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
-      updateScopeCardStyles('rtn-scope-card-soreturn-9-12', '9-12 Bulan', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
-      updateScopeCardStyles('rtn-scope-card-soreturn-gt16', '>16 Bulan', activeSoReturnAgingFilter, '#0d9488', '#f0fdfa');
-
-      // Helper to show/hide detailed tables under scopes and update headers
-      const toggleDetailContainer = (containerId, titleId, filterVal) => {
-        const el = document.getElementById(containerId);
-        const titleEl = document.getElementById(titleId);
-        if (el) {
-          if (filterVal === 'ALL') {
-            el.style.display = 'none';
-          } else {
-            el.style.display = 'block';
-          }
-        }
-        if (titleEl) {
-          titleEl.textContent = filterVal === 'ALL' ? 'Semua' : filterVal;
-        }
-      };
-
-      toggleDetailContainer('rtn-detail-container-onprogress', 'rtn-detail-title-onprogress', activeOnProgressAgingFilter);
-      toggleDetailContainer('rtn-detail-container-claim3pl', 'rtn-detail-title-claim3pl', activeClaim3PLAgingFilter);
-      toggleDetailContainer('rtn-detail-container-soreturn', 'rtn-detail-title-soreturn', activeSoReturnAgingFilter);
-
-      // Filter ON PROGRESS items based on active aging filter
-      let displayedOnProgressItems = [...onProgressItems];
-      let displayedOnProgressInvoices = new Set();
-      let displayedOnProgressQty = 0;
-
-      if (activeOnProgressAgingFilter === 'ALL') {
-        displayedOnProgressInvoices = onProgressInvoicesCur;
-        displayedOnProgressQty = onProgressQtyCur;
-      } else {
-        displayedOnProgressItems = onProgressItems.filter(item => getAgingGroup(item) === activeOnProgressAgingFilter);
-        displayedOnProgressItems.forEach(item => {
-          if (item.invoice) displayedOnProgressInvoices.add(item.invoice);
-          displayedOnProgressQty += item.qty;
-        });
-      }
-
-      // Filter CLAIM 3PL items based on active aging filter
-      let displayedClaim3PLItems = [...claim3PLItems];
-      let displayedClaim3PLInvoices = new Set();
-      let displayedClaim3PLQty = 0;
-
-      if (activeClaim3PLAgingFilter === 'ALL') {
-        displayedClaim3PLInvoices = claim3PLInvoicesCur;
-        displayedClaim3PLQty = claim3PLQtyCur;
-      } else {
-        displayedClaim3PLItems = claim3PLItems.filter(item => getAgingGroup(item) === activeClaim3PLAgingFilter);
-        displayedClaim3PLItems.forEach(item => {
-          if (item.invoice) displayedClaim3PLInvoices.add(item.invoice);
-          displayedClaim3PLQty += item.qty;
-        });
-      }
-
-      // Filter SO RETURN items based on active aging filter
-      let displayedSoReturnItems = [...soReturnItems];
-      let displayedSoReturnInvoices = new Set();
-      let displayedSoReturnQty = 0;
-
-      if (activeSoReturnAgingFilter === 'ALL') {
-        displayedSoReturnInvoices = soReturnInvoicesCur;
-        displayedSoReturnQty = soReturnQtyCur;
-      } else {
-        displayedSoReturnItems = soReturnItems.filter(item => getAgingGroup(item) === activeSoReturnAgingFilter);
-        displayedSoReturnItems.forEach(item => {
-          if (item.invoice) displayedSoReturnInvoices.add(item.invoice);
-          displayedSoReturnQty += item.qty;
-        });
-      }
-
-      const updateBadgeText = (id, text) => {
-        const elem = document.getElementById(id);
-        if (elem) elem.textContent = text;
-      };
-
-      // Header Badges on each Table Card (updates with current subset count if filtered)
-      updateBadgeText('rtn-header-badge-onprogress', `${displayedOnProgressInvoices.size} Inv / ${displayedOnProgressQty.toLocaleString('id-ID')} Pcs`);
-      updateBadgeText('rtn-header-badge-claim3pl', `${displayedClaim3PLInvoices.size} Inv / ${displayedClaim3PLQty.toLocaleString('id-ID')} Pcs`);
-      updateBadgeText('rtn-header-badge-soreturn', `${displayedSoReturnInvoices.size} Inv / ${displayedSoReturnQty.toLocaleString('id-ID')} Pcs`);
-
-      // Render Detailed Table Helper
-      const renderDetailedTable = (tbodyId, items) => {
-        const tbody = document.getElementById(tbodyId);
-        if (!tbody) return;
-        tbody.innerHTML = '';
-        if (items.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 25px 10px; color: #94a3b8; font-size: 14px;"><i class="fa-solid fa-folder-open" style="font-size: 14px; display: block; margin-bottom: 4px; color: #cbd5e1;"></i> Tidak ada data</td></tr>`;
-        } else {
-          items.forEach((item, index) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-              <td style="padding: 8px 6px; text-align: center; font-size: 20px; font-weight: 500; color: #64748b; border-bottom: 1px solid #f1f5f9;">${index + 1}</td>
-              <td style="padding: 8px 6px; border-bottom: 1px solid #f1f5f9;">
-                <div style="font-weight: 700; color: #1e293b; font-size: 20px;">${item.invoice}</div>
-              </td>
-              <td style="padding: 8px 6px; border-bottom: 1px solid #f1f5f9; max-width: 140px; overflow: hidden;">
-                <div style="font-weight: 700; color: #334155; font-size: 20px; font-family: var(--font-mono);">${item.sku || '<span style="color:#94a3b8; font-style:italic; font-weight:400;">No SKU</span>'}</div>
-                <div style="color: #64748b; font-size: 14px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px;" title="${item.description}">${item.description}</div>
-              </td>
-              <td style="padding: 8px 6px; text-align: center; border-bottom: 1px solid #f1f5f9;">
-                <span class="status-badge" style="background: ${item.agingDays > 30 ? '#fee2e2' : '#fef9c3'}; color: ${item.agingDays > 30 ? '#ef4444' : '#a16207'}; font-weight: 800; font-size: 14px; padding: 2px 8px; border-radius: 4px; line-height: 1; display: inline-block;">${item.agingDays}</span>
-              </td>
-              <td style="padding: 8px 6px; text-align: center; font-weight: 700; color: var(--primary-accent); font-size: 20px; border-bottom: 1px solid #f1f5f9;">${item.qty.toLocaleString('id-ID')}</td>
-            `;
-            tbody.appendChild(tr);
-          });
-        }
-      };
-
-      renderDetailedTable('rtn-table-onprogress-body', displayedOnProgressItems);
-      renderDetailedTable('rtn-table-claim3pl-body', displayedClaim3PLItems);
-      renderDetailedTable('rtn-table-soreturn-body', displayedSoReturnItems);
-
-      // Trigger Tab UI Layout update
-      updateReturnTabUI();
+      // Render the Unified Detailed Dashboard Table!
+      renderUnifiedTable();
     }
 
-    // Accordion state tracker for collapsible table dropdown lists
-    const rtnAccordionState = {
-      onprogress: true,
-      claim3pl: true,
-      soreturn: true
-    };
+    // Helper function to match aging categories with values or fallback to days
+    function getAgingGroup(item) {
+      const cat = (item.agingCat || "").toString().trim().toUpperCase();
+      if (cat.includes('1-3') || cat.includes('1 - 3')) return '1-3 Bulan';
+      if (cat.includes('3-6') || cat.includes('3 - 6')) return '3-6 Bulan';
+      if (cat.includes('7-9') || cat.includes('7 - 9')) return '7-9 Bulan';
+      if (cat.includes('9-12') || cat.includes('9 - 12')) return '9-12 Bulan';
+      if (cat.includes('>16') || cat.includes('16+')) return '>16 Bulan';
 
-    function toggleRtnAccordion(sectionId) {
-      const container = document.getElementById(`rtn-collapse-${sectionId}`);
-      const arrow = document.getElementById(`rtn-arrow-${sectionId}`);
-      if (!container || !arrow) return;
+      const days = item.agingDays;
+      if (days <= 90) return '1-3 Bulan';
+      if (days > 90 && days <= 180) return '3-6 Bulan';
+      if (days > 180 && days <= 270) return '7-9 Bulan';
+      if (days > 270 && days <= 365) return '9-12 Bulan';
+      return '>16 Bulan';
+    }
+
+    // Interactive Handler for Categories (Tabs)
+    function setRtnCategory(cat) {
+      rtnCategory = cat;
+      activeRtnStatusFilter = cat; // keeps in sync with top-level selections
+      rtnCurrentPage = 1;
+      showToast(`Menampilkan kategori: ${cat === 'ALL' ? 'SEMUA' : cat}`, 'info');
+      updateRtnKpiCardSelectionStyles();
+      renderUnifiedTable();
+    }
+
+    // Interactive Handler for Aging Filters
+    function setRtnAgingFilter(filterVal) {
+      rtnAgingFilter = filterVal;
+      rtnCurrentPage = 1;
+      showToast(`Menyaring Aging: ${filterVal === 'ALL' ? 'Semua Aging' : filterVal}`, 'info');
+      renderUnifiedTable();
+    }
+
+    // Interactive Handler for Area Filter
+    function changeRtnAreaFilter(areaVal) {
+      rtnAreaFilter = areaVal;
+      rtnCurrentPage = 1;
+      showToast(`Menyaring Area: ${areaVal === 'ALL' ? 'Semua Area' : areaVal}`, 'info');
+      renderUnifiedTable();
+    }
+
+    // Interactive Handler for Search Input
+    function changeRtnSearchQuery(queryVal) {
+      rtnSearchQuery = queryVal.trim();
+      rtnCurrentPage = 1;
+      renderUnifiedTable();
+    }
+
+    // Interactive Handler for Sorting
+    function changeRtnUnifiedSort(sortVal) {
+      rtnSortOrder = sortVal;
+      rtnCurrentPage = 1;
+      renderUnifiedTable();
+    }
+
+    // Toggles visibility of the detailed table card
+    function toggleUnifiedTableVisibility() {
+      const container = document.getElementById('rtn-unified-table-container');
+      const icon = document.getElementById('rtn-close-icon');
+      if (!container) return;
       
-      rtnAccordionState[sectionId] = !rtnAccordionState[sectionId];
-      if (rtnAccordionState[sectionId]) {
+      rtnTableVisible = !rtnTableVisible;
+      if (rtnTableVisible) {
         container.style.display = 'block';
-        arrow.style.transform = 'rotate(0deg)';
+        if (icon) {
+          icon.className = 'fa-solid fa-xmark';
+          icon.style.transform = 'none';
+        }
+        showToast('Menampilkan tabel detail', 'info');
       } else {
         container.style.display = 'none';
-        arrow.style.transform = 'rotate(-90deg)';
-      }
-    }
-
-    // Sort trigger function called when table dropdown is changed
-    function changeRtnSort(sectionId, val) {
-      if (sectionId === 'onprogress') sortOnProgress = val;
-      else if (sectionId === 'claim3pl') sortClaim3PL = val;
-      else if (sectionId === 'soreturn') sortSoReturn = val;
-      
-      updateReturnView();
-    }
-
-    // Toggle interactive aging filters for the ON PROGRESS section
-    function toggleOnProgressAgingFilter(filterName) {
-      if (activeOnProgressAgingFilter === filterName) {
-        activeOnProgressAgingFilter = 'ALL';
-        showToast("Menampilkan semua data On Progress", "info");
-      } else {
-        activeOnProgressAgingFilter = filterName;
-        showToast(`Menyaring On Progress: Aging ${filterName}`, "info");
-      }
-      updateReturnView();
-    }
-
-    // Toggle interactive aging filters for the CLAIM 3PL section
-    function toggleClaim3PLAgingFilter(filterName) {
-      if (activeClaim3PLAgingFilter === filterName) {
-        activeClaim3PLAgingFilter = 'ALL';
-        showToast("Menampilkan semua data Claim 3PL", "info");
-      } else {
-        activeClaim3PLAgingFilter = filterName;
-        showToast(`Menyaring Claim 3PL: Aging ${filterName}`, "info");
-      }
-      updateReturnView();
-    }
-
-    // Toggle interactive aging filters for the SO RETURN section
-    function toggleSoReturnAgingFilter(filterName) {
-      if (activeSoReturnAgingFilter === filterName) {
-        activeSoReturnAgingFilter = 'ALL';
-        showToast("Menampilkan semua data SO Return", "info");
-      } else {
-        activeSoReturnAgingFilter = filterName;
-        showToast(`Menyaring SO Return: Aging ${filterName}`, "info");
-      }
-      updateReturnView();
-    }
-
-    // Handles layout visibility and side-by-side layout of Return tables
-    function updateReturnTabUI() {
-      const gridContainer = document.getElementById('rtn-tables-grid-container');
-      const sectionOnProgress = document.getElementById('rtn-section-onprogress');
-      const sectionClaim3PL = document.getElementById('rtn-section-claim3pl');
-      const sectionSoReturn = document.getElementById('rtn-section-soreturn');
-
-      if (!gridContainer || !sectionOnProgress || !sectionClaim3PL || !sectionSoReturn) return;
-
-      gridContainer.style.display = 'grid';
-      gridContainer.style.gap = '16px';
-
-      if (activeRtnStatusFilter === 'ALL') {
-        sectionOnProgress.style.display = 'flex';
-        sectionClaim3PL.style.display = 'flex';
-        sectionSoReturn.style.display = 'flex';
-        
-        if (window.innerWidth >= 1200) {
-          gridContainer.style.gridTemplateColumns = 'repeat(3, 1fr)';
-        } else if (window.innerWidth >= 768) {
-          gridContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        } else {
-          gridContainer.style.gridTemplateColumns = '1fr';
+        if (icon) {
+          icon.className = 'fa-solid fa-chevron-down';
+          icon.style.transform = 'rotate(-90deg)';
         }
-      } else {
-        sectionOnProgress.style.display = activeRtnStatusFilter === 'ON PROGRESS' ? 'flex' : 'none';
-        sectionClaim3PL.style.display = activeRtnStatusFilter === 'CLAIM 3PL' ? 'flex' : 'none';
-        sectionSoReturn.style.display = activeRtnStatusFilter === 'SO RETURN' ? 'flex' : 'none';
-        gridContainer.style.gridTemplateColumns = '1fr';
+        showToast('Tabel detail ditutup', 'info');
       }
     }
 
-    // Responsive listener for column adjustments
-    window.addEventListener('resize', () => {
-      if (currentView === 'return') {
-        updateReturnTabUI();
+    // CORE RENDERING ENGINE FOR THE UNIFIED RETURN TABLE
+    function renderUnifiedTable() {
+      const tbody = document.getElementById('rtn-unified-table-body');
+      if (!tbody) return;
+
+      // 1. Populating Category Tab Buttons Style Classes
+      const tabs = ['ALL', 'ON PROGRESS', 'CLAIM 3PL', 'SO RETURN'];
+      tabs.forEach(tab => {
+        const btnId = 'rtn-tab-' + tab.toLowerCase().replace(' ', '');
+        const btn = document.getElementById(btnId);
+        if (btn) {
+          if (rtnCategory === tab) {
+            btn.className = 'rtn-tab-btn active-' + tab.toLowerCase().replace(' ', '');
+            btn.style.background = tab === 'ALL' ? '#f1f5f9' : tab === 'ON PROGRESS' ? 'rgba(79, 70, 229, 0.08)' : tab === 'CLAIM 3PL' ? 'rgba(217, 119, 6, 0.08)' : 'rgba(13, 148, 136, 0.08)';
+            btn.style.color = tab === 'ALL' ? '#1e293b' : tab === 'ON PROGRESS' ? '#4f46e5' : tab === 'CLAIM 3PL' ? '#d97706' : '#0d9488';
+            btn.style.borderColor = tab === 'ALL' ? '#cbd5e1' : tab === 'ON PROGRESS' ? 'rgba(79, 70, 229, 0.3)' : tab === 'CLAIM 3PL' ? 'rgba(217, 119, 6, 0.3)' : 'rgba(13, 148, 136, 0.3)';
+          } else {
+            btn.className = 'rtn-tab-btn';
+            btn.style.background = '#ffffff';
+            btn.style.color = '#64748b';
+            btn.style.borderColor = '#e2e8f0';
+          }
+        }
+      });
+
+      // 2. Populating Category Badges text on Tabs (based on dates selected)
+      let countAll = 0;
+      let countOP = 0;
+      let countClaim = 0;
+      let countSO = 0;
+
+      rtnAllItems.forEach(item => {
+        countAll++;
+        if (item.statusUpper === 'ON PROGRESS') countOP++;
+        else if (item.statusUpper === 'CLAIM 3PL') countClaim++;
+        else if (item.statusUpper === 'SO RETURN') countSO++;
+      });
+
+      const updateBadge = (id, val) => {
+        const elem = document.getElementById(id);
+        if (elem) elem.textContent = val.toLocaleString('id-ID');
+      };
+      updateBadge('rtn-badge-all', countAll);
+      updateBadge('rtn-badge-onprogress', countOP);
+      updateBadge('rtn-badge-claim3pl', countClaim);
+      updateBadge('rtn-badge-soreturn', countSO);
+
+      // 3. Dynamic Area Dropdown options
+      const areaSelect = document.getElementById('rtn-filter-area');
+      if (areaSelect) {
+        const currentSelection = rtnAreaFilter;
+        // Collect areas from rtnAllItems
+        const uniqueAreas = Array.from(new Set(rtnAllItems.map(item => item.area).filter(Boolean))).sort();
+        
+        areaSelect.innerHTML = '<option value="ALL">Semua Area</option>';
+        uniqueAreas.forEach(area => {
+          const opt = document.createElement('option');
+          opt.value = area;
+          opt.textContent = area;
+          if (area === currentSelection) opt.selected = true;
+          areaSelect.appendChild(opt);
+        });
       }
-    });
+
+      // 4. Filtering items based on category, aging, area, and search query
+      let filteredItems = rtnAllItems.filter(item => {
+        // Filter Category
+        if (rtnCategory !== 'ALL' && item.statusUpper !== rtnCategory) return false;
+
+        // Filter Aging
+        if (rtnAgingFilter !== 'ALL' && getAgingGroup(item) !== rtnAgingFilter) return false;
+
+        // Filter Area
+        if (rtnAreaFilter !== 'ALL' && item.area !== rtnAreaFilter) return false;
+
+        // Filter Search Query
+        if (rtnSearchQuery !== '') {
+          const query = rtnSearchQuery.toLowerCase();
+          const invoiceStr = (item.invoice || '').toLowerCase();
+          const skuStr = (item.sku || '').toLowerCase();
+          const descStr = (item.description || '').toLowerCase();
+          const namaStr = (item.nama || '').toLowerCase();
+          const areaStr = (item.area || '').toLowerCase();
+          const checkStr = (item.check || '').toLowerCase();
+          const reasonStr = (item.reason || '').toLowerCase();
+          const reasonCancelStr = (item.reasonCancel || '').toLowerCase();
+          const statusStr = (item.status || '').toLowerCase();
+          
+          if (!invoiceStr.includes(query) && 
+              !skuStr.includes(query) && 
+              !descStr.includes(query) && 
+              !namaStr.includes(query) && 
+              !areaStr.includes(query) &&
+              !checkStr.includes(query) &&
+              !reasonStr.includes(query) &&
+              !reasonCancelStr.includes(query) &&
+              !statusStr.includes(query)) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+
+      // Render Top SKU return by Qty Table and Top Department Return Chart
+      updateRtnTopSkuTable(filteredItems);
+      updateRtnDeptQtyChart(filteredItems);
+
+      // 5. Counting the number of items for Aging Pills
+      // These counts represent items within the currently selected CATEGORY tab, AREA and SEARCH, but unfiltered by AGING.
+      let countA1_3 = 0;
+      let countA3_6 = 0;
+      let countA7_9 = 0;
+      let countA9_12 = 0;
+      let countAgt16 = 0;
+
+      rtnAllItems.forEach(item => {
+        // Match active category tab
+        if (rtnCategory !== 'ALL' && item.statusUpper !== rtnCategory) return;
+        // Match active area
+        if (rtnAreaFilter !== 'ALL' && item.area !== rtnAreaFilter) return;
+        // Match search query
+        if (rtnSearchQuery !== '') {
+          const query = rtnSearchQuery.toLowerCase();
+          const invoiceStr = (item.invoice || '').toLowerCase();
+          const skuStr = (item.sku || '').toLowerCase();
+          const descStr = (item.description || '').toLowerCase();
+          const namaStr = (item.nama || '').toLowerCase();
+          if (!invoiceStr.includes(query) && !skuStr.includes(query) && !descStr.includes(query) && !namaStr.includes(query)) return;
+        }
+
+        const agingGroup = getAgingGroup(item);
+        if (agingGroup === '1-3 Bulan') countA1_3++;
+        else if (agingGroup === '3-6 Bulan') countA3_6++;
+        else if (agingGroup === '7-9 Bulan') countA7_9++;
+        else if (agingGroup === '9-12 Bulan') countA9_12++;
+        else if (agingGroup === '>16 Bulan') countAgt16++;
+      });
+
+      // Update badge counts on the aging pill buttons
+      const updatePillBadge = (id, count) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = '(' + count + ')';
+      };
+      updatePillBadge('rtn-scope-badge-1-3', countA1_3);
+      updatePillBadge('rtn-scope-badge-3-6', countA3_6);
+      updatePillBadge('rtn-scope-badge-7-9', countA7_9);
+      updatePillBadge('rtn-scope-badge-9-12', countA9_12);
+      updatePillBadge('rtn-scope-badge-gt16', countAgt16);
+
+      // Highlight the active aging pill button
+      const agingPills = ['ALL', '1-3 Bulan', '3-6 Bulan', '7-9 Bulan', '9-12 Bulan', '>16 Bulan'];
+      agingPills.forEach(pill => {
+        const safePillId = pill.replace(' ', '-').toLowerCase();
+        const btn = document.getElementById('rtn-aging-tab-' + (safePillId === '1-3-bulan' ? '1-3' : safePillId === '3-6-bulan' ? '3-6' : safePillId === '7-9-bulan' ? '7-9' : safePillId === '9-12-bulan' ? '9-12' : safePillId === '>16-bulan' ? 'gt16' : 'all'));
+        if (btn) {
+          if (rtnAgingFilter === pill) {
+            btn.className = 'rtn-aging-btn active-pill';
+            btn.style.background = '#4f46e5';
+            btn.style.color = '#ffffff';
+            btn.style.borderColor = '#4f46e5';
+          } else {
+            btn.className = 'rtn-aging-btn';
+            btn.style.background = '#ffffff';
+            btn.style.color = '#64748b';
+            btn.style.borderColor = '#e2e8f0';
+          }
+        }
+      });
+
+      // 6. Update Breadcrumbs & Counters
+      const brCategory = document.getElementById('breadcrumb-category');
+      if (brCategory) {
+        brCategory.textContent = rtnCategory === 'ALL' ? 'SEMUA' : rtnCategory;
+        brCategory.style.color = rtnCategory === 'ALL' ? '#4f46e5' : rtnCategory === 'ON PROGRESS' ? '#4f46e5' : rtnCategory === 'CLAIM 3PL' ? '#d97706' : '#0d9488';
+      }
+      
+      const brAging = document.getElementById('breadcrumb-aging');
+      if (brAging) brAging.textContent = rtnAgingFilter === 'ALL' ? 'Semua Aging' : rtnAgingFilter;
+
+      const brAreaWrapper = document.getElementById('breadcrumb-area-wrapper');
+      const brArea = document.getElementById('breadcrumb-area');
+      if (brAreaWrapper && brArea) {
+        if (rtnAreaFilter !== 'ALL') {
+          brAreaWrapper.style.display = 'inline';
+          brArea.textContent = rtnAreaFilter;
+        } else {
+          brAreaWrapper.style.display = 'none';
+        }
+      }
+
+      const brSearchWrapper = document.getElementById('breadcrumb-search-wrapper');
+      const brSearch = document.getElementById('breadcrumb-search');
+      if (brSearchWrapper && brSearch) {
+        if (rtnSearchQuery !== '') {
+          brSearchWrapper.style.display = 'inline';
+          brSearch.textContent = rtnSearchQuery;
+        } else {
+          brSearchWrapper.style.display = 'none';
+        }
+      }
+
+      // Update total badge count
+      const totalCountBadge = document.getElementById('rtn-unified-badge-count');
+      if (totalCountBadge) {
+        totalCountBadge.textContent = filteredItems.length.toLocaleString('id-ID') + ' Items';
+        totalCountBadge.style.background = rtnCategory === 'ALL' ? '#eef2ff' : rtnCategory === 'ON PROGRESS' ? '#eef2ff' : rtnCategory === 'CLAIM 3PL' ? '#fffbeb' : '#f0fdfa';
+        totalCountBadge.style.color = rtnCategory === 'ALL' ? '#4f46e5' : rtnCategory === 'ON PROGRESS' ? '#4f46e5' : rtnCategory === 'CLAIM 3PL' ? '#d97706' : '#0d9488';
+      }
+
+      // If the table detailed card is closed, auto reopen it when a filter is chosen (to provide intuitive visual feedback)
+      if (!rtnTableVisible && (rtnCategory !== 'ALL' || rtnAgingFilter !== 'ALL' || rtnAreaFilter !== 'ALL' || rtnSearchQuery !== '')) {
+        rtnTableVisible = true;
+        const container = document.getElementById('rtn-unified-table-container');
+        const icon = document.getElementById('rtn-close-icon');
+        if (container) container.style.display = 'block';
+        if (icon) {
+          icon.className = 'fa-solid fa-xmark';
+          icon.style.transform = 'none';
+        }
+      }
+
+      // 7. Sorting the items
+      if (rtnSortOrder === 'aging_desc') {
+        filteredItems.sort((a, b) => b.agingDays - a.agingDays);
+      } else if (rtnSortOrder === 'aging_asc') {
+        filteredItems.sort((a, b) => a.agingDays - b.agingDays);
+      } else if (rtnSortOrder === 'qty_desc') {
+        filteredItems.sort((a, b) => b.qty - a.qty);
+      } else if (rtnSortOrder === 'qty_asc') {
+        filteredItems.sort((a, b) => a.qty - b.qty);
+      } else if (rtnSortOrder === 'invoice_asc') {
+        filteredItems.sort((a, b) => (a.invoice || '').localeCompare(b.invoice || ''));
+      }
+
+      // Sync sort select
+      const sortSelect = document.getElementById('rtn-unified-sort');
+      if (sortSelect) sortSelect.value = rtnSortOrder;
+
+      // 8. Pagination Setup
+      const totalItems = filteredItems.length;
+      const totalPages = Math.max(1, Math.ceil(totalItems / rtnPageSize));
+      if (rtnCurrentPage > totalPages) rtnCurrentPage = totalPages;
+
+      const startIndex = (rtnCurrentPage - 1) * rtnPageSize;
+      const endIndex = Math.min(startIndex + rtnPageSize, totalItems);
+      const paginatedItems = filteredItems.slice(startIndex, endIndex);
+
+      // Update Pagination Text
+      const pagText = document.getElementById('rtn-pagination-text');
+      if (pagText) {
+        if (totalItems === 0) {
+          pagText.textContent = 'Menampilkan 0 dari 0 data';
+        } else {
+          pagText.textContent = `Menampilkan ${startIndex + 1}-${endIndex} dari ${totalItems} data`;
+        }
+      }
+
+      // Render Pagination Buttons
+      const pagBtns = document.getElementById('rtn-pagination-buttons');
+      if (pagBtns) {
+        pagBtns.innerHTML = '';
+        
+        // Prev button
+        const prevBtn = document.createElement('button');
+        prevBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+        prevBtn.style.padding = '4px 8px';
+        prevBtn.style.borderRadius = '6px';
+        prevBtn.style.border = '1px solid #cbd5e1';
+        prevBtn.style.background = '#ffffff';
+        prevBtn.style.color = '#475569';
+        prevBtn.style.fontSize = '11px';
+        prevBtn.style.cursor = rtnCurrentPage === 1 ? 'not-allowed' : 'pointer';
+        prevBtn.style.opacity = rtnCurrentPage === 1 ? '0.5' : '1';
+        prevBtn.disabled = rtnCurrentPage === 1;
+        prevBtn.onclick = () => {
+          if (rtnCurrentPage > 1) {
+            rtnCurrentPage--;
+            renderUnifiedTable();
+          }
+        };
+        pagBtns.appendChild(prevBtn);
+
+        // Page Numbers (with maximum of 5 displayed numbers for cleanliness)
+        const maxPagesToShow = 5;
+        let startPage = Math.max(1, rtnCurrentPage - 2);
+        let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+        if (endPage - startPage < maxPagesToShow - 1) {
+          startPage = Math.max(1, endPage - maxPagesToShow + 1);
+        }
+
+        for (let p = startPage; p <= endPage; p++) {
+          const btn = document.createElement('button');
+          btn.textContent = p;
+          btn.style.padding = '4px 10px';
+          btn.style.borderRadius = '6px';
+          btn.style.fontSize = '11px';
+          btn.style.fontWeight = '700';
+          if (p === rtnCurrentPage) {
+            btn.style.background = '#4f46e5';
+            btn.style.color = '#ffffff';
+            btn.style.border = '1px solid #4f46e5';
+          } else {
+            btn.style.background = '#ffffff';
+            btn.style.color = '#475569';
+            btn.style.border = '1px solid #cbd5e1';
+            btn.style.cursor = 'pointer';
+          }
+          btn.onclick = () => {
+            rtnCurrentPage = p;
+            renderUnifiedTable();
+          };
+          pagBtns.appendChild(btn);
+        }
+
+        // Next button
+        const nextBtn = document.createElement('button');
+        nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+        nextBtn.style.padding = '4px 8px';
+        nextBtn.style.borderRadius = '6px';
+        nextBtn.style.border = '1px solid #cbd5e1';
+        nextBtn.style.background = '#ffffff';
+        nextBtn.style.color = '#475569';
+        nextBtn.style.fontSize = '11px';
+        nextBtn.style.cursor = rtnCurrentPage === totalPages ? 'not-allowed' : 'pointer';
+        nextBtn.style.opacity = rtnCurrentPage === totalPages ? '0.5' : '1';
+        nextBtn.disabled = rtnCurrentPage === totalPages;
+        nextBtn.onclick = () => {
+          if (rtnCurrentPage < totalPages) {
+            rtnCurrentPage++;
+            renderUnifiedTable();
+          }
+        };
+        pagBtns.appendChild(nextBtn);
+      }
+
+      // 9. Render Table Rows
+      tbody.innerHTML = '';
+      if (paginatedItems.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 100px 20px; color: #94a3b8; font-size: 14px;">
+              <i class="fa-solid fa-folder-open" style="font-size: 24px; display: block; margin-bottom: 8px; color: #cbd5e1;"></i>
+              Tidak ada data yang cocok dengan kriteria filter saat ini
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      paginatedItems.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid #f1f5f9';
+        tr.style.height = '48px';
+        tr.style.transition = 'all 0.2s';
+        
+        tr.onmouseover = () => { tr.style.background = '#f8fafc'; };
+        tr.onmouseout = () => { tr.style.background = 'transparent'; };
+
+        // Determine aging badge coloring
+        let agingBadgeColor = 'background: #f0fdf4; color: #166534;';
+        if (item.agingDays > 180) {
+          agingBadgeColor = 'background: #fef2f2; color: #991b1b;';
+        } else if (item.agingDays > 90) {
+          agingBadgeColor = 'background: #fffbeb; color: #92400e;';
+        }
+
+        // Format dates cleanly
+        let formattedDate = '-';
+        if (item.date && !isNaN(item.date.getTime())) {
+          const d = formatTimeComponent(item.date.getDate());
+          const m = formatTimeComponent(item.date.getMonth() + 1);
+          const y = item.date.getFullYear();
+          formattedDate = `${d}/${m}/${y}`;
+        }
+
+        tr.innerHTML = `
+          <td style="padding: 8px; text-align: center; font-size: 11px; font-weight: 700; color: #64748b; font-family: var(--font-mono);">${startIndex + index + 1}</td>
+          <td style="padding: 8px; text-align: center; font-size: 11px; font-weight: 700; color: #64748b; font-family: var(--font-mono);">${formattedDate}</td>
+          <td style="padding: 8px; text-align: left; font-size: 11px; font-weight: 800; color: #1e293b; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${item.invoice}">${item.invoice}</td>
+          <td style="padding: 8px; text-align: left; font-size: 11px; font-weight: 800; color: #334155; font-family: var(--font-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${item.sku || '-'}">${item.sku || '-'}</td>
+          <td style="padding: 8px; text-align: left; font-size: 11px; color: #475569; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${item.description || '-'}">${item.description || '-'}</td>
+          <td style="padding: 8px; text-align: center; font-size: 12px; font-weight: 800; color: #4f46e5;">${item.qty.toLocaleString('id-ID')}</td>
+          <td style="padding: 8px; text-align: center; font-size: 11px;">
+            <span style="font-weight: 800; padding: 2px 8px; border-radius: 6px; font-family: var(--font-mono); font-size: 10px; ${agingBadgeColor}">${item.agingDays} HARI</span>
+          </td>
+          <td style="padding: 8px; text-align: left; font-size: 11px; color: #475569; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${item.reasonCancel || '-'}">${item.reasonCancel || '-'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
     function updateRtnKpiCardSelectionStyles() {
       const cardOnProgress = document.getElementById('rtn-card-onprogress');
@@ -4374,7 +4422,162 @@
       }
     }
 
-    function updateReturnTrendChart(trendMap) {
+    function updateRtnTopSkuTable(items) {
+      const tbody = document.getElementById('rtn-top-sku-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      // Aggregate qty by SKU
+      const skuMap = new Map();
+      items.forEach(item => {
+        const sku = item.sku || 'Unknown';
+        const desc = item.description || '';
+        const qty = item.qty || 0;
+        if (skuMap.has(sku)) {
+          const existing = skuMap.get(sku);
+          existing.qty += qty;
+        } else {
+          skuMap.set(sku, { sku, desc, qty });
+        }
+      });
+
+      // Sort descending and take top 10
+      const topSKUs = Array.from(skuMap.values())
+        .filter(item => item.qty > 0)
+        .sort((a, b) => b.qty - a.qty)
+        .slice(0, 10);
+
+      if (topSKUs.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="4" style="text-align: center; padding: 24px; color: #94a3b8; font-style: italic;">
+              Tidak ada data return terpilih
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      topSKUs.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid #f1f5f9';
+        tr.style.transition = 'all 0.2s';
+        tr.className = 'hover:bg-slate-50';
+        tr.innerHTML = `
+          <td style="padding: 10px 8px; text-align: center; font-weight: 700; color: #64748b; background: #f8fafc; border-right: 1px solid #f1f5f9;">${index + 1}</td>
+          <td style="padding: 10px 8px; font-weight: 800; color: #4f46e5; font-family: var(--font-mono);">${item.sku}</td>
+          <td style="padding: 10px 8px; color: #334155; font-weight: 500;" title="${item.desc}">${item.desc || '-'}</td>
+          <td style="padding: 10px 8px; text-align: center; font-weight: 800; color: #0d9488; background: rgba(13, 148, 136, 0.04); font-size: 11px;">${item.qty.toLocaleString('id-ID')}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function updateRtnDeptQtyChart(items) {
+      const ctxElem = document.getElementById('chart-rtn-dept-qty');
+      if (!ctxElem) return;
+      const ctx = ctxElem.getContext('2d');
+
+      // Aggregate qty by Department (item.department)
+      const deptMap = new Map();
+      items.forEach(item => {
+        const dept = item.department || 'Unknown';
+        const qty = item.qty || 0;
+        deptMap.set(dept, (deptMap.get(dept) || 0) + qty);
+      });
+
+      // Sort descending and take top 10
+      const sortedDepts = Array.from(deptMap.entries())
+        .filter(([_, qty]) => qty > 0)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10);
+
+      const labels = sortedDepts.map(([dept, _]) => dept);
+      const values = sortedDepts.map(([_, qty]) => qty);
+
+      const barGradient = ctx.createLinearGradient(0, 0, 600, 0);
+      barGradient.addColorStop(0, 'rgba(13, 148, 136, 0.9)');
+      barGradient.addColorStop(1, 'rgba(13, 148, 136, 0.3)');
+
+      if (chartRtnDeptQty) {
+        chartRtnDeptQty.data.labels = labels;
+        chartRtnDeptQty.data.datasets[0].data = values;
+        chartRtnDeptQty.data.datasets[0].backgroundColor = barGradient;
+        chartRtnDeptQty.update();
+      } else {
+        chartRtnDeptQty = new Chart(ctxElem, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Qty Return',
+              data: values,
+              backgroundColor: barGradient,
+              hoverBackgroundColor: 'rgba(13, 148, 136, 1)',
+              borderColor: '#0D9488',
+              borderWidth: 0,
+              borderRadius: 6,
+              barThickness: 20
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                padding: 10,
+                callbacks: {
+                  label: function(context) {
+                    return ` Qty: ${context.raw.toLocaleString('id-ID')} pcs`;
+                  }
+                }
+              },
+              datalabels: { display: false }
+            },
+            layout: {
+              padding: { right: 50, top: 10, bottom: 10 }
+            },
+            scales: {
+              x: {
+                grid: { color: '#F1F5F9', drawBorder: false },
+                ticks: { font: { family: 'Inter', size: 11 }, color: '#64748b' }
+              },
+              y: {
+                grid: { display: false },
+                ticks: { 
+                  font: { family: 'Inter', size: 11, weight: '700' },
+                  color: '#334155'
+                }
+              }
+            },
+            animation: {
+              onComplete: function() {
+                const chartInstance = this;
+                const ctx = chartInstance.ctx;
+                ctx.font = 'bold 11px Inter, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#0D9488';
+
+                chartInstance.data.datasets.forEach(function(dataset, i) {
+                  const meta = chartInstance.getDatasetMeta(i);
+                  meta.data.forEach(function(bar, index) {
+                    const data = dataset.data[index];
+                    if (data === undefined || data === null) return;
+                    ctx.fillText(data.toLocaleString('id-ID'), bar.x + 8, bar.y);
+                  });
+                });
+              }
+            }
+          }
+        });
+      }
+    }
+
+    function updateReturnTrendChart(trendMap) { return; // Disabled as requested by user
       const ctxElem = document.getElementById('chart-rtn-trend');
       if (!ctxElem) return;
       const ctx = ctxElem.getContext('2d');
@@ -4490,6 +4693,125 @@
               }
             },
             layout: { padding: { top: 25, right: 15, left: 10, bottom: 10 } }
+          }
+        });
+      }
+    }
+
+    function updateRtnSkuQtyChart(items) { return; // Disabled as requested by user
+      const ctxElem = document.getElementById('chart-rtn-sku-qty');
+      if (!ctxElem) return;
+      const ctx = ctxElem.getContext('2d');
+
+      // Aggregate qty by SKU
+      const skuMap = new Map();
+      items.forEach(item => {
+        const sku = item.sku || 'Unknown';
+        const desc = item.description || '';
+        const qty = item.qty || 0;
+        if (skuMap.has(sku)) {
+          const existing = skuMap.get(sku);
+          existing.qty += qty;
+        } else {
+          skuMap.set(sku, { sku, desc, qty });
+        }
+      });
+
+      // Sort descending and take top 10
+      const topSKUs = Array.from(skuMap.values())
+        .filter(item => item.qty > 0)
+        .sort((a, b) => b.qty - a.qty)
+        .slice(0, 10);
+
+      const labels = topSKUs.map(item => item.sku);
+      const values = topSKUs.map(item => item.qty);
+      const descs = topSKUs.map(item => item.desc);
+
+      const barGradient = ctx.createLinearGradient(0, 0, 600, 0);
+      barGradient.addColorStop(0, 'rgba(13, 148, 136, 0.9)');
+      barGradient.addColorStop(1, 'rgba(13, 148, 136, 0.3)');
+
+      if (chartRtnSkuQty) {
+        chartRtnSkuQty.data.labels = labels;
+        chartRtnSkuQty.data.datasets[0].data = values;
+        chartRtnSkuQty.data.datasets[0].backgroundColor = barGradient;
+        chartRtnSkuQty.options.plugins.tooltip.callbacks.title = function(context) {
+          const index = context[0].dataIndex;
+          return descs[index] || labels[index];
+        };
+        chartRtnSkuQty.update();
+      } else {
+        chartRtnSkuQty = new Chart(ctxElem, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Qty Return',
+              data: values,
+              backgroundColor: barGradient,
+              hoverBackgroundColor: 'rgba(13, 148, 136, 1)',
+              borderColor: '#0D9488',
+              borderWidth: 0,
+              borderRadius: 6,
+              barThickness: 20
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                padding: 10,
+                callbacks: {
+                  title: function(context) {
+                    const index = context[0].dataIndex;
+                    return descs[index] || labels[index];
+                  },
+                  label: function(context) {
+                    return ` Qty: ${context.raw.toLocaleString('id-ID')} pcs`;
+                  }
+                }
+              },
+              datalabels: { display: false }
+            },
+            layout: {
+              padding: { right: 50, top: 10, bottom: 10 }
+            },
+            scales: {
+              x: {
+                grid: { color: '#F1F5F9', drawBorder: false },
+                ticks: { font: { family: 'Inter', size: 11 }, color: '#64748b' }
+              },
+              y: {
+                grid: { display: false },
+                ticks: { 
+                  font: { family: 'Inter', size: 11, weight: '700' },
+                  color: '#334155'
+                }
+              }
+            },
+            animation: {
+              onComplete: function() {
+                const chartInstance = this;
+                const ctx = chartInstance.ctx;
+                ctx.font = 'bold 12px Inter, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#0D9488';
+
+                chartInstance.data.datasets.forEach(function(dataset, i) {
+                  const meta = chartInstance.getDatasetMeta(i);
+                  meta.data.forEach(function(bar, index) {
+                    const data = dataset.data[index];
+                    if (data === undefined || data === null) return;
+                    ctx.fillText(data.toLocaleString('id-ID'), bar.x + 8, bar.y);
+                  });
+                });
+              }
+            }
           }
         });
       }
@@ -4863,7 +5185,7 @@
         if (chartSkuGroup) chartSkuGroup.resize();
         if (chartEcommerce) chartEcommerce.resize();
         if (chart3PlPie) chart3PlPie.resize();
-        if (chartRtnTrend) chartRtnTrend.resize();
+        if (chartRtnDeptQty) chartRtnDeptQty.resize();
       });
 
       updateLiveClock();
