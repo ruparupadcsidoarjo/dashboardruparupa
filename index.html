@@ -1826,6 +1826,33 @@
 
       <!-- RETURN MANAGEMENT VIEW -->
       <div id="return-view" style="display: none;">
+        <!-- LAST DATA SUMMARY SCOPE -->
+        <div id="rtn-summary-scope" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 12px; padding: 12px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; color: #f8fafc; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.1);">
+           <div style="display: flex; align-items: center; gap: 12px;">
+             <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 18px;">
+               <i class="fa-solid fa-clock-rotate-left"></i>
+             </div>
+             <div>
+               <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Terakhir Data Return Masuk</div>
+               <div id="rtn-summary-last-date" style="font-size: 16px; font-weight: 800;">-</div>
+             </div>
+           </div>
+           
+           <div style="display: flex; gap: 40px; align-items: center;">
+             <div style="text-align: right;">
+               <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Total Invoices</div>
+               <div id="rtn-summary-total-inv" style="font-size: 18px; font-weight: 900; color: #ffffff;">0</div>
+             </div>
+             <div style="text-align: right;">
+               <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Total Qty</div>
+               <div style="display: flex; align-items: center; gap: 6px; justify-content: flex-end;">
+                 <div id="rtn-summary-total-qty" style="font-size: 18px; font-weight: 900; color: #10b981;">0</div>
+                 <span style="font-size: 11px; font-weight: 700; color: #94a3b8;">PCS</span>
+               </div>
+             </div>
+           </div>
+        </div>
+
         <!-- KPI ROW -->
         <section class="rtn-kpi-row">
           <!-- Card 1: On Progress -->
@@ -3723,6 +3750,11 @@
       const today = new Date();
       rtnAllItems = [];
 
+      // Overall Summary Accumulators (for the top right scope)
+      let overallLastDate = null;
+      const overallInvoices = new Set();
+      let overallTotalQty = 0;
+
       // Accumulators for top KPIs (CURRENT and PREVIOUS periods)
       let onProgressInvoiceCountCur = 0;
       let onProgressQtyCur = 0;
@@ -3763,6 +3795,15 @@
         const status = (row[COL_STATUS] || "Unknown").toString().trim();
         const qty = safeParseFloat(row[COL_QTY]);
         const statusUpper = status.toUpperCase().trim();
+
+        // Update overall summary logic
+        if (rowDate && !isNaN(rowDate.getTime())) {
+          if (!overallLastDate || rowDate > overallLastDate) {
+            overallLastDate = rowDate;
+          }
+        }
+        if (invoice) overallInvoices.add(invoice);
+        overallTotalQty += qty;
 
         const rowTime = rowDate ? rowDate.getTime() : null;
         const isCurrentPeriod = (rowTime !== null && !isNaN(rowTime) && rowTime >= currentStart.getTime() && rowTime <= currentEnd.getTime());
@@ -3844,6 +3885,21 @@
             soReturnQtyPrev += qty;
           }
         }
+      }
+
+      // Update Overall Summary UI
+      const lastDateElem = document.getElementById('rtn-summary-last-date');
+      const totalInvElem = document.getElementById('rtn-summary-total-inv');
+      const totalQtyElem = document.getElementById('rtn-summary-total-qty');
+
+      if (lastDateElem) {
+        lastDateElem.textContent = overallLastDate ? overallLastDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '-';
+      }
+      if (totalInvElem) {
+        animateValue('rtn-summary-total-inv', 0, overallInvoices.size, 1000);
+      }
+      if (totalQtyElem) {
+        animateValue('rtn-summary-total-qty', 0, overallTotalQty, 1000);
       }
 
       onProgressInvoiceCountCur = onProgressInvoicesCur.size;
@@ -4023,26 +4079,30 @@
       });
 
       // 2. Populating Category Badges text on Tabs (based on dates selected)
-      let countAll = 0;
-      let countOP = 0;
-      let countClaim = 0;
-      let countSO = 0;
+      const invAll = new Set();
+      const invOP = new Set();
+      const invClaim = new Set();
+      const invSO = new Set();
 
       rtnAllItems.forEach(item => {
-        countAll++;
-        if (item.statusUpper === 'ON PROGRESS') countOP++;
-        else if (item.statusUpper === 'CLAIM 3PL') countClaim++;
-        else if (item.statusUpper === 'SO RETURN') countSO++;
+        if (item.invoice) invAll.add(item.invoice);
+        if (item.statusUpper === 'ON PROGRESS') {
+          if (item.invoice) invOP.add(item.invoice);
+        } else if (item.statusUpper === 'CLAIM 3PL') {
+          if (item.invoice) invClaim.add(item.invoice);
+        } else if (item.statusUpper === 'SO RETURN') {
+          if (item.invoice) invSO.add(item.invoice);
+        }
       });
 
       const updateBadge = (id, val) => {
         const elem = document.getElementById(id);
         if (elem) elem.textContent = val.toLocaleString('id-ID');
       };
-      updateBadge('rtn-badge-all', countAll);
-      updateBadge('rtn-badge-onprogress', countOP);
-      updateBadge('rtn-badge-claim3pl', countClaim);
-      updateBadge('rtn-badge-soreturn', countSO);
+      updateBadge('rtn-badge-all', invAll.size);
+      updateBadge('rtn-badge-onprogress', invOP.size);
+      updateBadge('rtn-badge-claim3pl', invClaim.size);
+      updateBadge('rtn-badge-soreturn', invSO.size);
 
       // 3. Dynamic Area Dropdown options
       const areaSelect = document.getElementById('rtn-filter-area');
@@ -4106,12 +4166,12 @@
       updateRtnDeptQtyChart(filteredItems);
 
       // 5. Counting the number of items for Aging Pills
-      // These counts represent items within the currently selected CATEGORY tab, AREA and SEARCH, but unfiltered by AGING.
-      let countA1_3 = 0;
-      let countA3_6 = 0;
-      let countA7_9 = 0;
-      let countA9_12 = 0;
-      let countAgt16 = 0;
+      // These counts represent unique invoices within the currently selected CATEGORY tab, AREA and SEARCH, but unfiltered by AGING.
+      const invA1_3 = new Set();
+      const invA3_6 = new Set();
+      const invA7_9 = new Set();
+      const invA9_12 = new Set();
+      const invAgt16 = new Set();
 
       rtnAllItems.forEach(item => {
         // Match active category tab
@@ -4129,11 +4189,13 @@
         }
 
         const agingGroup = getAgingGroup(item);
-        if (agingGroup === '1-3 Bulan') countA1_3++;
-        else if (agingGroup === '3-6 Bulan') countA3_6++;
-        else if (agingGroup === '7-9 Bulan') countA7_9++;
-        else if (agingGroup === '9-12 Bulan') countA9_12++;
-        else if (agingGroup === '>16 Bulan') countAgt16++;
+        if (item.invoice) {
+          if (agingGroup === '1-3 Bulan') invA1_3.add(item.invoice);
+          else if (agingGroup === '3-6 Bulan') invA3_6.add(item.invoice);
+          else if (agingGroup === '7-9 Bulan') invA7_9.add(item.invoice);
+          else if (agingGroup === '9-12 Bulan') invA9_12.add(item.invoice);
+          else if (agingGroup === '>16 Bulan') invAgt16.add(item.invoice);
+        }
       });
 
       // Update badge counts on the aging pill buttons
@@ -4141,11 +4203,11 @@
         const el = document.getElementById(id);
         if (el) el.textContent = '(' + count + ')';
       };
-      updatePillBadge('rtn-scope-badge-1-3', countA1_3);
-      updatePillBadge('rtn-scope-badge-3-6', countA3_6);
-      updatePillBadge('rtn-scope-badge-7-9', countA7_9);
-      updatePillBadge('rtn-scope-badge-9-12', countA9_12);
-      updatePillBadge('rtn-scope-badge-gt16', countAgt16);
+      updatePillBadge('rtn-scope-badge-1-3', invA1_3.size);
+      updatePillBadge('rtn-scope-badge-3-6', invA3_6.size);
+      updatePillBadge('rtn-scope-badge-7-9', invA7_9.size);
+      updatePillBadge('rtn-scope-badge-9-12', invA9_12.size);
+      updatePillBadge('rtn-scope-badge-gt16', invAgt16.size);
 
       // Highlight the active aging pill button
       const agingPills = ['ALL', '1-3 Bulan', '3-6 Bulan', '7-9 Bulan', '9-12 Bulan', '>16 Bulan'];
