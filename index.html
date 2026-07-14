@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Monitoring Dashboard Return</title>
+  <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOVGfrmUJ08O_RERYGzhkd28TV2m6eAypRST20cq9aqw&s=10">
   
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1488,8 +1489,8 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-top">
       <div class="logo-area">
-        <div class="logo-icon">
-          <i class="fa-solid fa-truck-ramp-box"></i>
+        <div class="logo-icon" style="background: none; box-shadow: none; width: 42px; height: 42px;">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOVGfrmUJ08O_RERYGzhkd28TV2m6eAypRST20cq9aqw&s=10" alt="RupaRupa Logo" style="width: 100%; height: 100%; border-radius: 8px; object-fit: cover;" referrerPolicy="no-referrer">
         </div>
         <div class="logo-text-container">
           <span class="logo-title">RUPA-RUPA</span>
@@ -1989,8 +1990,105 @@
             </h3>
             <span id="rtn-bar-chart-subtitle" style="font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; background: rgba(79, 70, 229, 0.08); color: #4F46E5; font-family: var(--font-mono);">Bulanan / Harian</span>
           </div>
-          <div style="height: 300px; position: relative; width: 100%;">
-            <canvas id="chart-rtn-bar-qty"></canvas>
+          
+          <div style="display: flex; gap: 20px; width: 100%; align-items: stretch; flex-wrap: wrap;" id="rtn-bar-chart-wrapper">
+            <!-- Left Side: Chart (Flexible) -->
+            <div style="flex: 1 1 400px; display: flex; flex-direction: column; gap: 12px; min-width: 0;">
+              <div style="height: 260px; position: relative; width: 100%;">
+                <canvas id="chart-rtn-bar-qty"></canvas>
+              </div>
+              
+              <!-- Mini info bar -->
+              <div style="display: flex; gap: 12px; flex-wrap: wrap; background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 14px; border-radius: 10px;" class="no-print">
+                <div style="flex: 1; min-width: 90px; display: flex; flex-direction: column; gap: 2px;">
+                  <span style="font-size: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px;">TOTAL VOLUME</span>
+                  <span id="rtn-chart-foot-total" style="font-size: 12px; font-weight: 800; color: #1e293b; font-family: var(--font-mono);">0 Qty</span>
+                </div>
+                <div style="width: 1px; background: #e2e8f0; align-self: stretch;"></div>
+                <div style="flex: 1.2; min-width: 110px; display: flex; flex-direction: column; gap: 2px;">
+                  <span style="font-size: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px;">PUNCAK RETUR</span>
+                  <span id="rtn-chart-foot-peak" style="font-size: 12px; font-weight: 800; color: #4f46e5; font-family: var(--font-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">-</span>
+                </div>
+                <div style="width: 1px; background: #e2e8f0; align-self: stretch;"></div>
+                <div style="flex: 1; min-width: 100px; display: flex; flex-direction: column; gap: 2px;">
+                  <span style="font-size: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px;">RATA-RATA</span>
+                  <span id="rtn-chart-foot-avg" style="font-size: 12px; font-weight: 800; color: #ea580c; font-family: var(--font-mono);">0 Qty</span>
+                </div>
+                <div style="width: 1px; background: #e2e8f0; align-self: stretch;"></div>
+                <div style="flex: 1; min-width: 90px; display: flex; flex-direction: column; gap: 2px;">
+                  <span style="font-size: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px;">ON PROGRESS</span>
+                  <span id="rtn-chart-foot-active" style="font-size: 12px; font-weight: 800; color: #ef4444; font-family: var(--font-mono);">0 Qty</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Center Side: Stats Panel (width: 300px) -->
+            <div id="rtn-bar-chart-stats-panel" style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; justify-content: flex-start;" class="no-print">
+              <h4 style="font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin: 0 0 4px 0; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-square-poll-vertical" style="color: #4F46E5;"></i>
+                ANALISIS OPERASIONAL GUDANG
+              </h4>
+              
+              <!-- KPI 1: Resolution Rate -->
+              <div style="display: flex; flex-direction: column; gap: 4px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span style="font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase;">QC Resolution Rate</span>
+                  <span id="rtn-stats-resolution-val" style="font-size: 14px; font-weight: 800; color: #10b981;">0%</span>
+                </div>
+                <div style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
+                  <div id="rtn-stats-resolution-bar" style="width: 0%; height: 100%; background: #10b981; border-radius: 4px; transition: width 0.8s ease-out;"></div>
+                </div>
+                <span id="rtn-stats-resolution-sub" style="font-size: 9px; color: #94a3b8;">0 dari 0 unit telah diselesaikan</span>
+              </div>
+              
+              <!-- KPI 2: Avg Aging of Open Cases -->
+              <div style="display: flex; align-items: center; justify-content: space-between; background: #ffffff; border: 1px solid #e2e8f0; padding: 8px 10px; border-radius: 8px;">
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                  <span style="font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase;">Rata-rata Aging (On-Progress)</span>
+                  <span id="rtn-stats-avg-aging" style="font-size: 15px; font-weight: 800; color: #1e293b;">0 Hari</span>
+                </div>
+                <span id="rtn-stats-aging-status" style="font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 20px; background: #f1f5f9; color: #64748b;">AMAT BAIK</span>
+              </div>
+              
+              <!-- KPI 3: Highest Department Contributor -->
+              <div style="display: flex; flex-direction: column; gap: 4px; background: #ffffff; border: 1px solid #e2e8f0; padding: 8px 10px; border-radius: 8px;">
+                <span style="font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase;">Sektor Kontributor Terbanyak</span>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 2px;">
+                  <span id="rtn-stats-top-dept" style="font-size: 12px; font-weight: 800; color: #4f46e5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 150px;" title="-">-</span>
+                  <span id="rtn-stats-top-dept-qty" style="font-size: 10px; font-weight: 700; color: #475569; font-family: var(--font-mono); background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">0 Qty</span>
+                </div>
+              </div>
+              
+              <!-- KPI 4: Alert Message -->
+              <div id="rtn-stats-alert-card" style="display: flex; gap: 8px; background: rgba(79, 70, 229, 0.04); border: 1px solid rgba(79, 70, 229, 0.15); padding: 8px; border-radius: 8px; align-items: flex-start; margin-top: auto;">
+                <i class="fa-solid fa-circle-info" style="color: #4f46e5; font-size: 12px; margin-top: 2px;"></i>
+                <div style="display: flex; flex-direction: column; gap: 1px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #4f46e5;">INFORMASI ALUR QC</span>
+                  <p id="rtn-stats-alert-msg" style="font-size: 9px; color: #475569; margin: 0; line-height: 1.35;">Semua dokumen return dalam kondisi aman dan terkendali.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: Aging Distribution Breakdown (width: 300px) -->
+            <div id="rtn-aging-dist-card" style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; justify-content: flex-start;" class="no-print">
+              <h4 style="font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin: 0 0 4px 0; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-hourglass-half" style="color: #f59e0b;"></i>
+                DISTRIBUSI AGING RETURN
+              </h4>
+              
+              <div id="rtn-aging-dist-container" style="display: flex; flex-direction: column; gap: 11px;">
+                <!-- Dynamically populated -->
+              </div>
+
+              <!-- Recommendation Alert Block -->
+              <div id="rtn-aging-recommendation-card" style="display: flex; gap: 8px; background: rgba(245, 158, 11, 0.04); border: 1px solid rgba(245, 158, 11, 0.15); padding: 8px; border-radius: 8px; align-items: flex-start; margin-top: auto;">
+                <i class="fa-solid fa-lightbulb" style="color: #f59e0b; font-size: 12px; margin-top: 2px;"></i>
+                <div style="display: flex; flex-direction: column; gap: 1px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #d97706;">REKOMENDASI OPERASIONAL</span>
+                  <p id="rtn-aging-recommendation-msg" style="font-size: 9px; color: #475569; margin: 0; line-height: 1.35;">Menganalisis komposisi usia dokumen...</p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -4902,6 +5000,88 @@
           legendContainer.appendChild(item);
         });
       }
+
+      // Populate Aging Distribution Card
+      const agingDistContainer = document.getElementById('rtn-aging-dist-container');
+      if (agingDistContainer) {
+        agingDistContainer.innerHTML = '';
+        
+        // Count frequencies of aging groups for currently filtered items
+        const groupCounts = {
+          '1-3 Bulan': 0,
+          '3-6 Bulan': 0,
+          '7-9 Bulan': 0,
+          '9-12 Bulan': 0,
+          '>16 Bulan': 0
+        };
+        
+        items.forEach(item => {
+          const group = getAgingGroup(item);
+          if (groupCounts[group] !== undefined) {
+            groupCounts[group] += item.qty || 0;
+          }
+        });
+        
+        const totalAgingQty = Object.values(groupCounts).reduce((acc, curr) => acc + curr, 0);
+        
+        const groupStyles = {
+          '1-3 Bulan': { color: '#3b82f6', bg: '#eff6ff', border: '#dbeafe', label: '1 - 3 Bulan' },
+          '3-6 Bulan': { color: '#10b981', bg: '#f0fdf4', border: '#dcfce7', label: '3 - 6 Bulan' },
+          '7-9 Bulan': { color: '#f97316', bg: '#fff7ed', border: '#ffedd5', label: '7 - 9 Bulan' },
+          '9-12 Bulan': { color: '#ef4444', bg: '#fff1f2', border: '#ffe4e6', label: '9 - 12 Bulan' },
+          '>16 Bulan': { color: '#8b5cf6', bg: '#f5f3ff', border: '#ede9fe', label: '> 16 Bulan' }
+        };
+        
+        Object.entries(groupCounts).forEach(([groupName, groupQty]) => {
+          const style = groupStyles[groupName];
+          const pct = totalAgingQty > 0 ? ((groupQty / totalAgingQty) * 100).toFixed(1) : '0.0';
+          
+          const groupItem = document.createElement('div');
+          groupItem.style.display = 'flex';
+          groupItem.style.flexDirection = 'column';
+          groupItem.style.gap = '4px';
+          
+          groupItem.innerHTML = `
+            <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #475569;">
+              <span style="display: flex; align-items: center; gap: 6px; font-size: 11px;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: ${style.color}; display: inline-block;"></span>
+                ${style.label}
+              </span>
+              <span style="color: ${style.color}; font-weight: 800; font-family: var(--font-mono); font-size: 11px;">${groupQty.toLocaleString('id-ID')} Qty (${pct}%)</span>
+            </div>
+            <div style="width: 100%; height: 8px; background: #f1f5f9; border-radius: 4px; overflow: hidden; border: 1px solid #e2e8f0;">
+              <div style="width: ${pct}%; height: 100%; background: ${style.color}; border-radius: 4px; transition: width 0.8s ease-out;"></div>
+            </div>
+          `;
+          agingDistContainer.appendChild(groupItem);
+        });
+
+        // Update Recommendation Message Dynamically
+        const recommendationMsgElem = document.getElementById('rtn-aging-recommendation-msg');
+        if (recommendationMsgElem) {
+          if (totalAgingQty === 0) {
+            recommendationMsgElem.innerHTML = "Tidak ada penuaan dokumen yang aktif pada filter saat ini.";
+          } else {
+            const qtyGt16 = groupCounts['>16 Bulan'] || 0;
+            const qty9to12 = groupCounts['9-12 Bulan'] || 0;
+            const qty7to9 = groupCounts['7-9 Bulan'] || 0;
+            const qty3to6 = groupCounts['3-6 Bulan'] || 0;
+            const qty1to3 = groupCounts['1-3 Bulan'] || 0;
+
+            const pctCritical = ((qtyGt16 + qty9to12 + qty7to9) / totalAgingQty) * 100;
+
+            if (qtyGt16 > 0) {
+              recommendationMsgElem.innerHTML = `<strong>Prioritas Utama:</strong> Terdapat antrean berusia &gt;16 bulan (${qtyGt16.toLocaleString('id-ID')} Qty). Segera lakukan <em>write-off</em> atau audit pembersihan fisik.`;
+            } else if (pctCritical > 20) {
+              recommendationMsgElem.innerHTML = `<strong>Tindak Lanjut Vendor:</strong> Berkas penuaan tinggi (&gt;6 bulan) mendominasi (${Math.round(pctCritical)}%). Jadwalkan koordinasi eskalasi klaim vendor minggu ini.`;
+            } else if (qty3to6 > qty1to3) {
+              recommendationMsgElem.innerHTML = `<strong>Percepat Verifikasi:</strong> Penumpukan terdeteksi pada kelompok usia 3-6 bulan (${qty3to6.toLocaleString('id-ID')} Qty). Butuh eskalasi tim QC Gudang.`;
+            } else {
+              recommendationMsgElem.innerHTML = `<strong>Operasional Sehat:</strong> Turnaround time optimal dengan mayoritas berkas berada di kelompok usia muda (<3 bln). Pertahankan ritme kerja ini!`;
+            }
+          }
+        }
+      }
     }
 
     function updateRtnBarChart(items) {
@@ -5091,6 +5271,39 @@
         });
       }
 
+      // Calculate Average Line (Rata-rata)
+      let avgValue = 0;
+      if (labels.length > 0) {
+        const barTotals = labels.map((_, i) => {
+          let sum = 0;
+          statuses.forEach(status => {
+            sum += (statusData[status][i] || 0);
+          });
+          return sum;
+        });
+        const totalSum = barTotals.reduce((a, b) => a + b, 0);
+        avgValue = totalSum / labels.length;
+      }
+
+      if (avgValue > 0) {
+        datasets.push({
+          type: 'line',
+          label: `Rata-rata (${Math.round(avgValue).toLocaleString('id-ID')} Qty)`,
+          data: labels.map(() => avgValue),
+          borderColor: '#ea580c', // Bright orange for visibility
+          borderWidth: 2.5,
+          borderDash: [6, 4],
+          fill: false,
+          pointRadius: 0,
+          pointHoverRadius: 0,
+          tension: 0,
+          datalabels: {
+            display: false // suppress labels on the line points
+          },
+          order: -1 // draw line on top of the bars
+        });
+      }
+
       chartRtnBarQty = new Chart(ctxElem, {
         type: 'bar',
         data: {
@@ -5179,6 +5392,131 @@
         },
         plugins: [ChartDataLabels]
       });
+
+      // Calculate Peak Return
+      let peakLabel = '-';
+      let peakValue = 0;
+      if (labels.length > 0) {
+        labels.forEach((lbl, i) => {
+          let sum = 0;
+          statuses.forEach(status => {
+            sum += (statusData[status][i] || 0);
+          });
+          if (sum > peakValue) {
+            peakValue = sum;
+            peakLabel = lbl;
+          }
+        });
+      }
+
+      // Update Mini Info Bar
+      const footTotalElem = document.getElementById('rtn-chart-foot-total');
+      const footPeakElem = document.getElementById('rtn-chart-foot-peak');
+      const footAvgElem = document.getElementById('rtn-chart-foot-avg');
+      const footActiveElem = document.getElementById('rtn-chart-foot-active');
+
+      const totalRtnQty = items.reduce((sum, item) => sum + (item.qty || 0), 0);
+      const activeRtnQty = items.filter(item => (item.statusUpper || '').trim() === 'ON PROGRESS').reduce((sum, item) => sum + (item.qty || 0), 0);
+
+      if (footTotalElem) footTotalElem.textContent = `${totalRtnQty.toLocaleString('id-ID')} Qty`;
+      if (footPeakElem) {
+        if (peakValue > 0) {
+          footPeakElem.textContent = `${peakLabel} (${peakValue.toLocaleString('id-ID')} Qty)`;
+          footPeakElem.title = `${peakLabel} (${peakValue.toLocaleString('id-ID')} Qty)`;
+        } else {
+          footPeakElem.textContent = '-';
+        }
+      }
+      if (footAvgElem) footAvgElem.textContent = `${Math.round(avgValue).toLocaleString('id-ID')} Qty`;
+      if (footActiveElem) footActiveElem.textContent = `${activeRtnQty.toLocaleString('id-ID')} Qty`;
+
+      // DYNAMIC CALCULATION AND DOM POPULATION FOR THE WAREHOUSE STATS PANEL
+      const totalQty = items.reduce((sum, item) => sum + (item.qty || 0), 0);
+      const opItems = items.filter(item => (item.statusUpper || '').trim() === 'ON PROGRESS');
+      const opQty = opItems.reduce((sum, item) => sum + (item.qty || 0), 0);
+      const resolvedQty = Math.max(0, totalQty - opQty);
+      
+      const resolutionRate = totalQty > 0 ? (resolvedQty / totalQty) * 100 : 0;
+      const avgAging = opItems.length > 0 ? (opItems.reduce((sum, item) => sum + (item.agingDays || 0), 0) / opItems.length) : 0;
+      
+      // Top Department Contributor
+      const deptMap = {};
+      items.forEach(it => {
+        const dept = it.department || 'LAINNYA';
+        deptMap[dept] = (deptMap[dept] || 0) + (it.qty || 0);
+      });
+      let maxDept = '-';
+      let maxDeptQty = 0;
+      Object.entries(deptMap).forEach(([d, q]) => {
+        if (q > maxDeptQty) {
+          maxDeptQty = q;
+          maxDept = d;
+        }
+      });
+      
+      // Populate Resolution Rate
+      const resValElem = document.getElementById('rtn-stats-resolution-val');
+      const resBarElem = document.getElementById('rtn-stats-resolution-bar');
+      const resSubElem = document.getElementById('rtn-stats-resolution-sub');
+      
+      if (resValElem) resValElem.textContent = `${resolutionRate.toFixed(1)}%`;
+      if (resBarElem) resBarElem.style.width = `${resolutionRate}%`;
+      if (resSubElem) resSubElem.textContent = `${resolvedQty.toLocaleString('id-ID')} dari ${totalQty.toLocaleString('id-ID')} unit telah diselesaikan`;
+      
+      // Populate Average Aging
+      const avgAgingElem = document.getElementById('rtn-stats-avg-aging');
+      const agingStatusElem = document.getElementById('rtn-stats-aging-status');
+      
+      if (avgAgingElem) avgAgingElem.textContent = `${Math.round(avgAging)} Hari`;
+      if (agingStatusElem) {
+        if (opItems.length === 0) {
+          agingStatusElem.textContent = 'SELESAI';
+          agingStatusElem.style.background = '#dcfce7';
+          agingStatusElem.style.color = '#15803d';
+        } else if (avgAging <= 30) {
+          agingStatusElem.textContent = 'SANGAT CEPAT';
+          agingStatusElem.style.background = '#dcfce7';
+          agingStatusElem.style.color = '#15803d';
+        } else if (avgAging <= 60) {
+          agingStatusElem.textContent = 'OPTIMAL';
+          agingStatusElem.style.background = '#eff6ff';
+          agingStatusElem.style.color = '#1d4ed8';
+        } else if (avgAging <= 90) {
+          agingStatusElem.textContent = 'PERLU TINGKATKAN';
+          agingStatusElem.style.background = '#fff7ed';
+          agingStatusElem.style.color = '#c2410c';
+        } else {
+          agingStatusElem.textContent = 'CRITICAL AGING';
+          agingStatusElem.style.background = '#ffe4e6';
+          agingStatusElem.style.color = '#be123c';
+        }
+      }
+      
+      // Populate Sektor Kontributor Terbanyak
+      const topDeptElem = document.getElementById('rtn-stats-top-dept');
+      const topDeptQtyElem = document.getElementById('rtn-stats-top-dept-qty');
+      
+      if (topDeptElem) {
+        topDeptElem.textContent = maxDept;
+        topDeptElem.title = maxDept;
+      }
+      if (topDeptQtyElem) topDeptQtyElem.textContent = `${maxDeptQty.toLocaleString('id-ID')} Qty`;
+      
+      // Populate Informative Alert Prompt
+      const alertMsgElem = document.getElementById('rtn-stats-alert-msg');
+      if (alertMsgElem) {
+        if (totalQty === 0) {
+          alertMsgElem.textContent = 'Tidak ada aktivitas return terdeteksi untuk periode filter ini.';
+        } else if (opItems.length === 0) {
+          alertMsgElem.textContent = 'Luar biasa! Semua dokumen return dalam periode ini telah selesai diproses QC 100%.';
+        } else if (avgAging > 90) {
+          alertMsgElem.textContent = 'Perhatian! Terdapat antrean return dengan penuaan tinggi (>90 hari). Harap jadwalkan audit QC ekstra.';
+        } else if (resolutionRate < 50) {
+          alertMsgElem.textContent = 'Status alur lambat: Lebih dari 50% return masih dalam proses QC. Butuh percepatan penyelesaian.';
+        } else {
+          alertMsgElem.textContent = `Aktivitas normal. ${opItems.length} dokumen masih aktif diproses dengan estimasi penyelesaian terkendali.`;
+        }
+      }
     }
 
     function updateRtnTopSkuTable(items) {
