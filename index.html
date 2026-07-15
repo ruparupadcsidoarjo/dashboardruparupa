@@ -1829,13 +1829,26 @@
       <div id="return-view" style="display: none;">
         <!-- LAST DATA SUMMARY SCOPE -->
         <div id="rtn-summary-scope" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 12px; padding: 12px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; color: #f8fafc; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.1);">
-           <div style="display: flex; align-items: center; gap: 12px;">
-             <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 18px;">
-               <i class="fa-solid fa-clock-rotate-left"></i>
+           <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+             <div style="display: flex; align-items: center; gap: 12px;">
+               <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                 <i class="fa-solid fa-clock-rotate-left"></i>
+               </div>
+               <div>
+                 <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Terakhir Data Return Masuk</div>
+                 <div id="rtn-summary-last-date" style="font-size: 16px; font-weight: 800;">-</div>
+               </div>
              </div>
-             <div>
-               <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Terakhir Data Return Masuk</div>
-               <div id="rtn-summary-last-date" style="font-size: 16px; font-weight: 800;">-</div>
+
+             <!-- New Element: Peak Return Month, shown only when Date Filter is ALL -->
+             <div id="rtn-summary-peak-month-container" style="display: none; align-items: center; gap: 12px; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 20px;">
+               <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                 <i class="fa-solid fa-calendar-check" style="color: #f59e0b;"></i>
+               </div>
+               <div>
+                 <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Bulan Return Terbanyak</div>
+                 <div id="rtn-summary-peak-month" style="font-size: 16px; font-weight: 800; color: #f59e0b;">-</div>
+               </div>
              </div>
            </div>
            
@@ -1982,7 +1995,7 @@
         </section>
 
         <!-- SECTION — DYNAMIC BAR CHART -->
-        <section class="dashboard-card" style="margin-top: 24px; border: 2px solid #e2e8f0; border-radius: 16px; padding: 20px; background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 16px;" id="rtn-bar-chart-card">
+        <section class="dashboard-card" style="margin-top: 24px; border: 2px solid #e2e8f0; border-radius: 16px; padding: 24px; background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 20px;" id="rtn-bar-chart-card">
           <div class="card-header" style="border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
             <h3 class="card-header-title" style="font-size: 15px; font-weight: 800; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
               <i class="fa-solid fa-chart-column" style="color: #4F46E5;"></i>
@@ -1991,102 +2004,23 @@
             <span id="rtn-bar-chart-subtitle" style="font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; background: rgba(79, 70, 229, 0.08); color: #4F46E5; font-family: var(--font-mono);">Bulanan / Harian</span>
           </div>
           
-          <div style="display: flex; gap: 20px; width: 100%; align-items: stretch; flex-wrap: wrap;" id="rtn-bar-chart-wrapper">
+          <div style="display: flex; gap: 24px; width: 100%; align-items: stretch; flex-wrap: wrap;" id="rtn-bar-chart-wrapper">
             <!-- Left Side: Chart (Flexible) -->
             <div style="flex: 1 1 400px; display: flex; flex-direction: column; gap: 12px; min-width: 0;">
-              <div style="height: 260px; position: relative; width: 100%;">
-                <canvas id="chart-rtn-bar-qty"></canvas>
-              </div>
-              
-              <!-- Mini info bar -->
-              <div style="display: flex; gap: 12px; flex-wrap: wrap; background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 14px; border-radius: 10px;" class="no-print">
-                <div style="flex: 1; min-width: 90px; display: flex; flex-direction: column; gap: 2px;">
-                  <span style="font-size: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px;">TOTAL VOLUME</span>
-                  <span id="rtn-chart-foot-total" style="font-size: 12px; font-weight: 800; color: #1e293b; font-family: var(--font-mono);">0 Qty</span>
-                </div>
-                <div style="width: 1px; background: #e2e8f0; align-self: stretch;"></div>
-                <div style="flex: 1.2; min-width: 110px; display: flex; flex-direction: column; gap: 2px;">
-                  <span style="font-size: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px;">PUNCAK RETUR</span>
-                  <span id="rtn-chart-foot-peak" style="font-size: 12px; font-weight: 800; color: #4f46e5; font-family: var(--font-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">-</span>
-                </div>
-                <div style="width: 1px; background: #e2e8f0; align-self: stretch;"></div>
-                <div style="flex: 1; min-width: 100px; display: flex; flex-direction: column; gap: 2px;">
-                  <span style="font-size: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px;">RATA-RATA</span>
-                  <span id="rtn-chart-foot-avg" style="font-size: 12px; font-weight: 800; color: #ea580c; font-family: var(--font-mono);">0 Qty</span>
-                </div>
-                <div style="width: 1px; background: #e2e8f0; align-self: stretch;"></div>
-                <div style="flex: 1; min-width: 90px; display: flex; flex-direction: column; gap: 2px;">
-                  <span style="font-size: 8px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px;">ON PROGRESS</span>
-                  <span id="rtn-chart-foot-active" style="font-size: 12px; font-weight: 800; color: #ef4444; font-family: var(--font-mono);">0 Qty</span>
-                </div>
-              </div>
+               <div style="height: 330px; position: relative; width: 100%;">
+                 <canvas id="chart-rtn-bar-qty"></canvas>
+               </div>
             </div>
             
-            <!-- Center Side: Stats Panel (width: 300px) -->
-            <div id="rtn-bar-chart-stats-panel" style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; justify-content: flex-start;" class="no-print">
-              <h4 style="font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin: 0 0 4px 0; display: flex; align-items: center; gap: 6px;">
-                <i class="fa-solid fa-square-poll-vertical" style="color: #4F46E5;"></i>
-                ANALISIS OPERASIONAL GUDANG
-              </h4>
-              
-              <!-- KPI 1: Resolution Rate -->
-              <div style="display: flex; flex-direction: column; gap: 4px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <span style="font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase;">QC Resolution Rate</span>
-                  <span id="rtn-stats-resolution-val" style="font-size: 14px; font-weight: 800; color: #10b981;">0%</span>
-                </div>
-                <div style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
-                  <div id="rtn-stats-resolution-bar" style="width: 0%; height: 100%; background: #10b981; border-radius: 4px; transition: width 0.8s ease-out;"></div>
-                </div>
-                <span id="rtn-stats-resolution-sub" style="font-size: 9px; color: #94a3b8;">0 dari 0 unit telah diselesaikan</span>
-              </div>
-              
-              <!-- KPI 2: Avg Aging of Open Cases -->
-              <div style="display: flex; align-items: center; justify-content: space-between; background: #ffffff; border: 1px solid #e2e8f0; padding: 8px 10px; border-radius: 8px;">
-                <div style="display: flex; flex-direction: column; gap: 2px;">
-                  <span style="font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase;">Rata-rata Aging (On-Progress)</span>
-                  <span id="rtn-stats-avg-aging" style="font-size: 15px; font-weight: 800; color: #1e293b;">0 Hari</span>
-                </div>
-                <span id="rtn-stats-aging-status" style="font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 20px; background: #f1f5f9; color: #64748b;">AMAT BAIK</span>
-              </div>
-              
-              <!-- KPI 3: Highest Department Contributor -->
-              <div style="display: flex; flex-direction: column; gap: 4px; background: #ffffff; border: 1px solid #e2e8f0; padding: 8px 10px; border-radius: 8px;">
-                <span style="font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase;">Sektor Kontributor Terbanyak</span>
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 2px;">
-                  <span id="rtn-stats-top-dept" style="font-size: 12px; font-weight: 800; color: #4f46e5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 150px;" title="-">-</span>
-                  <span id="rtn-stats-top-dept-qty" style="font-size: 10px; font-weight: 700; color: #475569; font-family: var(--font-mono); background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">0 Qty</span>
-                </div>
-              </div>
-              
-              <!-- KPI 4: Alert Message -->
-              <div id="rtn-stats-alert-card" style="display: flex; gap: 8px; background: rgba(79, 70, 229, 0.04); border: 1px solid rgba(79, 70, 229, 0.15); padding: 8px; border-radius: 8px; align-items: flex-start; margin-top: auto;">
-                <i class="fa-solid fa-circle-info" style="color: #4f46e5; font-size: 12px; margin-top: 2px;"></i>
-                <div style="display: flex; flex-direction: column; gap: 1px;">
-                  <span style="font-size: 10px; font-weight: 800; color: #4f46e5;">INFORMASI ALUR QC</span>
-                  <p id="rtn-stats-alert-msg" style="font-size: 9px; color: #475569; margin: 0; line-height: 1.35;">Semua dokumen return dalam kondisi aman dan terkendali.</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Side: Aging Distribution Breakdown (width: 300px) -->
-            <div id="rtn-aging-dist-card" style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; justify-content: flex-start;" class="no-print">
-              <h4 style="font-size: 11px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin: 0 0 4px 0; display: flex; align-items: center; gap: 6px;">
+            <!-- Right Side: Aging Distribution Breakdown (width: 330px) -->
+            <div id="rtn-aging-dist-card" style="width: 330px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; justify-content: flex-start;" class="no-print">
+              <h4 style="font-size: 12px; font-weight: 800; color: #334155; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin: 0 0 10px 0; display: flex; align-items: center; gap: 8px;">
                 <i class="fa-solid fa-hourglass-half" style="color: #f59e0b;"></i>
                 DISTRIBUSI AGING RETURN
               </h4>
               
-              <div id="rtn-aging-dist-container" style="display: flex; flex-direction: column; gap: 11px;">
+              <div id="rtn-aging-dist-container" style="display: flex; flex-direction: column; gap: 14px;">
                 <!-- Dynamically populated -->
-              </div>
-
-              <!-- Recommendation Alert Block -->
-              <div id="rtn-aging-recommendation-card" style="display: flex; gap: 8px; background: rgba(245, 158, 11, 0.04); border: 1px solid rgba(245, 158, 11, 0.15); padding: 8px; border-radius: 8px; align-items: flex-start; margin-top: auto;">
-                <i class="fa-solid fa-lightbulb" style="color: #f59e0b; font-size: 12px; margin-top: 2px;"></i>
-                <div style="display: flex; flex-direction: column; gap: 1px;">
-                  <span style="font-size: 10px; font-weight: 800; color: #d97706;">REKOMENDASI OPERASIONAL</span>
-                  <p id="rtn-aging-recommendation-msg" style="font-size: 9px; color: #475569; margin: 0; line-height: 1.35;">Menganalisis komposisi usia dokumen...</p>
-                </div>
               </div>
             </div>
           </div>
@@ -4124,6 +4058,80 @@
         animateValue('rtn-summary-total-qty', 0, overallTotalQty, 1000);
       }
 
+      // Check if filter is ALL dates (Semua Bulan / reset filters)
+      let isAllDateFilter = false;
+      if (filterMonth === "") {
+        if (!dateStartVal && !dateEndVal) {
+          isAllDateFilter = true;
+        } else if (sheetMinDate && sheetMaxDate) {
+          const inputStart = dateStart ? dateStart.getTime() : null;
+          const inputEnd = dateEnd ? dateEnd.getTime() : null;
+          const minTime = sheetMinDate.getTime();
+          const maxTime = sheetMaxDate.getTime();
+          // allow 1 day tolerance (86400000 ms)
+          if ((!inputStart || inputStart <= minTime + 86400000) && (!inputEnd || inputEnd >= maxTime - 86400000)) {
+            isAllDateFilter = true;
+          }
+        } else {
+          isAllDateFilter = true;
+        }
+      }
+
+      // Peak month return calculation across entire dataset
+      let peakMonthText = "-";
+      if (parsedSheetReturn && parsedSheetReturn.length > 1) {
+        const monthQtyMap = {};
+        const indonesianMonths = [
+          "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+          "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        ];
+        
+        for (let i = 1; i < parsedSheetReturn.length; i++) {
+          const row = parsedSheetReturn[i];
+          if (!row || row.length <= COL_DATE) continue;
+          let rowDate = null;
+          let dateVal = row[COL_DATE];
+          if (typeof dateVal === 'number') {
+            rowDate = new Date((dateVal - 25569) * 86400 * 1000);
+          } else if (dateVal) {
+            rowDate = parseDateFromStr(dateVal.toString());
+          }
+          
+          if (rowDate && !isNaN(rowDate.getTime())) {
+            const qty = safeParseFloat(row[COL_QTY]);
+            const monthIdx = rowDate.getMonth();
+            const yearVal = rowDate.getFullYear();
+            const monthKey = `${monthIdx}-${yearVal}`;
+            monthQtyMap[monthKey] = (monthQtyMap[monthKey] || 0) + qty;
+          }
+        }
+        
+        let maxMonthKey = null;
+        let maxMonthQty = -1;
+        for (const key in monthQtyMap) {
+          if (monthQtyMap[key] > maxMonthQty) {
+            maxMonthQty = monthQtyMap[key];
+            maxMonthKey = key;
+          }
+        }
+        
+        if (maxMonthKey) {
+          const [mIdx, yVal] = maxMonthKey.split('-').map(Number);
+          peakMonthText = `${indonesianMonths[mIdx]} ${yVal} (${Math.round(maxMonthQty).toLocaleString('id-ID')} Qty)`;
+        }
+      }
+
+      const peakMonthContainer = document.getElementById('rtn-summary-peak-month-container');
+      const peakMonthElem = document.getElementById('rtn-summary-peak-month');
+      if (peakMonthContainer && peakMonthElem) {
+        if (isAllDateFilter) {
+          peakMonthElem.textContent = peakMonthText;
+          peakMonthContainer.style.display = 'flex';
+        } else {
+          peakMonthContainer.style.display = 'none';
+        }
+      }
+
       // Update redesigned KPI cards (animated counters)
       animateValue('rtn-kpi-onprogress-invoice', 0, onProgressInvoiceCountCur, 1000);
       animateValue('rtn-kpi-onprogress-qty', 0, onProgressQtyCur, 1000);
@@ -5039,48 +5047,25 @@
           const groupItem = document.createElement('div');
           groupItem.style.display = 'flex';
           groupItem.style.flexDirection = 'column';
-          groupItem.style.gap = '4px';
+          groupItem.style.gap = '5px';
           
           groupItem.innerHTML = `
-            <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #475569;">
-              <span style="display: flex; align-items: center; gap: 6px; font-size: 11px;">
-                <span style="width: 8px; height: 8px; border-radius: 50%; background: ${style.color}; display: inline-block;"></span>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: #334155;">
+                <span style="width: 10px; height: 10px; border-radius: 50%; background: ${style.color}; display: inline-block; box-shadow: 0 0 4px ${style.color}40;"></span>
                 ${style.label}
               </span>
-              <span style="color: ${style.color}; font-weight: 800; font-family: var(--font-mono); font-size: 11px;">${groupQty.toLocaleString('id-ID')} Qty (${pct}%)</span>
+              <span style="color: #1e293b; font-weight: 800; font-family: var(--font-mono); font-size: 12px;">
+                ${groupQty.toLocaleString('id-ID')} Qty 
+                <span style="color: ${style.color}; font-weight: 700; margin-left: 2px;">(${pct}%)</span>
+              </span>
             </div>
-            <div style="width: 100%; height: 8px; background: #f1f5f9; border-radius: 4px; overflow: hidden; border: 1px solid #e2e8f0;">
-              <div style="width: ${pct}%; height: 100%; background: ${style.color}; border-radius: 4px; transition: width 0.8s ease-out;"></div>
+            <div style="width: 100%; height: 10px; background: #e2e8f0; border-radius: 6px; overflow: hidden; border: 1px solid #cbd5e1; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);">
+              <div style="width: ${pct}%; height: 100%; background: ${style.color}; border-radius: 6px; transition: width 0.8s ease-out; box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);"></div>
             </div>
           `;
           agingDistContainer.appendChild(groupItem);
         });
-
-        // Update Recommendation Message Dynamically
-        const recommendationMsgElem = document.getElementById('rtn-aging-recommendation-msg');
-        if (recommendationMsgElem) {
-          if (totalAgingQty === 0) {
-            recommendationMsgElem.innerHTML = "Tidak ada penuaan dokumen yang aktif pada filter saat ini.";
-          } else {
-            const qtyGt16 = groupCounts['>16 Bulan'] || 0;
-            const qty9to12 = groupCounts['9-12 Bulan'] || 0;
-            const qty7to9 = groupCounts['7-9 Bulan'] || 0;
-            const qty3to6 = groupCounts['3-6 Bulan'] || 0;
-            const qty1to3 = groupCounts['1-3 Bulan'] || 0;
-
-            const pctCritical = ((qtyGt16 + qty9to12 + qty7to9) / totalAgingQty) * 100;
-
-            if (qtyGt16 > 0) {
-              recommendationMsgElem.innerHTML = `<strong>Prioritas Utama:</strong> Terdapat antrean berusia &gt;16 bulan (${qtyGt16.toLocaleString('id-ID')} Qty). Segera lakukan <em>write-off</em> atau audit pembersihan fisik.`;
-            } else if (pctCritical > 20) {
-              recommendationMsgElem.innerHTML = `<strong>Tindak Lanjut Vendor:</strong> Berkas penuaan tinggi (&gt;6 bulan) mendominasi (${Math.round(pctCritical)}%). Jadwalkan koordinasi eskalasi klaim vendor minggu ini.`;
-            } else if (qty3to6 > qty1to3) {
-              recommendationMsgElem.innerHTML = `<strong>Percepat Verifikasi:</strong> Penumpukan terdeteksi pada kelompok usia 3-6 bulan (${qty3to6.toLocaleString('id-ID')} Qty). Butuh eskalasi tim QC Gudang.`;
-            } else {
-              recommendationMsgElem.innerHTML = `<strong>Operasional Sehat:</strong> Turnaround time optimal dengan mayoritas berkas berada di kelompok usia muda (<3 bln). Pertahankan ritme kerja ini!`;
-            }
-          }
-        }
       }
     }
 
@@ -5271,38 +5256,7 @@
         });
       }
 
-      // Calculate Average Line (Rata-rata)
-      let avgValue = 0;
-      if (labels.length > 0) {
-        const barTotals = labels.map((_, i) => {
-          let sum = 0;
-          statuses.forEach(status => {
-            sum += (statusData[status][i] || 0);
-          });
-          return sum;
-        });
-        const totalSum = barTotals.reduce((a, b) => a + b, 0);
-        avgValue = totalSum / labels.length;
-      }
-
-      if (avgValue > 0) {
-        datasets.push({
-          type: 'line',
-          label: `Rata-rata (${Math.round(avgValue).toLocaleString('id-ID')} Qty)`,
-          data: labels.map(() => avgValue),
-          borderColor: '#ea580c', // Bright orange for visibility
-          borderWidth: 2.5,
-          borderDash: [6, 4],
-          fill: false,
-          pointRadius: 0,
-          pointHoverRadius: 0,
-          tension: 0,
-          datalabels: {
-            display: false // suppress labels on the line points
-          },
-          order: -1 // draw line on top of the bars
-        });
-      }
+      // Calculate Average Line (Rata-rata) removed as requested by the user
 
       chartRtnBarQty = new Chart(ctxElem, {
         type: 'bar',
@@ -5327,14 +5281,14 @@
               labels: {
                 usePointStyle: true,
                 pointStyle: 'circle',
-                boxWidth: 8,
-                padding: 15,
+                boxWidth: 10,
+                padding: 20,
                 font: {
                   family: 'Inter',
-                  size: 11,
-                  weight: '800'
+                  size: 12,
+                  weight: '700'
                 },
-                color: '#475569'
+                color: '#334155'
               }
             },
             tooltip: {
@@ -5359,7 +5313,7 @@
               offset: 2,
               font: {
                 weight: '800',
-                size: 10,
+                size: 11,
                 family: 'Inter'
               },
               formatter: (value) => {
@@ -5371,7 +5325,7 @@
             x: {
               grid: { display: false },
               ticks: {
-                font: { family: 'Inter', size: 11, weight: '600' },
+                font: { family: 'Inter', size: 12, weight: '600' },
                 color: '#475569'
               }
             },
@@ -5381,7 +5335,7 @@
                 drawBorder: false
               },
               ticks: {
-                font: { family: 'Inter', size: 11 },
+                font: { family: 'Inter', size: 12 },
                 color: '#64748b',
                 callback: function(value) {
                   return value.toLocaleString('id-ID');
@@ -5412,11 +5366,16 @@
       // Update Mini Info Bar
       const footTotalElem = document.getElementById('rtn-chart-foot-total');
       const footPeakElem = document.getElementById('rtn-chart-foot-peak');
-      const footAvgElem = document.getElementById('rtn-chart-foot-avg');
+      const footSoElem = document.getElementById('rtn-chart-foot-so');
+      const footSendBackElem = document.getElementById('rtn-chart-foot-sendback');
+      const footClaimElem = document.getElementById('rtn-chart-foot-claim');
       const footActiveElem = document.getElementById('rtn-chart-foot-active');
 
       const totalRtnQty = items.reduce((sum, item) => sum + (item.qty || 0), 0);
       const activeRtnQty = items.filter(item => (item.statusUpper || '').trim() === 'ON PROGRESS').reduce((sum, item) => sum + (item.qty || 0), 0);
+      const claim3plQty = items.filter(item => (item.statusUpper || '').trim() === 'CLAIM 3PL').reduce((sum, item) => sum + (item.qty || 0), 0);
+      const soRtnQty = items.filter(item => (item.statusUpper || '').trim() === 'SO RETURN').reduce((sum, item) => sum + (item.qty || 0), 0);
+      const sendBackQty = items.filter(item => (item.statusUpper || '').trim() === 'BARANG KEMBALI DIKIRIM KE CUSTOMER').reduce((sum, item) => sum + (item.qty || 0), 0);
 
       if (footTotalElem) footTotalElem.textContent = `${totalRtnQty.toLocaleString('id-ID')} Qty`;
       if (footPeakElem) {
@@ -5427,7 +5386,9 @@
           footPeakElem.textContent = '-';
         }
       }
-      if (footAvgElem) footAvgElem.textContent = `${Math.round(avgValue).toLocaleString('id-ID')} Qty`;
+      if (footSoElem) footSoElem.textContent = `${soRtnQty.toLocaleString('id-ID')} Qty`;
+      if (footSendBackElem) footSendBackElem.textContent = `${sendBackQty.toLocaleString('id-ID')} Qty`;
+      if (footClaimElem) footClaimElem.textContent = `${claim3plQty.toLocaleString('id-ID')} Qty`;
       if (footActiveElem) footActiveElem.textContent = `${activeRtnQty.toLocaleString('id-ID')} Qty`;
 
       // DYNAMIC CALCULATION AND DOM POPULATION FOR THE WAREHOUSE STATS PANEL
