@@ -2164,7 +2164,7 @@
                   <i class="fa-solid fa-filter" style="color: #4f46e5;"></i>
                   Filter: <span id="breadcrumb-category" style="color: #4f46e5; font-weight: 800; background: rgba(79, 70, 229, 0.08); padding: 1px 8px; border-radius: 4px;">SEMUA</span> 
                 </span>
-                <div style="display: flex; align-items: center; gap: 8px;">
+                <div id="rtn-badges-container" style="display: flex; align-items: center; gap: 8px;">
                   <span id="rtn-unified-badge-max-aging" style="font-size: 12px; font-weight: 800; background: #fee2e2; color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 3px 12px; border-radius: 15px;">Aging Terlama: 0 Hari</span>
                   <span id="rtn-unified-badge-count" style="font-size: 12px; font-weight: 800; background: #4f46e5; color: #fff; padding: 3px 12px; border-radius: 15px;">0 Items</span>
                 </div>
@@ -2173,7 +2173,7 @@
               <div class="table-container" id="rtn-unified-table-scroll-container" style="overflow-x: auto; overflow-y: auto; max-height: 520px; width: 100%; border: 1px solid #cbd5e1; border-radius: 12px; background: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);">
                 <table class="data-table" style="width: 100%; border-collapse: collapse; min-width: 900px; table-layout: fixed;">
                   <thead>
-                    <tr style="background: #f8fafc; border-bottom: 2px solid #cbd5e1; position: sticky; top: 0; z-index: 10;">
+                    <tr id="rtn-unified-table-header-row" style="background: #f8fafc; border-bottom: 2px solid #cbd5e1; position: sticky; top: 0; z-index: 10;">
                       <th style="padding: 12px 6px; font-size: 11px; width: 45px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">NO</th>
                       <th style="padding: 12px 6px; font-size: 11px; width: 90px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">TANGGAL</th>
                       <th style="padding: 12px 6px; font-size: 11px; width: 110px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">INVOICE</th>
@@ -2208,7 +2208,7 @@
                <!-- Card: Reason Summary Share (Chart) -->
                <div class="dashboard-card" style="border: 1px solid #e2e8f0; padding: 20px; border-radius: 16px; background: #ffffff; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
                   <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px;">
-                    <h3 style="font-size: 13px; font-weight: 800; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">
+                    <h3 id="rtn-reason-chart-title" style="font-size: 13px; font-weight: 800; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">
                       <i class="fa-solid fa-chart-pie" style="color: #4f46e5; margin-right: 8px;"></i>
                       REASON SUMMARY SHARE BY QTY
                     </h3>
@@ -2764,12 +2764,24 @@
         if (parsedSheetReturn && parsedSheetReturn.length > 1) {
           let minDate = null;
           let maxDate = null;
-          const COL_DATE = 2;
+          
+          // Use dynamic column detection for date
+          const headers = parsedSheetReturn[0] ? parsedSheetReturn[0].map(h => (h || '').toString().trim().toUpperCase()) : [];
+          const possibleDateNames = ['TANGGAL', 'DATE', 'TGL', 'TANGGAL MASUK'];
+          let colDateIdx = 2; // default
+          for (let name of possibleDateNames) {
+            const idx = headers.indexOf(name);
+            if (idx !== -1) {
+              colDateIdx = idx;
+              break;
+            }
+          }
+
           for (let i = 1; i < parsedSheetReturn.length; i++) {
             let row = parsedSheetReturn[i];
-            if (!row || row.length <= COL_DATE) continue;
+            if (!row || row.length <= colDateIdx) continue;
             let rowDate = null;
-            let dateVal = row[COL_DATE];
+            let dateVal = row[colDateIdx];
             if (typeof dateVal === 'number') {
               rowDate = new Date((dateVal - 25569) * 86400 * 1000);
             } else if (dateVal) {
@@ -2786,7 +2798,7 @@
           }
         } else {
           document.getElementById('filter-date-start').value = "2025-01-01";
-          document.getElementById('filter-date-end').value = "2025-01-31";
+          document.getElementById('filter-date-end').value = "2025-12-31";
         }
       }
     }
@@ -3824,6 +3836,8 @@
       const COL_ACTION = findColIndex(['Action', 'Tindakan', 'Solusi', 'Follow Up'], 12);
       const COL_DISC = findColIndex(['Disc', 'Discount', 'Selisih', 'Potongan'], 13);
       const COL_DEPART = findColIndex(['Nama Depart', 'Depart', 'Department', 'Nama Departemen', 'Departemen'], 7);
+      const COL_ROOT_CAUSE = findColIndex(['Root Cause', 'Rootcause', 'Alasan Utama', 'Sebab Utama', 'Penyebab', 'Root Cause/ Alasan', 'Help', 'Substatus Detail'], 3);
+      const COL_SERTIM = findColIndex(['SERTIM', 'Sertim', 'Sertifikasi', 'Sertim/Keterangan'], 15);
 
       for (let i = 1; i < parsedSheetReturn.length; i++) {
         const row = parsedSheetReturn[i];
@@ -3969,6 +3983,30 @@
           const reasonCancel = (row[10] || "").toString().trim();
           const action = (row[COL_ACTION] || "").toString().trim();
           const disc = (row[COL_DISC] || "").toString().trim();
+          
+          const rootCauseValue = row[COL_ROOT_CAUSE];
+          const rootCause = (rootCauseValue !== undefined && rootCauseValue !== null) ? rootCauseValue.toString().trim() : "";
+          
+          let sertimValue = "";
+          if (COL_SERTIM < row.length) {
+            sertimValue = (row[COL_SERTIM] || "").toString().trim();
+          }
+          if (!sertimValue && row[12]) {
+            const hVal = row[12].toString().trim();
+            if (hVal.toLowerCase().includes("sloc 1000") || hVal.toLowerCase().includes("barus") || hVal.toLowerCase().includes("sto")) {
+              sertimValue = hVal;
+            }
+          }
+
+          let normalizedSertim = "";
+          const upperSertim = sertimValue.toUpperCase();
+          if (upperSertim.includes("SLOC 1000") || upperSertim.includes("1000")) {
+            normalizedSertim = "SLOC 1000";
+          } else if (upperSertim.includes("BARUS")) {
+            normalizedSertim = "BARUS";
+          } else if (upperSertim.includes("STO") && !upperSertim.includes("STOOL")) {
+            normalizedSertim = "STO";
+          }
 
           const itemObj = {
             date: finalDate,
@@ -3989,7 +4027,9 @@
             action: action,
             disc: disc,
             status: status,
-            statusUpper: statusUpper
+            statusUpper: statusUpper,
+            rootCause: rootCause,
+            normalizedSertim: normalizedSertim
           };
 
           rtnAllItems.push(itemObj);
@@ -4061,15 +4101,18 @@
       // Check if filter is ALL dates (Semua Bulan / reset filters)
       let isAllDateFilter = false;
       if (filterMonth === "") {
-        if (!dateStartVal && !dateEndVal) {
+        const startVal = document.getElementById('filter-date-start').value;
+        const endVal = document.getElementById('filter-date-end').value;
+        
+        if (!startVal && !endVal) {
           isAllDateFilter = true;
         } else if (sheetMinDate && sheetMaxDate) {
           const inputStart = dateStart ? dateStart.getTime() : null;
           const inputEnd = dateEnd ? dateEnd.getTime() : null;
           const minTime = sheetMinDate.getTime();
           const maxTime = sheetMaxDate.getTime();
-          // allow 1 day tolerance (86400000 ms)
-          if ((!inputStart || inputStart <= minTime + 86400000) && (!inputEnd || inputEnd >= maxTime - 86400000)) {
+          // allow 2 days tolerance for safety
+          if ((!inputStart || inputStart <= minTime + 172800000) && (!inputEnd || inputEnd >= maxTime - 172800000)) {
             isAllDateFilter = true;
           }
         } else {
@@ -4079,46 +4122,53 @@
 
       // Peak month return calculation across entire dataset
       let peakMonthText = "-";
-      if (parsedSheetReturn && parsedSheetReturn.length > 1) {
-        const monthQtyMap = {};
-        const indonesianMonths = [
-          "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-          "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-        ];
-        
-        for (let i = 1; i < parsedSheetReturn.length; i++) {
-          const row = parsedSheetReturn[i];
-          if (!row || row.length <= COL_DATE) continue;
-          let rowDate = null;
-          let dateVal = row[COL_DATE];
-          if (typeof dateVal === 'number') {
-            rowDate = new Date((dateVal - 25569) * 86400 * 1000);
-          } else if (dateVal) {
-            rowDate = parseDateFromStr(dateVal.toString());
+      try {
+        if (parsedSheetReturn && parsedSheetReturn.length > 1) {
+          const monthQtyMap = {};
+          const indonesianMonths = [
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+          ];
+          
+          for (let i = 1; i < parsedSheetReturn.length; i++) {
+            const row = parsedSheetReturn[i];
+            if (!row || row.length <= COL_DATE) continue;
+            let rowDate = null;
+            let dateVal = row[COL_DATE];
+            if (typeof dateVal === 'number') {
+              rowDate = new Date((dateVal - 25569) * 86400 * 1000);
+            } else if (dateVal) {
+              rowDate = parseDateFromStr(dateVal.toString());
+            }
+            
+            if (rowDate && !isNaN(rowDate.getTime())) {
+              const qty = safeParseFloat(row[COL_QTY]);
+              const monthIdx = rowDate.getMonth();
+              const yearVal = rowDate.getFullYear();
+              const monthKey = `${monthIdx}-${yearVal}`;
+              monthQtyMap[monthKey] = (monthQtyMap[monthKey] || 0) + qty;
+            }
           }
           
-          if (rowDate && !isNaN(rowDate.getTime())) {
-            const qty = safeParseFloat(row[COL_QTY]);
-            const monthIdx = rowDate.getMonth();
-            const yearVal = rowDate.getFullYear();
-            const monthKey = `${monthIdx}-${yearVal}`;
-            monthQtyMap[monthKey] = (monthQtyMap[monthKey] || 0) + qty;
+          let maxMonthKey = null;
+          let maxMonthQty = -1;
+          for (const key in monthQtyMap) {
+            if (monthQtyMap[key] > maxMonthQty) {
+              maxMonthQty = monthQtyMap[key];
+              maxMonthKey = key;
+            }
+          }
+          
+          if (maxMonthKey) {
+            const parts = maxMonthKey.split('-');
+            const mIdx = parseInt(parts[0], 10);
+            const yVal = parseInt(parts[1], 10);
+            peakMonthText = `${indonesianMonths[mIdx]} ${yVal} (${Math.round(maxMonthQty).toLocaleString('id-ID')} Qty)`;
           }
         }
-        
-        let maxMonthKey = null;
-        let maxMonthQty = -1;
-        for (const key in monthQtyMap) {
-          if (monthQtyMap[key] > maxMonthQty) {
-            maxMonthQty = monthQtyMap[key];
-            maxMonthKey = key;
-          }
-        }
-        
-        if (maxMonthKey) {
-          const [mIdx, yVal] = maxMonthKey.split('-').map(Number);
-          peakMonthText = `${indonesianMonths[mIdx]} ${yVal} (${Math.round(maxMonthQty).toLocaleString('id-ID')} Qty)`;
-        }
+      } catch (e) {
+        console.error("Peak month calc error:", e);
+        peakMonthText = "-";
       }
 
       const peakMonthContainer = document.getElementById('rtn-summary-peak-month-container');
@@ -4631,24 +4681,63 @@
         }
       }
 
-      const totalCountBadge = document.getElementById('rtn-unified-badge-count');
-      if (totalCountBadge) {
-        // Find unique invoices in filtered items
-        const uniqueFilteredInvoices = new Set(filteredItems.map(it => it.invoice).filter(Boolean));
-        totalCountBadge.textContent = uniqueFilteredInvoices.size.toLocaleString('id-ID') + ' Invoices';
-        totalCountBadge.style.background = rtnCategory === 'ALL' ? '#eef2ff' : rtnCategory === 'ON PROGRESS' ? '#eef2ff' : rtnCategory === 'CLAIM 3PL' ? '#fffbeb' : rtnCategory === 'SO RETURN' ? '#f0fdfa' : '#f0fdf4';
-        totalCountBadge.style.color = rtnCategory === 'ALL' ? '#4f46e5' : rtnCategory === 'ON PROGRESS' ? '#4f46e5' : rtnCategory === 'CLAIM 3PL' ? '#d97706' : rtnCategory === 'SO RETURN' ? '#0d9488' : '#10b981';
-      }
+      const badgesContainer = document.getElementById('rtn-badges-container');
+      if (badgesContainer) {
+        if (rtnCategory === 'SO RETURN') {
+          // Calculate sum of quantities for SLOC 1000, BARUS, STO
+          let slocQty = 0;
+          let barusQty = 0;
+          let stoQty = 0;
+          
+          filteredItems.forEach(it => {
+            if (it.normalizedSertim === 'SLOC 1000') {
+              slocQty += it.qty;
+            } else if (it.normalizedSertim === 'BARUS') {
+              barusQty += it.qty;
+            } else if (it.normalizedSertim === 'STO') {
+              stoQty += it.qty;
+            }
+          });
 
-      const maxAgingBadge = document.getElementById('rtn-unified-badge-max-aging');
-      if (maxAgingBadge) {
-        let maxAgingDays = 0;
-        filteredItems.forEach(it => {
-          if (it.agingDays > maxAgingDays) {
-            maxAgingDays = it.agingDays;
+          // Render these 3 custom beautiful badges instead of Aging Lama and Jumlah Inv
+          badgesContainer.innerHTML = `
+            <span style="font-size: 11px; font-weight: 800; background: #e0f2fe; color: #0369a1; border: 1px solid rgba(3, 105, 161, 0.2); padding: 3px 12px; border-radius: 15px; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
+              <i class="fa-solid fa-warehouse"></i> SLOC 1000: ${slocQty.toLocaleString('id-ID')} Qty
+            </span>
+            <span style="font-size: 11px; font-weight: 800; background: #ccfbf1; color: #0f766e; border: 1px solid rgba(15, 118, 110, 0.2); padding: 3px 12px; border-radius: 15px; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
+              <i class="fa-solid fa-truck"></i> BARUS: ${barusQty.toLocaleString('id-ID')} Qty
+            </span>
+            <span style="font-size: 11px; font-weight: 800; background: #fffbeb; color: #b45309; border: 1px solid rgba(180, 83, 9, 0.2); padding: 3px 12px; border-radius: 15px; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
+              <i class="fa-solid fa-exchange-alt"></i> STO: ${stoQty.toLocaleString('id-ID')} Qty
+            </span>
+          `;
+        } else {
+          // Restore the standard badges
+          badgesContainer.innerHTML = `
+            <span id="rtn-unified-badge-max-aging" style="font-size: 12px; font-weight: 800; background: #fee2e2; color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 3px 12px; border-radius: 15px;">Aging Terlama: 0 Hari</span>
+            <span id="rtn-unified-badge-count" style="font-size: 12px; font-weight: 800; background: #4f46e5; color: #fff; padding: 3px 12px; border-radius: 15px;">0 Items</span>
+          `;
+
+          // Now update them dynamically as usual
+          const totalCountBadge = document.getElementById('rtn-unified-badge-count');
+          if (totalCountBadge) {
+            const uniqueFilteredInvoices = new Set(filteredItems.map(it => it.invoice).filter(Boolean));
+            totalCountBadge.textContent = uniqueFilteredInvoices.size.toLocaleString('id-ID') + ' Invoices';
+            totalCountBadge.style.background = rtnCategory === 'ALL' ? '#eef2ff' : rtnCategory === 'ON PROGRESS' ? '#eef2ff' : rtnCategory === 'CLAIM 3PL' ? '#fffbeb' : '#f0fdf4';
+            totalCountBadge.style.color = rtnCategory === 'ALL' ? '#4f46e5' : rtnCategory === 'ON PROGRESS' ? '#4f46e5' : rtnCategory === 'CLAIM 3PL' ? '#d97706' : '#10b981';
           }
-        });
-        maxAgingBadge.textContent = 'Aging Terlama: ' + maxAgingDays.toLocaleString('id-ID') + ' Hari';
+
+          const maxAgingBadge = document.getElementById('rtn-unified-badge-max-aging');
+          if (maxAgingBadge) {
+            let maxAgingDays = 0;
+            filteredItems.forEach(it => {
+              if (it.agingDays > maxAgingDays) {
+                maxAgingDays = it.agingDays;
+              }
+            });
+            maxAgingBadge.textContent = 'Aging Terlama: ' + maxAgingDays.toLocaleString('id-ID') + ' Hari';
+          }
+        }
       }
 
       // If the table detailed card is closed, auto reopen it when a filter is chosen (to provide intuitive visual feedback)
@@ -4780,11 +4869,46 @@
       }
 
       // 9. Render Table Rows
+      const isSoReturn = (rtnCategory === 'SO RETURN');
+      const headerRow = document.getElementById('rtn-unified-table-header-row');
+      const tableElem = document.querySelector('#rtn-unified-table-scroll-container table');
+      
+      if (tableElem) {
+        tableElem.style.minWidth = isSoReturn ? '1060px' : '900px';
+      }
+
+      if (headerRow) {
+        if (isSoReturn) {
+          headerRow.innerHTML = `
+            <th style="padding: 12px 6px; font-size: 11px; width: 45px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">NO</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 90px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">TANGGAL</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 110px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">INVOICE</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 100px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">ARTIKEL</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 180px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">DESKRIPSI</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 60px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">QTY</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 100px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">AGING</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 160px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">REASON CANCEL</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 160px; text-align: left; font-weight: 700; color: #0d9488; letter-spacing: 0.05em; text-transform: uppercase; border-left: 2px solid rgba(13, 148, 136, 0.2); background: rgba(13, 148, 136, 0.04);">ROOT CAUSE</th>
+          `;
+        } else {
+          headerRow.innerHTML = `
+            <th style="padding: 12px 6px; font-size: 11px; width: 45px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">NO</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 90px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">TANGGAL</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 110px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">INVOICE</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 100px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">ARTIKEL</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 200px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">DESKRIPSI</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 60px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">QTY</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 100px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">AGING</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 200px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">REASON CANCEL</th>
+          `;
+        }
+      }
+
       tbody.innerHTML = '';
       if (paginatedItems.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="8" style="text-align: center; padding: 100px 20px; color: #94a3b8; font-size: 14px;">
+            <td colspan="${isSoReturn ? 9 : 8}" style="text-align: center; padding: 100px 20px; color: #94a3b8; font-size: 14px;">
               <i class="fa-solid fa-folder-open" style="font-size: 24px; display: block; margin-bottom: 8px; color: #cbd5e1;"></i>
               Tidak ada data yang cocok dengan kriteria filter saat ini
             </td>
@@ -4826,6 +4950,8 @@
         else if (agingGroup === '9-12 Bulan') scopeBadgeColor = 'background: #fff1f2; color: #9f1239; border: 1px solid rgba(159, 18, 57, 0.2);';
         else if (agingGroup === '>16 Bulan') scopeBadgeColor = 'background: #f5f3ff; color: #5b21b6; border: 1px solid rgba(91, 33, 182, 0.2);';
 
+        const rootCauseCell = `<td style="padding: 8px 6px; text-align: left; font-size: 12px; color: #0d9488; font-weight: 600; white-space: normal; word-break: break-word; line-height: 1.3; border-left: 2px solid rgba(13, 148, 136, 0.2); background: rgba(13, 148, 136, 0.02);" title="${item.rootCause || '-'}">${item.rootCause || '-'}</td>`;
+
         tr.innerHTML = `
           <td style="padding: 8px 6px; text-align: center; font-size: 11px; font-weight: 600; color: #64748b; font-family: var(--font-mono); border-right: 1px solid #e2e8f0; background: #f8fafc;">${startIndex + index + 1}</td>
           <td style="padding: 8px 6px; text-align: center; font-size: 11px; font-weight: 600; color: #475569; font-family: var(--font-mono);">${formattedDate}</td>
@@ -4837,6 +4963,7 @@
             <span style="font-weight: 800; padding: 4px 10px; border-radius: 6px; font-family: var(--font-mono); font-size: 11px; display: inline-block; min-width: 75px; text-align: center; box-shadow: 0 1px 2px rgba(0,0,0,0.05); ${agingBadgeColor}">${item.agingDays} HARI</span>
           </td>
           <td style="padding: 8px 6px; text-align: left; font-size: 12px; color: #334155; font-weight: 500; white-space: normal; word-break: break-word; line-height: 1.3;" title="${item.reasonCancel || '-'}">${item.reasonCancel || '-'}</td>
+          ${isSoReturn ? rootCauseCell : ''}
         `;
         tbody.appendChild(tr);
       });
@@ -4903,10 +5030,28 @@
       if (!ctxElem) return;
       const ctx = ctxElem.getContext('2d');
 
-      // Aggregate qty by Reason Cancel (item.reasonCancel)
+      const isSoReturn = (activeRtnStatusFilter === 'SO RETURN');
+
+      // Update chart title dynamically
+      const titleElem = document.getElementById('rtn-reason-chart-title');
+      if (titleElem) {
+        titleElem.innerHTML = isSoReturn ? 
+          `<i class="fa-solid fa-chart-pie" style="color: #0d9488; margin-right: 8px;"></i> ROOT CAUSE SUMMARY SHARE BY QTY` :
+          `<i class="fa-solid fa-chart-pie" style="color: #4f46e5; margin-right: 8px;"></i> REASON SUMMARY SHARE BY QTY`;
+      }
+
+      // Aggregate qty by either Root Cause or Reason Cancel
       const reasonMap = new Map();
       items.forEach(item => {
-        const reason = (item.reasonCancel || 'Lainnya').toString().trim();
+        let reason = "";
+        if (isSoReturn) {
+          reason = (item.rootCause || 'Tidak Ada Root Cause').toString().trim();
+        } else {
+          reason = (item.reasonCancel || 'Lainnya').toString().trim();
+        }
+        if (!reason) {
+          reason = isSoReturn ? 'Tidak Ada Root Cause' : 'Lainnya';
+        }
         const qty = item.qty || 0;
         reasonMap.set(reason, (reasonMap.get(reason) || 0) + qty);
       });
@@ -4922,7 +5067,10 @@
       const labels = sortedReasons.map(([reason, _]) => reason);
       const values = sortedReasons.map(([_, qty]) => qty);
 
-      const colors = [
+      const colors = isSoReturn ? [
+        '#0d9488', '#0f766e', '#115e59', '#14b8a6', '#2dd4bf', 
+        '#5eead4', '#99f6e4', '#ccfbf1', '#065f46', '#047857'
+      ] : [
         '#4f46e5', '#0ea5e9', '#10b981', '#f59e0b', '#ef4444', 
         '#8b5cf6', '#ec4899', '#14b8a6', '#f97316', '#6366f1'
       ];
@@ -4999,7 +5147,7 @@
           item.innerHTML = `
             <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 2px;">
               <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 320px;" title="${reason}">${reason}</span>
-              <span style="color: #4f46e5; font-weight: 800; font-family: var(--font-mono);">${qty.toLocaleString('id-ID')} Qty (${pct}%)</span>
+              <span style="color: ${color}; font-weight: 800; font-family: var(--font-mono);">${qty.toLocaleString('id-ID')} Qty (${pct}%)</span>
             </div>
             <div style="width: 100%; height: 8px; background: #f1f5f9; border-radius: 4px; overflow: hidden; border: 1px solid #e2e8f0;">
               <div style="width: ${pct}%; height: 100%; background: ${color}; border-radius: 4px; transition: width 0.8s ease-out;"></div>
