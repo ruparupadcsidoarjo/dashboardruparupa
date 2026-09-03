@@ -2612,6 +2612,7 @@
 
     // Unified Return Dashboard States
     let rtnCategory = 'ALL';
+    let rtnSubFilter = 'ALL';
     let rtnAgingFilter = 'ALL';
     let rtnAreaFilter = 'ALL';
     let rtnSearchQuery = '';
@@ -3838,6 +3839,7 @@
       const COL_DEPART = findColIndex(['Nama Depart', 'Depart', 'Department', 'Nama Departemen', 'Departemen'], 7);
       const COL_ROOT_CAUSE = findColIndex(['Root Cause', 'Rootcause', 'Alasan Utama', 'Sebab Utama', 'Penyebab', 'Root Cause/ Alasan', 'Help', 'Substatus Detail'], 3);
       const COL_SERTIM = findColIndex(['SERTIM', 'Sertim', 'Sertifikasi', 'Sertim/Keterangan'], 15);
+      const COL_PLAN = findColIndex(['Plan', 'Action Plan', 'Rencana', 'Action', 'Solusi'], 15);
 
       for (let i = 1; i < parsedSheetReturn.length; i++) {
         const row = parsedSheetReturn[i];
@@ -3987,6 +3989,11 @@
           const rootCauseValue = row[COL_ROOT_CAUSE];
           const rootCause = (rootCauseValue !== undefined && rootCauseValue !== null) ? rootCauseValue.toString().trim() : "";
           
+          let planValue = "";
+          if (COL_PLAN < row.length) {
+            planValue = (row[COL_PLAN] || "").toString().trim();
+          }
+
           let sertimValue = "";
           if (COL_SERTIM < row.length) {
             sertimValue = (row[COL_SERTIM] || "").toString().trim();
@@ -4029,6 +4036,7 @@
             status: status,
             statusUpper: statusUpper,
             rootCause: rootCause,
+            plan: planValue,
             normalizedSertim: normalizedSertim
           };
 
@@ -4268,6 +4276,7 @@
     // Interactive Handler for Categories (Tabs)
     function setRtnCategory(cat) {
       rtnCategory = cat;
+      rtnSubFilter = 'ALL'; // Reset sub-filter when category changes
       activeRtnStatusFilter = cat; // keeps in sync with top-level selections
       rtnCurrentPage = 1;
       
@@ -4289,6 +4298,17 @@
       }
       rtnCurrentPage = 1;
       showToast(`Menyaring Aging: ${rtnAgingFilter === 'ALL' ? 'Semua Aging' : rtnAgingFilter}`, 'info');
+      renderUnifiedTable();
+    }
+
+    function setRtnSubFilter(sub) {
+      if (rtnSubFilter === sub) {
+        rtnSubFilter = 'ALL';
+      } else {
+        rtnSubFilter = sub;
+      }
+      rtnCurrentPage = 1;
+      showToast(`Menyaring: ${rtnSubFilter === 'ALL' ? 'Semua SO Return' : rtnSubFilter}`, 'info');
       renderUnifiedTable();
     }
 
@@ -4418,6 +4438,9 @@
         // Filter Category
         if (rtnCategory !== 'ALL' && item.statusUpper !== rtnCategory) return false;
 
+        // Sub Filter for SO RETURN
+        if (rtnCategory === 'SO RETURN' && rtnSubFilter !== 'ALL' && item.normalizedSertim !== rtnSubFilter) return false;
+
         // Filter Aging
         if (rtnAgingFilter !== 'ALL' && getAgingGroup(item) !== rtnAgingFilter) return false;
 
@@ -4485,6 +4508,8 @@
       rtnAllItems.forEach(item => {
         // Match active category tab
         if (rtnCategory !== 'ALL' && item.statusUpper !== rtnCategory) return;
+        // Match active sub-filter for SO RETURN
+        if (rtnCategory === 'SO RETURN' && rtnSubFilter !== 'ALL' && item.normalizedSertim !== rtnSubFilter) return;
         // Match active area
         if (rtnAreaFilter !== 'ALL' && item.area !== rtnAreaFilter) return;
         // Match search query
@@ -4684,30 +4709,49 @@
       const badgesContainer = document.getElementById('rtn-badges-container');
       if (badgesContainer) {
         if (rtnCategory === 'SO RETURN') {
-          // Calculate sum of quantities for SLOC 1000, BARUS, STO
+          // Calculate sum of quantities for SLOC 1000, BARUS, STO from base filtered list (without subfilter)
+          const soReturnBaseItems = rtnAllItems.filter(item => {
+            if (item.statusUpper !== 'SO RETURN') return false;
+            if (rtnAgingFilter !== 'ALL' && getAgingGroup(item) !== rtnAgingFilter) return false;
+            if (rtnAreaFilter !== 'ALL' && item.area !== rtnAreaFilter) return false;
+            if (rtnSearchQuery !== '') {
+              const query = rtnSearchQuery.toLowerCase();
+              const fields = [item.invoice, item.sku, item.description, item.nama, item.area, item.check, item.reason, item.reasonCancel, item.status];
+              if (!fields.some(f => (f || '').toLowerCase().includes(query))) return false;
+            }
+            return true;
+          });
+
           let slocQty = 0;
           let barusQty = 0;
           let stoQty = 0;
           
-          filteredItems.forEach(it => {
-            if (it.normalizedSertim === 'SLOC 1000') {
-              slocQty += it.qty;
-            } else if (it.normalizedSertim === 'BARUS') {
-              barusQty += it.qty;
-            } else if (it.normalizedSertim === 'STO') {
-              stoQty += it.qty;
-            }
+          soReturnBaseItems.forEach(it => {
+            if (it.normalizedSertim === 'SLOC 1000') slocQty += it.qty;
+            else if (it.normalizedSertim === 'BARUS') barusQty += it.qty;
+            else if (it.normalizedSertim === 'STO') stoQty += it.qty;
           });
 
-          // Render these 3 custom beautiful badges instead of Aging Lama and Jumlah Inv
+          // Render these 3 custom beautiful badges
+          const getStyle = (sub) => {
+            const isActive = rtnSubFilter === sub;
+            const colors = {
+              'SLOC 1000': { bg: '#e0f2fe', text: '#0369a1', border: 'rgba(3, 105, 161, 0.2)', activeBg: '#0369a1', activeText: '#fff' },
+              'BARUS': { bg: '#ccfbf1', text: '#0f766e', border: 'rgba(15, 118, 110, 0.2)', activeBg: '#0f766e', activeText: '#fff' },
+              'STO': { bg: '#fffbeb', text: '#b45309', border: 'rgba(180, 83, 9, 0.2)', activeBg: '#b45309', activeText: '#fff' }
+            };
+            const c = colors[sub];
+            return `cursor: pointer; font-size: 11px; font-weight: 800; background: ${isActive ? c.activeBg : c.bg}; color: ${isActive ? c.activeText : c.text}; border: 1px solid ${c.border}; padding: 3px 12px; border-radius: 15px; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; transition: all 0.2s; ${isActive ? 'box-shadow: 0 0 0 2px #fff, 0 0 0 4px ' + c.activeBg : ''}`;
+          };
+
           badgesContainer.innerHTML = `
-            <span style="font-size: 11px; font-weight: 800; background: #e0f2fe; color: #0369a1; border: 1px solid rgba(3, 105, 161, 0.2); padding: 3px 12px; border-radius: 15px; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
+            <span onclick="setRtnSubFilter('SLOC 1000')" style="${getStyle('SLOC 1000')}">
               <i class="fa-solid fa-warehouse"></i> SLOC 1000: ${slocQty.toLocaleString('id-ID')} Qty
             </span>
-            <span style="font-size: 11px; font-weight: 800; background: #ccfbf1; color: #0f766e; border: 1px solid rgba(15, 118, 110, 0.2); padding: 3px 12px; border-radius: 15px; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
+            <span onclick="setRtnSubFilter('BARUS')" style="${getStyle('BARUS')}">
               <i class="fa-solid fa-truck"></i> BARUS: ${barusQty.toLocaleString('id-ID')} Qty
             </span>
-            <span style="font-size: 11px; font-weight: 800; background: #fffbeb; color: #b45309; border: 1px solid rgba(180, 83, 9, 0.2); padding: 3px 12px; border-radius: 15px; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
+            <span onclick="setRtnSubFilter('STO')" style="${getStyle('STO')}">
               <i class="fa-solid fa-exchange-alt"></i> STO: ${stoQty.toLocaleString('id-ID')} Qty
             </span>
           `;
@@ -4874,7 +4918,7 @@
       const tableElem = document.querySelector('#rtn-unified-table-scroll-container table');
       
       if (tableElem) {
-        tableElem.style.minWidth = isSoReturn ? '1060px' : '900px';
+        tableElem.style.minWidth = isSoReturn ? '1200px' : '900px';
       }
 
       if (headerRow) {
@@ -4884,11 +4928,12 @@
             <th style="padding: 12px 6px; font-size: 11px; width: 90px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">TANGGAL</th>
             <th style="padding: 12px 6px; font-size: 11px; width: 110px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">INVOICE</th>
             <th style="padding: 12px 6px; font-size: 11px; width: 100px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">ARTIKEL</th>
-            <th style="padding: 12px 6px; font-size: 11px; width: 180px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">DESKRIPSI</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 160px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">DESKRIPSI</th>
             <th style="padding: 12px 6px; font-size: 11px; width: 60px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">QTY</th>
-            <th style="padding: 12px 6px; font-size: 11px; width: 100px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">AGING</th>
-            <th style="padding: 12px 6px; font-size: 11px; width: 160px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">REASON CANCEL</th>
-            <th style="padding: 12px 6px; font-size: 11px; width: 160px; text-align: left; font-weight: 700; color: #0d9488; letter-spacing: 0.05em; text-transform: uppercase; border-left: 2px solid rgba(13, 148, 136, 0.2); background: rgba(13, 148, 136, 0.04);">ROOT CAUSE</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 90px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">AGING</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 150px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">REASON CANCEL</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 150px; text-align: left; font-weight: 700; color: #0d9488; letter-spacing: 0.05em; text-transform: uppercase; border-left: 2px solid rgba(13, 148, 136, 0.2); background: rgba(13, 148, 136, 0.04);">ROOT CAUSE</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 150px; text-align: left; font-weight: 700; color: #0891b2; letter-spacing: 0.05em; text-transform: uppercase; border-left: 2px solid rgba(8, 145, 178, 0.2); background: rgba(8, 145, 178, 0.04);">PLAN</th>
           `;
         } else {
           headerRow.innerHTML = `
@@ -4908,7 +4953,7 @@
       if (paginatedItems.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="${isSoReturn ? 9 : 8}" style="text-align: center; padding: 100px 20px; color: #94a3b8; font-size: 14px;">
+            <td colspan="${isSoReturn ? 10 : 8}" style="text-align: center; padding: 100px 20px; color: #94a3b8; font-size: 14px;">
               <i class="fa-solid fa-folder-open" style="font-size: 24px; display: block; margin-bottom: 8px; color: #cbd5e1;"></i>
               Tidak ada data yang cocok dengan kriteria filter saat ini
             </td>
@@ -4951,6 +4996,7 @@
         else if (agingGroup === '>16 Bulan') scopeBadgeColor = 'background: #f5f3ff; color: #5b21b6; border: 1px solid rgba(91, 33, 182, 0.2);';
 
         const rootCauseCell = `<td style="padding: 8px 6px; text-align: left; font-size: 12px; color: #0d9488; font-weight: 600; white-space: normal; word-break: break-word; line-height: 1.3; border-left: 2px solid rgba(13, 148, 136, 0.2); background: rgba(13, 148, 136, 0.02);" title="${item.rootCause || '-'}">${item.rootCause || '-'}</td>`;
+        const planCell = `<td style="padding: 8px 6px; text-align: left; font-size: 12px; color: #0891b2; font-weight: 600; white-space: normal; word-break: break-word; line-height: 1.3; border-left: 2px solid rgba(8, 145, 178, 0.2); background: rgba(8, 145, 178, 0.02);" title="${item.plan || '-'}">${item.plan || '-'}</td>`;
 
         tr.innerHTML = `
           <td style="padding: 8px 6px; text-align: center; font-size: 11px; font-weight: 600; color: #64748b; font-family: var(--font-mono); border-right: 1px solid #e2e8f0; background: #f8fafc;">${startIndex + index + 1}</td>
@@ -4964,6 +5010,7 @@
           </td>
           <td style="padding: 8px 6px; text-align: left; font-size: 12px; color: #334155; font-weight: 500; white-space: normal; word-break: break-word; line-height: 1.3;" title="${item.reasonCancel || '-'}">${item.reasonCancel || '-'}</td>
           ${isSoReturn ? rootCauseCell : ''}
+          ${isSoReturn ? planCell : ''}
         `;
         tbody.appendChild(tr);
       });
