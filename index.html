@@ -645,6 +645,18 @@
       transform: translateY(-5px) scale(1.02);
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08) !important;
     }
+    
+    .rtn-sticky-header {
+      position: sticky;
+      top: -14px;
+      z-index: 100;
+      background-color: var(--main-bg);
+      margin: -14px -18px 24px -18px;
+      padding: 14px 18px 12px 18px;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+    
     .rtn-kpi-card .kpi-label {
       letter-spacing: 0.5px;
       font-size: 14px;
@@ -1827,170 +1839,202 @@
 
       <!-- RETURN MANAGEMENT VIEW -->
       <div id="return-view" style="display: none;">
-        <!-- LAST DATA SUMMARY SCOPE -->
-        <div id="rtn-summary-scope" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 12px; padding: 12px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; color: #f8fafc; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.1);">
-           <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
-             <div style="display: flex; align-items: center; gap: 12px;">
-               <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 18px;">
-                 <i class="fa-solid fa-clock-rotate-left"></i>
+        
+        <!-- STICKY KPI & SUMMARY HEADER -->
+        <div class="rtn-sticky-header">
+          <!-- LAST DATA SUMMARY SCOPE -->
+          <div id="rtn-summary-scope" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 12px; padding: 12px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; color: #f8fafc; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.1);">
+             <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+               <div style="display: flex; align-items: center; gap: 12px;">
+                 <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                   <i class="fa-solid fa-clock-rotate-left"></i>
+                 </div>
+                 <div>
+                   <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Terakhir Data Return Masuk</div>
+                   <div id="rtn-summary-last-date" style="font-size: 16px; font-weight: 800;">-</div>
+                 </div>
                </div>
-               <div>
-                 <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Terakhir Data Return Masuk</div>
-                 <div id="rtn-summary-last-date" style="font-size: 16px; font-weight: 800;">-</div>
-               </div>
-             </div>
 
-             <!-- New Element: Peak Return Month, shown only when Date Filter is ALL -->
-             <div id="rtn-summary-peak-month-container" style="display: none; align-items: center; gap: 12px; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 20px;">
-               <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; display: flex; align-items: center; justify-content: center; font-size: 18px;">
-                 <i class="fa-solid fa-calendar-check" style="color: #f59e0b;"></i>
-               </div>
-               <div>
-                 <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Bulan Return Terbanyak</div>
-                 <div id="rtn-summary-peak-month" style="font-size: 16px; font-weight: 800; color: #f59e0b;">-</div>
-               </div>
-             </div>
-           </div>
-           
-           <div style="display: flex; gap: 40px; align-items: center;">
-             <div style="text-align: right;">
-               <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Total Invoices</div>
-               <div id="rtn-summary-total-inv" style="font-size: 18px; font-weight: 900; color: #ffffff;">0</div>
-             </div>
-             <div style="text-align: right;">
-               <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Total Qty</div>
-               <div style="display: flex; align-items: center; gap: 6px; justify-content: flex-end;">
-                 <div id="rtn-summary-total-qty" style="font-size: 18px; font-weight: 900; color: #10b981;">0</div>
-                 
+               <!-- New Element: Peak Return Month, shown only when Date Filter is ALL -->
+               <div id="rtn-summary-peak-month-container" style="display: none; align-items: center; gap: 12px; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 20px;">
+                 <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                   <i class="fa-solid fa-calendar-check" style="color: #f59e0b;"></i>
+                 </div>
+                 <div>
+                   <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Bulan Return Terbanyak</div>
+                   <div id="rtn-summary-peak-month" style="font-size: 16px; font-weight: 800; color: #f59e0b;">-</div>
+                 </div>
                </div>
              </div>
-           </div>
+             
+             <div style="display: flex; gap: 40px; align-items: center;">
+               <div style="text-align: right;">
+                 <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Total Invoices</div>
+                 <div id="rtn-summary-total-inv" style="font-size: 18px; font-weight: 900; color: #ffffff;">0</div>
+               </div>
+               <div style="text-align: right;">
+                 <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 2px;">Total Qty</div>
+                 <div style="display: flex; align-items: center; gap: 6px; justify-content: flex-end;">
+                   <div id="rtn-summary-total-qty" style="font-size: 18px; font-weight: 900; color: #10b981;">0</div>
+                 </div>
+               </div>
+             </div>
+          </div>
+
+          <!-- KPI ROW -->
+          <section class="rtn-kpi-row" style="margin-bottom: 0;">
+            <!-- Card 1: On Progress -->
+            <div id="rtn-card-onprogress" class="dashboard-card rtn-kpi-card" style="border-radius: 16px; border: 1px solid rgba(79, 70, 229, 0.15) !important; background: #ffffff; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.04); padding: 18px; display: flex; flex-direction: column; gap: 12px; min-height: 135px; cursor: pointer; transition: all 0.3s ease;">
+              <!-- Top section: title and trend badge -->
+              <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(79, 70, 229, 0.08); color: #4f46e5; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                  </div>
+                  <div style="display: flex; flex-direction: column;">
+                    <span style="font-size: 13px; font-weight: 800; color: #4f46e5; letter-spacing: 0.5px; text-transform: uppercase;">ON PROGRESS</span>
+                    <span style="font-size: 10px; color: #6366f1; font-weight: 600; margin-top: -2px;">(Proses Banding)</span>
+                  </div>
+                </div>
+                <span id="rtn-trend-onprogress-badge" class="rtn-trend-badge neutral" style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px;">0%</span>
+              </div>
+              <!-- Value Grid -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid rgba(79, 70, 229, 0.1); padding-top: 12px;">
+                <div style="display: flex; flex-direction: column; gap: 2px; border-right: 1px solid rgba(79, 70, 229, 0.1); padding-right: 8px;">
+                  <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Jumlah Invoice</span>
+                  <span class="kpi-val" id="rtn-kpi-onprogress-invoice" style="font-size: 26px !important; font-weight: 800; color: #1e1b4b; line-height: 1;">0</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 2px; padding-left: 8px; align-items: flex-end; text-align: right;">
+                  <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; display: flex; align-items: center; gap: 4px;">
+                    Total Qty <i class="fa-solid fa-spinner fa-spin" style="color: #4f46e5; font-size: 10px;"></i>
+                  </span>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <span class="kpi-val" id="rtn-kpi-onprogress-qty" style="font-size: 26px !important; font-weight: 800; color: #4f46e5; line-height: 1;">0</span>
+                    <i class="fa-solid fa-boxes-stacked" style="color: #4f46e5; font-size: 14px; opacity: 0.85;"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Claim 3PL -->
+            <div id="rtn-card-claim3pl" class="dashboard-card rtn-kpi-card" style="border-radius: 16px; border: 1px solid rgba(217, 119, 6, 0.15) !important; background: #ffffff; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.04); padding: 18px; display: flex; flex-direction: column; gap: 12px; min-height: 135px; cursor: pointer; transition: all 0.3s ease;">
+              <!-- Top section -->
+              <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(217, 119, 6, 0.08); color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                    <i class="fa-solid fa-truck"></i>
+                  </div>
+                  <div style="display: flex; flex-direction: column;">
+                    <span style="font-size: 13px; font-weight: 800; color: #d97706; letter-spacing: 0.5px; text-transform: uppercase;">CLAIM 3PL</span>
+                    <span style="font-size: 10px; color: #b45309; font-weight: 600; margin-top: -2px;">(Menang Banding)</span>
+                  </div>
+                </div>
+                <span id="rtn-trend-claim3pl-badge" class="rtn-trend-badge neutral" style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px;">0%</span>
+              </div>
+              <!-- Value Grid -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid rgba(217, 119, 6, 0.1); padding-top: 12px;">
+                <div style="display: flex; flex-direction: column; gap: 2px; border-right: 1px solid rgba(217, 119, 6, 0.1); padding-right: 8px;">
+                  <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Jumlah Invoice</span>
+                  <span class="kpi-val" id="rtn-kpi-claim3pl-invoice" style="font-size: 26px !important; font-weight: 800; color: #451a03; line-height: 1;">0</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 2px; padding-left: 8px; align-items: flex-end; text-align: right;">
+                  <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; display: flex; align-items: center; gap: 4px;">
+                    Total Qty <i class="fa-solid fa-truck-ramp-box" style="color: #d97706; font-size: 10px;"></i>
+                  </span>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <span class="kpi-val" id="rtn-kpi-claim3pl-qty" style="font-size: 26px !important; font-weight: 800; color: #d97706; line-height: 1;">0</span>
+                    <i class="fa-solid fa-box-open" style="color: #d97706; font-size: 14px; opacity: 0.85;"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: SO Return -->
+            <div id="rtn-card-soreturn" class="dashboard-card rtn-kpi-card" style="border-radius: 16px; border: 1px solid rgba(13, 148, 136, 0.15) !important; background: #ffffff; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.04); padding: 18px; display: flex; flex-direction: column; gap: 12px; min-height: 135px; cursor: pointer; transition: all 0.3s ease;">
+              <!-- Top section -->
+              <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(13, 148, 136, 0.08); color: #0d9488; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                    <i class="fa-solid fa-arrow-rotate-left"></i>
+                  </div>
+                  <div style="display: flex; flex-direction: column;">
+                    <span style="font-size: 13px; font-weight: 800; color: #0d9488; letter-spacing: 0.5px; text-transform: uppercase;">SO RETURN</span>
+                    <span style="font-size: 10px; color: #0f766e; font-weight: 600; margin-top: -2px;">(Kalah banding)</span>
+                  </div>
+                </div>
+                <span id="rtn-trend-soreturn-badge" class="rtn-trend-badge neutral" style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px;">0%</span>
+              </div>
+              <!-- Value Grid -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid rgba(13, 148, 136, 0.1); padding-top: 12px;">
+                <div style="display: flex; flex-direction: column; gap: 2px; border-right: 1px solid rgba(13, 148, 136, 0.1); padding-right: 8px;">
+                  <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Jumlah Invoice</span>
+                  <span class="kpi-val" id="rtn-kpi-soreturn-invoice" style="font-size: 26px !important; font-weight: 800; color: #042f2e; line-height: 1;">0</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 2px; padding-left: 8px; align-items: flex-end; text-align: right;">
+                  <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; display: flex; align-items: center; gap: 4px;">
+                    Total Qty <i class="fa-solid fa-rotate-left" style="color: #0d9488; font-size: 10px;"></i>
+                  </span>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <span class="kpi-val" id="rtn-kpi-soreturn-qty" style="font-size: 26px !important; font-weight: 800; color: #0d9488; line-height: 1;">0</span>
+                    <i class="fa-solid fa-warehouse" style="color: #0d9488; font-size: 14px; opacity: 0.85;"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4: Dikirim ke Customer -->
+            <div id="rtn-card-dikirimcustomer" class="dashboard-card rtn-kpi-card" style="border-radius: 16px; border: 1px solid rgba(16, 185, 129, 0.15) !important; background: #ffffff; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.04); padding: 18px; display: flex; flex-direction: column; gap: 12px; min-height: 135px; cursor: pointer; transition: all 0.3s ease;">
+              <!-- Top section -->
+              <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(16, 185, 129, 0.08); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                    <i class="fa-solid fa-paper-plane"></i>
+                  </div>
+                  <div style="display: flex; flex-direction: column;">
+                    <span style="font-size: 13px; font-weight: 800; color: #10b981; letter-spacing: 0.5px; text-transform: uppercase;">SEND BACK CUSTOMER</span>
+                    <span style="font-size: 10px; color: #059669; font-weight: 600; margin-top: -2px;">(Kirim Ulang ke Customer)</span>
+                  </div>
+                </div>
+                <span id="rtn-trend-dikirimcustomer-badge" class="rtn-trend-badge neutral" style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px;">0%</span>
+              </div>
+              <!-- Value Grid -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid rgba(16, 185, 129, 0.1); padding-top: 12px;">
+                <div style="display: flex; flex-direction: column; gap: 2px; border-right: 1px solid rgba(16, 185, 129, 0.1); padding-right: 8px;">
+                  <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Jumlah Invoice</span>
+                  <span class="kpi-val" id="rtn-kpi-dikirimcustomer-invoice" style="font-size: 26px !important; font-weight: 800; color: #064e3b; line-height: 1;">0</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 2px; padding-left: 8px; align-items: flex-end; text-align: right;">
+                  <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Total Qty</span>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <span class="kpi-val" id="rtn-kpi-dikirimcustomer-qty" style="font-size: 26px !important; font-weight: 800; color: #10b981; line-height: 1;">0</span>
+                    <i class="fa-solid fa-truck-fast" style="color: #10b981; font-size: 14px; opacity: 0.85;"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
 
-        <!-- KPI ROW -->
-        <section class="rtn-kpi-row">
-          <!-- Card 1: On Progress -->
-          <div id="rtn-card-onprogress" class="dashboard-card rtn-kpi-card" style="border-radius: 16px; border: 1px solid rgba(79, 70, 229, 0.15) !important; background: #ffffff; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.04); padding: 18px; display: flex; flex-direction: column; gap: 12px; min-height: 135px; cursor: pointer; transition: all 0.3s ease;">
-            <!-- Top section: title and trend badge -->
-            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(79, 70, 229, 0.08); color: #4f46e5; display: flex; align-items: center; justify-content: center; font-size: 16px;">
-                  <i class="fa-solid fa-hourglass-half"></i>
-                </div>
-                <span style="font-size: 13px; font-weight: 800; color: #4f46e5; letter-spacing: 0.5px; text-transform: uppercase;">ON PROGRESS</span>
-              </div>
-              <span id="rtn-trend-onprogress-badge" class="rtn-trend-badge neutral" style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px;">0%</span>
-            </div>
-            <!-- Value Grid to fill space elegantly and prevent large blank spots -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid rgba(79, 70, 229, 0.1); padding-top: 12px;">
-              <!-- Col 1: Invoice Count -->
-              <div style="display: flex; flex-direction: column; gap: 2px; border-right: 1px solid rgba(79, 70, 229, 0.1); padding-right: 8px;">
-                <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Jumlah Invoice</span>
-                <span class="kpi-val" id="rtn-kpi-onprogress-invoice" style="font-size: 26px !important; font-weight: 800; color: #1e1b4b; line-height: 1;">0</span>
-              </div>
-              <!-- Col 2: Total Qty -->
-              <div style="display: flex; flex-direction: column; gap: 2px; padding-left: 8px; align-items: flex-end; text-align: right;">
-                <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; display: flex; align-items: center; gap: 4px;">
-                  Total Qty <i class="fa-solid fa-spinner fa-spin" style="color: #4f46e5; font-size: 10px;"></i>
-                </span>
-                <div style="display: flex; align-items: center; gap: 6px;">
-                  <span class="kpi-val" id="rtn-kpi-onprogress-qty" style="font-size: 26px !important; font-weight: 800; color: #4f46e5; line-height: 1;">0</span>
-                  <i class="fa-solid fa-boxes-stacked" style="color: #4f46e5; font-size: 14px; opacity: 0.85;"></i>
-                </div>
-              </div>
-            </div>
+        <!-- SECTION — DAILY COMPARISON MATRIX (EXCEL STYLE) -->
+        <section class="dashboard-card" style="margin-top: 24px; border: 2px solid #e2e8f0; padding: 20px; border-radius: 16px; background: #ffffff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);" id="rtn-pivot-section">
+          <div style="border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+            <h3 style="font-size: 15px; font-weight: 800; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-table-list" style="color: #0284c7;"></i>
+              Qty Order vs Qty Return
+            </h3>
+            <span style="font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; background: rgba(2, 132, 199, 0.08); color: #0284c7;">Matrix Perbandingan</span>
           </div>
 
-          <!-- Card 2: Claim 3PL -->
-          <div id="rtn-card-claim3pl" class="dashboard-card rtn-kpi-card" style="border-radius: 16px; border: 1px solid rgba(217, 119, 6, 0.15) !important; background: #ffffff; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.04); padding: 18px; display: flex; flex-direction: column; gap: 12px; min-height: 135px; cursor: pointer; transition: all 0.3s ease;">
-            <!-- Top section: title and trend badge -->
-            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(217, 119, 6, 0.08); color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 16px;">
-                  <i class="fa-solid fa-truck"></i>
-                </div>
-                <span style="font-size: 13px; font-weight: 800; color: #d97706; letter-spacing: 0.5px; text-transform: uppercase;">CLAIM 3PL</span>
-              </div>
-              <span id="rtn-trend-claim3pl-badge" class="rtn-trend-badge neutral" style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px;">0%</span>
-            </div>
-            <!-- Value Grid to fill space elegantly and prevent large blank spots -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid rgba(217, 119, 6, 0.1); padding-top: 12px;">
-              <!-- Col 1: Invoice Count -->
-              <div style="display: flex; flex-direction: column; gap: 2px; border-right: 1px solid rgba(217, 119, 6, 0.1); padding-right: 8px;">
-                <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Jumlah Invoice</span>
-                <span class="kpi-val" id="rtn-kpi-claim3pl-invoice" style="font-size: 26px !important; font-weight: 800; color: #451a03; line-height: 1;">0</span>
-              </div>
-              <!-- Col 2: Total Qty -->
-              <div style="display: flex; flex-direction: column; gap: 2px; padding-left: 8px; align-items: flex-end; text-align: right;">
-                <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; display: flex; align-items: center; gap: 4px;">
-                  Total Qty <i class="fa-solid fa-truck-ramp-box" style="color: #d97706; font-size: 10px;"></i>
-                </span>
-                <div style="display: flex; align-items: center; gap: 6px;">
-                  <span class="kpi-val" id="rtn-kpi-claim3pl-qty" style="font-size: 26px !important; font-weight: 800; color: #d97706; line-height: 1;">0</span>
-                  <i class="fa-solid fa-box-open" style="color: #d97706; font-size: 14px; opacity: 0.85;"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3: SO Return -->
-          <div id="rtn-card-soreturn" class="dashboard-card rtn-kpi-card" style="border-radius: 16px; border: 1px solid rgba(13, 148, 136, 0.15) !important; background: #ffffff; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.04); padding: 18px; display: flex; flex-direction: column; gap: 12px; min-height: 135px; cursor: pointer; transition: all 0.3s ease;">
-            <!-- Top section: title and trend badge -->
-            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(13, 148, 136, 0.08); color: #0d9488; display: flex; align-items: center; justify-content: center; font-size: 16px;">
-                  <i class="fa-solid fa-arrow-rotate-left"></i>
-                </div>
-                <span style="font-size: 13px; font-weight: 800; color: #0d9488; letter-spacing: 0.5px; text-transform: uppercase;">SO RETURN</span>
-              </div>
-              <span id="rtn-trend-soreturn-badge" class="rtn-trend-badge neutral" style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px;">0%</span>
-            </div>
-            <!-- Value Grid to fill space elegantly and prevent large blank spots -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid rgba(13, 148, 136, 0.1); padding-top: 12px;">
-              <!-- Col 1: Invoice Count -->
-              <div style="display: flex; flex-direction: column; gap: 2px; border-right: 1px solid rgba(13, 148, 136, 0.1); padding-right: 8px;">
-                <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Jumlah Invoice</span>
-                <span class="kpi-val" id="rtn-kpi-soreturn-invoice" style="font-size: 26px !important; font-weight: 800; color: #042f2e; line-height: 1;">0</span>
-              </div>
-              <!-- Col 2: Total Qty -->
-              <div style="display: flex; flex-direction: column; gap: 2px; padding-left: 8px; align-items: flex-end; text-align: right;">
-                <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; display: flex; align-items: center; gap: 4px;">
-                  Total Qty <i class="fa-solid fa-rotate-left" style="color: #0d9488; font-size: 10px;"></i>
-                </span>
-                <div style="display: flex; align-items: center; gap: 6px;">
-                  <span class="kpi-val" id="rtn-kpi-soreturn-qty" style="font-size: 26px !important; font-weight: 800; color: #0d9488; line-height: 1;">0</span>
-                  <i class="fa-solid fa-warehouse" style="color: #0d9488; font-size: 14px; opacity: 0.85;"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 4: Dikirim ke Customer -->
-          <div id="rtn-card-dikirimcustomer" class="dashboard-card rtn-kpi-card" style="border-radius: 16px; border: 1px solid rgba(16, 185, 129, 0.15) !important; background: #ffffff; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.04); padding: 18px; display: flex; flex-direction: column; gap: 12px; min-height: 135px; cursor: pointer; transition: all 0.3s ease;">
-            <!-- Top section: title and trend badge -->
-            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(16, 185, 129, 0.08); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 16px;">
-                  <i class="fa-solid fa-paper-plane"></i>
-                </div>
-                <span style="font-size: 13px; font-weight: 800; color: #10b981; letter-spacing: 0.5px; text-transform: uppercase;">SEND BACK CUSTOMER</span>
-              </div>
-              <span id="rtn-trend-dikirimcustomer-badge" class="rtn-trend-badge neutral" style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px;">0%</span>
-            </div>
-            <!-- Value Grid -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid rgba(16, 185, 129, 0.1); padding-top: 12px;">
-              <div style="display: flex; flex-direction: column; gap: 2px; border-right: 1px solid rgba(16, 185, 129, 0.1); padding-right: 8px;">
-                <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Jumlah Invoice</span>
-                <span class="kpi-val" id="rtn-kpi-dikirimcustomer-invoice" style="font-size: 26px !important; font-weight: 800; color: #064e3b; line-height: 1;">0</span>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 2px; padding-left: 8px; align-items: flex-end; text-align: right;">
-                <span style="font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;">Total Qty</span>
-                <div style="display: flex; align-items: center; gap: 6px;">
-                  <span class="kpi-val" id="rtn-kpi-dikirimcustomer-qty" style="font-size: 26px !important; font-weight: 800; color: #10b981; line-height: 1;">0</span>
-                  <i class="fa-solid fa-truck-fast" style="color: #10b981; font-size: 14px; opacity: 0.85;"></i>
-                </div>
-              </div>
-            </div>
+          <!-- Beautiful Excel-style Horizontal Scroll Table Container -->
+          <div style="width: 100%; overflow-x: auto; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: inset 0 0 4px rgba(0,0,0,0.02);">
+            <table style="width: 100%; border-separate: separate; border-spacing: 0; font-family: sans-serif; font-size: 12px; min-width: 1000px;" id="rtn-pivot-grid-table">
+              <thead id="rtn-pivot-thead">
+                <!-- Dynamically Populated -->
+              </thead>
+              <tbody id="rtn-pivot-tbody">
+                <!-- Dynamically Populated -->
+              </tbody>
+            </table>
           </div>
         </section>
 
@@ -2229,29 +2273,6 @@
                   </div>
                </div>
             </div>
-          </div>
-        </section>
-
-        <!-- SECTION — DAILY COMPARISON MATRIX (EXCEL STYLE) -->
-        <section class="dashboard-card" style="margin-top: 24px; border: 2px solid #e2e8f0; padding: 20px; border-radius: 16px; background: #ffffff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);" id="rtn-pivot-section">
-          <div style="border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
-            <h3 style="font-size: 15px; font-weight: 800; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
-              <i class="fa-solid fa-table-list" style="color: #0284c7;"></i>
-              Qty Order vs Qty Return
-            </h3>
-            <span style="font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; background: rgba(2, 132, 199, 0.08); color: #0284c7;">Matrix Perbandingan</span>
-          </div>
-
-          <!-- Beautiful Excel-style Horizontal Scroll Table Container -->
-          <div style="width: 100%; overflow-x: auto; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: inset 0 0 4px rgba(0,0,0,0.02);">
-            <table style="width: 100%; border-separate: separate; border-spacing: 0; font-family: sans-serif; font-size: 12px; min-width: 1000px;" id="rtn-pivot-grid-table">
-              <thead id="rtn-pivot-thead">
-                <!-- Dynamically Populated -->
-              </thead>
-              <tbody id="rtn-pivot-tbody">
-                <!-- Dynamically Populated -->
-              </tbody>
-            </table>
           </div>
         </section>
 
@@ -4015,16 +4036,26 @@
         else if (rawStatusUpper.includes('DIKIRIM') || rawStatusUpper.includes('SEND BACK') || rawStatusUpper.includes('KEMBALI')) statusUpper = 'BARANG KEMBALI DIKIRIM KE CUSTOMER';
 
         const rowTime = rowDate ? rowDate.getTime() : null;
-        const targetMonthIdx = isMonthOnlyFilter ? parseInt(rtnFilterMonth, 10) : -1;
-        const targetYear = currentStart.getFullYear();
-        const isCurrentPeriod = isMonthOnlyFilter 
-          ? (rowDate && rowDate.getMonth() === targetMonthIdx && rowDate.getFullYear() === targetYear)
-          : (rowTime !== null && !isNaN(rowTime) && rowTime >= currentStart.getTime() && rowTime <= currentEnd.getTime());
+        const isCurrentPeriod = (rowTime !== null && !isNaN(rowTime) && rowTime >= currentStart.getTime() && rowTime <= currentEnd.getTime());
         
         const isRtnActive = ['ON PROGRESS', 'CLAIM 3PL', 'SO RETURN', 'BARANG KEMBALI DIKIRIM KE CUSTOMER'].includes(statusUpper);
 
-        // Include row in CURRENT calculations only if it is within the current period and is an active status
-        if (isCurrentPeriod && isRtnActive) {
+        // Filter by Area
+        const rowArea = (row[COL_AREA] || "").toString().trim();
+        const matchesArea = (rtnAreaFilter === "ALL" || rtnAreaFilter === "" || rowArea === rtnAreaFilter);
+
+        // Filter by Search Query
+        const filterSearch = rtnSearchQuery.toLowerCase();
+        let matchesSearch = true;
+        if (filterSearch !== "") {
+          const sku = (row[COL_SKU] || "").toString().toLowerCase();
+          const desc = (row[COL_DESCRIPTION] || "").toString().toLowerCase();
+          const inv = (row[COL_INVOICE] || "").toString().toLowerCase();
+          matchesSearch = sku.includes(filterSearch) || desc.includes(filterSearch) || inv.includes(filterSearch);
+        }
+
+        // Include row in CURRENT calculations only if it matches ALL filters
+        if (isCurrentPeriod && isRtnActive && matchesArea && matchesSearch) {
           // Update overall summary logic inside filtered active data
           if (rowDate && !isNaN(rowDate.getTime())) {
             if (!overallLastDate || rowDate > overallLastDate) {
@@ -4129,8 +4160,8 @@
             trendMap[dateKey] = (trendMap[dateKey] || 0) + qty;
           }
         }
-        // Check if row falls in PREVIOUS period for percentage trends
-        else if (rowTime !== null && !isNaN(rowTime) && rowTime >= prevStart.getTime() && rowTime <= prevEnd.getTime()) {
+        // Check if row falls in PREVIOUS period for percentage trends (also applying Area/Search filters for consistency)
+        else if (rowTime !== null && !isNaN(rowTime) && rowTime >= prevStart.getTime() && rowTime <= prevEnd.getTime() && matchesArea && matchesSearch) {
           if (statusUpper === 'ON PROGRESS') {
             if (invoice) onProgressInvoicesPrev.add(invoice);
             onProgressQtyPrev += qty;
@@ -4544,7 +4575,7 @@
       });
 
       // Weekly/Total column at the end
-      headRow2 += `<th style="padding: 10px 12px; border: 1px solid #475569; text-align: center; font-weight: 800; background: #0f172a; min-width: 100px;">Weekly</th></tr>`;
+      headRow2 += `<th style="padding: 10px 12px; border: 1px solid #475569; text-align: center; font-weight: 800; background: #0f172a; min-width: 100px;">Total</th></tr>`;
 
       thead.innerHTML = headRow1 + headRow2;
 
@@ -4555,48 +4586,48 @@
       // HTML construction for rows
       let bodyHtml = '';
 
-      // Row 1: Jumlah Qty Barang yang Dikirim
+      // Row 1: Qty Barang Terkirim
       let row1Html = `
         <tr style="background: #ffffff; transition: background 0.15s ease;">
-          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; font-weight: 600; color: #334155; font-size: 12px; background: #f8fafc; position: sticky; left: 0; z-index: 20;">Jumlah Qty Barang yang Dikirim</td>
+          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; font-weight: 800; color: #334155; font-size: 14px; background: #f0f9ff; position: sticky; left: 0; z-index: 20;">Qty Barang Terkirim</td>
       `;
 
       sortedDates.forEach(dateStr => {
         const val = dailyOrdersMap[dateStr] || 0;
         totalOutboundSum += val;
         row1Html += `
-          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; background: #fef08a; color: #1e293b;">
+          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; background: #e0f2fe; color: #0369a1;">
             ${val === 0 ? '0' : val.toLocaleString('id-ID')}
           </td>
         `;
       });
-      // Add Weekly total
+      // Add Total
       row1Html += `
-        <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; background: #fef08a; color: #1e293b; font-size: 13px;">
+        <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 900; background: #0ea5e9; color: #ffffff; font-size: 14px;">
           ${totalOutboundSum.toLocaleString('id-ID')}
         </td>
       </tr>
       `;
       bodyHtml += row1Html;
 
-      // Row 2: Jumlah Qty Return
+      // Row 2: Qty Return
       let row2Html = `
         <tr style="background: #ffffff; transition: background 0.15s ease;">
-          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; font-weight: 600; color: #334155; font-size: 12px; background: #f8fafc; position: sticky; left: 0; z-index: 20;">Jumlah Qty Return</td>
+          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; font-weight: 800; color: #334155; font-size: 14px; background: #fff7ed; position: sticky; left: 0; z-index: 20;">Qty Return</td>
       `;
 
       sortedDates.forEach(dateStr => {
         const val = dailyReturnsMap[dateStr] || 0;
         totalReturnSum += val;
         row2Html += `
-          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; background: #fef08a; color: #1e293b;">
+          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; background: #ffedd5; color: #9a3412;">
             ${val === 0 ? '0' : val.toLocaleString('id-ID')}
           </td>
         `;
       });
       // Add Weekly total
       row2Html += `
-        <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; background: #fef08a; color: #1e293b; font-size: 13px;">
+        <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 900; background: #f97316; color: #ffffff; font-size: 15px; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
           ${totalReturnSum.toLocaleString('id-ID')}
         </td>
       </tr>
@@ -4606,7 +4637,7 @@
       // Row 3: Persentase
       let row3Html = `
         <tr style="background: #ffffff; transition: background 0.15s ease;">
-          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; font-weight: 600; color: #334155; font-size: 12px; background: #f8fafc; position: sticky; left: 0; z-index: 20;">Persentase</td>
+          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; font-weight: 800; color: #334155; font-size: 14px; background: #f8fafc; position: sticky; left: 0; z-index: 20;">Persentase</td>
       `;
 
       sortedDates.forEach(dateStr => {
@@ -4633,7 +4664,7 @@
         totalPctStr = '100,00%';
       }
       row3Html += `
-        <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; background: #f8fafc; color: #0284c7; font-size: 13px;">
+        <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 900; background: #475569; color: #ffffff; font-size: 14px;">
           ${totalPctStr}
         </td>
       </tr>
