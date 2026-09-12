@@ -2231,6 +2231,30 @@
             </div>
           </div>
         </section>
+
+        <!-- SECTION — DAILY COMPARISON MATRIX (EXCEL STYLE) -->
+        <section class="dashboard-card" style="margin-top: 24px; border: 2px solid #e2e8f0; padding: 20px; border-radius: 16px; background: #ffffff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);" id="rtn-pivot-section">
+          <div style="border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+            <h3 style="font-size: 15px; font-weight: 800; color: #1e293b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-table-list" style="color: #0284c7;"></i>
+              Qty Order vs Qty Return
+            </h3>
+            <span style="font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; background: rgba(2, 132, 199, 0.08); color: #0284c7;">Matrix Perbandingan</span>
+          </div>
+
+          <!-- Beautiful Excel-style Horizontal Scroll Table Container -->
+          <div style="width: 100%; overflow-x: auto; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: inset 0 0 4px rgba(0,0,0,0.02);">
+            <table style="width: 100%; border-separate: separate; border-spacing: 0; font-family: sans-serif; font-size: 12px; min-width: 1000px;" id="rtn-pivot-grid-table">
+              <thead id="rtn-pivot-thead">
+                <!-- Dynamically Populated -->
+              </thead>
+              <tbody id="rtn-pivot-tbody">
+                <!-- Dynamically Populated -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
       </div>
       </div>
 
@@ -2623,6 +2647,8 @@
     let rtnAllItems = [];
     let rtnPeriodStart = null;
     let rtnPeriodEnd = null;
+    let isMonthOnlyFilter = false;
+    let rtnFilterMonth = '';
 
     // Helper functions for localized date & time
     function getIndonesianDayName(dayIndex) {
@@ -2680,8 +2706,11 @@
           let p1 = parseInt(parts[1], 10);
           
           if (p0 > 12) {
-            return new Date(y, p1 - 1, p0);
+            return new Date(y, p1 - 1, p0); // DD/MM/YYYY
+          } else if (p1 > 12) {
+            return new Date(y, p0 - 1, p1); // MM/DD/YYYY
           } else {
+            // Default to MM/DD/YYYY for ambiguous cases (like 07/08) since our sheet uses MM/DD/YYYY
             return new Date(y, p0 - 1, p1);
           }
         }
@@ -2782,12 +2811,24 @@
             let row = parsedSheetReturn[i];
             if (!row || row.length <= colDateIdx) continue;
             let rowDate = null;
-            let dateVal = row[colDateIdx];
-            if (typeof dateVal === 'number') {
-              rowDate = new Date((dateVal - 25569) * 86400 * 1000);
-            } else if (dateVal) {
-              rowDate = parseDateFromStr(dateVal.toString());
+            let dateVal = row[colDateIdx]; // Receipt Date
+            let sertimRaw = (row.length > 16) ? row[16] : null;
+            let effectiveDateVal = dateVal;
+            
+            if (typeof effectiveDateVal === 'number') {
+              rowDate = new Date((effectiveDateVal - 25569) * 86400 * 1000);
+            } else if (effectiveDateVal) {
+              rowDate = parseDateFromStr(effectiveDateVal.toString());
             }
+            
+            if ((!rowDate || isNaN(rowDate.getTime())) && effectiveDateVal === sertimRaw) {
+              if (typeof dateVal === 'number') {
+                rowDate = new Date((dateVal - 25569) * 86400 * 1000);
+              } else if (dateVal) {
+                rowDate = parseDateFromStr(dateVal.toString());
+              }
+            }
+            
             if (rowDate && !isNaN(rowDate.getTime())) {
               if (!minDate || rowDate < minDate) minDate = rowDate;
               if (!maxDate || rowDate > maxDate) maxDate = rowDate;
@@ -3802,7 +3843,8 @@
       
       const dateStartVal = document.getElementById('filter-date-start').value;
       const dateEndVal = document.getElementById('filter-date-end').value;
-      const filterMonth = document.getElementById('filter-month').value;
+      rtnFilterMonth = document.getElementById('filter-month').value;
+      isMonthOnlyFilter = (rtnFilterMonth !== "");
       
       const dateStart = dateStartVal ? parseInputDate(dateStartVal) : null;
       const dateEnd = dateEndVal ? parseInputDate(dateEndVal) : null;
@@ -3845,11 +3887,22 @@
         const row = parsedSheetReturn[i];
         if (!row || row.length <= COL_DATE) continue;
         let rowDate = null;
-        let dateVal = row[COL_DATE];
-        if (typeof dateVal === 'number') {
-          rowDate = new Date((dateVal - 25569) * 86400 * 1000);
-        } else if (dateVal) {
-          rowDate = parseDateFromStr(dateVal.toString());
+        let dateVal = row[COL_DATE]; // Receipt Date
+        let sertimRaw = (row.length > 16) ? row[16] : null;
+        let effectiveDateVal = dateVal;
+        
+        if (typeof effectiveDateVal === 'number') {
+          rowDate = new Date((effectiveDateVal - 25569) * 86400 * 1000);
+        } else if (effectiveDateVal) {
+          rowDate = parseDateFromStr(effectiveDateVal.toString());
+        }
+        
+        if ((!rowDate || isNaN(rowDate.getTime())) && effectiveDateVal === sertimRaw) {
+          if (typeof dateVal === 'number') {
+            rowDate = new Date((dateVal - 25569) * 86400 * 1000);
+          } else if (dateVal) {
+            rowDate = parseDateFromStr(dateVal.toString());
+          }
         }
         if (rowDate && !isNaN(rowDate.getTime())) {
           if (!sheetMinDate || rowDate < sheetMinDate) sheetMinDate = new Date(rowDate);
@@ -3858,17 +3911,14 @@
       }
 
       // Establish current start/end times
-      let currentStart = dateStart ? new Date(dateStart) : (sheetMinDate ? new Date(sheetMinDate) : new Date("2025-01-01"));
+      let currentStart = dateStart ? new Date(dateStart) : (sheetMinDate ? new Date(sheetMinDate) : new Date("2024-01-01"));
       currentStart.setHours(0,0,0,0);
-      let currentEnd = dateEnd ? new Date(dateEnd) : (sheetMaxDate ? new Date(sheetMaxDate) : new Date("2025-12-31"));
+      let currentEnd = dateEnd ? new Date(dateEnd) : (sheetMaxDate ? new Date(sheetMaxDate) : new Date("2026-12-31"));
       currentEnd.setHours(23,59,59,999);
 
       // Overwrite if filterMonth is specified
-      if (filterMonth !== "") {
-        const activeYear = sheetMaxDate ? sheetMaxDate.getFullYear() : 2026;
-        const mIdx = parseInt(filterMonth, 10);
-        currentStart = new Date(activeYear, mIdx, 1, 0, 0, 0, 0);
-        currentEnd = new Date(activeYear, mIdx + 1, 0, 23, 59, 59, 999);
+      if (rtnFilterMonth !== "") {
+        // No-op here since isMonthOnlyFilter handles it
       }
 
       rtnPeriodStart = currentStart;
@@ -3935,11 +3985,23 @@
         if (!row || row.length === 0) continue;
 
         let rowDate = null;
-        let dateVal = row[COL_DATE];
-        if (typeof dateVal === 'number') {
-          rowDate = new Date((dateVal - 25569) * 86400 * 1000);
-        } else if (dateVal) {
-          rowDate = parseDateFromStr(dateVal.toString());
+        let dateVal = row[COL_DATE]; // Receipt Date
+        let sertimRaw = (row.length > 16) ? row[16] : null;
+        let effectiveDateVal = dateVal;
+        
+        if (typeof effectiveDateVal === 'number') {
+          rowDate = new Date((effectiveDateVal - 25569) * 86400 * 1000);
+        } else if (effectiveDateVal) {
+          rowDate = parseDateFromStr(effectiveDateVal.toString());
+        }
+        
+        // Final fallback to Receipt Date if effectiveDateVal parsing failed but was from Sertim
+        if ((!rowDate || isNaN(rowDate.getTime())) && effectiveDateVal === sertimRaw) {
+          if (typeof dateVal === 'number') {
+            rowDate = new Date((dateVal - 25569) * 86400 * 1000);
+          } else if (dateVal) {
+            rowDate = parseDateFromStr(dateVal.toString());
+          }
         }
 
         const invoice = (row[COL_INVOICE] || "").toString().trim();
@@ -3953,7 +4015,12 @@
         else if (rawStatusUpper.includes('DIKIRIM') || rawStatusUpper.includes('SEND BACK') || rawStatusUpper.includes('KEMBALI')) statusUpper = 'BARANG KEMBALI DIKIRIM KE CUSTOMER';
 
         const rowTime = rowDate ? rowDate.getTime() : null;
-        const isCurrentPeriod = (rowTime !== null && !isNaN(rowTime) && rowTime >= currentStart.getTime() && rowTime <= currentEnd.getTime());
+        const targetMonthIdx = isMonthOnlyFilter ? parseInt(rtnFilterMonth, 10) : -1;
+        const targetYear = currentStart.getFullYear();
+        const isCurrentPeriod = isMonthOnlyFilter 
+          ? (rowDate && rowDate.getMonth() === targetMonthIdx && rowDate.getFullYear() === targetYear)
+          : (rowTime !== null && !isNaN(rowTime) && rowTime >= currentStart.getTime() && rowTime <= currentEnd.getTime());
+        
         const isRtnActive = ['ON PROGRESS', 'CLAIM 3PL', 'SO RETURN', 'BARANG KEMBALI DIKIRIM KE CUSTOMER'].includes(statusUpper);
 
         // Include row in CURRENT calculations only if it is within the current period and is an active status
@@ -4108,7 +4175,7 @@
 
       // Check if filter is ALL dates (Semua Bulan / reset filters)
       let isAllDateFilter = false;
-      if (filterMonth === "") {
+      if (rtnFilterMonth === "") {
         const startVal = document.getElementById('filter-date-start').value;
         const endVal = document.getElementById('filter-date-end').value;
         
@@ -4142,11 +4209,22 @@
             const row = parsedSheetReturn[i];
             if (!row || row.length <= COL_DATE) continue;
             let rowDate = null;
-            let dateVal = row[COL_DATE];
-            if (typeof dateVal === 'number') {
-              rowDate = new Date((dateVal - 25569) * 86400 * 1000);
-            } else if (dateVal) {
-              rowDate = parseDateFromStr(dateVal.toString());
+            let dateVal = row[COL_DATE]; // Receipt Date
+            let sertimRaw = (row.length > 16) ? row[16] : null;
+            let effectiveDateVal = dateVal;
+            
+            if (typeof effectiveDateVal === 'number') {
+              rowDate = new Date((effectiveDateVal - 25569) * 86400 * 1000);
+            } else if (effectiveDateVal) {
+              rowDate = parseDateFromStr(effectiveDateVal.toString());
+            }
+            
+            if ((!rowDate || isNaN(rowDate.getTime())) && effectiveDateVal === sertimRaw) {
+              if (typeof dateVal === 'number') {
+                rowDate = new Date((dateVal - 25569) * 86400 * 1000);
+              } else if (dateVal) {
+                rowDate = parseDateFromStr(dateVal.toString());
+              }
             }
             
             if (rowDate && !isNaN(rowDate.getTime())) {
@@ -4254,6 +4332,329 @@
 
       // Render the Unified Detailed Dashboard Table!
       renderUnifiedTable();
+      renderRtnPivotTable();
+    }
+
+    // NEW EXCEL-STYLE PIVOT MATRIX TABLE
+    function renderRtnPivotTable() {
+      const thead = document.getElementById('rtn-pivot-thead');
+      const tbody = document.getElementById('rtn-pivot-tbody');
+      if (!thead || !tbody) return;
+
+      const dateStartVal = document.getElementById('filter-date-start').value;
+      const dateEndVal = document.getElementById('filter-date-end').value;
+      const filterMonth = document.getElementById('filter-month').value;
+      const filterArea = rtnAreaFilter;
+      const filterSearch = rtnSearchQuery.toLowerCase();
+      const isMonthOnly = (filterMonth !== "");
+      const targetMonthIdx = isMonthOnly ? parseInt(filterMonth, 10) : -1;
+
+      const dateStart = dateStartVal ? parseInputDate(dateStartVal) : null;
+      if (dateStart) dateStart.setHours(0,0,0,0);
+      const dateEnd = dateEndVal ? parseInputDate(dateEndVal) : null;
+      if (dateEnd) dateEnd.setHours(23,59,59,999);
+
+      // Group 1: Order quantities by Date Key
+      const dailyOrdersMap = {};
+      if (parsedSheetB && parsedSheetB.length > 1) {
+        // For Sheet B (Outbound), we don't have Area filter usually, but we apply Date
+        for (let i = 1; i < parsedSheetB.length; i++) {
+          const row = parsedSheetB[i];
+          if (!row || !row[0] || row[0].trim() === "") continue;
+
+          const rowDate = parseDateFromStr(row[0]);
+          if (!rowDate) continue;
+
+          const time = rowDate.getTime();
+          if (dateStart && time < dateStart.getTime()) continue;
+          if (dateEnd && time > dateEnd.getTime()) continue;
+
+          const qty = safeParseFloat(row[7]);
+          const dateKey = formatDateToInputString(rowDate);
+          dailyOrdersMap[dateKey] = (dailyOrdersMap[dateKey] || 0) + qty;
+        }
+      }
+
+      // Group 2: Return quantities by Date Key
+      const dailyReturnsMap = {};
+      if (parsedSheetReturn && parsedSheetReturn.length > 1) {
+        const rHeaders = parsedSheetReturn[0] ? parsedSheetReturn[0].map(h => (h || '').toString().trim().toUpperCase()) : [];
+        const findColIndex = (possibleNames, defaultIdx) => {
+          for (let name of possibleNames) {
+            const idx = rHeaders.indexOf(name.toUpperCase());
+            if (idx !== -1) return idx;
+          }
+          return defaultIdx;
+        };
+        const colDateIdx = findColIndex(['Tanggal', 'Date', 'Tgl', 'Tanggal Masuk'], 2); // Column C
+        const colQtyIdx = findColIndex(['Qty', 'Quantity', 'Jumlah', 'Pcs'], 8); // Column I
+        const colStatusIdx = findColIndex(['Status', 'Kategori', 'Status Return'], 9); // Column J
+        const colAreaIdx = findColIndex(['Area', 'Wilayah', 'Cabang', 'Lokasi'], 0);
+        const colSkuIdx = findColIndex(['SKU', 'Artikel', 'Kode SKU', 'Sku / Artikel'], 4);
+        const colDescIdx = findColIndex(['Nama Barang', 'Description', 'Desc', 'Nama Produk', 'Nama'], 5);
+
+        for (let i = 1; i < parsedSheetReturn.length; i++) {
+          const row = parsedSheetReturn[i];
+          if (!row || row.length <= colDateIdx) continue;
+
+          // 1. FILTER BY AREA
+          const rowArea = (row[colAreaIdx] || "").toString().trim();
+          if (filterArea !== "ALL" && filterArea !== "" && rowArea !== filterArea) continue;
+
+          // 2. FILTER BY SEARCH
+          if (filterSearch !== "") {
+            const sku = (row[colSkuIdx] || "").toString().toLowerCase();
+            const desc = (row[colDescIdx] || "").toString().toLowerCase();
+            const inv = (row[3] || "").toString().toLowerCase();
+            if (!sku.includes(filterSearch) && !desc.includes(filterSearch) && !inv.includes(filterSearch)) continue;
+          }
+
+          // 3. FILTER BY STATUS (Global Active Statuses for Return Dashboard)
+          const status = (row[colStatusIdx] || "Unknown").toString().trim();
+          const rawStatusUpper = status.toUpperCase().trim();
+          let statusUpper = rawStatusUpper;
+          if (rawStatusUpper.includes('ON PROGRESS')) statusUpper = 'ON PROGRESS';
+          else if (rawStatusUpper.includes('CLAIM')) statusUpper = 'CLAIM 3PL';
+          else if (rawStatusUpper.includes('SO RETURN') || rawStatusUpper.includes('SO RETUR') || rawStatusUpper.includes('RETURN SO') || rawStatusUpper.includes('RETUR SO')) statusUpper = 'SO RETURN';
+          else if (rawStatusUpper.includes('DIKIRIM') || rawStatusUpper.includes('SEND BACK') || rawStatusUpper.includes('KEMBALI')) statusUpper = 'BARANG KEMBALI DIKIRIM KE CUSTOMER';
+
+          const isRtnActive = ['ON PROGRESS', 'CLAIM 3PL', 'SO RETURN', 'BARANG KEMBALI DIKIRIM KE CUSTOMER'].includes(statusUpper);
+          if (!isRtnActive) continue;
+
+          // 4. FILTER BY SPECIFIC STATUS (If KPI card is active)
+          if (typeof activeRtnStatusFilter !== 'undefined' && activeRtnStatusFilter !== 'ALL' && statusUpper !== activeRtnStatusFilter) continue;
+
+          // Date selection (Match updateReturnView logic)
+          let dateVal = row[colDateIdx]; // Receipt Date
+          let sertimRaw = (row.length > 16) ? row[16] : null;
+          let effectiveDateVal = dateVal;
+          
+          let rowDate = null;
+          if (typeof effectiveDateVal === 'number') {
+            rowDate = new Date((effectiveDateVal - 25569) * 86400 * 1000);
+          } else if (effectiveDateVal) {
+            rowDate = parseDateFromStr(effectiveDateVal.toString());
+          }
+
+          // Fallback to Receipt Date if effectiveDateVal (Sertim) parsing failed
+          if ((!rowDate || isNaN(rowDate.getTime())) && effectiveDateVal === sertimRaw) {
+            if (typeof dateVal === 'number') {
+              rowDate = new Date((dateVal - 25569) * 86400 * 1000);
+            } else if (dateVal) {
+              rowDate = parseDateFromStr(dateVal.toString());
+            }
+          }
+
+          if (!rowDate || isNaN(rowDate.getTime())) continue;
+
+          const time = rowDate.getTime();
+          if (dateStart && time < dateStart.getTime()) continue;
+          if (dateEnd && time > dateEnd.getTime()) continue;
+
+          const qty = safeParseFloat(row[colQtyIdx]);
+          const dateKey = formatDateToInputString(rowDate);
+          dailyReturnsMap[dateKey] = (dailyReturnsMap[dateKey] || 0) + qty;
+        }
+      }
+
+      // Generate standard sortedDates sequentially matching exactly the filtered range
+      let rangeStart = dateStart ? new Date(dateStart) : null;
+      let rangeEnd = dateEnd ? new Date(dateEnd) : null;
+
+      if (!rangeStart || !rangeEnd) {
+        const keys = [
+          ...Object.keys(dailyOrdersMap),
+          ...Object.keys(dailyReturnsMap)
+        ];
+        if (keys.length > 0) {
+          keys.sort();
+          if (!rangeStart) rangeStart = new Date(keys[0]);
+          if (!rangeEnd) rangeEnd = new Date(keys[keys.length - 1]);
+        } else {
+          const today = new Date();
+          rangeStart = new Date(today.getFullYear(), today.getMonth(), 1);
+          rangeEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        }
+      }
+
+      const sortedDates = [];
+      let tempDate = new Date(rangeStart);
+      let loopSafety = 0;
+      while (tempDate <= rangeEnd && loopSafety < 366) {
+        sortedDates.push(formatDateToInputString(tempDate));
+        tempDate.setDate(tempDate.getDate() + 1);
+        loopSafety++;
+      }
+
+      if (sortedDates.length === 0) {
+        thead.innerHTML = `
+          <tr>
+            <th style="padding: 16px; text-align: center; color: #94a3b8; background: #f8fafc;">
+              No data available for the selected period
+            </th>
+          </tr>
+        `;
+        tbody.innerHTML = `
+          <tr>
+            <td style="padding: 16px; text-align: center; color: #94a3b8;">
+              Silakan pilih periode tanggal atau bulan yang valid
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      // Dynamic Month Name for header spanning
+      let periodName = "PERIODE AKTIF";
+      if (isMonthOnly) {
+        const monthNames = ["JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"];
+        const displayYear = rangeStart ? rangeStart.getFullYear() : 2026;
+        periodName = `${monthNames[targetMonthIdx]} ${displayYear}`;
+      } else if (dateStart && dateEnd) {
+        const formatS = dateStart.toLocaleDateString('id-ID', {day:'numeric', month:'short'});
+        const formatE = dateEnd.toLocaleDateString('id-ID', {day:'numeric', month:'short'});
+        periodName = `${formatS} - ${formatE}`.toUpperCase();
+      }
+
+      // Create Head HTML
+      // Row 1
+      let headRow1 = `
+        <tr style="background: #0f172a; color: white; text-transform: uppercase;">
+          <th style="padding: 12px; font-weight: 800; border: 1px solid #334155; font-size: 11px; width: 250px; text-align: left; position: sticky; left: 0; z-index: 30; background: #0f172a;">KETERANGAN</th>
+          <th colspan="${sortedDates.length + 1}" style="padding: 12px; font-weight: 800; border: 1px solid #334155; font-size: 12px; text-align: center; letter-spacing: 1px;">${periodName}</th>
+        </tr>
+      `;
+
+      // Row 2: Days Header
+      const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const shortMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+      let headRow2 = `
+        <tr style="background: #1e293b; color: white; font-size: 11px;">
+          <th style="padding: 10px 12px; border: 1px solid #475569; text-align: left; width: 250px; position: sticky; left: 0; z-index: 30; background: #1e293b;"></th>
+      `;
+
+      sortedDates.forEach(dateStr => {
+        const dObj = new Date(dateStr);
+        const dayLabel = daysOfWeek[dObj.getDay()];
+        const dayNum = dObj.getDate().toString().padStart(2, '0');
+        const monLabel = shortMonths[dObj.getMonth()];
+        const formattedDateCol = `${dayLabel} ${dayNum}-${monLabel}`;
+        headRow2 += `<th style="padding: 10px 12px; border: 1px solid #475569; text-align: center; font-weight: 700; min-width: 90px; white-space: nowrap;">${formattedDateCol}</th>`;
+      });
+
+      // Weekly/Total column at the end
+      headRow2 += `<th style="padding: 10px 12px; border: 1px solid #475569; text-align: center; font-weight: 800; background: #0f172a; min-width: 100px;">Weekly</th></tr>`;
+
+      thead.innerHTML = headRow1 + headRow2;
+
+      // Calculate totals for summary/Weekly column
+      let totalOutboundSum = 0;
+      let totalReturnSum = 0;
+
+      // HTML construction for rows
+      let bodyHtml = '';
+
+      // Row 1: Jumlah Qty Barang yang Dikirim
+      let row1Html = `
+        <tr style="background: #ffffff; transition: background 0.15s ease;">
+          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; font-weight: 600; color: #334155; font-size: 12px; background: #f8fafc; position: sticky; left: 0; z-index: 20;">Jumlah Qty Barang yang Dikirim</td>
+      `;
+
+      sortedDates.forEach(dateStr => {
+        const val = dailyOrdersMap[dateStr] || 0;
+        totalOutboundSum += val;
+        row1Html += `
+          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; background: #fef08a; color: #1e293b;">
+            ${val === 0 ? '0' : val.toLocaleString('id-ID')}
+          </td>
+        `;
+      });
+      // Add Weekly total
+      row1Html += `
+        <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; background: #fef08a; color: #1e293b; font-size: 13px;">
+          ${totalOutboundSum.toLocaleString('id-ID')}
+        </td>
+      </tr>
+      `;
+      bodyHtml += row1Html;
+
+      // Row 2: Jumlah Qty Return
+      let row2Html = `
+        <tr style="background: #ffffff; transition: background 0.15s ease;">
+          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; font-weight: 600; color: #334155; font-size: 12px; background: #f8fafc; position: sticky; left: 0; z-index: 20;">Jumlah Qty Return</td>
+      `;
+
+      sortedDates.forEach(dateStr => {
+        const val = dailyReturnsMap[dateStr] || 0;
+        totalReturnSum += val;
+        row2Html += `
+          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; background: #fef08a; color: #1e293b;">
+            ${val === 0 ? '0' : val.toLocaleString('id-ID')}
+          </td>
+        `;
+      });
+      // Add Weekly total
+      row2Html += `
+        <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; background: #fef08a; color: #1e293b; font-size: 13px;">
+          ${totalReturnSum.toLocaleString('id-ID')}
+        </td>
+      </tr>
+      `;
+      bodyHtml += row2Html;
+
+      // Row 3: Persentase
+      let row3Html = `
+        <tr style="background: #ffffff; transition: background 0.15s ease;">
+          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; font-weight: 600; color: #334155; font-size: 12px; background: #f8fafc; position: sticky; left: 0; z-index: 20;">Persentase</td>
+      `;
+
+      sortedDates.forEach(dateStr => {
+        const orders = dailyOrdersMap[dateStr] || 0;
+        const returns = dailyReturnsMap[dateStr] || 0;
+        let pctStr = '0,00%';
+        if (orders > 0) {
+          pctStr = ((returns / orders) * 100).toFixed(2).replace('.', ',') + '%';
+        } else if (returns > 0) {
+          pctStr = '100,00%';
+        }
+        row3Html += `
+          <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; color: #334155; font-weight: 600; background: #ffffff;">
+            ${pctStr}
+          </td>
+        `;
+      });
+
+      // Add Overall Weekly Percentage total
+      let totalPctStr = '0,00%';
+      if (totalOutboundSum > 0) {
+        totalPctStr = ((totalReturnSum / totalOutboundSum) * 100).toFixed(2).replace('.', ',') + '%';
+      } else if (totalReturnSum > 0) {
+        totalPctStr = '100,00%';
+      }
+      row3Html += `
+        <td style="padding: 10px 12px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; background: #f8fafc; color: #0284c7; font-size: 13px;">
+          ${totalPctStr}
+        </td>
+      </tr>
+      `;
+      bodyHtml += row3Html;
+
+      tbody.innerHTML = bodyHtml;
+    }
+
+    function formatIndoDate(dateStr) {
+      const parts = dateStr.split('-');
+      if (parts.length === 3) {
+        const y = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10) - 1;
+        const d = parseInt(parts[2], 10);
+        const day = d.toString().padStart(2, '0');
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+        const month = monthNames[m];
+        return `${day} ${month} ${y}`;
+      }
+      return dateStr;
     }
 
     // Helper function to match aging categories with values or fallback to days
@@ -4318,6 +4719,7 @@
       rtnCurrentPage = 1;
       showToast(`Menyaring Area: ${areaVal === 'ALL' ? 'Semua Area' : areaVal}`, 'info');
       renderUnifiedTable();
+      renderRtnPivotTable();
     }
 
     // Interactive Handler for Search Input
@@ -4325,6 +4727,7 @@
       rtnSearchQuery = queryVal.trim();
       rtnCurrentPage = 1;
       renderUnifiedTable();
+      renderRtnPivotTable();
     }
 
     // Interactive Handler for Sorting
@@ -4476,9 +4879,17 @@
         return true;
       });
 
-      // Filter items for statistical widgets to match the active date range exactly
+      // Filter items for statistical widgets to match the active date range or selected month
       const statsItems = filteredItems.filter(item => {
-        if (!item.date || !rtnPeriodStart || !rtnPeriodEnd) return true;
+        if (!item.date) return true;
+        
+        if (isMonthOnlyFilter) {
+          const targetMonthIdx = parseInt(rtnFilterMonth, 10);
+          const targetYear = rtnPeriodStart ? rtnPeriodStart.getFullYear() : 2026;
+          return item.date.getMonth() === targetMonthIdx && item.date.getFullYear() === targetYear;
+        }
+        
+        if (!rtnPeriodStart || !rtnPeriodEnd) return true;
         const time = item.date.getTime();
         return time >= rtnPeriodStart.getTime() && time <= rtnPeriodEnd.getTime();
       });
@@ -6500,8 +6911,14 @@
       document.getElementById('btn-apply-filters').addEventListener('click', applyMainFilters);
 
       // Auto-apply filters on changes
-      document.getElementById('filter-date-start').addEventListener('change', applyMainFilters);
-      document.getElementById('filter-date-end').addEventListener('change', applyMainFilters);
+      document.getElementById('filter-date-start').addEventListener('change', () => {
+        document.getElementById('filter-month').value = "";
+        applyMainFilters();
+      });
+      document.getElementById('filter-date-end').addEventListener('change', () => {
+        document.getElementById('filter-month').value = "";
+        applyMainFilters();
+      });
       document.getElementById('filter-month').addEventListener('change', (e) => {
         const val = e.target.value;
         if (currentView === 'return' && parsedSheetReturn && parsedSheetReturn.length > 1) {
