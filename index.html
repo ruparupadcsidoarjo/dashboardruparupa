@@ -6640,6 +6640,24 @@
         return;
       }
 
+      // Dynamic header column mapping for SKU Sheet
+      const skuHeaders = parsedSheetSKU[0] ? parsedSheetSKU[0].map(h => (h || '').toString().trim().toUpperCase()) : [];
+      
+      const findSkuColIndex = (possibleNames, defaultIdx) => {
+        for (let name of possibleNames) {
+          const idx = skuHeaders.indexOf(name.toUpperCase().trim());
+          if (idx !== -1) return idx;
+        }
+        return defaultIdx;
+      };
+
+      const COL_DATE = findSkuColIndex(['helper date', 'helper_date', 'ORDERDATE', 'DATE', 'ADDDATE'], 1);
+      const COL_SKU = findSkuColIndex(['SKU', 'ARTIKEL', 'KODE SKU'], 17);
+      const COL_DESCR = findSkuColIndex(['DESCR', 'DESCRIPTION', 'NAMA BARANG', 'DESC'], 18);
+      const COL_QTY = findSkuColIndex(['ORIGINALQTY', 'QTY', 'QUANTITY', 'QTYPICKED', 'SHIPPEDQTY'], 20);
+      const COL_GROUP = findSkuColIndex(['SKUGROUP', 'GROUP', 'KODE GROUP'], 19);
+      const COL_DEPT = findSkuColIndex(['Nama Departement', 'Nama Departement ', 'DEPARTEMENT', 'DEPARTMENT'], 30);
+
       // Get Global Filters
       const dateStartVal = document.getElementById('filter-date-start').value;
       const dateEndVal = document.getElementById('filter-date-end').value;
@@ -6655,12 +6673,14 @@
       const skuMap = new Map();
       const groupMap = new Map();
 
+      const maxRequiredIndex = Math.max(COL_DATE, COL_SKU, COL_DESCR, COL_QTY, COL_GROUP, COL_DEPT);
+
       for (let i = 1; i < parsedSheetSKU.length; i++) {
         const row = parsedSheetSKU[i];
-        if (!row || row.length < 22) continue;
+        if (!row || row.length <= maxRequiredIndex) continue;
 
         let rowDate = null;
-        let dateVal = row[1];
+        let dateVal = row[COL_DATE];
         if (typeof dateVal === 'number') {
           rowDate = new Date((dateVal - 25569) * 86400 * 1000);
         } else if (dateVal) {
@@ -6676,13 +6696,13 @@
         const rowTime = rowDate.setHours(12, 0, 0, 0);
         if (rowTime < startTimeTs || rowTime > endTimeTs) continue;
 
-        // Parse Quantity Robustly - Strict sum of Column V (Index 21)
-        let qty = safeParseFloat(row[21]);
+        // Parse Quantity Robustly
+        let qty = safeParseFloat(row[COL_QTY]);
 
         // SKU Table Data
-        const sku = (row[18] || '').toString().trim();
+        const sku = (row[COL_SKU] || '').toString().trim();
         if (sku !== "") {
-          const desc = (row[19] || '').toString().trim();
+          const desc = (row[COL_DESCR] || '').toString().trim();
           if (skuMap.has(sku)) {
             skuMap.get(sku).qty += qty;
           } else {
@@ -6691,8 +6711,8 @@
         }
 
         // SKU Group Data
-        const groupCode = (row[20] || '').toString().trim();
-        const groupLabel = (row[31] || groupCode || 'Other').toString().trim();
+        const groupCode = (row[COL_GROUP] || '').toString().trim();
+        const groupLabel = (row[COL_DEPT] || groupCode || 'Other').toString().trim();
         
         if (groupCode !== "" || groupLabel !== "Other") {
           const key = groupCode || groupLabel;
