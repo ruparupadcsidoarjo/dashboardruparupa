@@ -3902,7 +3902,8 @@
       const COL_DEPART = findColIndex(['Nama Depart', 'Depart', 'Department', 'Nama Departemen', 'Departemen'], 7);
       const COL_ROOT_CAUSE = findColIndex(['Root Cause', 'Rootcause', 'Alasan Utama', 'Sebab Utama', 'Penyebab', 'Root Cause/ Alasan', 'Help', 'Substatus Detail'], 3);
       const COL_SERTIM = findColIndex(['SERTIM', 'Sertim', 'Sertifikasi', 'Sertim/Keterangan'], 15);
-      const COL_PLAN = findColIndex(['Plan', 'Action Plan', 'Rencana', 'Action', 'Solusi'], 15);
+      const COL_PLAN = findColIndex(['Final', 'Plan', 'Action Plan', 'Rencana', 'Action', 'Solusi'], 15);
+      const COL_PROSES = 15; // Column P as requested
 
       for (let i = 1; i < parsedSheetReturn.length; i++) {
         const row = parsedSheetReturn[i];
@@ -3990,16 +3991,23 @@
       let dikirimCustomerInvoiceCountPrev = 0;
       let dikirimCustomerQtyPrev = 0;
 
+      let prosesInvoiceCountCur = 0;
+      let prosesQtyCur = 0;
+      let prosesInvoiceCountPrev = 0;
+      let prosesQtyPrev = 0;
+
       // Sets to track unique invoice numbers
       const onProgressInvoicesCur = new Set();
       const claim3PLInvoicesCur = new Set();
       const soReturnInvoicesCur = new Set();
       const dikirimCustomerInvoicesCur = new Set();
+      const prosesInvoicesCur = new Set();
 
       const onProgressInvoicesPrev = new Set();
       const claim3PLInvoicesPrev = new Set();
       const soReturnInvoicesPrev = new Set();
       const dikirimCustomerInvoicesPrev = new Set();
+      const prosesInvoicesPrev = new Set();
 
       for (let i = 1; i < parsedSheetReturn.length; i++) {
         const row = parsedSheetReturn[i];
@@ -4034,6 +4042,21 @@
         else if (rawStatusUpper.includes('CLAIM')) statusUpper = 'CLAIM 3PL';
         else if (rawStatusUpper.includes('SO RETURN') || rawStatusUpper.includes('SO RETUR') || rawStatusUpper.includes('RETURN SO') || rawStatusUpper.includes('RETUR SO')) statusUpper = 'SO RETURN';
         else if (rawStatusUpper.includes('DIKIRIM') || rawStatusUpper.includes('SEND BACK') || rawStatusUpper.includes('KEMBALI')) statusUpper = 'BARANG KEMBALI DIKIRIM KE CUSTOMER';
+
+        let rawProses = (COL_PLAN !== -1 && COL_PLAN < row.length) ? (row[COL_PLAN] || "").toString().trim() : "";
+        let prosesQtyValue = safeParseFloat(rawProses);
+        
+        // If the value is a link, non-numeric, or specifically says "PROSES",
+        // it means this row is "in process".
+        if (prosesQtyValue === 0 && rawProses !== "") {
+          const isLink = rawProses.toLowerCase().includes('http') || 
+                         rawProses.toLowerCase().includes('www') || 
+                         rawProses.toLowerCase().includes('.com') ||
+                         rawProses.toLowerCase().includes('.id') ||
+                         rawProses.toLowerCase().includes('.gl');
+          const isProsesText = rawProses.toUpperCase() === "PROSES";
+          prosesQtyValue = (isLink || isProsesText) ? qty : 0;
+        }
 
         const rowTime = rowDate ? rowDate.getTime() : null;
         const isCurrentPeriod = (rowTime !== null && !isNaN(rowTime) && rowTime >= currentStart.getTime() && rowTime <= currentEnd.getTime());
@@ -4135,6 +4158,7 @@
             statusUpper: statusUpper,
             rootCause: rootCause,
             plan: planValue,
+            prosesQty: prosesQtyValue,
             normalizedSertim: normalizedSertim
           };
 
@@ -4154,10 +4178,15 @@
             dikirimCustomerQtyCur += qty;
           }
 
+          if (prosesQtyValue > 0) {
+            if (invoice) prosesInvoicesCur.add(invoice);
+            prosesQtyCur += prosesQtyValue;
+          }
+
           // Apply status-specific filtering to trend map
-          if (activeRtnStatusFilter === 'ALL' || statusUpper === activeRtnStatusFilter) {
+          if (activeRtnStatusFilter === 'ALL' || statusUpper === activeRtnStatusFilter || (activeRtnStatusFilter === 'PROSES' && prosesQtyValue > 0)) {
             const dateKey = `${finalDate.getFullYear()}-${finalDate.getMonth()+1}-${finalDate.getDate()}`;
-            trendMap[dateKey] = (trendMap[dateKey] || 0) + qty;
+            trendMap[dateKey] = (trendMap[dateKey] || 0) + (activeRtnStatusFilter === 'PROSES' ? prosesQtyValue : qty);
           }
         }
         // Check if row falls in PREVIOUS period for percentage trends (also applying Area/Search filters for consistency)
@@ -4175,6 +4204,11 @@
             if (invoice) dikirimCustomerInvoicesPrev.add(invoice);
             dikirimCustomerQtyPrev += qty;
           }
+
+          if (prosesQtyValue > 0) {
+            if (invoice) prosesInvoicesPrev.add(invoice);
+            prosesQtyPrev += prosesQtyValue;
+          }
         }
       }
 
@@ -4182,11 +4216,13 @@
       claim3PLInvoiceCountCur = claim3PLInvoicesCur.size;
       soReturnInvoiceCountCur = soReturnInvoicesCur.size;
       dikirimCustomerInvoiceCountCur = dikirimCustomerInvoicesCur.size;
+      prosesInvoiceCountCur = prosesInvoicesCur.size;
 
       onProgressInvoiceCountPrev = onProgressInvoicesPrev.size;
       claim3PLInvoiceCountPrev = claim3PLInvoicesPrev.size;
       soReturnInvoiceCountPrev = soReturnInvoicesPrev.size;
       dikirimCustomerInvoiceCountPrev = dikirimCustomerInvoicesPrev.size;
+      prosesInvoiceCountPrev = prosesInvoicesPrev.size;
 
       // Update Overall Summary UI
       const lastDateElem = document.getElementById('rtn-summary-last-date');
@@ -4825,6 +4861,7 @@
       const invClaim = new Set();
       const invSO = new Set();
       const invDikirim = new Set();
+      const invProses = new Set();
 
       rtnAllItems.forEach(item => {
         if (item.invoice) invAll.add(item.invoice);
@@ -4836,6 +4873,10 @@
           if (item.invoice) invSO.add(item.invoice);
         } else if (item.statusUpper === 'BARANG KEMBALI DIKIRIM KE CUSTOMER') {
           if (item.invoice) invDikirim.add(item.invoice);
+        }
+        
+        if (item.prosesQty > 0) {
+          if (item.invoice) invProses.add(item.invoice);
         }
       });
 
@@ -4849,6 +4890,7 @@
       updateBadge('rtn-badge-claim3pl', invClaim.size);
       updateBadge('rtn-badge-soreturn', invSO.size);
       updateBadge('rtn-badge-dikirimcustomer', invDikirim.size);
+      updateBadge('rtn-badge-proses', invProses.size);
 
       // 3. Dynamic Area Dropdown options
       const areaSelect = document.getElementById('rtn-filter-area');
@@ -4870,10 +4912,18 @@
       // 4. Filtering items based on category, aging, area, and search query
       let filteredItems = rtnAllItems.filter(item => {
         // Filter Category
-        if (rtnCategory !== 'ALL' && item.statusUpper !== rtnCategory) return false;
+        if (rtnCategory !== 'ALL' && item.statusUpper !== rtnCategory) {
+          return false;
+        }
 
         // Sub Filter for SO RETURN
-        if (rtnCategory === 'SO RETURN' && rtnSubFilter !== 'ALL' && item.normalizedSertim !== rtnSubFilter) return false;
+        if (rtnCategory === 'SO RETURN' && rtnSubFilter !== 'ALL') {
+          if (rtnSubFilter === 'PROSES') {
+            if (!(item.prosesQty > 0)) return false;
+          } else {
+            if (item.normalizedSertim !== rtnSubFilter) return false;
+          }
+        }
 
         // Filter Aging
         if (rtnAgingFilter !== 'ALL' && getAgingGroup(item) !== rtnAgingFilter) return false;
@@ -5167,20 +5217,24 @@
           let slocQty = 0;
           let barusQty = 0;
           let stoQty = 0;
+          let totalProsesQty = 0;
           
           soReturnBaseItems.forEach(it => {
             if (it.normalizedSertim === 'SLOC 1000') slocQty += it.qty;
             else if (it.normalizedSertim === 'BARUS') barusQty += it.qty;
             else if (it.normalizedSertim === 'STO') stoQty += it.qty;
+            
+            if (it.prosesQty > 0) totalProsesQty += it.qty;
           });
 
-          // Render these 3 custom beautiful badges
+          // Render these 4 custom beautiful badges
           const getStyle = (sub) => {
             const isActive = rtnSubFilter === sub;
             const colors = {
               'SLOC 1000': { bg: '#e0f2fe', text: '#0369a1', border: 'rgba(3, 105, 161, 0.2)', activeBg: '#0369a1', activeText: '#fff' },
               'BARUS': { bg: '#ccfbf1', text: '#0f766e', border: 'rgba(15, 118, 110, 0.2)', activeBg: '#0f766e', activeText: '#fff' },
-              'STO': { bg: '#fffbeb', text: '#b45309', border: 'rgba(180, 83, 9, 0.2)', activeBg: '#b45309', activeText: '#fff' }
+              'STO': { bg: '#fffbeb', text: '#b45309', border: 'rgba(180, 83, 9, 0.2)', activeBg: '#b45309', activeText: '#fff' },
+              'PROSES': { bg: '#fff7ed', text: '#f97316', border: 'rgba(249, 115, 22, 0.2)', activeBg: '#f97316', activeText: '#fff' }
             };
             const c = colors[sub];
             return `cursor: pointer; font-size: 11px; font-weight: 800; background: ${isActive ? c.activeBg : c.bg}; color: ${isActive ? c.activeText : c.text}; border: 1px solid ${c.border}; padding: 3px 12px; border-radius: 15px; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; transition: all 0.2s; ${isActive ? 'box-shadow: 0 0 0 2px #fff, 0 0 0 4px ' + c.activeBg : ''}`;
@@ -5195,6 +5249,9 @@
             </span>
             <span onclick="setRtnSubFilter('STO')" style="${getStyle('STO')}">
               <i class="fa-solid fa-exchange-alt"></i> STO: ${stoQty.toLocaleString('id-ID')} Qty
+            </span>
+            <span onclick="setRtnSubFilter('PROSES')" style="${getStyle('PROSES')}">
+              <i class="fa-solid fa-spinner fa-spin-pulse"></i> PROSES: ${totalProsesQty.toLocaleString('id-ID')} Qty
             </span>
           `;
         } else {
@@ -5360,7 +5417,7 @@
       const tableElem = document.querySelector('#rtn-unified-table-scroll-container table');
       
       if (tableElem) {
-        tableElem.style.minWidth = isSoReturn ? '1200px' : '900px';
+        tableElem.style.minWidth = isSoReturn ? '1250px' : '900px';
       }
 
       if (headerRow) {
@@ -5375,7 +5432,7 @@
             <th style="padding: 12px 6px; font-size: 11px; width: 90px; text-align: center; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">AGING</th>
             <th style="padding: 12px 6px; font-size: 11px; width: 150px; text-align: left; font-weight: 700; color: #475569; letter-spacing: 0.05em; text-transform: uppercase;">REASON CANCEL</th>
             <th style="padding: 12px 6px; font-size: 11px; width: 150px; text-align: left; font-weight: 700; color: #0d9488; letter-spacing: 0.05em; text-transform: uppercase; border-left: 2px solid rgba(13, 148, 136, 0.2); background: rgba(13, 148, 136, 0.04);">ROOT CAUSE</th>
-            <th style="padding: 12px 6px; font-size: 11px; width: 150px; text-align: left; font-weight: 700; color: #0891b2; letter-spacing: 0.05em; text-transform: uppercase; border-left: 2px solid rgba(8, 145, 178, 0.2); background: rgba(8, 145, 178, 0.04);">PLAN</th>
+            <th style="padding: 12px 6px; font-size: 11px; width: 150px; text-align: left; font-weight: 700; color: #0891b2; letter-spacing: 0.05em; text-transform: uppercase; border-left: 2px solid rgba(8, 145, 178, 0.2); background: rgba(8, 145, 178, 0.04);">FINAL</th>
           `;
         } else {
           headerRow.innerHTML = `
